@@ -108,6 +108,7 @@
 	{% assets filters="rjsmin", output="webassets_generated/worksheet.js",
 		"sage/js/load_mathjax.js",
 		"codemirror-3.0/lib/codemirror.js",
+		"codemirror-3.0/lib/util/matchbrackets.js",
 		"codemirror-3.0/lib/util/simple-hint.js",
 		"codemirror-3.0/mode/python/python.js",
 		"codemirror-3.0/mode/stex/stex.js",
@@ -149,7 +150,6 @@
 	<link rel="stylesheet" media="screen" type="text/css" href="/data/jquery/plugins/colorpicker/css/colorpicker.css" />
 	<script type="text/javascript" src="/data/jquery/plugins/colorpicker/js/colorpicker.min.js"></script>
 	<script type="text/javascript" src="/data/jquery/plugins/achtung/ui.achtung-mod.min.js"></script>
-	
 	<script type="text/javascript">
 		$(function() {
 			// init notebook stuff
@@ -179,6 +179,9 @@
 
 			// initialize
 			sagenb.worksheetapp.worksheet.init();
+
+            sagenb.worksheetapp.worksheet.ws_get_username();
+
 		});
 	</script>
 {% endblock extra_javascript %}
