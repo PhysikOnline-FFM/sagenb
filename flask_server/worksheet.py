@@ -167,6 +167,14 @@ def worksheet_pretty_print(worksheet, enable):
 def worksheet_conf(worksheet):
     return str(worksheet.conf())
 
+#####################################################
+#  Websocket initialization
+######################################################
+@worksheet_command('get_username')
+def worksheet_get_username(worksheet):
+    ##Returns the username of the current session for Websocket-Initialization
+    ## needed in nickname[] of Websocket -> Worksheet_Namespace
+    return g.username
 
 ########################################################
 # Save a worksheet
