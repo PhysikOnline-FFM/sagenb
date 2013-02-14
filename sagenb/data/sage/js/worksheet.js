@@ -53,6 +53,19 @@ sagenb.worksheetapp.worksheet = function() {
 	
 	
 	// other variables go here
+
+
+    ///////////// STARTUP ///////////////
+    _this.ws_get_username = function(){
+        /*
+        Get the username for websocket initialization
+        */
+        sagenb.async_request(_this.worksheet_command('get_username'), function(status, response){
+            window.alert("Your nickname is: " + response)
+        });
+    }
+
+
 	
 	///////////// COMMANDS ////////////
 	_this.worksheet_command = function(cmd) {
@@ -815,15 +828,19 @@ sagenb.worksheetapp.worksheet = function() {
 			1000
 		);
 		
-		// load js-hotkeys
-		/* TODO notes on hotkeys: these don't work on all browsers consistently
+		// Setup hotkeys
+		/* Notes on hotkeys: these don't work on all browsers consistently
 		but they are included in the best case scenario that they are all 
-		accepted. I have not checked all of the official hotkeys for Sage NB
-		so this list may not be complete but will be updated later. */
+		accepted. */
 		$(document).bind("keydown", sagenb.ctrlkey + "+N", function(evt) { _this.new_worksheet(); return false; });
 		$(document).bind("keydown", sagenb.ctrlkey + "+S", function(evt) { _this.save(); return false; });
 		$(document).bind("keydown", sagenb.ctrlkey + "+W", function(evt) { _this.close(); return false; });
 		$(document).bind("keydown", sagenb.ctrlkey + "+P", function(evt) { _this.print(); return false; });
+		$(document).bind("keydown", "esc", function(evt) {
+			if(confirm(gettext("Are you sure you would like to interrupt the running computation?"))) {
+				_this.interrupt();
+			}
+		});
 				
 		/////// FILE MENU ////////
 		$("#new_worksheet").click(_this.new_worksheet);
