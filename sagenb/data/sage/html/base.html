@@ -24,17 +24,6 @@
 		
 		<!-- LESS -->
 		<link href="/data/sage/less/main.less" rel="stylesheet/less">
-<<<<<<< HEAD
-		<script src="/data/less-1.3.0.min.js"></script>
-		<!-- SocketIO -->
-		<script src="/data/sage/js/socketio/socket.io.min.js"></script>
-=======
-		<script src="/data/less-1.3.0.min.js" type="text/javascript"></script>
-        <!-- SocketIO -->
-        <script src="/data/sage/js/socketio/socket.io.min.js"></script>
-        <!-- PhysikOnline design -->
->>>>>>> 026ed5c728343cdc8a5743a00b513046f2ac9725
-
 		{% endblock head %}
 	</head>
 
@@ -43,25 +32,14 @@
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
-                    <a class="brand" href="/" id="goethe-container">
-                        <img src="/data/sage/images/PhysikOnline/logo_small-new.png" alt="" id="goethe-logo" />
-                    </a>
-
-                    <a class="brand" href="/">
-                        <img src="/data/sage/images/Pokal/POKAL-Logo.png" alt="POKAL" />
-                    </a>
-					
 					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</a>
-<<<<<<< HEAD
 					
-=======
 					<a class="brand" href="/" style="padding-bottom: 0; padding-top: 5px; padding-right: 0;">
-						<!--<img src="/data/sage/images/headerlogo.png" alt="" width="113" height="30">-->
-						<img src="/data/sage/images/pokal/pokal-bootstrap-logo.png" alt="POKAL-Logo" width="107" height="30" title="POKAL">
+						<img src="/data/sage/images/pokal/pokal-bootstrap-logo.png" alt="POKAL" width="107" height="30" title="POKAL">
 					</a>
 	
 					<!-- PhysikOnline-Navigation, sollte nur ausserhalb sein -->
@@ -96,7 +74,6 @@
 					</ul>
 					</div>
 
->>>>>>> 026ed5c728343cdc8a5743a00b513046f2ac9725
 					<div id="user_navbar_area"></div>
 					<div id="worksheet_chat_bar"></div>
 					
@@ -142,9 +119,11 @@
 			"jquery/jquery-1.7.2.min.js",
 			"bootstrap-2.3.1/js/bootstrap.min.js",
 			"jeresig-jquery.hotkeys-0451de1/jquery.hotkeys.js",
-			"sage/js/misc.js",
 			"json/json2.min.js",
 			"spin.min.js",
+			"less/less-1.3.0.min.js",
+			"socketio/socket.io.min.js",
+			"sage/js/misc.js",
 			"sage/js/sagenb.js"
 		%}
 			<script type="text/javascript" src="{{ ASSET_URL }}"></script>

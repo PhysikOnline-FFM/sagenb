@@ -49,7 +49,7 @@ sagenb.worksheetapp.worksheet = function() {
 	_this.is_evaluating_all = false;
 	_this.access_to_slider = true;
 	
-	_this.WEB_SOCKET_SWF_LOCATION = '/data/sage/js/socketio/WebSocketMain.swf', 
+	_this.WEB_SOCKET_SWF_LOCATION = '/socketio/WebSocketMain.swf', 
 	_this.socket = io.connect('/worksheet');
 	
 	// other variables go here
