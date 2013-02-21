@@ -11,6 +11,8 @@ sagenb.worksheetapp.worksheet = function() {
 	/* this allows us to access this cell object from 
 	 * inner functions
 	 */
+
+
 	var _this = this;
 	
 	/* Array of all of the cells. This is a sparse array because 
@@ -54,6 +56,13 @@ sagenb.worksheetapp.worksheet = function() {
 	
 	// other variables go here
 
+    ///////////// TESTS ////////////////
+    _this.ws_get_room = function(){
+        window.alert("worksheet- / roomname: " + _this.filename);
+    }
+
+
+
 
     ///////////// STARTUP ///////////////
     _this.ws_get_username = function(){
@@ -61,12 +70,18 @@ sagenb.worksheetapp.worksheet = function() {
         Get the username for websocket initialization
         */
         sagenb.async_request(_this.worksheet_command('get_username'), function(status, response){
-            window.alert("Your nickname is: " + response)
+            return response;
         });
     }
 
+    _this.ws_init_wsconnection = function(){
+        _this.WEB_SOCKET_SWF_LOCATION = '/data/sage/js/socketio/WebSocketMain.swf',
+            _this.socket = io.connect('/worksheet');
+            _this.socket.emit('evaluate', 'test');
+    }
 
-	
+
+
 	///////////// COMMANDS ////////////
 	_this.worksheet_command = function(cmd) {
 		/*

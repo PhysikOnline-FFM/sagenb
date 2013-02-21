@@ -1,6 +1,7 @@
+import re
 import os, threading, collections
 from functools import wraps
-from flask import Module, url_for, render_template, request, session, redirect, g, current_app, make_response
+from flask import Module, url_for, render_template, request, session, redirect, g, current_app, make_response, Response
 from decorators import guest_or_login_required, login_required, with_lock
 from collections import defaultdict
 from flaskext.babel import Babel, gettext, ngettext, lazy_gettext
@@ -8,9 +9,18 @@ _ = gettext
 
 from sagenb.notebook.interact import INTERACT_UPDATE_PREFIX
 from sagenb.notebook.misc import encode_response
+from socketio import socketio_manage
+from socketio.namespace import BaseNamespace
+from socketio.mixins import RoomsMixin, BroadcastMixin
+from gevent import monkey
+
+monkey.patch_all()
 
 ws = Module('flask_server.worksheet')
+ws.debug = True
 worksheet_locks = defaultdict(threading.Lock)
+
+
 
 def worksheet_view(f):
     """
@@ -97,6 +107,8 @@ published_commands_allowed = set(['alive', 'cells', 'cell_update',
                           'new_cell_after'])
 
 readonly_commands_allowed = set(['alive', 'cells', 'data', 'datafile', 'download', 'quit_sage', 'rating_info', 'delete_all_output'])
+
+
 
 def worksheet_command(target, **route_kwds):
     if 'methods' not in route_kwds:
@@ -980,6 +992,21 @@ def doc_worksheet():
 #     proxy.save()
 #     return proxy
 
+class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
+    nicknames = []
+
+    def initialize(self):
+        print "INIT"
+
+    def on_join(self, room):
+        self.room = room
+        self.join(room)
+        return True
+
+    def on_evaluate(self, evalinp):
+        print "EVAL HANDLER!"
+
+
 #######################################################
 # Jmol Popup
 #######################################################
@@ -987,3 +1014,16 @@ def doc_worksheet():
 @login_required
 def jmol_popup(username, id):
     return render_template(os.path.join('html', 'jmol_popup.html'))
+
+@ws.route('/socket.io/<path:remaining>')
+def socketio(remaining):
+    print "YEAH WEBSOCKET CONNECTION!!!"
+    try:
+        socketio_manage(request.environ, {'/worksheet': WorksheetNamespace}, request)
+        print "passiert hier was?"
+    except:
+        print "passiert hier was?"
+        ws.logger.error("Exception while handling socketio connection",
+            exc_info=True)
+    return Response()
+

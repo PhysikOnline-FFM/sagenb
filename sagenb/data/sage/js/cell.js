@@ -594,11 +594,16 @@ sagenb.worksheetapp.cell = function(id) {
 		}
 		
 		// update the server input property
-		sagenb.async_request(_this.worksheet.worksheet_command("eval"), sagenb.generic_callback, {
-			save_only: 1,
-			id: _this.id,
-			input: _this.input
-		});
+        var eval_msg = {save_only: 1,
+            id: _this.id,
+            input: _this.input}
+        sagenb.socket.emit('eval', eval_msg);
+
+        //sagenb.async_request(_this.worksheet.worksheet_command("eval"), sagenb.generic_callback, {
+		//	save_only: 1,
+		//	id: _this.id,
+		//	input: _this.input
+		//});
 	};
 	_this.evaluate = function() {
 		if(_this.worksheet.published_mode) return;
@@ -621,19 +626,20 @@ sagenb.worksheetapp.cell = function(id) {
 		}
 
 		// we're an evaluate cell
-		sagenb.async_request(_this.worksheet.worksheet_command("eval"), _evaluate_callback, {
-			// 0 = false, 1 = true this needs some conditional
-			newcell: 0,
-			
-			id: toint(_this.id),
-			
-			/* It's necessary to get the codemirror value because the user
-			 * may have made changes and not blurred the codemirror so the 
-			 * changes haven't been put in _this.input
-			 */
-			input: _this.codemirror.getValue()
-		});
+        sagenb.async_request(_this.worksheet.worksheet_command("eval"), _evaluate_callback, {
+        // 0 = false, 1 = true this needs some conditional
+            newcell: 0,
+
+            id: toint(_this.id),
+
+            /* It's necessary to get the codemirror value because the user
+             * may have made changes and not blurred the codemirror so the
+             * changes haven't been put in _this.input
+             */
+            input: _this.codemirror.getValue()
+        });
 	};
+
 	_this.evaluate_interact = function(update, recompute) {
 		if(_this.worksheet.published_mode) return;
 		sagenb.async_request(_this.worksheet.worksheet_command("eval"), _evaluate_callback, {
@@ -646,6 +652,7 @@ sagenb.worksheetapp.cell = function(id) {
 			newcell: 0
 		});
 	};
+
 	_this.introspect = function() {
 		/* Attempts to begin an introspection. Firstly, it splits the input 
 		 * according to the cursor position. Then it matches the text before 
