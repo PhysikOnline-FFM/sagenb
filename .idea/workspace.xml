@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ecfdb0b2-4a62-453b-af89-223d5f1581a7" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/flask_server/websocket_init_.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/flask_server/base.py" afterPath="$PROJECT_DIR$/flask_server/base.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/flask_server/worksheet.py" afterPath="$PROJECT_DIR$/flask_server/worksheet.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sagenb/data/sage/html/worksheet.html" afterPath="$PROJECT_DIR$/sagenb/data/sage/html/worksheet.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sagenb/data/sage/js/cell.js" afterPath="$PROJECT_DIR$/sagenb/data/sage/js/cell.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sagenb/data/sage/js/worksheet.js" afterPath="$PROJECT_DIR$/sagenb/data/sage/js/worksheet.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sagenb/notebook/lib/gevent_socketio-0.3.5_rc2-py2.7.egg/socketio/namespace.py" afterPath="$PROJECT_DIR$/sagenb/notebook/lib/gevent_socketio-0.3.5_rc2-py2.7.egg/socketio/namespace.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sagenb/notebook/run_notebook.py" afterPath="$PROJECT_DIR$/sagenb/notebook/run_notebook.py" />
     </list>
     <ignored path="sagenb.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,10 +39,10 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="cell.js" pinned="false" current="false" current-in-tab="false">
+          <file leaf-file-name="cell.js" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/sagenb/data/sage/js/cell.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="662" column="90" selection-start="19593" selection-end="19611" vertical-scroll-proportion="-0.48387095">
+                <state line="620" column="41" selection-start="18291" selection-end="18291" vertical-scroll-proportion="0.8723898">
                   <folding>
                     <marker date="1363004927095" expanded="true" signature="31201:31228" placeholder="..." />
                     <marker date="1363004927095" expanded="true" signature="31273:31285" placeholder="..." />
@@ -61,16 +54,16 @@
           <file leaf-file-name="worksheet.html" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/sagenb/data/sage/html/worksheet.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="173" column="56" selection-start="8248" selection-end="8248" vertical-scroll-proportion="-22.208334">
+                <state line="173" column="56" selection-start="8248" selection-end="8248" vertical-scroll-proportion="-29.708334">
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="worksheet.js" pinned="false" current="true" current-in-tab="true">
+          <file leaf-file-name="worksheet.js" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/sagenb/data/sage/js/worksheet.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="70" column="66" selection-start="1780" selection-end="1780" vertical-scroll-proportion="0.54176337">
+                <state line="71" column="8" selection-start="1790" selection-end="1829" vertical-scroll-proportion="-14.096774">
                   <folding>
                     <element signature="n#!!doc" expanded="true" />
                   </folding>
@@ -95,8 +88,8 @@
       <list>
         <option value="$PROJECT_DIR$/sagenb/data/sage/html/worksheet.html" />
         <option value="$PROJECT_DIR$/flask_server/worksheet.py" />
-        <option value="$PROJECT_DIR$/sagenb/data/sage/js/worksheet.js" />
         <option value="$PROJECT_DIR$/sagenb/data/sage/js/cell.js" />
+        <option value="$PROJECT_DIR$/sagenb/data/sage/js/worksheet.js" />
       </list>
     </option>
   </component>
@@ -442,14 +435,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sagenb/data/sage/html/worksheet.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="173" column="56" selection-start="8248" selection-end="8248" vertical-scroll-proportion="-22.208334">
+        <state line="173" column="56" selection-start="8248" selection-end="8248" vertical-scroll-proportion="-29.708334">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sagenb/data/sage/js/worksheet.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="66" selection-start="1780" selection-end="1780" vertical-scroll-proportion="0.54176337">
+        <state line="71" column="8" selection-start="1790" selection-end="1829" vertical-scroll-proportion="-14.096774">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -458,7 +451,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sagenb/data/sage/js/cell.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="662" column="90" selection-start="19593" selection-end="19611" vertical-scroll-proportion="-0.48387095">
+        <state line="620" column="41" selection-start="18291" selection-end="18291" vertical-scroll-proportion="0.8723898">
           <folding>
             <marker date="1363004927095" expanded="true" signature="31201:31228" placeholder="..." />
             <marker date="1363004927095" expanded="true" signature="31273:31285" placeholder="..." />
