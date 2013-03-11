@@ -52,14 +52,27 @@ sagenb.worksheetapp.worksheet = function() {
 	
 	// Evaluate all
 	_this.is_evaluating_all = false;
-	
-	
+
+    _this.WEB_SOCKET_SWF_LOCATION = '/data/sage/js/socketio/WebSocketMain.swf',
+        _this.socket = io.connect('/worksheet');
+
+
 	// other variables go here
 
     ///////////// TESTS ////////////////
-    _this.ws_get_room = function(){
-        window.alert("worksheet- / roomname: " + _this.filename);
-    }
+    ////////// WEBSOCKET_HANDLER ////////
+    _this.socket.on('connect', function (){
+        _this.ws_get_username();
+        _this.socket.emit('join', _this.filename);
+    });
+
+    _this.socket.on('eval_reply', function (result){
+        var X = decode_response(result)
+        _this.cells[X.id]._evaluate_callback_ws("success", result);
+    });
+
+
+
 
 
 
@@ -70,15 +83,10 @@ sagenb.worksheetapp.worksheet = function() {
         Get the username for websocket initialization
         */
         sagenb.async_request(_this.worksheet_command('get_username'), function(status, response){
-            return response;
+            _this.socket.emit('nickname',response);
         });
     }
 
-    _this.ws_init_wsconnection = function(){
-        _this.WEB_SOCKET_SWF_LOCATION = '/data/sage/js/socketio/WebSocketMain.swf',
-            _this.socket = io.connect('/worksheet');
-            _this.socket.emit('evaluate', 'test');
-    }
 
 
 

@@ -38,6 +38,7 @@ class BaseNamespace(object):
           print "See the BaseNamespace::call_method() method for details"
     """
     def __init__(self, environ, ns_name, request=None):
+	print "init"
         self.environ = environ
         self.socket = environ['socketio']
         self.session = self.socket.session  # easily accessible session

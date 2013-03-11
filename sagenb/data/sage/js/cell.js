@@ -25,8 +25,9 @@ sagenb.worksheetapp.cell = function(id) {
 	// the amount of time in millisecs between update checks
 	_this.output_check_interval = 250;
 
-	
-	// HELPERS
+
+
+    // HELPERS
 	function get_next_cell() {
 		var $nextcell = $("#cell_" + _this.id).parent().next().next().find(".cell");
 		if($nextcell.length > 0) {
@@ -385,11 +386,16 @@ sagenb.worksheetapp.cell = function(id) {
 			}
 		}
 	};
+    _this.eval_result_output = function(result, id) {
+        ///ICH BIN HIER STEHEn geblieben!
+
+    };
+
 	_this.render_output = function(stuff_to_render) {
 		/* Renders stuff_to_render as the cells output, 
 		 * if given. If not, then it renders _this.output.
 		 */
-		
+
 		// don't do anything for text cells
 		if(!_this.is_evaluate_cell) return;
 		
@@ -547,6 +553,13 @@ sagenb.worksheetapp.cell = function(id) {
 	}
 	
 	/////// EVALUATION //////
+
+    // This Function is needed to use old callbackfunctions from Websocket
+    _this._evaluate_callback_ws = function(status, response) {
+        _evaluate_callback(status, response);
+    };
+
+
 	var _evaluate_callback = sagenb.generic_callback(function(status, response) {
 		var X = decode_response(response);
 		
@@ -594,16 +607,12 @@ sagenb.worksheetapp.cell = function(id) {
 		}
 		
 		// update the server input property
-        var eval_msg = {save_only: 1,
-            id: _this.id,
-            input: _this.input}
-        sagenb.socket.emit('eval', eval_msg);
 
-        //sagenb.async_request(_this.worksheet.worksheet_command("eval"), sagenb.generic_callback, {
-		//	save_only: 1,
-		//	id: _this.id,
-		//	input: _this.input
-		//});
+        sagenb.async_request(_this.worksheet.worksheet_command("eval"), sagenb.generic_callback, {
+			save_only: 1,
+			id: _this.id,
+			input: _this.input
+		});
 	};
 	_this.evaluate = function() {
 		if(_this.worksheet.published_mode) return;
@@ -626,8 +635,10 @@ sagenb.worksheetapp.cell = function(id) {
 		}
 
 		// we're an evaluate cell
-        sagenb.async_request(_this.worksheet.worksheet_command("eval"), _evaluate_callback, {
-        // 0 = false, 1 = true this needs some conditional
+        //sagenb.worksheetapp.worksheet.socket.emit('eval', {filename: _this.worksheet.filename, eval_cookie: document.cookie ,id: toint(_this.id), newcell: 0, input: _this.codemirror.getValue() })
+        //window.alert("3var")
+        sagenb.async_request(_this.worksheet.worksheet_command("eval"), _this.emit_eval_result, {
+         //0 = false, 1 = true this needs some conditional
             newcell: 0,
 
             id: toint(_this.id),
@@ -639,9 +650,16 @@ sagenb.worksheetapp.cell = function(id) {
             input: _this.codemirror.getValue()
         });
 	};
+    _this.emit_eval_result = function(status, response){
+
+          sagenb.worksheetapp.worksheet.socket.emit('eval', response);
+
+    };
+
 
 	_this.evaluate_interact = function(update, recompute) {
 		if(_this.worksheet.published_mode) return;
+        window.alert("ajkldnkawd")
 		sagenb.async_request(_this.worksheet.worksheet_command("eval"), _evaluate_callback, {
 			id: toint(_this.id),
 			interact: 1,

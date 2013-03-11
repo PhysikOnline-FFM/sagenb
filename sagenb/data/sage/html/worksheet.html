@@ -125,7 +125,7 @@
 	%}
 		<script type="text/javascript" src="{{ ASSET_URL }}"></script>
 	{% endassets %}
-
+    <script src="/data/sage/js/socketio/socket.io.min.js"></script>
 	<!-- Can't minify -->
 	<!-- TinyMCE -->
 	<script type="text/javascript" src="/data/tinymce-3.5.2/jscripts/tiny_mce/tiny_mce.js"></script>
@@ -180,8 +180,9 @@
 			// initialize
 			sagenb.worksheetapp.worksheet.init();
 
-            sagenb.worksheetapp.worksheet.ws_get_room();
-            sagenb.worksheetapp.worksheet.ws_init_wsconnection();
+            sagenb.worksheetapp.worksheet.ws_get_username();
+
+
 
 
 

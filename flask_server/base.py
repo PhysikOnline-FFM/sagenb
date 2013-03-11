@@ -438,3 +438,4 @@ def create_app(path_to_notebook, *args, **kwds):
         return idx.render_autoindex(path)
 
     return app
+

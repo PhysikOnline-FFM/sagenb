@@ -205,9 +205,9 @@ if %(secure)s:
 %(open_page)s
 try:
         print 'Listening on port 8080 and on port 843 (flash policy server)'
-        SocketIOServer(('0.0.0.0', 8080), flask_app,
+        Server = SocketIOServer(('', 8080), flask_app,
         resource="socket.io", policy_server=True,
-        policy_listener=('0.0.0.0', 10843)).serve_forever()
+        policy_listener=('', 10843)).serve_forever()
         flask_app.run(host=%(interface)r, port=%(port)s, threaded=True, ssl_context=ssl_context, debug=False)
 finally:
     save_notebook(flask_base.notebook)
@@ -457,7 +457,7 @@ command={'flask': NotebookRunFlask, 'twistd': NotebookRunTwisted, 'uwsgi': Noteb
 def notebook_run(self,
              directory     = None,
              port          = 8080,
-             interface     = 'localhost',
+             interface     = '',
              port_tries    = 50,
              secure        = False,
              reset         = False,

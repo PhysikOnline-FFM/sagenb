@@ -17,9 +17,7 @@ from gevent import monkey
 monkey.patch_all()
 
 ws = Module('flask_server.worksheet')
-ws.debug = True
 worksheet_locks = defaultdict(threading.Lock)
-
 
 
 def worksheet_view(f):
@@ -32,6 +30,7 @@ def worksheet_view(f):
     @wraps(f)
     def wrapper(username, id, **kwds):
         worksheet_filename = username + "/" + id
+
         try:
             worksheet = kwds['worksheet'] = g.notebook.get_worksheet_with_filename(worksheet_filename)
         except KeyError:
@@ -410,7 +409,6 @@ def worksheet_eval(worksheet):
     respectively.
     """
     from base import notebook_updates
-    
     r = {}
 
     r['id'] = id = get_cell_id()
@@ -466,7 +464,6 @@ def worksheet_eval(worksheet):
         r['next_id'] = cell.next_compute_id()
 
     notebook_updates()
-
     return encode_response(r)
 
 @worksheet_command('cell_update')
@@ -992,19 +989,13 @@ def doc_worksheet():
 #     proxy.save()
 #     return proxy
 
-class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
-    nicknames = []
 
-    def initialize(self):
-        print "INIT"
 
-    def on_join(self, room):
-        self.room = room
-        self.join(room)
-        return True
 
-    def on_evaluate(self, evalinp):
-        print "EVAL HANDLER!"
+
+
+
+
 
 
 #######################################################
@@ -1015,15 +1006,48 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 def jmol_popup(username, id):
     return render_template(os.path.join('html', 'jmol_popup.html'))
 
+######################################################
+# Websocket Handshake
+#######################################################
+from flask import globals
+
 @ws.route('/socket.io/<path:remaining>')
 def socketio(remaining):
     print "YEAH WEBSOCKET CONNECTION!!!"
     try:
-        socketio_manage(request.environ, {'/worksheet': WorksheetNamespace}, request)
-        print "passiert hier was?"
+        socketio_manage(request.environ, {'/worksheet': WorksheetNamespace},
+            request)
+
     except:
-        print "passiert hier was?"
-        ws.logger.error("Exception while handling socketio connection",
-            exc_info=True)
+         print "Websocket Error!"
     return Response()
+#########################################################
+# Websocket Namespace
+##########################################################
+
+class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
+    nicknames = []
+
+    def on_join(self, room):
+        print self.session['nickname'] + " joined room: "  + room
+        self.room = room
+        self.join(room)
+        return True
+
+    def on_nickname(self, nickname):
+        self.nicknames.append(nickname)
+        self.session['nickname'] = nickname
+        return True, nickname
+
+
+    def on_eval(self, result):
+        print "eval_handler"
+        print self.session
+        self.emit_to_room(self.room, 'eval_reply', result)
+        self.emit('eval_reply', result)
+        print result
+        return True
+
+    def recv_disconnect(self):
+        print self.session['nickname'] + " disconnected"
 
