@@ -66,9 +66,10 @@ sagenb.worksheetapp.worksheet = function() {
         _this.socket.emit('join', _this.filename);
     });
 
-    _this.socket.on('eval_reply', function (result){
+    _this.socket.on('eval_reply', function (result, input){
         var X = decode_response(result)
         _this.cells[X.id]._evaluate_callback_ws("success", result);
+        _this.cells[X.id].set_cell_input(input);
         _this.cells[X.id].set_output_loading();
     });
 

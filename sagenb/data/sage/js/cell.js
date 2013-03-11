@@ -635,8 +635,7 @@ sagenb.worksheetapp.cell = function(id) {
 		}
 
 		// we're an evaluate cell
-        //sagenb.worksheetapp.worksheet.socket.emit('eval', {filename: _this.worksheet.filename, eval_cookie: document.cookie ,id: toint(_this.id), newcell: 0, input: _this.codemirror.getValue() })
-        //window.alert("3var")
+
         sagenb.async_request(_this.worksheet.worksheet_command("eval"), _this.emit_eval_result, {
          //0 = false, 1 = true this needs some conditional
             newcell: 0,
@@ -652,14 +651,13 @@ sagenb.worksheetapp.cell = function(id) {
 	};
     _this.emit_eval_result = function(status, response){
 
-          sagenb.worksheetapp.worksheet.socket.emit('eval', response);
+          sagenb.worksheetapp.worksheet.socket.emit('eval', response, _this.input);
 
     };
 
 
 	_this.evaluate_interact = function(update, recompute) {
 		if(_this.worksheet.published_mode) return;
-        window.alert("ajkldnkawd")
 		sagenb.async_request(_this.worksheet.worksheet_command("eval"), _evaluate_callback, {
 			id: toint(_this.id),
 			interact: 1,
@@ -1001,6 +999,13 @@ sagenb.worksheetapp.cell = function(id) {
 			}
 		}
 	}
+
+    /////// INPUT ////////
+    //This is used by Websockethandlers to make sure input is synchrone
+   _this.set_cell_input = function(input){
+       _this.input = input;
+       _this.codemirror.setValue(_this.input);
+   };
 	
 	/////// OUTPUT ///////
 	_this.delete_output = function() {

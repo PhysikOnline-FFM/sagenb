@@ -1040,11 +1040,12 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         return True, nickname
 
 
-    def on_eval(self, result):
+    def on_eval(self, result, input):
         print "eval_handler"
         print self.session
-        self.emit_to_room(self.room, 'eval_reply', result)
-        self.emit('eval_reply', result)
+        print input
+        self.emit_to_room(self.room, 'eval_reply', result, input)
+        self.emit('eval_reply', result, input)
         print result
         return True
 
