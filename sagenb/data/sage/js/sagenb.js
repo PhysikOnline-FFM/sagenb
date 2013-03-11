@@ -11,14 +11,14 @@ sagenb.init = function() {
 	// update username
 	if(sagenb.username === "guest") {
 		$("#user_navbar_area").html(
-'<div class="btn-group pull-right nav">' +
+'<div class="pull-right nav"><div class="btn-group">' +
 	'<a href="/login" class="btn">' + gettext('Login') + '</a>' +
-'</div>'
+'</div></div>'
 		);
 	}
 	else {
 		$("#user_navbar_area").html(
-'<div class="btn-group pull-right nav">' +
+'<div class="pull-right nav"><div class="btn-group">' +
 	'<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">' +
 		'<i class="icon-user"></i> <span id="username">' + sagenb.username + ' </span>' +
 		'<span class="caret"></span>' +
@@ -34,7 +34,7 @@ sagenb.init = function() {
 		'<li><a href="#" id="help"><i class="icon-book"></i> ' + gettext('Help') + '</a></li>' +
 		'<li><a href="#" id="report_a_problem"><i class="icon-exclamation-sign"></i> ' + gettext('Report a Problem') + '</a></li>' +
 	'</ul>' +
-'</div>'
+'</div></div>'
 		);
 	}
 	
