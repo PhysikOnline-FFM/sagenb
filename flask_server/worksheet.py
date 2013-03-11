@@ -19,7 +19,7 @@ monkey.patch_all()
 ws = Module('flask_server.worksheet')
 worksheet_locks = defaultdict(threading.Lock)
 
-# Kommetar!!!
+# Geänderter Kommetar!!!
 
 def worksheet_view(f):
     """
