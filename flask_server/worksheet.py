@@ -1045,7 +1045,7 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         print self.session
         print input
         self.emit_to_room(self.room, 'eval_reply', result, input)
-        self.emit('eval_reply', result, input)
+        self.emit('eval_reply', result)
         print result
         return True
 

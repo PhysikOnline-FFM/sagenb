@@ -64,12 +64,15 @@ sagenb.worksheetapp.worksheet = function() {
     _this.socket.on('connect', function (){
         _this.ws_get_username();
         _this.socket.emit('join', _this.filename);
+        window.alert('testadwadawdawdad');
     });
 
     _this.socket.on('eval_reply', function (result, input){
         var X = decode_response(result)
         _this.cells[X.id]._evaluate_callback_ws("success", result);
+        if (input != "") {
         _this.cells[X.id].set_cell_input(input);
+        }
         _this.cells[X.id].set_output_loading();
     });
 
