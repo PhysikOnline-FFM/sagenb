@@ -85,11 +85,56 @@ sagenb.worksheetapp.worksheet = function() {
     });
 
 
+    ///// CHATBOX integration /////
+    _this.chat = {};
+    _this.chat.init = function(){
+        // header button
+        $("#worksheet_chat_bar").html(
+            '<div class="btn-group pull-right nav">' +
+                '<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">' +
+                '<i class="icon-comment"></i>&nbsp;<span>Chat</span>&nbsp;<span class="badge badge-info"></span> ' +
+                //'<span class="caret"></span>' +
+                '</a>' +
+            '</div>'
+        );
+        // chat box
 
+        _this.chat.container = $("<div></div>").attr({"id": "chat_container", "class": ""});
+        _this.chat.container.append(
+            $("<div></div>").attr({"id": "chat_userlist_box", "class": ""}),
+            $("<div></div>").attr({"id": "chat_message_box", "class": ""}),
+            $("<div></div>").attr({"id": "chat_input_box", "class": "input-append"})
+                .append(
+                    $("<textarea></textarea>").attr({"id": "chat_input_text", "class": "span2"}),
+                    $("<button></button>").attr({"id": "chat_input_btn", "class": "btn", "type": "button"}).text("send")
+            )
+        );
 
+        _this.chat.container.appendTo("body");
+        _this.chat.container.dialog({
+            autoOpen: false,
+            dialogClass: "chat",
+            height: 400,
+            width: 240,
+            position: { my: "right top", at: "right bottom"},
+            show: "fast",
+            title: "Worksheet - Chat"
 
+        });
+    }
+    _this.chat.toggle = function(){
+        var btn = $("#worksheet_chat_bar .btn");
 
-
+        if (btn.hasClass("active")){
+            _this.chat.container.dialog("close");
+            btn.removeClass("active");
+        }
+        else {
+            _this.chat.container.dialog("open");
+            btn.addClass("active");
+        }
+        btn.blur();
+    }
 
     ///////////// STARTUP ///////////////
     _this.ws_get_username = function(){
@@ -864,7 +909,11 @@ sagenb.worksheetapp.worksheet = function() {
 		},
 			1000
 		);
-		
+
+        //////// CHATBOX ////////
+        _this.chat.init();
+        $("#worksheet_chat_bar .btn").click(_this.chat.toggle);
+
 		// Setup hotkeys
 		/* Notes on hotkeys: these don't work on all browsers consistently
 		but they are included in the best case scenario that they are all 
