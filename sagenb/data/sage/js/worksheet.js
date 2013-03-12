@@ -73,6 +73,15 @@ sagenb.worksheetapp.worksheet = function() {
         _this.cells[X.id].set_output_loading();
     });
 
+    //sets Input every Time it gets changed
+    _this.socket.on('realtime_change', function (input, cid){
+
+        window.alert(cid); //delete this
+        _this.cells[cid].set_cell_input(input);
+
+    });
+
+
 
 
 

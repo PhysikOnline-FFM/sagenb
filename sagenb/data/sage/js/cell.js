@@ -129,7 +129,8 @@ sagenb.worksheetapp.cell = function(id) {
 										"<button class=\"btn evaluate_button\" type=\"button\">" + gettext("Evaluate") + "</button>" +
 									"</div>" +
 								"</div> <!-- /cell -->");
-			
+
+            $(container).find(".evaluate_button").click(window.alert("click!"));
 			// Bind the evaluate button
 			$(container).find(".evaluate_button").click(_this.evaluate);
 
@@ -260,7 +261,8 @@ sagenb.worksheetapp.cell = function(id) {
 
 				// Show the evaluate button
 				$("#cell_" + _this.id + " .evaluate_button_container").show();
-			});
+
+            });
 
 			_this.codemirror.on("blur", function() {
 				if(!($("body").hasClass("single_cell_mode"))) {
