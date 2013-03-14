@@ -130,7 +130,7 @@ sagenb.worksheetapp.cell = function(id) {
 									"</div>" +
 								"</div> <!-- /cell -->");
 
-            $(container).find(".evaluate_button").click(window.alert("click!"));
+
 			// Bind the evaluate button
 			$(container).find(".evaluate_button").click(_this.evaluate);
 

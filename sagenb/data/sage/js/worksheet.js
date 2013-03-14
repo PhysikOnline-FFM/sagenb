@@ -64,7 +64,6 @@ sagenb.worksheetapp.worksheet = function() {
     _this.socket.on('connect', function (){
         _this.ws_get_username();
         _this.socket.emit('join', _this.filename);
-        window.alert('testadwadawdawdad');
     });
 
     _this.socket.on('eval_reply', function (result, input){
