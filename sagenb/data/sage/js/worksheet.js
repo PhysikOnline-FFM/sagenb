@@ -62,8 +62,19 @@ sagenb.worksheetapp.worksheet = function() {
     ///////////// TESTS ////////////////
     ////////// WEBSOCKET_HANDLER ////////
     _this.socket.on('connect', function (){
-        _this.ws_get_username();
         _this.socket.emit('join', _this.filename);
+        sagenb.async_request(_this.worksheet_command('get_username'), function(status, response){
+            _this.socket.emit('nickname',response);
+        });
+    });
+
+
+    _this.socket.on('nicknames', function (nicknames){
+        //$("#chat_userlist_box").append($('<b>').text(' ' + nickname + ','));
+        $('#chat_userlist_box').empty().append($('<span>Online: </span>'));
+        for (var i in nicknames) {
+            $('#chat_userlist_box').append($('<b>').text(nicknames[i] + ', '));
+        }
     });
 
     _this.socket.on('eval_reply', function (result, input){
@@ -74,6 +85,11 @@ sagenb.worksheetapp.worksheet = function() {
         }
         _this.cells[X.id].set_output_loading();
     });
+
+    _this.socket.on('user_message', function(msg){
+       $('#chat_message_box').append($('<p>').append($('<b>').text(msg)));
+    });
+
 
     //sets Input every Time it gets changed
     _this.socket.on('realtime_change', function (input, cid){
@@ -102,11 +118,9 @@ sagenb.worksheetapp.worksheet = function() {
         _this.chat.container.append(
             $("<div></div>").attr({"id": "chat_userlist_box", "class": ""}),
             $("<div></div>").attr({"id": "chat_message_box", "class": ""}),
-            $("<div></div>").attr({"id": "chat_input_box", "class": "input-append"})
-                .append(
                     $("<textarea></textarea>").attr({"id": "chat_input_text", "class": "span2"}),
                     $("<button></button>").attr({"id": "chat_input_btn", "class": "btn", "type": "button"}).text("send")
-            )
+
         );
 
         _this.chat.container.appendTo("body");
@@ -135,17 +149,12 @@ sagenb.worksheetapp.worksheet = function() {
         btn.blur();
     }
 
+    _this.send_message = function(){
+        _this.socket.emit('user message', $('#chat_input_text').val());
+        $('#chat_input_text').val('').focus();
+    };
+
     ///////////// STARTUP ///////////////
-    _this.ws_get_username = function(){
-        /*
-        Get the username for websocket initialization
-        */
-        sagenb.async_request(_this.worksheet_command('get_username'), function(status, response){
-            _this.socket.emit('nickname',response);
-        });
-    }
-
-
 
 
 	///////////// COMMANDS ////////////
@@ -912,6 +921,14 @@ sagenb.worksheetapp.worksheet = function() {
         //////// CHATBOX ////////
         _this.chat.init();
         $("#worksheet_chat_bar .btn").click(_this.chat.toggle);
+        $("#chat_input_btn ").click(_this.send_message);
+
+//_this.socket.emit('user message' ,$('#chat_input_text').val())
+
+
+
+
+
 
 		// Setup hotkeys
 		/* Notes on hotkeys: these don't work on all browsers consistently

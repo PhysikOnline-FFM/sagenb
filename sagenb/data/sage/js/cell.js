@@ -276,7 +276,7 @@ sagenb.worksheetapp.cell = function(id) {
 				}
 				
 				// Hide the evaluate button
-				$("#cell_" + _this.id + " .evaluate_button_container").hide();
+				//$("#cell_" + _this.id + " .evaluate_button_container").hide(); //This was buggy, so i commented it out!
 
 				// update cell properties without rendering
 				_this.update();

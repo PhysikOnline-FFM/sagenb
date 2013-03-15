@@ -1029,16 +1029,19 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
     nicknames = []
 
     def on_join(self, room):
-        print self.session['nickname'] + " joined room: "  + room
+        print "join"
         self.room = room
         self.join(room)
         return True
 
-    def on_nickname(self, nickname):
-        self.nicknames.append(nickname)
-        self.session['nickname'] = nickname
-        return True, nickname
 
+    def on_nickname(self, nickname):
+        print "on_nickname"
+        self.nicknames.append(nickname)
+        print self.nicknames
+        self.session['nickname'] = nickname
+        self.emit_to_room(self.room, 'nicknames', self.nicknames)
+        self.emit('nicknames', self.nicknames)
 
     def on_eval(self, result, input):
         print "eval_handler"
@@ -1049,8 +1052,17 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         print result
         return True
 
+    def on_user_message(self, msg):
+        self.msg = self.session['nickname'] + ': ' + msg
+        self.emit('user_message', self.msg)
+        self.emit_to_room(self.room, 'user_message', self.msg)
+
     def recv_disconnect(self):
         print self.session['nickname'] + " disconnected"
+        nickname = self.session['nickname']
+        self.nicknames.remove(nickname)
+        self.emit_to_room(self.room, 'nicknames', self.nicknames)
+        self.emit('nicknames', self.nicknames)
 
     #Used for Realtime Input-Synchronisation
     #input = input as string + new char

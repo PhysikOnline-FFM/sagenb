@@ -88,18 +88,20 @@
 #chat_container {
   width: 100%;
   padding: 4px;
-  background-color: yellow;
+  background-color: #EEEEEE;
+  border: 1px solid #bbbbbb;
 
   #chat_userlist_box {
     width: 100%;
     min-height: 20px;
-    background-color: red;
+    background-color: #f9f9f9;
     .chat_separator;
   }
 
   #chat_message_box {
     width: 100%;
     min-height: 80px;
+    max-height: 200px;
     overflow-x: hidden;
     overflow-y: visible;
     background-color: white;
@@ -109,6 +111,7 @@
   #chat_input_box {
     width: 100%;
     min-height: 18px;
+    z-index: 99;
 
     #chat_input_text {
       height: 18px;
