@@ -92,12 +92,12 @@ sagenb.worksheetapp.worksheet = function() {
 
 
     //sets Input every Time it gets changed
-    _this.socket.on('realtime_change', function (input, cid){
-
-        window.alert(cid); //delete this
+    _this.socket.on('input_change', function (input, cid){
         _this.cells[cid].set_cell_input(input);
 
     });
+
+
 
 
     ///// CHATBOX integration /////
@@ -923,7 +923,6 @@ sagenb.worksheetapp.worksheet = function() {
         $("#worksheet_chat_bar .btn").click(_this.chat.toggle);
         $("#chat_input_btn ").click(_this.send_message);
 
-//_this.socket.emit('user message' ,$('#chat_input_text').val())
 
 
 

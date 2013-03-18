@@ -1067,6 +1067,6 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
     #Used for Realtime Input-Synchronisation
     #input = input as string + new char
     #this message will be sent every time an input cell gets changed (every Keypress on focus)
-    def on_realtime_change(self, input):
-        self.emit_to_room(self.room, 'realtime_change', input)
-        self.emit('realtime_change', input)
+    def on_input_change(self, input, id):
+        print "inp_change"
+        self.emit_to_room(self.room, 'input_change', input, id)

@@ -25,6 +25,7 @@ sagenb.worksheetapp.cell = function(id) {
 	// the amount of time in millisecs between update checks
 	_this.output_check_interval = 250;
 
+    _this.change_by_collab = false;
 
 
     // HELPERS
@@ -241,7 +242,16 @@ sagenb.worksheetapp.cell = function(id) {
 				extraKeys: extrakeys
 			});
 
+            ///////Sync///////
+
+
 			_this.codemirror.on("change", function(cm, chg) {
+                if (_this.change_by_collab === false) {
+                    _this.worksheet.socket.emit("input_change", _this.codemirror.getValue(), _this.id);
+                }
+
+                _this.change_by_collab = false;
+
 				if(chg.text[0] === "(") {
 					_this.introspect();
 				}
@@ -653,7 +663,7 @@ sagenb.worksheetapp.cell = function(id) {
 	};
     _this.emit_eval_result = function(status, response){
 
-          sagenb.worksheetapp.worksheet.socket.emit('eval', response, _this.input);
+          sagenb.worksheetapp.worksheet.socket.emit('eval', response, _this.codemirror.getValue());
 
     };
 
@@ -1006,6 +1016,7 @@ sagenb.worksheetapp.cell = function(id) {
     //This is used by Websockethandlers to make sure input is synchrone
    _this.set_cell_input = function(input){
        _this.input = input;
+       _this.change_by_collab = true;
        _this.codemirror.setValue(_this.input);
    };
 	
