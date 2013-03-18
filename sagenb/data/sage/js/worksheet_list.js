@@ -43,10 +43,10 @@ sagenb.worksheetlistapp.list_row = function() {
 		// name/running
 		var name_html = "";
 		if(_this.list.published_mode) {
-			name_html += '<a href="/home/pub/' + _this.props.published_id_number + '" target="_blank">' + _this.props.name + '</a>';
+			name_html += '<a href="/home/pub/' + _this.props.published_id_number + '" >' + _this.props.name + '</a>';
 		}
 		else {
-			name_html += '<a href="/home/' + _this.props.filename + '" target="_blank">' + _this.props.name + '</a>';
+			name_html += '<a href="/home/' + _this.props.filename + '" >' + _this.props.name + '</a>';
 		}
 		/*if(_this.props.running && !_this.list.published_mode) {
 			name_html += '<span class="label label-important pull-right running_label">' + gettext("running") + '</span>';
