@@ -1041,6 +1041,7 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         print self.nicknames
         self.session['nickname'] = nickname
         self.emit_to_room(self.room, 'nicknames', self.nicknames)
+        self.emit_to_room(self.room, 'user_message', nickname + ' joined')
         self.emit('nicknames', self.nicknames)
 
     def on_eval(self, result, input):

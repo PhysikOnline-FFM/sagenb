@@ -73,7 +73,7 @@ sagenb.worksheetapp.worksheet = function() {
         //$("#chat_userlist_box").append($('<b>').text(' ' + nickname + ','));
         $('#chat_userlist_box').empty().append($('<span>Online: </span>'));
         for (var i in nicknames) {
-            $('#chat_userlist_box').append($('<b>').text(nicknames[i] + ', '));
+            $('#chat_userlist_box').html("<div><b><span style=color:green;font-size:80%>Online: </b><b><span style=font-size:80%>" + nicknames + "</b></div>");
         }
     });
 
