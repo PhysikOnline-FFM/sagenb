@@ -71,7 +71,7 @@ sagenb.worksheetapp.worksheet = function() {
 
     _this.socket.on('nicknames', function (nicknames){
         //$("#chat_userlist_box").append($('<b>').text(' ' + nickname + ','));
-        $('#chat_userlist_box').empty().append($('<span>Online: </span>'));
+        //$('#chat_userlist_box').empty().append($('<span>Online: </span>'));
         for (var i in nicknames) {
             $('#chat_userlist_box').html("<div><b><span style=color:green;font-size:80%>Online: </b><b><span style=font-size:80%>" + nicknames + "</b></div>");
         }
@@ -84,6 +84,10 @@ sagenb.worksheetapp.worksheet = function() {
         _this.cells[X.id].set_cell_input(input);
         }
         _this.cells[X.id].set_output_loading();
+    });
+
+    _this.socket.on('new_cell_after', function (response){
+        _this.new_cell_all_after(response);
     });
 
     _this.socket.on('user_message', function(msg){
@@ -282,6 +286,7 @@ sagenb.worksheetapp.worksheet = function() {
 				} else {
 					_this.new_cell_after(after_cell_id);
 				}
+
 			}
 			else {
 				// this is the first button
@@ -390,34 +395,44 @@ sagenb.worksheetapp.worksheet = function() {
 			id: id
 		});
 	};
-	_this.new_cell_after = function(id) {
-		if(_this.published_mode) return;
-		sagenb.async_request(_this.worksheet_command("new_cell_after"), function(status, response) {
-			if(response === "locked") {
-				$(".alert_locked").show();
-				return;
-			}
-			
-			var X = decode_response(response);
-			var new_cell = new sagenb.worksheetapp.cell(X.new_id);
-			var a = $("#cell_" + X.id).parent().next();
-			var wrapper = $("<div></div>").addClass("cell_wrapper").insertAfter(a);
-			new_cell.worksheet = _this;
-			new_cell.update(wrapper);
-			
-			// add the next new cell button
-			_this.add_new_cell_button_after(wrapper);
-			
-			// wait for the render to finish
-			setTimeout(new_cell.focus, 50);
-			
-			_this.cells[new_cell.id] = new_cell;
-		},
-		{
-			id: id
-		});
-	};
-	
+
+    _this.new_cell_all_after = function(response) {
+
+        var X = decode_response(response);
+        var new_cell = new sagenb.worksheetapp.cell(X.new_id);
+        var a = $("#cell_" + X.id).parent().next();
+        var wrapper = $("<div></div>").addClass("cell_wrapper").insertAfter(a);
+        new_cell.worksheet = _this;
+        new_cell.update(wrapper);
+
+        // add the next new cell button
+        _this.add_new_cell_button_after(wrapper);
+
+        // wait for the render to finish
+        setTimeout(new_cell.focus, 50);
+
+        _this.cells[new_cell.id] = new_cell;
+    }
+
+    _this.new_cell_after = function(id){
+        sagenb.async_request(_this.worksheet_command("new_cell_after"), function(status, response) {
+            if(response === "locked") {
+                $(".alert_locked").show();
+                return;
+            }
+            else{
+                _this.new_cell_all_after(response);
+                _this.socket.emit('new_cell_after', response)
+            }
+        },
+            {
+                id: id
+            }
+        );
+    }
+
+
+
 	_this.new_text_cell_before = function(id) {
 		if(_this.published_mode) return;
 		sagenb.async_request(_this.worksheet_command("new_text_cell_before"), function(status, response) {

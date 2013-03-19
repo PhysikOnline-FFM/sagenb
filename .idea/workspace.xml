@@ -27,19 +27,19 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf>
-          <file leaf-file-name="worksheet.py" pinned="false" current="false" current-in-tab="false">
+          <file leaf-file-name="worksheet.py" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/flask_server/worksheet.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="1043" column="74" selection-start="36397" selection-end="36397" vertical-scroll-proportion="-5.839286">
+                <state line="1048" column="63" selection-start="36553" selection-end="36553" vertical-scroll-proportion="0.3548387">
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="worksheet.less" pinned="false" current="false" current-in-tab="true">
+          <file leaf-file-name="worksheet.less" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/sagenb/data/sage/less/worksheet.less">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="93" column="14" selection-start="413" selection-end="422" vertical-scroll-proportion="0.36643836">
+                <state line="105" column="23" selection-start="1652" selection-end="1652" vertical-scroll-proportion="-15.7">
                   <folding />
                 </state>
               </provider>
@@ -61,7 +61,7 @@
           <file leaf-file-name="cell.js" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/sagenb/data/sage/js/cell.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="688" column="55" selection-start="20298" selection-end="20298" vertical-scroll-proportion="-22.32258">
+                <state line="57" column="74" selection-start="1637" selection-end="1647" vertical-scroll-proportion="-10.709678">
                   <folding>
                     <marker date="1363698751916" expanded="false" signature="31578:31605" placeholder="..." />
                     <marker date="1363698751916" expanded="false" signature="31650:31662" placeholder="..." />
@@ -73,10 +73,10 @@
           <file leaf-file-name="worksheet.js" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/sagenb/data/sage/js/worksheet.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="75" column="115" selection-start="2111" selection-end="2111" vertical-scroll-proportion="0.33603707">
+                <state line="89" column="43" selection-start="2590" selection-end="2590" vertical-scroll-proportion="0.55916476">
                   <folding>
-                    <marker date="1363704915940" expanded="true" signature="2058:2083" placeholder="..." />
-                    <marker date="1363704915940" expanded="true" signature="2111:2124" placeholder="..." />
+                    <marker date="1363710801148" expanded="true" signature="2060:2085" placeholder="..." />
+                    <marker date="1363710801148" expanded="true" signature="2113:2126" placeholder="..." />
                   </folding>
                 </state>
               </provider>
@@ -101,8 +101,8 @@
         <option value="$PROJECT_DIR$/sagenb/data/sage/js/worksheet_list.js" />
         <option value="$PROJECT_DIR$/sagenb/data/jqueryui/css/sage/jquery-ui-1.8.11.custom.css" />
         <option value="$PROJECT_DIR$/sagenb/data/sage/js/cell.js" />
-        <option value="$PROJECT_DIR$/flask_server/worksheet.py" />
         <option value="$PROJECT_DIR$/sagenb/data/sage/less/worksheet.less" />
+        <option value="$PROJECT_DIR$/flask_server/worksheet.py" />
         <option value="$PROJECT_DIR$/sagenb/data/sage/js/worksheet.js" />
       </list>
     </option>
@@ -485,20 +485,10 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sagenb/data/sage/js/worksheet.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="0" selection-start="1371" selection-end="1371" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1363704915940" expanded="true" signature="2058:2083" placeholder="..." />
-            <marker date="1363704915940" expanded="true" signature="2111:2124" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sagenb/data/sage/html/worksheet.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="173" column="56" selection-start="8248" selection-end="8248" vertical-scroll-proportion="0.0" />
@@ -521,12 +511,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sagenb/data/bootstrap-2.0.4/css/bootstrap.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4687" column="9" selection-start="113789" selection-end="113796" vertical-scroll-proportion="0.3236659" />
+        <state line="4687" column="9" selection-start="113789" selection-end="113796" vertical-scroll-proportion="0.3236659">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sagenb/data/sage/less/main.less">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="0" selection-start="580" selection-end="580" vertical-scroll-proportion="0.01655629" />
+        <state line="22" column="0" selection-start="580" selection-end="580" vertical-scroll-proportion="0.01655629">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sagenb/data/sage/html/worksheet.html">
@@ -558,9 +552,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/sagenb/data/sage/less/worksheet.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="105" column="23" selection-start="1652" selection-end="1652" vertical-scroll-proportion="-15.7">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/sagenb/data/sage/js/cell.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="688" column="55" selection-start="20298" selection-end="20298" vertical-scroll-proportion="-22.32258">
+        <state line="57" column="74" selection-start="1637" selection-end="1647" vertical-scroll-proportion="-10.709678">
           <folding>
             <marker date="1363698751916" expanded="false" signature="31578:31605" placeholder="..." />
             <marker date="1363698751916" expanded="false" signature="31650:31662" placeholder="..." />
@@ -568,26 +569,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/flask_server/worksheet.py">
+    <entry file="file://$PROJECT_DIR$/sagenb/data/sage/html/alerts/worksheet_locked_alert.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1043" column="74" selection-start="36397" selection-end="36397" vertical-scroll-proportion="-5.839286">
+        <state line="0" column="12" selection-start="12" selection-end="12" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sagenb/data/sage/less/worksheet.less">
+    <entry file="file://$PROJECT_DIR$/flask_server/worksheet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="93" column="14" selection-start="413" selection-end="422" vertical-scroll-proportion="0.36643836">
+        <state line="1048" column="63" selection-start="36553" selection-end="36553" vertical-scroll-proportion="0.3548387">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sagenb/data/sage/js/worksheet.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="115" selection-start="2111" selection-end="2111" vertical-scroll-proportion="0.33603707">
+        <state line="89" column="43" selection-start="2590" selection-end="2590" vertical-scroll-proportion="0.55916476">
           <folding>
-            <marker date="1363704915940" expanded="true" signature="2058:2083" placeholder="..." />
-            <marker date="1363704915940" expanded="true" signature="2111:2124" placeholder="..." />
+            <marker date="1363710801148" expanded="true" signature="2060:2085" placeholder="..." />
+            <marker date="1363710801148" expanded="true" signature="2113:2126" placeholder="..." />
           </folding>
         </state>
       </provider>

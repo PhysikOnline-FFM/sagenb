@@ -1044,6 +1044,10 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         self.emit_to_room(self.room, 'user_message', nickname + ' joined')
         self.emit('nicknames', self.nicknames)
 
+
+    def on_new_cell_after(self, response):
+        self.emit_to_room(self.room,'new_cell_after', response)
+
     def on_eval(self, result, input):
         self.emit_to_room(self.room, 'eval_reply', result, input)
         self.emit('eval_reply', result)
@@ -1052,16 +1056,12 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
 
     def on_user_message(self, msg):
+
         self.msg = self.session['nickname'] + ': ' + msg
         self.emit('user_message', self.msg)
         self.emit_to_room(self.room, 'user_message', self.msg)
 
-    def recv_disconnect(self):
-        print self.session['nickname'] + "disconnected"
-        nickname = self.session['nickname']
-        self.nicknames.remove(nickname)
-        self.emit_to_room(self.room, 'nicknames', self.nicknames)
-        self.emit('nicknames', self.nicknames)
+
 
     #Used for Realtime Input-Synchronisation
     #input = input as string + new char
@@ -1069,3 +1069,10 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
     def on_input_change(self, input, id):
         print "inp_change"
         self.emit_to_room(self.room, 'input_change', input, id)
+
+    def recv_disconnect(self): #i think theres a bug in here!
+        print self.session['nickname'] + "disconnected"
+        nickname = self.session['nickname']
+        self.nicknames.remove(nickname)
+        self.emit_to_room(self.room, 'nicknames', self.nicknames)
+        self.emit('nicknames', self.nicknames)
