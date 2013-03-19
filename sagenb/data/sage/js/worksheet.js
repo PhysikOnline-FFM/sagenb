@@ -409,7 +409,7 @@ sagenb.worksheetapp.worksheet = function() {
         _this.add_new_cell_button_after(wrapper);
 
         // wait for the render to finish
-        setTimeout(new_cell.focus, 50);
+        setTimeout(50);
 
         _this.cells[new_cell.id] = new_cell;
     }

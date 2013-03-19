@@ -1028,12 +1028,14 @@ def socketio(remaining):
 class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
     nicknames = []
 
+
+#Client Informations Handler
+
     def on_join(self, room):
         print "join"
         self.room = room
         self.join(room)
         return True
-
 
     def on_nickname(self, nickname):
         print "on_nickname"
@@ -1044,24 +1046,23 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         self.emit_to_room(self.room, 'user_message', nickname + ' joined')
         self.emit('nicknames', self.nicknames)
 
-
+#cell operations Handler
     def on_new_cell_after(self, response):
         self.emit_to_room(self.room,'new_cell_after', response)
 
+#Evaluate Handler
     def on_eval(self, result, input):
         self.emit_to_room(self.room, 'eval_reply', result, input)
         self.emit('eval_reply', result)
         print result
         return True
 
-
+#Chat Handler
     def on_user_message(self, msg):
 
         self.msg = self.session['nickname'] + ': ' + msg
         self.emit('user_message', self.msg)
         self.emit_to_room(self.room, 'user_message', self.msg)
-
-
 
     #Used for Realtime Input-Synchronisation
     #input = input as string + new char
@@ -1069,6 +1070,7 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
     def on_input_change(self, input, id):
         print "inp_change"
         self.emit_to_room(self.room, 'input_change', input, id)
+
 
     def recv_disconnect(self): #i think theres a bug in here!
         print self.session['nickname'] + "disconnected"
