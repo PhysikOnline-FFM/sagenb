@@ -1044,13 +1044,11 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         self.emit('nicknames', self.nicknames)
 
     def on_eval(self, result, input):
-        print "eval_handler"
-        print self.session
-        print input
         self.emit_to_room(self.room, 'eval_reply', result, input)
         self.emit('eval_reply', result)
         print result
         return True
+
 
     def on_user_message(self, msg):
         self.msg = self.session['nickname'] + ': ' + msg
@@ -1058,7 +1056,7 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         self.emit_to_room(self.room, 'user_message', self.msg)
 
     def recv_disconnect(self):
-        print self.session['nickname'] + " disconnected"
+        print self.session['nickname'] + "disconnected"
         nickname = self.session['nickname']
         self.nicknames.remove(nickname)
         self.emit_to_room(self.room, 'nicknames', self.nicknames)

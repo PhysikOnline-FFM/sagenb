@@ -150,8 +150,10 @@ sagenb.worksheetapp.worksheet = function() {
     }
 
     _this.send_message = function(){
-        _this.socket.emit('user message', $('#chat_input_text').val());
-        $('#chat_input_text').val('').focus();
+        if($('#chat_input_text').val() != ''){
+            _this.socket.emit('user message', $('#chat_input_text').val());
+            $('#chat_input_text').val('').focus();
+        }
     };
 
     ///////////// STARTUP ///////////////

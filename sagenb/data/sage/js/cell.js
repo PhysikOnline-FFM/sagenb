@@ -1018,6 +1018,7 @@ sagenb.worksheetapp.cell = function(id) {
        _this.input = input;
        _this.change_by_collab = true;
        _this.codemirror.setValue(_this.input);
+
    };
 	
 	/////// OUTPUT ///////

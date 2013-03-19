@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ecfdb0b2-4a62-453b-af89-223d5f1581a7" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/flask_server/worksheet.py" afterPath="$PROJECT_DIR$/flask_server/worksheet.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sagenb/data/jqueryui/css/sage/jquery-ui-1.8.11.custom.css" afterPath="$PROJECT_DIR$/sagenb/data/jqueryui/css/sage/jquery-ui-1.8.11.custom.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sagenb/data/sage/js/cell.js" afterPath="$PROJECT_DIR$/sagenb/data/sage/js/cell.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sagenb/data/sage/js/worksheet.js" afterPath="$PROJECT_DIR$/sagenb/data/sage/js/worksheet.js" />
     </list>
@@ -26,10 +28,37 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf>
-          <file leaf-file-name="worksheet.py" pinned="false" current="true" current-in-tab="true">
+          <file leaf-file-name="worksheet.py" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/flask_server/worksheet.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="1071" column="63" selection-start="37432" selection-end="37432" vertical-scroll-proportion="0.87903225">
+                <state line="1049" column="19" selection-start="36555" selection-end="36555" vertical-scroll-proportion="-7.714286">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="worksheet.less" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/sagenb/data/sage/less/worksheet.less">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="81" column="0" selection-start="1221" selection-end="1221" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="jquery-ui-1.8.11.custom.css" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/sagenb/data/jqueryui/css/sage/jquery-ui-1.8.11.custom.css">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="458" column="57" selection-start="26718" selection-end="26718" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="worksheet.js" pinned="false" current="true" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/sagenb/data/sage/js/worksheet.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="152" column="42" selection-start="4539" selection-end="4539" vertical-scroll-proportion="0.51287794">
                   <folding />
                 </state>
               </provider>
@@ -42,20 +71,11 @@
           <file leaf-file-name="cell.js" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/sagenb/data/sage/js/cell.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="250" column="17" selection-start="7006" selection-end="7006" vertical-scroll-proportion="0.21113689">
+                <state line="669" column="0" selection-start="19538" selection-end="19538" vertical-scroll-proportion="0.6287703">
                   <folding>
-                    <marker date="1363619511474" expanded="true" signature="31577:31604" placeholder="..." />
-                    <marker date="1363619511474" expanded="true" signature="31649:31661" placeholder="..." />
+                    <marker date="1363698751916" expanded="false" signature="31578:31605" placeholder="..." />
+                    <marker date="1363698751916" expanded="false" signature="31650:31662" placeholder="..." />
                   </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="worksheet.js" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/sagenb/data/sage/js/worksheet.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="95" column="30" selection-start="2675" selection-end="2675" vertical-scroll-proportion="0.0">
-                  <folding />
                 </state>
               </provider>
             </entry>
@@ -76,11 +96,12 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/sagenb/data/sage/html/worksheet.html" />
-        <option value="$PROJECT_DIR$/sagenb/data/sage/less/worksheet.less" />
         <option value="$PROJECT_DIR$/sagenb/data/sage/js/worksheet_list.js" />
-        <option value="$PROJECT_DIR$/sagenb/data/sage/js/worksheet.js" />
+        <option value="$PROJECT_DIR$/sagenb/data/sage/less/worksheet.less" />
+        <option value="$PROJECT_DIR$/sagenb/data/jqueryui/css/sage/jquery-ui-1.8.11.custom.css" />
         <option value="$PROJECT_DIR$/sagenb/data/sage/js/cell.js" />
         <option value="$PROJECT_DIR$/flask_server/worksheet.py" />
+        <option value="$PROJECT_DIR$/sagenb/data/sage/js/worksheet.js" />
       </list>
     </option>
   </component>
@@ -213,32 +234,6 @@
               <option name="myItemId" value="sage" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sagenb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sagenb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sagenb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -284,7 +279,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="bootstrap-2.0.4" />
+              <option name="myItemId" value="jqueryui" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -306,11 +301,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="bootstrap-2.0.4" />
+              <option name="myItemId" value="jqueryui" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sage" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -336,7 +335,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Pokal/samnb" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -416,9 +415,10 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32976446" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21606648" sideWeight="0.496788" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21883656" sideWeight="0.49571735" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21828255" sideWeight="0.49571735" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -427,7 +427,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -490,18 +489,6 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/sagenb/data/sage/js/worksheet.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="48" selection-start="1837" selection-end="1837" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagenb/data/sage/js/sagenb.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagenb/data/sage/js/worksheet.js">
-      <provider selected="true" editor-type-id="text-editor">
         <state line="58" column="0" selection-start="1371" selection-end="1371" vertical-scroll-proportion="0.0">
           <folding />
         </state>
@@ -509,9 +496,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sagenb/data/sage/html/worksheet.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="173" column="56" selection-start="8248" selection-end="8248" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="173" column="56" selection-start="8248" selection-end="8248" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sagenb/data/sage/js/sagenb.js">
@@ -526,75 +511,75 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sagenb/data/sage/js/worksheet_list.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="86" selection-start="1189" selection-end="1189" vertical-scroll-proportion="0.78306264">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sagenb/data/sage/less/worksheet.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="16" selection-start="1315" selection-end="1315" vertical-scroll-proportion="0.26953566">
-          <folding />
-        </state>
+        <state line="45" column="86" selection-start="1189" selection-end="1189" vertical-scroll-proportion="0.78306264" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sagenb/data/bootstrap-2.0.4/css/bootstrap.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4687" column="9" selection-start="113789" selection-end="113796" vertical-scroll-proportion="0.3236659">
-          <folding />
-        </state>
+        <state line="4687" column="9" selection-start="113789" selection-end="113796" vertical-scroll-proportion="0.3236659" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sagenb/data/sage/less/main.less">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="0" selection-start="580" selection-end="580" vertical-scroll-proportion="0.01655629">
-          <folding />
-        </state>
+        <state line="22" column="0" selection-start="580" selection-end="580" vertical-scroll-proportion="0.01655629" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sagenb/data/sage/html/worksheet.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="53" selection-start="3018" selection-end="3019" vertical-scroll-proportion="0.01726122">
-          <folding />
-        </state>
+        <state line="51" column="53" selection-start="3018" selection-end="3019" vertical-scroll-proportion="0.01726122" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sagenb/data/sage/html/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="40" selection-start="1997" selection-end="1998" vertical-scroll-proportion="0.017006803">
-          <folding />
-        </state>
+        <state line="55" column="40" selection-start="1997" selection-end="1998" vertical-scroll-proportion="0.017006803" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sagenb/data/sage/html/worksheet_list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="63" selection-start="534" selection-end="540" vertical-scroll-proportion="0.41050118">
+        <state line="25" column="63" selection-start="534" selection-end="540" vertical-scroll-proportion="0.41050118" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sagenb/data/sage/less/worksheet.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="81" column="0" selection-start="1221" selection-end="1221" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sagenb/data/sage/js/worksheet.js">
+    <entry file="file://$PROJECT_DIR$/sagenb/data/jqueryui/css/sage/jquery-ui-1.8.11.custom.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="95" column="30" selection-start="2675" selection-end="2675" vertical-scroll-proportion="0.0">
+        <state line="458" column="57" selection-start="26718" selection-end="26718" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sagenb/data/bootstrap-2.0.4/js/bootstrap.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="14740" selection-start="14857" selection-end="14857" vertical-scroll-proportion="0.016797312">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flask_server/worksheet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1049" column="19" selection-start="36555" selection-end="36555" vertical-scroll-proportion="-7.714286">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sagenb/data/sage/js/cell.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="250" column="17" selection-start="7006" selection-end="7006" vertical-scroll-proportion="0.21113689">
+        <state line="669" column="0" selection-start="19538" selection-end="19538" vertical-scroll-proportion="0.6287703">
           <folding>
-            <marker date="1363619511474" expanded="true" signature="31577:31604" placeholder="..." />
-            <marker date="1363619511474" expanded="true" signature="31649:31661" placeholder="..." />
+            <marker date="1363698751916" expanded="false" signature="31578:31605" placeholder="..." />
+            <marker date="1363698751916" expanded="false" signature="31650:31662" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/flask_server/worksheet.py">
+    <entry file="file://$PROJECT_DIR$/sagenb/data/sage/js/worksheet.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1071" column="63" selection-start="37432" selection-end="37432" vertical-scroll-proportion="0.87903225">
+        <state line="152" column="42" selection-start="4539" selection-end="4539" vertical-scroll-proportion="0.51287794">
           <folding />
         </state>
       </provider>
