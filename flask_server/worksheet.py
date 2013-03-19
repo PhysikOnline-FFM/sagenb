@@ -1050,6 +1050,10 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
     def on_new_cell_after(self, response):
         self.emit_to_room(self.room,'new_cell_after', response)
 
+    def on_delete_cell(self, id):
+        self.emit('delete_cell', id)
+        self.emit_to_room(self.room,'delete_cell', id)
+
 #Evaluate Handler
     def on_eval(self, result, input):
         self.emit_to_room(self.room, 'eval_reply', result, input)

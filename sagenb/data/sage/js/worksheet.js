@@ -86,6 +86,12 @@ sagenb.worksheetapp.worksheet = function() {
         _this.cells[X.id].set_output_loading();
     });
 
+    _this.socket.on('delete_cell', function(id){
+        delete _this.cells[id];
+        $("#cell_" + id).parent().next().detach();
+        $("#cell_" + id).parent().detach();
+    });
+
     _this.socket.on('new_cell_after', function (response){
         _this.new_cell_all_after(response);
     });
