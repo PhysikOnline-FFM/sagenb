@@ -1061,6 +1061,11 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         print result
         return True
 
+    def on_set_state_number(self, statenumber):
+        print statenumber
+        self.emit_to_room(self.room, 'set_state_number', statenumber)
+        self.emit('set_state_number', statenumber)
+
 #Chat Handler
     def on_user_message(self, msg):
 

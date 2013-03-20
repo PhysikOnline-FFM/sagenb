@@ -86,6 +86,10 @@ sagenb.worksheetapp.worksheet = function() {
         _this.cells[X.id].set_output_loading();
     });
 
+    _this.socket.on('set_state_number', function(statenumber){
+        _this.statenumber = statenumber;
+    });
+
     _this.socket.on('delete_cell', function(id){
         delete _this.cells[id];
         $("#cell_" + id).parent().next().detach();
@@ -106,8 +110,6 @@ sagenb.worksheetapp.worksheet = function() {
         _this.cells[cid].set_cell_input(input);
 
     });
-
-
 
 
     ///// CHATBOX integration /////
@@ -204,28 +206,7 @@ sagenb.worksheetapp.worksheet = function() {
 	}
 	
 	///////////////// PINGS //////////////////
-	_this.ping_server = function() {
-		/* for some reason pinging doesn't work well.
-		 * the callback goes but jQuery throws a 404 error.
-		 * this error may not be a bug, not sure...
-		 */
-		sagenb.async_request(_this.worksheet_command('alive'), sagenb.generic_callback(function(status, response) {
-			/*  Each time the server is up and responds, the server includes
-				the worksheet state_number is the response.  If this number is out
-				of sync with our view of the worksheet state, then we force a
-				refresh of the list of cells.  This is very useful in case the
-				user uses the back button and the browser cache displays an
-				invalid worksheet list (which can cause massive confusion), or the
-				user open the same worksheet in multiple browsers, or multiple
-				users open the same shared worksheet.
-			*/
-			if (_this.state_number >= 0 && parseInt(response, 10) > _this.state_number) {
-				// Force a refresh of just the cells in the body.
-				_this.worksheet_update();
-				_this.cell_list_update();
-			}
-		}));
-	};
+
 	
 	function close_window() {
 		// this is a hack which gets close working
@@ -921,7 +902,7 @@ sagenb.worksheetapp.worksheet = function() {
 		});
 		
 		// start the ping interval
-		_this.ping_interval_id = window.setInterval(_this.ping_server, _this.server_ping_time);
+		//_this.ping_interval_id = window.setInterval(_this.ping_server, _this.server_ping_time);
 		
 		var load_done_interval = setInterval(function() {
 			/* because the cells array is sparse we need this.
