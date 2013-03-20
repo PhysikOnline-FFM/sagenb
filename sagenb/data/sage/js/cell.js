@@ -28,8 +28,6 @@ sagenb.worksheetapp.cell = function(id) {
     _this.change_by_collab = false;
 
 
-
-    // HELPERS
 	function get_next_cell() {
 		var $nextcell = $("#cell_" + _this.id).parent().next().next().find(".cell");
 		if($nextcell.length > 0) {

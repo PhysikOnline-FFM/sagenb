@@ -180,8 +180,17 @@
 			// initialize
 			sagenb.worksheetapp.worksheet.init();
 
-            sagenb.worksheetapp.worksheet.ws_get_username();
 
+            $('.ui-slider').live('slide slidechange', function(e){
+               var val = ($(this).slider("value"));
+               var div_id = ($(this).attr('id'));
+               if(sagenb.worksheetapp.worksheet.access_to_slider === true){
+               sagenb.worksheetapp.worksheet.socket.emit('slider_state', val, div_id);
+               }
+               sagenb.worksheetapp.worksheet.access_to_slider = true;
+            });
+
+            sagenb.worksheetapp.worksheet.ws_get_username();
 
 
 

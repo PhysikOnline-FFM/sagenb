@@ -52,6 +52,7 @@ sagenb.worksheetapp.worksheet = function() {
 	
 	// Evaluate all
 	_this.is_evaluating_all = false;
+    _this.access_to_slider = true;
 
     _this.WEB_SOCKET_SWF_LOCATION = '/data/sage/js/socketio/WebSocketMain.swf',
         _this.socket = io.connect('/worksheet');
@@ -110,6 +111,13 @@ sagenb.worksheetapp.worksheet = function() {
         _this.cells[cid].set_cell_input(input);
 
     });
+
+    _this.socket.on('slider_state', function(val, div_id){
+        $('#' + div_id).slider('value', val);
+        _this.access_to_slider = false;
+
+    });
+
 
 
     ///// CHATBOX integration /////

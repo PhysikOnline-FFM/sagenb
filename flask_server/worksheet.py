@@ -1066,6 +1066,9 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         self.emit_to_room(self.room, 'set_state_number', statenumber)
         self.emit('set_state_number', statenumber)
 
+    def on_slider_state(self, val, div_id):
+        self.emit_to_room(self.room, 'slider_state', val, div_id)
+
 #Chat Handler
     def on_user_message(self, msg):
 
