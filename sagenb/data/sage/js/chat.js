@@ -75,6 +75,27 @@ sagenb.chat.init = function(worksheet) {
 	*/
 };
 
+sagenb.chat.alert = function(text) {
+	// show an alert in the sagenb twitter booostrap alert region.
+	if(!$("#user_chat_alert").length) {
+		// create the alert box
+		sagenb.chat.alert_box = $('<div class="alert alert-info" id="user_chat_alert">' + 
+			'<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+			'<strong>Chatnachricht von</strong> <span class="alert-content"></span>'+
+			'<a class="btn primary btn-small open-chat" style="float:right"><i class="icon-comment"></i>&nbsp;Open chat</a>' +
+		'</div>').appendTo(".alert_container_inner");
+		sagenb.chat.alert_box.find('.open-chat').click(function(){
+			sagenb.chat.message_box.dialog('open');
+			sagenb.chat.alert_box.fadeOut(1); // aka hide()
+		});
+		
+	}
+	
+	sagenb.chat.alert_box.fadeIn(200); // fade in
+	sagenb.chat.alert_box.find(".alert-content").html(text);
+	sagenb.chat.alert_box.delay(6000).fadeOut(500); // fade out
+};
+
 sagenb.chat.toggle = function() {
 	sagenb.chat.message_box.dialog( sagenb.chat.header_button.hasClass("active") ? "close" : "open");
 	$(this).blur(); // FIXME klappt nicht gut
@@ -142,6 +163,11 @@ sagenb.chat.append_message = function(classes, text) {
 	if(user_was_at_bottom)
 		// user was already at bottom -.-
 		sagenb.chat.message_box[0].scrollTop = sagenb.chat.message_box[0].scrollHeight;
+	
+	if(!sagenb.chat.message_box.dialog("isOpen")) {
+		// message dialog not open, show a notificiation
+		sagenb.chat.alert(text);
+	}
 	
 	return message;
 }
