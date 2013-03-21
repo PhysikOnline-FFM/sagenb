@@ -1114,11 +1114,3 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
     def on_input_change(self, input, id):
         print "inp_change"
         self.emit_to_room(self.room, 'input_change', input, id)
-
-
-    def recv_disconnect(self): #i think theres a bug in here!
-        print self.session['nickname'] + "disconnected"
-        nickname = self.session['nickname']
-        self.nicknames.remove(nickname)
-        self.emit_to_room(self.room, 'nicknames', self.nicknames)
-        self.emit('nicknames', self.nicknames)
