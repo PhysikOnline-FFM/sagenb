@@ -8,8 +8,11 @@ MathJax.Hub.Config({
         // "cell_input_print" because those are input cells in published worksheets
         // "math" so that the tex2jax plugin leaves the spans/divs with class math alone
         // (since jsMath2jax will take care of it); if we don't, then tex2jax and jsMath2jax conflict.
-        // See https://groups.google.com/forum/?fromgroups=#!topic/mathjax-users/qzWdxiQvNrw
-        ignoreClass: 'cell_input_print|math'
+        // Seeh ttps://groups.google.com/forum/?fromgroups=#!topic/mathjax-users/qzWdxiQvNrw
+        ignoreClass: 'cell_input_print|math',
+	
+	// POKAL: Chat math feature
+	processClass: 'chat-math'
     },
 
     styles: {

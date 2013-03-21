@@ -60,22 +60,6 @@ sagenb.worksheetapp.worksheet = function() {
 	// other variables go here
 
     ///////////// TESTS ////////////////
-    ////////// WEBSOCKET_HANDLER ////////
-    _this.socket.on('connect', function (){
-        _this.socket.emit('join', _this.filename);
-        sagenb.async_request(_this.worksheet_command('get_username'), function(status, response){
-            _this.socket.emit('nickname',response);
-        });
-    });
-
-
-    _this.socket.on('nicknames', function (nicknames){
-        //$("#chat_userlist_box").append($('<b>').text(' ' + nickname + ','));
-        $('#chat_userlist_box').empty().append($('<span>Online: </span>'));
-        for (var i in nicknames) {
-            $('#chat_userlist_box').html("<div><b><span style=color:green;font-size:80%>Online: </b><b><span style=font-size:80%>" + nicknames + "</b></div>");
-        }
-    });
 
     _this.socket.on('eval_reply', function (result, input){
         var X = decode_response(result)
@@ -86,75 +70,15 @@ sagenb.worksheetapp.worksheet = function() {
         _this.cells[X.id].set_output_loading();
     });
 
-    _this.socket.on('user_message', function(msg){
-       $('#chat_message_box').append($('<p>').append($('<b>').text(msg)));
-    });
-
 
     //sets Input every Time it gets changed
     _this.socket.on('input_change', function (input, cid){
         _this.cells[cid].set_cell_input(input);
-
     });
+    
+    // chat message dispatching/fetching is done in chat.js directly
 
 
-
-
-    ///// CHATBOX integration /////
-    _this.chat = {};
-    _this.chat.init = function(){
-        // header button
-        $("#worksheet_chat_bar").html(
-            '<div class="btn-group pull-right nav">' +
-                '<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">' +
-                '<i class="icon-comment"></i>&nbsp;<span>Chat</span>&nbsp;<span class="badge badge-info"></span> ' +
-                //'<span class="caret"></span>' +
-                '</a>' +
-            '</div>'
-        );
-        // chat box
-
-        _this.chat.container = $("<div></div>").attr({"id": "chat_container", "class": ""});
-        _this.chat.container.append(
-            $("<div></div>").attr({"id": "chat_userlist_box", "class": ""}),
-            $("<div></div>").attr({"id": "chat_message_box", "class": ""}),
-                    $("<textarea></textarea>").attr({"id": "chat_input_text", "class": "span2"}),
-                    $("<button></button>").attr({"id": "chat_input_btn", "class": "btn", "type": "button"}).text("send")
-
-        );
-
-        _this.chat.container.appendTo("body");
-        _this.chat.container.dialog({
-            autoOpen: false,
-            dialogClass: "chat",
-            height: 400,
-            width: 240,
-            position: { my: "right top", at: "right bottom"},
-            show: "fast",
-            title: "Worksheet - Chat"
-
-        });
-    }
-    _this.chat.toggle = function(){
-        var btn = $("#worksheet_chat_bar .btn");
-
-        if (btn.hasClass("active")){
-            _this.chat.container.dialog("close");
-            btn.removeClass("active");
-        }
-        else {
-            _this.chat.container.dialog("open");
-            btn.addClass("active");
-        }
-        btn.blur();
-    }
-
-    _this.send_message = function(){
-        if($('#chat_input_text').val() != ''){
-            _this.socket.emit('user message', $('#chat_input_text').val());
-            $('#chat_input_text').val('').focus();
-        }
-    };
 
     ///////////// STARTUP ///////////////
 
@@ -920,10 +844,13 @@ sagenb.worksheetapp.worksheet = function() {
 			1000
 		);
 
-        //////// CHATBOX ////////
-        _this.chat.init();
-        $("#worksheet_chat_bar .btn").click(_this.chat.toggle);
-        $("#chat_input_btn ").click(_this.send_message);
+		// init chat things
+		sagenb.chat.init(_this);
+		
+	
+		//////// CHATBOX ////////
+		//_this.chat.init();
+		//$("#chat_input_btn ").click(_this.send_message);
 
 
 

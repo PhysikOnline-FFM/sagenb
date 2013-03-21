@@ -185,6 +185,8 @@ def worksheet_conf(worksheet):
 def worksheet_get_username(worksheet):
     ##Returns the username of the current session for Websocket-Initialization
     ## needed in nickname[] of Websocket -> Worksheet_Namespace
+    
+    # Sven: no more needed.
     return g.username
 
 ########################################################
@@ -1026,23 +1028,52 @@ def socketio(remaining):
 ##########################################################
 
 class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
-    nicknames = []
+    # nicknames: mapping nickname => Color (string #aabbcc)
+    nicknames = {}
+    
+    # in dieser klasse fehlt saemltiche Fehlerbehandlung:
+    # Jede Message, die Clients senden, die aber nicht spezifiziert ist, fuehrt
+    # zu einer Python-exception. Es wird auch nicht gecheckt, ob Benutzer
+    # wirklich eingeloggt waren (recv_disconnect, usw).!
 
-    def on_join(self, room):
-        print "join"
-        self.room = room
-        self.join(room)
+    def on_join(self, data):
+        """
+           Join which is emitted when joining the room (used internally)
+        """
+        print "Websocket join:"
+        print data
+        self.room = data["worksheet"]
+        self.join(self.room)
+        
+        # mal etwas getrennt
+	self.on_nickname_join(data["nickname"])
         return True
 
 
-    def on_nickname(self, nickname):
+    def on_nickname_join(self, nickname):
+        """
+           "Official" join with nickname which will proposed to all other viewers
+           in the room. This method also decides a color for that user
+        """
         print "on_nickname"
-        self.nicknames.append(nickname)
-        print self.nicknames
-        self.session['nickname'] = nickname
-        self.emit_to_room(self.room, 'nicknames', self.nicknames)
-        self.emit_to_room(self.room, 'user_message', nickname + ' joined')
-        self.emit('nicknames', self.nicknames)
+        
+        if(nickname in self.nicknames):
+		# a user opens a worksheet two times
+		self.emit_to_room(self.room, 'join_message', nickname+" x 2")
+	else:
+		# no double enter
+       
+		from sage.plot.colors import Color,get_cmap
+		m = get_cmap("Accent")
+		new_color = Color(m(len(self.nicknames.keys()) * 1./20)[:3]).html_color()
+	
+		self.nicknames[nickname] = new_color;
+		print self.nicknames
+		self.session['nickname'] = nickname
+		self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.nicknames))
+		self.emit_to_room(self.room, 'join_message', nickname)
+		self.emit('new_nickname_list', self.nicknames)
+        return True
 
     def on_eval(self, result, input):
         self.emit_to_room(self.room, 'eval_reply', result, input)
@@ -1052,16 +1083,17 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
 
     def on_user_message(self, msg):
-        self.msg = self.session['nickname'] + ': ' + msg
+        self.msg = encode_response({"nickname": self.session['nickname'], "message": msg })
         self.emit('user_message', self.msg)
         self.emit_to_room(self.room, 'user_message', self.msg)
 
     def recv_disconnect(self):
         print self.session['nickname'] + "disconnected"
         nickname = self.session['nickname']
-        self.nicknames.remove(nickname)
-        self.emit_to_room(self.room, 'nicknames', self.nicknames)
-        self.emit('nicknames', self.nicknames)
+        del self.nicknames[nickname]
+        self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.nicknames))
+        self.emit_to_room(self.room, 'leave_message', nickname)
+        self.emit('new_nickname_list', self.nicknames)
 
     #Used for Realtime Input-Synchronisation
     #input = input as string + new char
