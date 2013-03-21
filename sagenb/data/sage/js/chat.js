@@ -117,7 +117,6 @@ sagenb.chat.on_user_message = function(data) {
 	data = $.parseJSON(data);
 	message = sagenb.chat.append_message("",'<b>'+sagenb.chat.colorize_nickname(data.user, ":")+'</b> <span class="message chat-math">'+data.message+'</span>');
 	
-	console.log(message);
 	// enable MathJax/LaTex on output
 	MathJax.Hub.Queue(["Typeset", MathJax.Hub, $(".chat-math", message)[0]]);
 };

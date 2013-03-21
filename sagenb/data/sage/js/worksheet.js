@@ -85,10 +85,6 @@ sagenb.worksheetapp.worksheet = function() {
         _this.new_cell_all_after(response);
     });
 
-    _this.socket.on('user_message', function(msg){
-       $('#chat_message_box').append($('<p>').append($('<b>').text(msg)));
-    });
-
     //sets Input every Time it gets changed
     _this.socket.on('input_change', function (input, cid){
         _this.cells[cid].set_cell_input(input);

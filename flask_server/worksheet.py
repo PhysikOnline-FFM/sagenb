@@ -1038,48 +1038,19 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
     #  { nickname: "sage username", color: "#aabbcc", }
     # thus enabling the same user opening his worksheet multiple times.
     nicknames = []
-    
-    # in dieser klasse fehlt saemltiche Fehlerbehandlung:
-    # Jede Message, die Clients senden, die aber nicht spezifiziert ist, fuehrt
-    # zu einer Python-exception. Es wird auch nicht gecheckt, ob Benutzer
-    # wirklich eingeloggt waren (recv_disconnect, usw).!
-
-    def on_join(self, data):
-        """
-           Join which is emitted when joining the room (used internally)
-        """
-        print "Websocket join:"
-        print data
-        self.room = data["worksheet"]
-        self.join(self.room)
-        
-        # noch etwas getrennt
-	self.on_nickname_join(data["nickname"])
-        return True
-
-
-    def on_nickname_join(self, nickname):
-        """
-           "Official" join with nickname which will proposed to all other viewers
-           in the room. This method also decides a color for that user
-        """
 
 #Client Informations Handler
+    def on_join(self, data):
+	# expecting data = {nickname:"sage username", "worksheet":"worksheet-name"}
+        print "join of "+str(data)
+        self.room = data['worksheet']
+        self.join(self.room)
 
-    def on_join(self, room):
-        print "join"
-        self.room = room
-        self.join(room)
-        return True
-
-    def on_nickname(self, nickname):
-        print "on_nickname"
-        
         # we can't directly use the self.session object because it contains
         # room information from the room mixin which is basically a python set and not
         # serializable by encode_response. And it isn't supposed to be shared anyway.
         self.session['session_nick'] = {}
-        self.session['session_nick']['nickname'] = nickname
+        self.session['session_nick']['nickname'] = data['nickname']
 
 	import uuid
         self.session['session_nick']['uuid'] = str(uuid.uuid4())
@@ -1127,11 +1098,15 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         self.emit_to_room(self.room, 'user_message', self.msg)
 
     def recv_disconnect(self):
+        if not (self.session['session_nick'] in self.nicknames):
+		print self.session['session_nick']['uuid'] + "was no more connected!"
+		return True
         print self.session['session_nick']['uuid'] + "disconnected"
         self.nicknames.remove(self.session['session_nick'])
         self.emit_to_room(self.room, 'leave_message', encode_response(self.session['session_nick']))
         self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.nicknames))
         self.emit('new_nickname_list', encode_response(self.nicknames))
+        return True
 
     #Used for Realtime Input-Synchronisation
     #input = input as string + new char
