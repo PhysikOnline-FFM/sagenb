@@ -2139,7 +2139,8 @@ class InteractCanvas(object):
               <td bgcolor="#f9f9f9" valign="top" align="left">%s</td>
             </tr>
           </table>
-        </div>""" % (self.cell_id(), inside)
+        </div>
+        """ % (self.cell_id(), inside)
 
     # The following could be used to make the interact frame resizable
     # and/or draggable.  Neither effect is as cool as it sounds!

@@ -50,10 +50,56 @@ sagenb.worksheetapp.worksheet = function() {
 	
 	// Evaluate all
 	_this.is_evaluating_all = false;
-	
-	
+    _this.access_to_slider = true;
+
+    _this.WEB_SOCKET_SWF_LOCATION = '/data/sage/js/socketio/WebSocketMain.swf',
+        _this.socket = io.connect('/worksheet');
+
+
 	// other variables go here
-	
+
+    ///////////// TESTS ////////////////
+
+    _this.socket.on('eval_reply', function (result, input){
+        var X = decode_response(result)
+        _this.cells[X.id]._evaluate_callback_ws("success", result);
+        if (input != "") {
+        _this.cells[X.id].set_cell_input(input);
+        }
+        _this.cells[X.id].set_output_loading();
+    });
+
+    _this.socket.on('set_state_number', function(statenumber){
+        _this.statenumber = statenumber;
+    });
+
+    _this.socket.on('delete_cell', function(id){
+        delete _this.cells[id];
+        $("#cell_" + id).parent().next().detach();
+        $("#cell_" + id).parent().detach();
+    });
+
+    _this.socket.on('new_cell_after', function (response){
+        _this.new_cell_all_after(response);
+    });
+
+    //sets Input every Time it gets changed
+    _this.socket.on('input_change', function (input, cid){
+        _this.cells[cid].set_cell_input(input);
+    });
+    
+    // chat message dispatching/fetching is done in chat.js directly
+
+    _this.socket.on('slider_state', function(val, div_id){
+        $('#' + div_id).slider('value', val);
+        _this.access_to_slider = false;
+
+    });
+
+
+    ///////////// STARTUP ///////////////
+
+
 	///////////// COMMANDS ////////////
 	_this.worksheet_command = function(cmd) {
 		/*
@@ -89,28 +135,7 @@ sagenb.worksheetapp.worksheet = function() {
 	}
 	
 	///////////////// PINGS //////////////////
-	_this.ping_server = function() {
-		/* for some reason pinging doesn't work well.
-		 * the callback goes but jQuery throws a 404 error.
-		 * this error may not be a bug, not sure...
-		 */
-		sagenb.async_request(_this.worksheet_command('alive'), sagenb.generic_callback(function(status, response) {
-			/*  Each time the server is up and responds, the server includes
-				the worksheet state_number is the response.  If this number is out
-				of sync with our view of the worksheet state, then we force a
-				refresh of the list of cells.  This is very useful in case the
-				user uses the back button and the browser cache displays an
-				invalid worksheet list (which can cause massive confusion), or the
-				user open the same worksheet in multiple browsers, or multiple
-				users open the same shared worksheet.
-			*/
-			if (_this.state_number >= 0 && parseInt(response, 10) > _this.state_number) {
-				// Force a refresh of just the cells in the body.
-				_this.worksheet_update();
-				_this.cell_list_update();
-			}
-		}));
-	};
+
 	
 	function close_window() {
 		// this is a hack which gets close working
@@ -207,11 +232,6 @@ sagenb.worksheetapp.worksheet = function() {
 		if(_this.published_mode) return;
 		sagenb.async_request(_this.worksheet_command('interrupt'), sagenb.generic_callback());
 	};
-	_this.interrupt_with_confirm = function() {
-		if(confirm(gettext("Are you sure you would like to interrupt the running computation?"))) {
-			_this.interrupt();
-		}
-	};
 	_this.restart_sage = function() {
 		if(_this.published_mode) return;
 		_this.forEachCell(function(cell) {
@@ -290,34 +310,44 @@ sagenb.worksheetapp.worksheet = function() {
 			id: id
 		});
 	};
-	_this.new_cell_after = function(id) {
-		if(_this.published_mode) return;
-		sagenb.async_request(_this.worksheet_command("new_cell_after"), function(status, response) {
-			if(response === "locked") {
-				$(".alert_locked").show();
-				return;
-			}
-			
-			var X = decode_response(response);
-			var new_cell = new sagenb.worksheetapp.cell(X.new_id);
-			var a = $("#cell_" + X.id).parent().next();
-			var wrapper = $("<div></div>").addClass("cell_wrapper").insertAfter(a);
-			new_cell.worksheet = _this;
-			new_cell.update(wrapper);
-			
-			// add the next new cell button
-			_this.add_new_cell_button_after(wrapper);
-			
-			// wait for the render to finish
-			setTimeout(new_cell.focus, 50);
-			
-			_this.cells[new_cell.id] = new_cell;
-		},
-		{
-			id: id
-		});
-	};
-	
+
+    _this.new_cell_all_after = function(response) {
+
+        var X = decode_response(response);
+        var new_cell = new sagenb.worksheetapp.cell(X.new_id);
+        var a = $("#cell_" + X.id).parent().next();
+        var wrapper = $("<div></div>").addClass("cell_wrapper").insertAfter(a);
+        new_cell.worksheet = _this;
+        new_cell.update(wrapper);
+
+        // add the next new cell button
+        _this.add_new_cell_button_after(wrapper);
+
+        // wait for the render to finish
+        setTimeout(50);
+
+        _this.cells[new_cell.id] = new_cell;
+    }
+
+    _this.new_cell_after = function(id){
+        sagenb.async_request(_this.worksheet_command("new_cell_after"), function(status, response) {
+            if(response === "locked") {
+                $(".alert_locked").show();
+                return;
+            }
+            else{
+                _this.new_cell_all_after(response);
+                _this.socket.emit('new_cell_after', response)
+            }
+        },
+            {
+                id: id
+            }
+        );
+    }
+
+
+
 	_this.new_text_cell_before = function(id) {
 		if(_this.published_mode) return;
 		sagenb.async_request(_this.worksheet_command("new_text_cell_before"), function(status, response) {
@@ -800,7 +830,7 @@ sagenb.worksheetapp.worksheet = function() {
 		});
 		
 		// start the ping interval
-		_this.ping_interval_id = window.setInterval(_this.ping_server, _this.server_ping_time);
+		//_this.ping_interval_id = window.setInterval(_this.ping_server, _this.server_ping_time);
 		
 		var load_done_interval = setInterval(function() {
 			/* because the cells array is sparse we need this.
@@ -819,16 +849,24 @@ sagenb.worksheetapp.worksheet = function() {
 		},
 			1000
 		);
+
+		// init chat things
+		sagenb.chat.init(_this);
 		
-		// Setup hotkeys
-		/* Notes on hotkeys: these don't work on all browsers consistently
+		// load js-hotkeys
+		/* TODO notes on hotkeys: these don't work on all browsers consistently
 		but they are included in the best case scenario that they are all 
-		accepted. */
+		accepted. I have not checked all of the official hotkeys for Sage NB
+		so this list may not be complete but will be updated later. */
 		$(document).bind("keydown", sagenb.ctrlkey + "+N", function(evt) { _this.new_worksheet(); return false; });
 		$(document).bind("keydown", sagenb.ctrlkey + "+S", function(evt) { _this.save(); return false; });
 		$(document).bind("keydown", sagenb.ctrlkey + "+W", function(evt) { _this.close(); return false; });
 		$(document).bind("keydown", sagenb.ctrlkey + "+P", function(evt) { _this.print(); return false; });
-		$(document).bind("keydown", "esc", function(evt) { _this.interrupt_with_confirm(); return false; });
+		$(document).bind("keydown", "esc", function(evt) {
+			if(confirm(gettext("Are you sure you would like to interrupt the running computation?"))) {
+				_this.interrupt();
+			}
+		});
 				
 		/////// FILE MENU ////////
 		$("#new_worksheet").click(_this.new_worksheet);

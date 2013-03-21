@@ -121,11 +121,12 @@
 		"sage3d/sage3d.js",
 		"sage/js/jmol.js",
 		"sage/js/worksheet.js",
+		"sage/js/chat.js",
 		"sage/js/cell.js"
 	%}
 		<script type="text/javascript" src="{{ ASSET_URL }}"></script>
 	{% endassets %}
-
+    <script src="/data/sage/js/socketio/socket.io.min.js"></script>
 	<!-- Can't minify -->
 	<!-- TinyMCE -->
 	<script type="text/javascript" src="/data/tinymce-3.5.2/jscripts/tiny_mce/tiny_mce.js"></script>
@@ -150,7 +151,6 @@
 	<link rel="stylesheet" media="screen" type="text/css" href="/data/jquery/plugins/colorpicker/css/colorpicker.css" />
 	<script type="text/javascript" src="/data/jquery/plugins/colorpicker/js/colorpicker.min.js"></script>
 	<script type="text/javascript" src="/data/jquery/plugins/achtung/ui.achtung-mod.min.js"></script>
-	
 	<script type="text/javascript">
 		$(function() {
 			// init notebook stuff
@@ -180,6 +180,17 @@
 
 			// initialize
 			sagenb.worksheetapp.worksheet.init();
+
+
+			// slider sync
+			$('.ui-slider').live('slide slidechange', function(e){
+				var val = ($(this).slider("value"));
+				var div_id = ($(this).attr('id'));
+				if(sagenb.worksheetapp.worksheet.access_to_slider === true){
+					sagenb.worksheetapp.worksheet.socket.emit('slider_state', val, div_id);
+				}
+				sagenb.worksheetapp.worksheet.access_to_slider = true;
+			});
 		});
 	</script>
 {% endblock extra_javascript %}

@@ -25,43 +25,27 @@ sagenb.worksheetapp.cell = function(id) {
 	// the amount of time in millisecs between update checks
 	_this.output_check_interval = 250;
 
-	
-	// HELPERS
-	function get_next_eval_cell() {
-		var $nextcell = $("#cell_" + _this.id).parent().next().next();
-		while($nextcell.length > 0 && $nextcell.find(".evaluate_cell").length === 0) {
-			$nextcell = $nextcell.next().next();
-		}
+    _this.change_by_collab = false;
+
+
+	function get_next_cell() {
+		var $nextcell = $("#cell_" + _this.id).parent().next().next().find(".cell");
 		if($nextcell.length > 0) {
 			// we're not the last cell
-			var nextcell_id = parseInt($nextcell.find(".evaluate_cell").attr("id").substring(5));
+			var nextcell_id = parseInt($nextcell.attr("id").substring(5));
 			return _this.worksheet.cells[nextcell_id];
 		}
 	}
 
-	function get_prev_eval_cell() {
-		var $prevcell = $("#cell_" + _this.id).parent().prev().prev();
-		while($prevcell.length > 0 && $prevcell.find(".evaluate_cell").length === 0) {
-			$prevcell = $prevcell.prev().prev();
-		}
+	function get_prev_cell() {
+		var $prevcell = $("#cell_" + _this.id).parent().prev().prev().find(".cell");
 		if($prevcell.length > 0) {
 			// we're not the last cell
-			var prevcell_id = parseInt($prevcell.find(".evaluate_cell").attr("id").substring(5));
+			var prevcell_id = parseInt($prevcell.attr("id").substring(5));
 			return _this.worksheet.cells[prevcell_id];
 		}
-	}
+	}	
 
-	function fixOldjsMath(elem) {
-		// mathjax each span with \( \)
-		$(elem).find("span.math").each(function(i, element) {
-			$(element).html("\\(" + $(element).html() + "\\)");
-		});
-		
-		// mathjax each div with \[ \]
-		$(elem).find("div.math").each(function(i, element) {
-			$(element).html("\\[" + $(element).html() + "\\]");
-		});
-	}
 
 	///////////// UPDATING /////////////
 	_this.update = function(render_container, auto_evaluate) {
@@ -145,7 +129,8 @@ sagenb.worksheetapp.cell = function(id) {
 										"<button class=\"btn evaluate_button\" type=\"button\">" + gettext("Evaluate") + "</button>" +
 									"</div>" +
 								"</div> <!-- /cell -->");
-			
+
+
 			// Bind the evaluate button
 			$(container).find(".evaluate_button").click(_this.evaluate);
 
@@ -189,11 +174,10 @@ sagenb.worksheetapp.cell = function(id) {
 			extrakeys["Up"] = function(cm) {
 				var c = cm.getCursor();
 				if(c.line === 0) {
-					var prevcell = get_prev_eval_cell();
+					var prevcell = get_prev_cell();
 					if(prevcell) {
 						_this.cancel_introspect();
 
-						_this.blur();
 						prevcell.focus();
 					}
 				} else {
@@ -204,11 +188,10 @@ sagenb.worksheetapp.cell = function(id) {
 			extrakeys["Down"] = function(cm) {
 				var c = cm.getCursor();
 				if(c.line === cm.getValue().split("\n").length - 1) {
-					var nextcell = get_next_eval_cell();
+					var nextcell = get_next_cell();
 					if(nextcell) {
 						_this.cancel_introspect();
 
-						_this.blur();
 						nextcell.focus();
 					}
 				} else {
@@ -258,7 +241,16 @@ sagenb.worksheetapp.cell = function(id) {
 				extraKeys: extrakeys
 			});
 
+            ///////Sync///////
+
+
 			_this.codemirror.on("change", function(cm, chg) {
+                if (_this.change_by_collab === false) {
+                    _this.worksheet.socket.emit("input_change", _this.codemirror.getValue(), _this.id);
+                }
+
+                _this.change_by_collab = false;
+
 				if(chg.text[0] === "(") {
 					_this.introspect();
 				}
@@ -275,7 +267,11 @@ sagenb.worksheetapp.cell = function(id) {
 				
 				// unhide if hidden
 				$("#cell_" + _this.id + " .input_cell").removeClass("input_hidden");
-			});
+
+				// Show the evaluate button
+				$("#cell_" + _this.id + " .evaluate_button_container").show();
+
+            });
 
 			_this.codemirror.on("blur", function() {
 				if(!($("body").hasClass("single_cell_mode"))) {
@@ -287,6 +283,9 @@ sagenb.worksheetapp.cell = function(id) {
 					// so we send it back to the server
 					_this.send_input();
 				}
+				
+				// Hide the evaluate button
+				$("#cell_" + _this.id + " .evaluate_button_container").hide();
 
 				// update cell properties without rendering
 				_this.update();
@@ -351,6 +350,9 @@ sagenb.worksheetapp.cell = function(id) {
 				
 				$_this.dblclick(function(e) {
 					if(!_this.is_evaluate_cell) {
+						// set the current_cell_id
+						_this.worksheet.current_cell_id = _this.id;
+						
 						// lose any selection that was made
 						if (window.getSelection) {
 							window.getSelection().removeAllRanges();
@@ -359,8 +361,7 @@ sagenb.worksheetapp.cell = function(id) {
 						}
 						
 						// add the edit class
-						$("#cell_" + _this.id).addClass("edit")
-											  .addClass("current_cell");
+						$("#cell_" + _this.id).addClass("edit");
 					}
 				});
 				
@@ -374,8 +375,7 @@ sagenb.worksheetapp.cell = function(id) {
 					ed.setContent(_this.input);
 					
 					// remove the edit class
-					$("#cell_" + _this.id).removeClass("edit")
-										  .removeClass("current_cell");
+					$("#cell_" + _this.id).removeClass("edit");
 				});
 				
 				$_this.find(".save_button").click(function(e) {
@@ -392,17 +392,21 @@ sagenb.worksheetapp.cell = function(id) {
 					MathJax.Hub.Queue(["Typeset", MathJax.Hub, $_this.find(".view_text")[0]]);
 					
 					// remove the edit class
-					$("#cell_" + _this.id).removeClass("edit")
-										  .removeClass("current_cell");
+					$("#cell_" + _this.id).removeClass("edit");
 				});
 			}
 		}
 	};
+    _this.eval_result_output = function(result, id) {
+        ///ICH BIN HIER STEHEn geblieben!
+
+    };
+
 	_this.render_output = function(stuff_to_render) {
 		/* Renders stuff_to_render as the cells output, 
 		 * if given. If not, then it renders _this.output.
 		 */
-		
+
 		// don't do anything for text cells
 		if(!_this.is_evaluate_cell) return;
 		
@@ -472,7 +476,17 @@ sagenb.worksheetapp.cell = function(id) {
 				$output_cell.html("\\[" + $output_cell.find("script[type='math/tex']").html() + "\\]");
 			}
 			else {
-				fixOldjsMath($output_cell);
+				// NOTE: these may be obsolete
+
+				// mathjax each span with \( \)
+				$output_cell.find("span.math").each(function(i, element) {
+					$(element).html("\\(" + $(element).html() + "\\)");
+				});
+				
+				// mathjax each div with \[ \]
+				$output_cell.find("div.math").each(function(i, element) {
+					$(element).html("\\[" + $(element).html() + "\\]");
+				});
 			}
 
 			MathJax.Hub.Queue(["Typeset", MathJax.Hub, $output_cell[0]]);
@@ -487,12 +501,6 @@ sagenb.worksheetapp.cell = function(id) {
 			// edit the tinyMCE
 			$("#cell_" + _this.id).dblclick();
 			tinyMCE.execCommand('mceFocus', false, "text_cell_textarea_" + _this.id);
-		}
-	}
-
-	_this.blur = function() {
-		if(_this.codemirror) {
-			_this.codemirror.getInputField().blur();
 		}
 	}
 	
@@ -532,7 +540,6 @@ sagenb.worksheetapp.cell = function(id) {
 		});
 
 		tooltip_root.popover("show");
-		fixOldjsMath($(".popover"));
 		MathJax.Hub.Queue(["Typeset", MathJax.Hub, $(".popover")[0]]);
 
 		var safety = 50;
@@ -557,6 +564,13 @@ sagenb.worksheetapp.cell = function(id) {
 	}
 	
 	/////// EVALUATION //////
+
+    // This Function is needed to use old callbackfunctions from Websocket
+    _this._evaluate_callback_ws = function(status, response) {
+        _evaluate_callback(status, response);
+    };
+
+
 	var _evaluate_callback = sagenb.generic_callback(function(status, response) {
 		var X = decode_response(response);
 		
@@ -604,7 +618,8 @@ sagenb.worksheetapp.cell = function(id) {
 		}
 		
 		// update the server input property
-		sagenb.async_request(_this.worksheet.worksheet_command("eval"), sagenb.generic_callback, {
+
+        sagenb.async_request(_this.worksheet.worksheet_command("eval"), sagenb.generic_callback, {
 			save_only: 1,
 			id: _this.id,
 			input: _this.input
@@ -625,25 +640,33 @@ sagenb.worksheetapp.cell = function(id) {
 		_this.cancel_introspect();
 		_this.set_output_loading();
 
-		var nextcell = get_next_eval_cell();
+		var nextcell = get_next_cell();
 		if(nextcell) {
 			nextcell.focus();
 		}
 
 		// we're an evaluate cell
-		sagenb.async_request(_this.worksheet.worksheet_command("eval"), _evaluate_callback, {
-			// 0 = false, 1 = true this needs some conditional
-			newcell: 0,
-			
-			id: toint(_this.id),
-			
-			/* It's necessary to get the codemirror value because the user
-			 * may have made changes and not blurred the codemirror so the 
-			 * changes haven't been put in _this.input
-			 */
-			input: _this.codemirror.getValue()
-		});
+
+        sagenb.async_request(_this.worksheet.worksheet_command("eval"), _this.emit_eval_result, {
+         //0 = false, 1 = true this needs some conditional
+            newcell: 0,
+
+            id: toint(_this.id),
+
+            /* It's necessary to get the codemirror value because the user
+             * may have made changes and not blurred the codemirror so the
+             * changes haven't been put in _this.input
+             */
+            input: _this.codemirror.getValue()
+        });
 	};
+    _this.emit_eval_result = function(status, response){
+
+          sagenb.worksheetapp.worksheet.socket.emit('eval', response, _this.codemirror.getValue());
+
+    };
+
+
 	_this.evaluate_interact = function(update, recompute) {
 		if(_this.worksheet.published_mode) return;
 		sagenb.async_request(_this.worksheet.worksheet_command("eval"), _evaluate_callback, {
@@ -656,6 +679,7 @@ sagenb.worksheetapp.cell = function(id) {
 			newcell: 0
 		});
 	};
+
 	_this.introspect = function() {
 		/* Attempts to begin an introspection. Firstly, it splits the input 
 		 * according to the cursor position. Then it matches the text before 
@@ -975,7 +999,7 @@ sagenb.worksheetapp.cell = function(id) {
 		if(_this.worksheet.published_mode) return;
 		if(_this.worksheet.is_evaluating_all) {
 			// get the next cell
-			var nextcell = get_next_eval_cell();
+			var nextcell = get_next_cell();
 
 			if(nextcell) {
 				// evaluate
@@ -986,6 +1010,15 @@ sagenb.worksheetapp.cell = function(id) {
 			}
 		}
 	}
+
+    /////// INPUT ////////
+    //This is used by Websockethandlers to make sure input is synchrone
+   _this.set_cell_input = function(input){
+       _this.input = input;
+       _this.change_by_collab = true;
+       _this.codemirror.setValue(_this.input);
+
+   };
 	
 	/////// OUTPUT ///////
 	_this.delete_output = function() {
@@ -1019,7 +1052,7 @@ sagenb.worksheetapp.cell = function(id) {
 		// connect with Cell.percent_directives
 		return _this.input.substring(0, 5) === "%hide";
 	};
-	
+
 	_this.delete = function() {
 		if(_this.worksheet.published_mode) return;
 		if(_this.is_evaluating) {
@@ -1027,7 +1060,7 @@ sagenb.worksheetapp.cell = function(id) {
 			sagenb.async_request(_this.worksheet.worksheet_command('interrupt'));
 		}
 
-		var prevcell = get_prev_eval_cell();
+		var prevcell = get_prev_cell();
 		if(prevcell) {
 			prevcell.focus();
 		}
@@ -1035,11 +1068,8 @@ sagenb.worksheetapp.cell = function(id) {
 		sagenb.async_request(_this.worksheet.worksheet_command('delete_cell'), sagenb.generic_callback(function(status, response) {
 			X = decode_response(response);
 			if(X.command === "ignore") return;
-			
-			delete _this.worksheet.cells[_this.id];
-			
-			$("#cell_" + _this.id).parent().next().detach();
-			$("#cell_" + _this.id).parent().detach();
+            _this.worksheet.socket.emit('delete_cell', _this.id)
+
 		}), {
 			id: toint(_this.id)
 		});
