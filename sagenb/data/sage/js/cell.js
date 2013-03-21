@@ -28,7 +28,6 @@ sagenb.worksheetapp.cell = function(id) {
     _this.change_by_collab = false;
 
 
-    // HELPERS
 	function get_next_cell() {
 		var $nextcell = $("#cell_" + _this.id).parent().next().next().find(".cell");
 		if($nextcell.length > 0) {
@@ -1053,7 +1052,7 @@ sagenb.worksheetapp.cell = function(id) {
 		// connect with Cell.percent_directives
 		return _this.input.substring(0, 5) === "%hide";
 	};
-	
+
 	_this.delete = function() {
 		if(_this.worksheet.published_mode) return;
 		if(_this.is_evaluating) {
@@ -1069,11 +1068,8 @@ sagenb.worksheetapp.cell = function(id) {
 		sagenb.async_request(_this.worksheet.worksheet_command('delete_cell'), sagenb.generic_callback(function(status, response) {
 			X = decode_response(response);
 			if(X.command === "ignore") return;
-			
-			delete _this.worksheet.cells[_this.id];
-			
-			$("#cell_" + _this.id).parent().next().detach();
-			$("#cell_" + _this.id).parent().detach();
+            _this.worksheet.socket.emit('delete_cell', _this.id)
+
 		}), {
 			id: toint(_this.id)
 		});

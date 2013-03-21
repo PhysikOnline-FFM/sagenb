@@ -1063,6 +1063,16 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
            "Official" join with nickname which will proposed to all other viewers
            in the room. This method also decides a color for that user
         """
+
+#Client Informations Handler
+
+    def on_join(self, room):
+        print "join"
+        self.room = room
+        self.join(room)
+        return True
+
+    def on_nickname(self, nickname):
         print "on_nickname"
         
         # we can't directly use the self.session object because it contains
@@ -1087,13 +1097,30 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 	self.emit('new_nickname_list', encode_response(self.nicknames))
         return True
 
+#cell operations Handler
+    def on_new_cell_after(self, response):
+        self.emit_to_room(self.room,'new_cell_after', response)
+
+    def on_delete_cell(self, id):
+        self.emit('delete_cell', id)
+        self.emit_to_room(self.room,'delete_cell', id)
+
+#Evaluate Handler
     def on_eval(self, result, input):
         self.emit_to_room(self.room, 'eval_reply', result, input)
         self.emit('eval_reply', result)
         print result
         return True
 
+    def on_set_state_number(self, statenumber):
+        print statenumber
+        self.emit_to_room(self.room, 'set_state_number', statenumber)
+        self.emit('set_state_number', statenumber)
 
+    def on_slider_state(self, val, div_id):
+        self.emit_to_room(self.room, 'slider_state', val, div_id)
+
+#Chat Handler
     def on_user_message(self, msg):
         self.msg = encode_response({"user": self.session['session_nick'], "message": msg })
         self.emit('user_message', self.msg)
@@ -1112,3 +1139,11 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
     def on_input_change(self, input, id):
         print "inp_change"
         self.emit_to_room(self.room, 'input_change', input, id)
+
+
+    def recv_disconnect(self): #i think theres a bug in here!
+        print self.session['nickname'] + "disconnected"
+        nickname = self.session['nickname']
+        self.nicknames.remove(nickname)
+        self.emit_to_room(self.room, 'nicknames', self.nicknames)
+        self.emit('nicknames', self.nicknames)
