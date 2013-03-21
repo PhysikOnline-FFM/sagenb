@@ -1,3 +1,5 @@
+alert("mathjax_sage genutzt");
+
 MathJax.Hub.Config({
     // Need jsMath2jax so that worksheets with div/span class "math" elements still render correctly
     // This is important for backwards compatibility (notably Rob Beezer's books)
@@ -10,9 +12,6 @@ MathJax.Hub.Config({
         // (since jsMath2jax will take care of it); if we don't, then tex2jax and jsMath2jax conflict.
         // Seeh ttps://groups.google.com/forum/?fromgroups=#!topic/mathjax-users/qzWdxiQvNrw
         ignoreClass: 'cell_input_print|math',
-	
-	// POKAL: Chat math feature
-	processClass: 'chat-math'
     },
 
     styles: {

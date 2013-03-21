@@ -1028,8 +1028,16 @@ def socketio(remaining):
 ##########################################################
 
 class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
-    # nicknames: mapping nickname => Color (string #aabbcc)
-    nicknames = {}
+    # nicknames: a list of dictionaries with the entries
+    #  { nickname: "sage username", color: "#aabbcc", uuid: "886313e1-3b8a-537..." }
+    # this enables the same user opens his worksheet multiple times.
+    # The UUID is chosen randomly at server site and is only used internally to
+    # distinguish between sessions
+    
+    # nicknames: a list of self.session['session_nick'] objects, each containing data like
+    #  { nickname: "sage username", color: "#aabbcc", }
+    # thus enabling the same user opening his worksheet multiple times.
+    nicknames = []
     
     # in dieser klasse fehlt saemltiche Fehlerbehandlung:
     # Jede Message, die Clients senden, die aber nicht spezifiziert ist, fuehrt
@@ -1045,7 +1053,7 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         self.room = data["worksheet"]
         self.join(self.room)
         
-        # mal etwas getrennt
+        # noch etwas getrennt
 	self.on_nickname_join(data["nickname"])
         return True
 
@@ -1057,22 +1065,26 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         """
         print "on_nickname"
         
-        if(nickname in self.nicknames):
-		# a user opens a worksheet two times
-		self.emit_to_room(self.room, 'join_message', nickname+" x 2")
-	else:
-		# no double enter
-       
-		from sage.plot.colors import Color,get_cmap
-		m = get_cmap("Accent")
-		new_color = Color(m(len(self.nicknames.keys()) * 1./20)[:3]).html_color()
+        # we can't directly use the self.session object because it contains
+        # room information from the room mixin which is basically a python set and not
+        # serializable by encode_response. And it isn't supposed to be shared anyway.
+        self.session['session_nick'] = {}
+        self.session['session_nick']['nickname'] = nickname
+
+	import uuid
+        self.session['session_nick']['uuid'] = str(uuid.uuid4())
+        
+	from sage.plot.colors import Color,get_cmap
+	m = get_cmap("Accent")
+	self.session['session_nick']['color'] = Color(m(len(self.nicknames) * 1./20)[:3]).html_color()
+
+	# store this session in the nickname list
+	self.nicknames.append(self.session['session_nick'])
 	
-		self.nicknames[nickname] = new_color;
-		print self.nicknames
-		self.session['nickname'] = nickname
-		self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.nicknames))
-		self.emit_to_room(self.room, 'join_message', nickname)
-		self.emit('new_nickname_list', self.nicknames)
+	print self.nicknames
+	self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.nicknames))
+	self.emit_to_room(self.room, 'join_message', encode_response(self.session['session_nick']))
+	self.emit('new_nickname_list', encode_response(self.nicknames))
         return True
 
     def on_eval(self, result, input):
@@ -1083,17 +1095,16 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
 
     def on_user_message(self, msg):
-        self.msg = encode_response({"nickname": self.session['nickname'], "message": msg })
+        self.msg = encode_response({"user": self.session['session_nick'], "message": msg })
         self.emit('user_message', self.msg)
         self.emit_to_room(self.room, 'user_message', self.msg)
 
     def recv_disconnect(self):
-        print self.session['nickname'] + "disconnected"
-        nickname = self.session['nickname']
-        del self.nicknames[nickname]
+        print self.session['session_nick']['uuid'] + "disconnected"
+        self.nicknames.remove(self.session['session_nick'])
+        self.emit_to_room(self.room, 'leave_message', encode_response(self.session['session_nick']))
         self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.nicknames))
-        self.emit_to_room(self.room, 'leave_message', nickname)
-        self.emit('new_nickname_list', self.nicknames)
+        self.emit('new_nickname_list', encode_response(self.nicknames))
 
     #Used for Realtime Input-Synchronisation
     #input = input as string + new char

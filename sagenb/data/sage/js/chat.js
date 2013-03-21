@@ -22,7 +22,7 @@ sagenb.chat.init = function(worksheet) {
         sagenb.chat.header_button = $("#worksheet_chat_bar").html(
             '<div class="btn-group pull-right nav">' +
                 '<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">' +
-                '<i class="icon-comment"></i>&nbsp;<span>Chat</span>&nbsp;<span class="badge badge-info"></span> ' +
+                '<i class="icon-comment"></i>&nbsp;<span>Chat</span' +
                 //'<span class="caret"></span>' +
                 '</a>' +
             '</div>'
@@ -78,7 +78,7 @@ sagenb.chat.init = function(worksheet) {
 
 sagenb.chat.toggle = function() {
 	sagenb.chat.message_box.dialog( sagenb.chat.header_button.hasClass("active") ? "close" : "open");
-        sagenb.chat.header_button.blur();
+	$(this).blur(); // FIXME klappt nicht gut
 }
 
 sagenb.chat.send_message = function() {
@@ -89,20 +89,24 @@ sagenb.chat.send_message = function() {
 	}
 };
 
-sagenb.chat.colorize_nickname = function(name, suffix) {
-	return '<span class="nickname" style="color:'+sagenb.chat.nicknames[name]+'">'+name+(suffix ? suffix : '')+'</span>';
+sagenb.chat.colorize_nickname = function(user, suffix) {
+	name = user['nickname']
+	color = user['color']
+	return '<span class="nickname" style="color:'+color+'">'+name+(suffix ? suffix : '')+'</span>';
 };
 
 /**
  * Websocket Message: Update nickname list
- * @arg nicknames array
+ * @arg nicknames array of user object
  **/
 sagenb.chat.on_new_nickname_list = function(nicknames) {
-	sagenb.chat.nicknames = nicknames; // store nicknames
-	namelist = $.map(nicknames, function(color, name) {
-		return sagenb.chat.colorize_nickname(name);
-	}).join(", ");
-	sagenb.chat.userlist_box.html('<b>Mitarbeiter:</b> ' + namelist);
+	nicknames = $.parseJSON(nicknames);
+	// the storage is currently used only for debugging
+	sagenb.chat.nicknames = nicknames;
+	// nutze colorize_nickname als callback. da $.map ihm aber zwei parameter zuweist,
+	// im zweiten den Index, wird sowas wie "username1", "username2" concatenated als suffix.
+	// das ist eigentlich nicht schlimm, sondern witzigerweise sogar wuenschenswert.
+	sagenb.chat.userlist_box.html('<b>Mitarbeiter:</b> ' + $.map(nicknames, function(x){ return sagenb.chat.colorize_nickname(x); }).join(", "));
 };
 
 /**
@@ -111,25 +115,35 @@ sagenb.chat.on_new_nickname_list = function(nicknames) {
  **/
 sagenb.chat.on_user_message = function(data) {
 	data = $.parseJSON(data);
-	sagenb.chat.append_message("",'<b>'+sagenb.chat.colorize_nickname(data.nickname, ":")+'</b> <span class="message chat-math">'+data.message+'</span>');
+	message = sagenb.chat.append_message("",'<b>'+sagenb.chat.colorize_nickname(data.user, ":")+'</b> <span class="message chat-math">'+data.message+'</span>');
+	
+	console.log(message);
+	// enable MathJax/LaTex on output
+	MathJax.Hub.Queue(["Typeset", MathJax.Hub, $(".chat-math", message)[0]]);
 };
 
-sagenb.chat.on_join_message = function(nickname) {
-	sagenb.chat.append_message("meta join", '<b>'+sagenb.chat.colorize_nickname(nickname)+'</b> joined');
+sagenb.chat.on_join_message = function(user) {
+	user = $.parseJSON(user);
+	sagenb.chat.append_message("meta join", '<b>'+sagenb.chat.colorize_nickname(user)+'</b> joined');
 }
 
-sagenb.chat.on_leave_message = function(nickname) {
-	sagenb.chat.append_message("meta leave",'<b>'+sagenb.chat.colorize_nickname(nickname)+'</b> left');
+sagenb.chat.on_leave_message = function(user) {
+	user = $.parseJSON(user);
+	sagenb.chat.append_message("meta leave",'<b>'+sagenb.chat.colorize_nickname(user)+'</b> left');
 }
 
 sagenb.chat.append_message = function(classes, text) {
 	// scroll to end if user was already at end
-	user_was_at_bottom = (sagenb.chat.message_box.scrollTop() == sagenb.chat.message_box[0].scrollHeight - sagenb.chat.message_box.height());
+	//user_was_at_bottom = (sagenb.chat.message_box.scrollTop() == sagenb.chat.message_box[0].scrollHeight - sagenb.chat.message_box.height());
+	// TODO: This check doesnt work yet
+	user_was_at_bottom = true
 
-	// push content
-	sagenb.chat.message_box.append('<p class="line '+classes+'">'+text+'</p>');
+	// push content and store the line element it for return
+	message = $('<p class="line '+classes+'">'+text+'</p>').appendTo(sagenb.chat.message_box);
 
 	if(user_was_at_bottom)
 		// user was already at bottom -.-
 		sagenb.chat.message_box[0].scrollTop = sagenb.chat.message_box[0].scrollHeight;
+	
+	return message;
 }
