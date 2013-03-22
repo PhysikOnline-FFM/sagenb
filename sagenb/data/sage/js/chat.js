@@ -35,7 +35,7 @@ sagenb.chat.init = function(worksheet) {
             dialogClass: "chat",
             height: 400,
             width: 240,
-            position: { my: "right top", at: "right bottom"},
+            position: { my: "right top", at: "right bottom" },
             show: "fast",
             title: "Worksheet - Chat",
 	    // Hacky: diese buttons sind nur farce, um die Pane zu kriegen.
@@ -99,6 +99,7 @@ sagenb.chat.alert = function(text) {
 sagenb.chat.toggle = function() {
 	sagenb.chat.message_box.dialog( sagenb.chat.header_button.hasClass("active") ? "close" : "open");
 	$(this).blur(); // FIXME klappt nicht gut
+	return false; // nicht aktiv werden (der link)
 }
 
 sagenb.chat.send_message = function() {
