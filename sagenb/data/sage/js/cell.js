@@ -25,8 +25,8 @@ sagenb.worksheetapp.cell = function(id) {
 	// the amount of time in millisecs between update checks
 	_this.output_check_interval = 250;
 
+	_this.change_by_collab = false;
 	
-	// HELPERS
 	function get_next_eval_cell() {
 		var $nextcell = $("#cell_" + _this.id).parent().next().next();
 		while($nextcell.length > 0 && $nextcell.find(".evaluate_cell").length === 0) {
@@ -258,7 +258,13 @@ sagenb.worksheetapp.cell = function(id) {
 				extraKeys: extrakeys
 			});
 
+			///////Sync///////
 			_this.codemirror.on("change", function(cm, chg) {
+                if (_this.change_by_collab === false){
+                    _this.worksheet.socket.emit("input_change", _this.codemirror.getValue(), _this.id);
+                }
+                _this.change_by_collab = false;
+			
 				if(chg.text[0] === "(") {
 					_this.introspect();
 				}
@@ -398,6 +404,12 @@ sagenb.worksheetapp.cell = function(id) {
 			}
 		}
 	};
+	
+	_this.eval_result_output = function(result, id) {
+        // ICH BIN HIER STEHEn geblieben! DEBUG
+
+    };
+	
 	_this.render_output = function(stuff_to_render) {
 		/* Renders stuff_to_render as the cells output, 
 		 * if given. If not, then it renders _this.output.
@@ -557,6 +569,12 @@ sagenb.worksheetapp.cell = function(id) {
 	}
 	
 	/////// EVALUATION //////
+	
+	// This Function is needed to use old callbackfunctions from Websocket
+    _this._evaluate_callback_ws = function(status, response) {
+        _evaluate_callback(status, response);
+    };
+	
 	var _evaluate_callback = sagenb.generic_callback(function(status, response) {
 		var X = decode_response(response);
 		
@@ -644,6 +662,11 @@ sagenb.worksheetapp.cell = function(id) {
 			input: _this.codemirror.getValue()
 		});
 	};
+	
+	_this.emit_eval_result = function(status, response){
+          sagenb.worksheetapp.worksheet.socket.emit('eval', response, _this.codemirror.getValue());
+    };
+	
 	_this.evaluate_interact = function(update, recompute) {
 		if(_this.worksheet.published_mode) return;
 		sagenb.async_request(_this.worksheet.worksheet_command("eval"), _evaluate_callback, {
@@ -987,6 +1010,14 @@ sagenb.worksheetapp.cell = function(id) {
 		}
 	}
 	
+	/////// INPUT ////////
+	// This is used by Websockethandlers to make sure input is synchrone
+	_this.set_cell_input = function(input){
+		_this.input = input;
+		_this.change_by_collab = true;
+		_this.codemirror.setValue(_this.input);
+	};
+	
 	/////// OUTPUT ///////
 	_this.delete_output = function() {
 		if(_this.worksheet.published_mode) return;
@@ -1032,16 +1063,15 @@ sagenb.worksheetapp.cell = function(id) {
 			prevcell.focus();
 		}
 		
-		sagenb.async_request(_this.worksheet.worksheet_command('delete_cell'), sagenb.generic_callback(function(status, response) {
-			X = decode_response(response);
-			if(X.command === "ignore") return;
-			
-			delete _this.worksheet.cells[_this.id];
-			
-			$("#cell_" + _this.id).parent().next().detach();
-			$("#cell_" + _this.id).parent().detach();
-		}), {
-			id: toint(_this.id)
-		});
+		sagenb.async_request(
+			_this.worksheet.worksheet_command('delete_cell'), 
+			sagenb.generic_callback(function(status, response) {
+				X = decode_response(response);
+				if(X.command === "ignore") return;
+				
+				_this.worksheet.socket.emit('delete_cell', _this.id)
+			}), 
+			{id: toint(_this.id)}
+		);
 	};
 };

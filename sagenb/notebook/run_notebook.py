@@ -26,6 +26,9 @@ from sagenb.misc.misc import (DOT_SAGENB, find_next_available_port,
 
 import notebook
 
+from gevent import monkey
+from socketio.server import SocketIOServer
+
 conf_path     = os.path.join(DOT_SAGENB, 'notebook')
 
 private_pem   = os.path.join(conf_path, 'private.pem')
@@ -153,6 +156,10 @@ class NotebookRunFlask(NotebookRun):
     name="flask"
     FLASK_NOTEBOOK_CONFIG = """
 import os
+from gevent import monkey
+from socketio.server import SocketIOServer
+monkey.patch_all();
+
 with open(%(pidfile)r, 'w') as pidfile:
     pidfile.write(str(os.getpid()))
 
@@ -193,8 +200,10 @@ if %(secure)s:
 
 %(open_page)s
 try:
-    flask_app.run(host=%(interface)r, port=%(port)s, threaded=True,
-                  ssl_context=ssl_context, debug=False)
+    print 'Listening on port 8080 and on port 843 (flash policy server)'
+    SocketIOServer(('', 8080), flask_app, resource="socket.io", policy_server=True, policy_listener=('', 10843)).serve_forever()
+    
+    flask_app.run(host=%(interface)r, port=%(port)s, threaded=True, ssl_context=ssl_context, debug=False)
 finally:
     save_notebook(flask_base.notebook)
     os.unlink(%(pidfile)r)
@@ -439,7 +448,7 @@ command={'flask': NotebookRunFlask, 'twistd': NotebookRunTwisted, 'uwsgi': Noteb
 def notebook_run(self,
              directory     = None,
              port          = 8080,
-             interface     = 'localhost',
+             interface     = '',
              port_tries    = 50,
              secure        = False,
              reset         = False,
@@ -460,7 +469,7 @@ def notebook_run(self,
              fork          = False,
              quiet         = False,
 
-             server = "twistd",
+             server = "flask",
              profile = False,
 
              subnets = None,

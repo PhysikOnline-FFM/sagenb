@@ -1,6 +1,6 @@
-import os, threading, collections
+import re, os, threading, collections
 from functools import wraps
-from flask import Module, url_for, render_template, request, session, redirect, g, current_app, make_response
+from flask import Module, url_for, render_template, request, session, redirect, g, current_app, make_response, Response
 from decorators import guest_or_login_required, login_required, with_lock
 from collections import defaultdict
 from flask.ext.babel import Babel, gettext, ngettext, lazy_gettext
@@ -8,8 +8,14 @@ _ = gettext
 
 from sagenb.notebook.interact import INTERACT_UPDATE_PREFIX
 from sagenb.notebook.misc import encode_response
+from socketio import socketio_manage
+from socketio.namespace import BaseNamespace
+from socketio.mixins import RoomsMixin, BroadcastMixin
+from gevent import monkey
 
-ws = Module('sagenb.flask_version.worksheet')
+monkey.patch_all()
+
+ws = Module('flask_server.worksheet')
 worksheet_locks = defaultdict(threading.Lock)
 
 def worksheet_view(f):
@@ -168,6 +174,14 @@ def worksheet_pretty_print(worksheet, enable):
 def worksheet_conf(worksheet):
     return str(worksheet.conf())
 
+######################################################
+#  Websocket initialization
+######################################################
+@worksheet_command('get_username')
+def worksheet_get_username(worksheet):
+    ##Returns the username of the current session for Websocket-Initialization
+    ## needed in nickname[] of Websocket -> Worksheet_Namespace
+    return g.username
 
 ########################################################
 # Save a worksheet
@@ -1007,3 +1021,78 @@ def doc_worksheet():
 @login_required
 def jmol_popup(username, id):
     return render_template(os.path.join('html', 'jmol_popup.html'))
+
+######################################################
+# Websocket Handshake
+#######################################################
+from flask import globals
+
+@ws.route('/socket.io/<path:remaining>')
+def socketio(remaining):
+    print "YEAH WEBSOCKET CONNECTION!!!"
+    try:
+        socketio_manage(request.environ, {'/worksheet': WorksheetNamespace},
+            request)
+
+    except:
+         print "Websocket Error!"
+    return Response()
+    
+
+#########################################################
+# Websocket Namespace
+##########################################################
+
+class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
+    nicknames = []
+
+    # client information handler
+    def on_join(self, room):
+        self.room = room
+        self.join(room)
+        return True
+
+    def on_nickname(self, nickname):
+        self.nicknames.append(nickname)
+        self.session['nickname'] = nickname
+        self.emit('nicknames', self.nicknames)
+        self.emit_to_room(self.room, 'nicknames', self.nicknames)
+        self.emit_to_room(self.room, 'user_message', nickname + ' joined')
+        
+    def recv_disconnect(self): #i think theres a bug in here!
+        nickname = self.session['nickname']
+        self.nicknames.remove(nickname)
+        self.emit('nicknames', self.nicknames)
+        self.emit_to_room(self.room, 'nicknames', self.nicknames)
+
+    # cell operation handler
+    def on_new_cell_after(self, response):
+        self.emit_to_room(self.room,'new_cell_after', response)
+        
+    def on_delete_cell(self, id):
+        self.emit('delete_cell', id)
+        self.emit_to_room(self.room,'delete_cell', id)
+        
+    def on_set_state_number(self, statenumber):
+        self.emit('set_state_number', statenumber)
+        self.emit_to_room(self.room, 'set_state_number', statenumber)
+      
+    def on_slider_state(self, val, div_id):
+        self.emit_to_room(self.room, 'slider_state', val, div_id)
+        
+    def on_eval(self, result, input):
+        self.emit('eval_reply', result)
+        self.emit_to_room(self.room, 'eval_reply', result, input)
+        return True
+    
+    # chat handler
+    def on_user_message(self, msg):
+        self.msg = self.session['nickname'] + ': ' + msg
+        self.emit('user_message', self.msg)
+        self.emit_to_room(self.room, 'user_message', self.msg)
+    
+    #Used for Realtime Input-Synchronisation
+    #input = input as string + new char
+    #this message will be sent every time an input cell gets changed (every Keypress on focus)
+    def on_input_change(self, input, id):
+        self.emit_to_room(self.room, 'input_change', input, id)

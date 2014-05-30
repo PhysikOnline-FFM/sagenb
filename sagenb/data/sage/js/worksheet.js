@@ -42,17 +42,129 @@ sagenb.worksheetapp.worksheet = function() {
 	// data
 	_this.attached_data_files = [];
 	
-	// Ping the server periodically for worksheet updates.
-	_this.server_ping_time = 10000;
-	
 	// Focus / blur.
 	_this.current_cell_id = -1;
 	
 	// Evaluate all
 	_this.is_evaluating_all = false;
+	_this.access_to_slider = true;
 	
+	_this.WEB_SOCKET_SWF_LOCATION = '/data/sage/js/socketio/WebSocketMain.swf', 
+	_this.socket = io.connect('/worksheet');
 	
 	// other variables go here
+	
+    ////////// WEBSOCKET_HANDLER ////////
+    _this.socket.on('connect', function (){
+        _this.socket.emit('join', _this.filename);
+		sagenb.async_request(_this.worksheet_command('get_username'), function(status, response){
+			_this.socket.emit('nickname', response);
+		});
+    });
+
+	_this.socket.on('nicknames', function (nicknames){
+        //$("#chat_userlist_box").append($('<b>').text(' ' + nickname + ','));
+        //$('#chat_userlist_box').empty().append($('<span>Online: </span>'));
+        for (var i in nicknames) {
+            $('#chat_userlist_box').html("<div><b><span style=color:green;font-size:80%>Online: </b><b><span style=font-size:80%>" + nicknames + "</b></div>");
+        }
+    });
+	
+	_this.socket.on('user_message', function(msg){
+		$('#chat_message_box').append($('<p>').append($('<b>').text(msg)));
+	});
+	
+	_this.socket.on('new_cell_after', function (response){
+		_this.new_cell_all_after(response);
+	});
+	
+	_this.socket.on('delete_cell', function(id){
+		delete _this.cells[id];
+		$("#cell_" + id).parent().next().detach();
+		$("#cell_" + id).parent().detach();
+    });
+	
+	_this.socket.on('set_state_number', function(statenumber){
+		_this.statenumber = statenumber;
+    });
+	
+	_this.socket.on('slider_state', function(val, div_id){
+		$('#' + div_id).slider('value', val);
+		_this.access_to_slider = false;
+    });
+	
+    _this.socket.on('eval_reply', function (result, input){
+        var X = decode_response(result)
+        _this.cells[X.id]._evaluate_callback_ws("success", result);
+		if (input != "") {
+			_this.cells[X.id].set_cell_input(input);
+		}
+        _this.cells[X.id].set_output_loading();
+    });
+	
+	//sets Input every Time it gets changed
+    _this.socket.on('input_change', function (input, cid){
+        _this.cells[cid].set_cell_input(input);
+    });
+	
+	
+	///// CHATBOX integration /////
+    _this.chat = {};
+    _this.chat.init = function(){
+        // header button
+        $("#worksheet_chat_bar").html(
+            '<div class="btn-group pull-right nav">' +
+                '<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">' +
+                '<i class="icon-comment"></i>&nbsp;<span>Chat</span>&nbsp;<span class="badge badge-info"></span> ' +
+                //'<span class="caret"></span>' +
+                '</a>' +
+            '</div>'
+        );
+		
+        // chat box
+        _this.chat.container = $("<div></div>").attr({"id": "chat_container", "class": ""});
+        _this.chat.container.append(
+            $("<div>").attr({"id": "chat_userlist_box", "class": ""}),
+            $("<div>").attr({"id": "chat_message_box", "class": ""}),
+            $("<div>").attr({"id": "chat_input_box", "class": "input-append"}),
+			$("<textarea>").attr({"id": "chat_input_text", "class": "span2"}),
+            $("<button>").attr({"id": "chat_input_btn", "class": "btn", "type": "button"}).text("send")
+        );
+
+        _this.chat.container.appendTo("body");
+        _this.chat.container.dialog({
+            autoOpen: false,
+            dialogClass: "chat",
+            height: 400,
+            width: 240,
+            position: { my: "right top", at: "right bottom"},
+            show: "fast",
+            title: "Worksheet - Chat"
+
+        });
+    }
+	
+    _this.chat.toggle = function(){
+        var btn = $("#worksheet_chat_bar .btn");
+
+        if (btn.hasClass("active")){
+            _this.chat.container.dialog("close");
+            btn.removeClass("active");
+        }
+        else {
+            _this.chat.container.dialog("open");
+            btn.addClass("active");
+        }
+        btn.blur();
+    }
+	
+	_this.send_message = function(){
+		if($('#chat_input_text').val() != ''){
+			_this.socket.emit('user message', $('#chat_input_text').val());
+			$('#chat_input_text').val('').focus();
+		}
+	};
+
 	
 	///////////// COMMANDS ////////////
 	_this.worksheet_command = function(cmd) {
@@ -88,30 +200,8 @@ sagenb.worksheetapp.worksheet = function() {
 		});
 	}
 	
-	///////////////// PINGS //////////////////
-	_this.ping_server = function() {
-		/* for some reason pinging doesn't work well.
-		 * the callback goes but jQuery throws a 404 error.
-		 * this error may not be a bug, not sure...
-		 */
-		sagenb.async_request(_this.worksheet_command('alive'), sagenb.generic_callback(function(status, response) {
-			/*  Each time the server is up and responds, the server includes
-				the worksheet state_number is the response.  If this number is out
-				of sync with our view of the worksheet state, then we force a
-				refresh of the list of cells.  This is very useful in case the
-				user uses the back button and the browser cache displays an
-				invalid worksheet list (which can cause massive confusion), or the
-				user open the same worksheet in multiple browsers, or multiple
-				users open the same shared worksheet.
-			*/
-			if (_this.state_number >= 0 && parseInt(response, 10) > _this.state_number) {
-				// Force a refresh of just the cells in the body.
-				_this.worksheet_update();
-				_this.cell_list_update();
-			}
-		}));
-	};
 	
+	//////////// FILE MENU TYPE STUFF //////////
 	function close_window() {
 		// this is a hack which gets close working
 		window.open('', '_self', '');
@@ -120,7 +210,6 @@ sagenb.worksheetapp.worksheet = function() {
 		self.close();
 	}
 	
-	//////////// FILE MENU TYPE STUFF //////////
 	_this.new_worksheet = function() {
 		if(_this.published_mode) return;
 		window.open("/new_worksheet");
@@ -290,33 +379,38 @@ sagenb.worksheetapp.worksheet = function() {
 			id: id
 		});
 	};
-	_this.new_cell_after = function(id) {
-		if(_this.published_mode) return;
-		sagenb.async_request(_this.worksheet_command("new_cell_after"), function(status, response) {
-			if(response === "locked") {
-				$(".alert_locked").show();
-				return;
-			}
-			
-			var X = decode_response(response);
-			var new_cell = new sagenb.worksheetapp.cell(X.new_id);
-			var a = $("#cell_" + X.id).parent().next();
-			var wrapper = $("<div></div>").addClass("cell_wrapper").insertAfter(a);
-			new_cell.worksheet = _this;
-			new_cell.update(wrapper);
-			
-			// add the next new cell button
-			_this.add_new_cell_button_after(wrapper);
-			
-			// wait for the render to finish
-			setTimeout(new_cell.focus, 50);
-			
-			_this.cells[new_cell.id] = new_cell;
-		},
-		{
-			id: id
-		});
-	};
+	
+	_this.new_cell_all_after = function(response) {
+        var X = decode_response(response);
+        var new_cell = new sagenb.worksheetapp.cell(X.new_id);
+        var a = $("#cell_" + X.id).parent().next();
+        var wrapper = $("<div></div>").addClass("cell_wrapper").insertAfter(a);
+        new_cell.worksheet = _this;
+        new_cell.update(wrapper);
+
+        // add the next new cell button
+        _this.add_new_cell_button_after(wrapper);
+
+        // wait for the render to finish
+        setTimeout(50);
+
+        _this.cells[new_cell.id] = new_cell;
+    }
+
+    _this.new_cell_after = function(id){
+        sagenb.async_request(_this.worksheet_command("new_cell_after"), function(status, response){
+            if (response === "locked") {
+                $(".alert_locked").show();
+                return;
+            }
+            else{
+                _this.new_cell_all_after(response);
+                _this.socket.emit('new_cell_after', response)
+            }
+        },
+        {id: id}
+        );
+    }
 	
 	_this.new_text_cell_before = function(id) {
 		if(_this.published_mode) return;
@@ -800,9 +894,6 @@ sagenb.worksheetapp.worksheet = function() {
 			}
 		});
 		
-		// start the ping interval
-		_this.ping_interval_id = window.setInterval(_this.ping_server, _this.server_ping_time);
-		
 		var load_done_interval = setInterval(function() {
 			/* because the cells array is sparse we need this.
 			 * it may be easier/faster to use $.grep either way...
@@ -820,6 +911,11 @@ sagenb.worksheetapp.worksheet = function() {
 		},
 			1000
 		);
+		
+		//////// CHATBOX ////////
+        _this.chat.init();
+        $("#worksheet_chat_bar .btn").click(_this.chat.toggle);
+		$("#chat_input_btn ").click(_this.send_message);
 		
 		// Setup hotkeys
 		/* Notes on hotkeys: these don't work on all browsers consistently

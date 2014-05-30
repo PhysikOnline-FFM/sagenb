@@ -125,7 +125,8 @@
 	%}
 		<script type="text/javascript" src="{{ ASSET_URL }}"></script>
 	{% endassets %}
-
+	
+	<script src="/data/sage/js/socketio/socket.io.min.js"></script>
 	<!-- Can't minify -->
 	<!-- TinyMCE -->
 	<script type="text/javascript" src="/data/tinymce-3.5.2/jscripts/tiny_mce/tiny_mce.js"></script>
@@ -180,6 +181,16 @@
 
 			// initialize
 			sagenb.worksheetapp.worksheet.init();
+			
+			// slider synch
+			$('.ui-slider').live('slide slidechange', function(e){
+				if(sagenb.worksheetapp.worksheet.access_to_slider === true){
+					sagenb.worksheetapp.worksheet.socket.emit('slider_state', $(this).slider("value"), $(this).attr('id'));
+				}
+				sagenb.worksheetapp.worksheet.access_to_slider = true;
+			});
+			
+			sagenb.worksheetapp.worksheet.ws_get_username();
 		});
 	</script>
 {% endblock extra_javascript %}
