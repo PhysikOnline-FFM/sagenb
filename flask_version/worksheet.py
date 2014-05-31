@@ -181,6 +181,8 @@ def worksheet_conf(worksheet):
 def worksheet_get_username(worksheet):
     ##Returns the username of the current session for Websocket-Initialization
     ## needed in nickname[] of Websocket -> Worksheet_Namespace
+    
+    # Sven: no more needed
     return g.username
 
 ########################################################
@@ -1042,57 +1044,91 @@ def socketio(remaining):
 #########################################################
 # Websocket Namespace
 ##########################################################
-
 class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
+    # nicknames: a list of dictionaries with the entries
+    #  { nickname: "sage username", color: "#aabbcc", uuid: "886313e1-3b8a-537..." }
+    # this enables the same user opens his worksheet multiple times.
+    # The UUID is chosen randomly at server site and is only used internally to
+    # distinguish between sessions
+    
+    # nicknames: a list of self.session['session_nick'] objects, each containing data like
+    #  { nickname: "sage username", color: "#aabbcc", }
+    # thus enabling the same user opening his worksheet multiple times.
     nicknames = []
 
     # client information handler
-    def on_join(self, room):
-        self.room = room
-        self.join(room)
+    def on_join(self, data):
+        # expecting data = {nickname:"sage username", "worksheet":"worksheet-name"}
+        print "join of "+str(data)
+        self.room = data['worksheet']
+        self.join(self.room)
+
+        # we can't directly use the self.session object because it contains
+        # room information from the room mixin which is basically a python set and not
+        # serializable by encode_response. And it isn't supposed to be shared anyway.
+        self.session['session_nick'] = {}
+        self.session['session_nick']['nickname'] = data['nickname']
+
+        import uuid
+        self.session['session_nick']['uuid'] = str(uuid.uuid4())
+            
+        from sage.plot.colors import Color,get_cmap
+        m = get_cmap("Accent")
+        self.session['session_nick']['color'] = Color(m(len(self.nicknames) * 1./20)[:3]).html_color()
+
+        # store this session in the nickname list
+        self.nicknames.append(self.session['session_nick'])
+        
+        print self.nicknames
+        self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.nicknames))
+        self.emit_to_room(self.room, 'join_message', encode_response(self.session['session_nick']))
+        self.emit('new_nickname_list', encode_response(self.nicknames))
         return True
 
-    def on_nickname(self, nickname):
-        self.nicknames.append(nickname)
-        self.session['nickname'] = nickname
-        self.emit('nicknames', self.nicknames)
-        self.emit_to_room(self.room, 'nicknames', self.nicknames)
-        self.emit_to_room(self.room, 'user_message', nickname + ' joined')
-        
-    def recv_disconnect(self): #i think theres a bug in here!
-        nickname = self.session['nickname']
-        self.nicknames.remove(nickname)
-        self.emit('nicknames', self.nicknames)
-        self.emit_to_room(self.room, 'nicknames', self.nicknames)
-
-    # cell operation handler
+    # cell operations handler
     def on_new_cell_after(self, response):
         self.emit_to_room(self.room,'new_cell_after', response)
-        
+
     def on_delete_cell(self, id):
         self.emit('delete_cell', id)
         self.emit_to_room(self.room,'delete_cell', id)
-        
+
+    # evaluate handler
+    def on_eval(self, result, input):
+        self.emit_to_room(self.room, 'eval_reply', result, input)
+        self.emit('eval_reply', result)
+        print result
+        return True
+
     def on_set_state_number(self, statenumber):
-        self.emit('set_state_number', statenumber)
+        print statenumber
         self.emit_to_room(self.room, 'set_state_number', statenumber)
-      
+        self.emit('set_state_number', statenumber)
+
     def on_slider_state(self, val, div_id):
         self.emit_to_room(self.room, 'slider_state', val, div_id)
-        
-    def on_eval(self, result, input):
-        self.emit('eval_reply', result)
-        self.emit_to_room(self.room, 'eval_reply', result, input)
-        return True
-    
+
     # chat handler
     def on_user_message(self, msg):
-        self.msg = self.session['nickname'] + ': ' + msg
+        self.msg = encode_response({"user": self.session['session_nick'], "message": msg })
         self.emit('user_message', self.msg)
         self.emit_to_room(self.room, 'user_message', self.msg)
-    
+
+    def recv_disconnect(self):
+        if not (self.session['session_nick'] in self.nicknames):
+            print self.session['session_nick']['uuid'] + "was no more connected!"
+            return True
+        
+        print self.session['session_nick']['uuid'] + "disconnected"
+        self.nicknames.remove(self.session['session_nick'])
+        self.emit_to_room(self.room, 'leave_message', encode_response(self.session['session_nick']))
+        self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.nicknames))
+        self.emit('new_nickname_list', encode_response(self.nicknames))
+        return True
+
     #Used for Realtime Input-Synchronisation
     #input = input as string + new char
     #this message will be sent every time an input cell gets changed (every Keypress on focus)
     def on_input_change(self, input, id):
+        print "inp_change"
         self.emit_to_room(self.room, 'input_change', input, id)

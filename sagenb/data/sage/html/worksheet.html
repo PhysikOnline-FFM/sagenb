@@ -121,6 +121,7 @@
 		"sage3d/sage3d.js",
 		"sage/js/jmol.js",
 		"sage/js/worksheet.js",
+		"sage/js/chat.js"
 		"sage/js/cell.js"
 	%}
 		<script type="text/javascript" src="{{ ASSET_URL }}"></script>
@@ -189,8 +190,6 @@
 				}
 				sagenb.worksheetapp.worksheet.access_to_slider = true;
 			});
-			
-			sagenb.worksheetapp.worksheet.ws_get_username();
 		});
 	</script>
 {% endblock extra_javascript %}
