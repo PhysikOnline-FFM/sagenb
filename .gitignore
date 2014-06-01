@@ -25,3 +25,4 @@ sagenb/data/jsmath/fonts
 /setup.cfg
 /sagenb/data/.webassets-cache
 /sagenb/data/webassets_generated
+.idea/

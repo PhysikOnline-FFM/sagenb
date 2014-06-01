@@ -11,14 +11,14 @@ sagenb.init = function() {
 	// update username
 	if(sagenb.username === "guest") {
 		$("#user_navbar_area").html(
-'<div class="btn-group pull-right nav">' +
+'<div class="pull-right nav"><div class="btn-group">' +
 	'<a href="/login" class="btn">' + gettext('Login') + '</a>' +
-'</div>'
+'</div></div>'
 		);
 	}
 	else {
 		$("#user_navbar_area").html(
-'<div class="btn-group pull-right nav">' +
+'<div class="pull-right nav"><div class="btn-group">' +
 	'<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">' +
 		'<i class="icon-user"></i> <span id="username">' + sagenb.username + ' </span>' +
 		'<span class="caret"></span>' +
@@ -30,11 +30,11 @@ sagenb.init = function() {
 		'<li><a href="/settings" id="settings"><i class="icon-wrench"></i> ' + gettext('Settings') + '</a></li>' +
 		'<li><a href="/logout" id="sign_out"><i class="icon-off"></i> ' + gettext('Sign out') + '</a></li>' +
 		'<li class="divider"></li>' +
-		'<li class="nav-header">' + gettext('Support') + '</li>' +
+		'<li class="nav-header">' + gettext('SAGE / POKAL Support') + '</li>' +
 		'<li><a href="#" id="help"><i class="icon-book"></i> ' + gettext('Help') + '</a></li>' +
 		'<li><a href="#" id="report_a_problem"><i class="icon-exclamation-sign"></i> ' + gettext('Report a Problem') + '</a></li>' +
 	'</ul>' +
-'</div>'
+'</div></div>'
 		);
 	}
 	
@@ -46,7 +46,8 @@ sagenb.init = function() {
 	
 	$("#log").click(sagenb.history_window);
 	$("#report_a_problem").click(function(e) {
-		window.open('http://spreadsheets.google.com/viewform?key=pCwvGVwSMxTzT6E2xNdo5fA', '', 'menubar=1,location=1,scrollbars=1,width=800,height=650,toolbar=1,resizable=1');
+		//window.open('http://spreadsheets.google.com/viewform?key=pCwvGVwSMxTzT6E2xNdo5fA', '', 'menubar=1,location=1,scrollbars=1,width=800,height=650,toolbar=1,resizable=1');
+		window.open('https://elearning.physik.uni-frankfurt.de/projekt/wiki/POKAL/Hilfe');
 	});
 	$("#help").click(sagenb.help);
 	$(document).bind("keydown", "F1", function(evt) { sagenb.help(); return false; });

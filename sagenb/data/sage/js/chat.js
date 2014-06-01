@@ -19,6 +19,7 @@ sagenb.chat.init = function(worksheet) {
 
 	
         // header button
+<<<<<<< HEAD
         sagenb.chat.header_button = $("#worksheet_chat_bar").html(
             '<div class="btn-group pull-right nav">' +
                 '<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">' +
@@ -27,6 +28,15 @@ sagenb.chat.init = function(worksheet) {
                 '</a>' +
             '</div>'
         ).find('.btn').click(sagenb.chat.toggle);
+=======
+        sagenb.chat.header_button = $(
+            '<div class="btn-group pull-right nav">' +
+                '<a class="btn" href="#"><i class="icon-comment"></i>&nbsp;<span>Chat</span></a>' +
+            '</div>'
+        ).find('.btn').click(sagenb.chat.toggle);
+	// put it next to the user button
+	$("#user_navbar_area").find(".btn-group").first().prepend(sagenb.chat.header_button);
+>>>>>>> 026ed5c728343cdc8a5743a00b513046f2ac9725
 	
         sagenb.chat.message_box = $('<div id="chat_message_box"/>');
 
@@ -36,7 +46,11 @@ sagenb.chat.init = function(worksheet) {
             dialogClass: "chat",
             height: 400,
             width: 240,
+<<<<<<< HEAD
             position: { my: "right top", at: "right bottom"},
+=======
+            position: { my: "right top", at: "right bottom" },
+>>>>>>> 026ed5c728343cdc8a5743a00b513046f2ac9725
             show: "fast",
             title: "Worksheet - Chat",
 	    // Hacky: diese buttons sind nur farce, um die Pane zu kriegen.
@@ -76,9 +90,37 @@ sagenb.chat.init = function(worksheet) {
 	*/
 };
 
+<<<<<<< HEAD
 sagenb.chat.toggle = function() {
 	sagenb.chat.message_box.dialog( sagenb.chat.header_button.hasClass("active") ? "close" : "open");
 	$(this).blur(); // FIXME klappt nicht gut
+=======
+sagenb.chat.alert = function(text) {
+	// show an alert in the sagenb twitter booostrap alert region.
+	if(!$("#user_chat_alert").length) {
+		// create the alert box
+		sagenb.chat.alert_box = $('<div class="alert alert-info" id="user_chat_alert">' + 
+			'<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+			'<strong>Chatnachricht von</strong> <span class="alert-content"></span>'+
+			'<a class="btn primary btn-small open-chat" style="float:right"><i class="icon-comment"></i>&nbsp;Open chat</a>' +
+		'</div>').appendTo(".alert_container_inner");
+		sagenb.chat.alert_box.find('.open-chat').click(function(){
+			sagenb.chat.message_box.dialog('open');
+			sagenb.chat.alert_box.fadeOut(1); // aka hide()
+		});
+		
+	}
+	
+	sagenb.chat.alert_box.fadeIn(200); // fade in
+	sagenb.chat.alert_box.find(".alert-content").html(text);
+	sagenb.chat.alert_box.delay(6000).fadeOut(500); // fade out
+};
+
+sagenb.chat.toggle = function() {
+	sagenb.chat.message_box.dialog( sagenb.chat.header_button.hasClass("active") ? "close" : "open");
+	$(this).blur(); // FIXME klappt nicht gut
+	return false; // nicht aktiv werden (der link)
+>>>>>>> 026ed5c728343cdc8a5743a00b513046f2ac9725
 }
 
 sagenb.chat.send_message = function() {
@@ -144,5 +186,13 @@ sagenb.chat.append_message = function(classes, text) {
 		// user was already at bottom -.-
 		sagenb.chat.message_box[0].scrollTop = sagenb.chat.message_box[0].scrollHeight;
 	
+<<<<<<< HEAD
+=======
+	if(!sagenb.chat.message_box.dialog("isOpen")) {
+		// message dialog not open, show a notificiation
+		sagenb.chat.alert(text);
+	}
+	
+>>>>>>> 026ed5c728343cdc8a5743a00b513046f2ac9725
 	return message;
 }

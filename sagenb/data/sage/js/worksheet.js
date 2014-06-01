@@ -302,8 +302,8 @@ sagenb.worksheetapp.worksheet = function() {
 			id: id
 		});
 	};
-	
-	_this.new_cell_all_after = function(response) {
+
+    _this.new_cell_all_after = function(response) {
         var X = decode_response(response);
         var new_cell = new sagenb.worksheetapp.cell(X.new_id);
         var a = $("#cell_" + X.id).parent().next();
@@ -834,7 +834,7 @@ sagenb.worksheetapp.worksheet = function() {
 		},
 			1000
 		);
-		
+
 		//////// CHATBOX ////////
 		sagenb.chat.init(_this);
 		
