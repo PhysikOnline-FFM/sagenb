@@ -31,6 +31,10 @@
 	<div class="container" style="margin-top: 60px;">
 		<div class="row-fluid">
 			<div id="desc" class="span8">
+				{# POKAL-Startseite includen #}
+				{% include "html/pokal/portal.html" %}
+				
+				{#
 				<h2>{{ gettext('Welcome!') }}</h2>
 				<p>{{ gettext('<strong>Sage</strong> is a different approach to mathematics software.') }}</p>
 
@@ -51,24 +55,41 @@
 
 				<h2>{{ gettext('Acknowledgement') }}</h2>
 				<p>{{ gettext('The Sage Notebook is based upon work supported by the National Science Foundation under grants DMS-0821725, DMS-1020378, DMS-0713225, DMS-0555776, DMS-0545904, DMS-0838212, DMS-0757627, DUE-1020378, DUE-1022574, DMS-1015114, etc.    Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.   See also <a href="http://sagemath.org/development-ack.html">http://sagemath.org/development-ack.html</a>.') }}</p>
+				#}
 			</div>
-
+			
 			<div id="sign-in-box" class="span4">
-				<h2 style="margin-bottom: 10px;">Sign into the Sage Notebook v{{ sage_version }}</h2>
+				<div class="well">
+					<!--
+					<img src="//lab2cloud.com/Content/img/beta_icon.png" style="float:right; margin: -41px -38px 0 0;" title="BETA!">
+					<h4>POKAL ist brandneu</h4>
+					<p>Wir haben im März 2013 den Betrieb aufgenommen. Daher ist noch nicht alles freigeschaltet. Für
+					einen Account wenden Sie sich bitte an <a href="mailto:pokal@elearning.physik.uni-frankfurt.de">pokal@elearning.physik.uni-frankfurt.de</a>.</p>
+					-->
+					<h4 style="margin-top: 26px">Öffentliche Worksheets</h4>
+					<p>Zu Demonstrationszwecken, für Vorlesungen, einfaches Teilen per Link können Benutzer Arbeitsblätter veröffentlichen.</p>
+					
+					<a class="btn btn-primary" href="/pub">Anschauen</a>
+				</div>
+			
+				<!--<h2 style="margin-bottom: 10px;">
+				Sign into the Sage Notebook v{{ sage_version }}</h2>-->
 				<form method="post" action="/login" id="sign-in-form" class="well">
+					<h4>Anmelden</h4>
+				
 					<div>
-						<label for="email">{{ gettext('Username') }}</label>
-						<input type="text" type="email" name="email" id="email" style="width: 97%;" />
+						<!--<label for="email">{{ gettext('Username') }}</label>-->
+						<input placeholder="{{ gettext('Username') }}" type="text" type="email" name="email" id="email" style="width: 97%;" />
 					</div>
 					<div>
 						<div style="margin-bottom: 5px">
-							<label for="password" style="display: inline">{{ gettext('Password') }}</label>
+							<!--<label  for="password" style="display: inline">{{ gettext('Password') }}</label>-->
 							{% if recovery %}
 								<a href="/forgotpass" style="font-size: 10px; line-height: 1em; padding-left: 5px">{{ gettext('forgot password?') }}</a>
 							{% endif %}
 						</div>
 						
-						<input type="password" name="password" id="password " style="width: 97%;" />
+						<input placeholder="{{ gettext('Password') }}" type="password" name="password" id="password " style="width: 97%;" />
 					</div>
 					<div>
 						<label for="remember"><input type="checkbox" name="remember" id="remember" /> {{ gettext('Remember me') }}</label>
@@ -85,20 +106,18 @@
 				{% if openid %}
 					<form method="post" action="/loginoid" id="openid" class="well"></form>
 				{% endif %}
-
-				<div>
-					<a href="/pub"><strong>{{ gettext('Browse published Sage worksheets (no login required)') }}</strong></a>
-				</div>
 			</div>
 		</div>
-    <div style="display: block; text-align: justify; color: #333;
-               border: 1px solid #333; border-radius: 3px;">
-        <strong>Note: </strong>
-        If you are a returning user, please use the exact same URL for
-        this notebook server as you used to log in previously. For example,
-        do not use www.sagenb.org if you used sagenb.org earlier.
-    </div>
-	</div>
+	</div><!-- container -->
+	<div class="container" style="text-align: center; margin-bottom: 15px;">
+		<a href="https://elearning.physik.uni-frankfurt.de/go/impressum">Impressum</a>  &middot;
+		<a href="https://elearning.physik.uni-frankfurt.de/go/datenschutz">Nutzungsbedingungen</a>  &middot;
+		<a href="https://elearning.physik.uni-frankfurt.de/go/datenschutz">Datenschutzerklärung</a>   &middot;
+		<a href="https://elearning.physik.uni-frankfurt.de/projekt">Projekt</a> 
+		<div style="text-align: center;">
+			PhysikOnline ist ein Projekt des Fachbereichs Physik der Uni Frankfurt
+		</div>
+	</div><!-- container -->
 {% endblock %}
 
 {% block after_container %}{% endblock after_container %}

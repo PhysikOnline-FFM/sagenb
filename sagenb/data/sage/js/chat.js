@@ -19,14 +19,13 @@ sagenb.chat.init = function(worksheet) {
 
 	
         // header button
-        sagenb.chat.header_button = $("#worksheet_chat_bar").html(
+        sagenb.chat.header_button = $(
             '<div class="btn-group pull-right nav">' +
-                '<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">' +
-                '<i class="icon-comment"></i>&nbsp;<span>Chat</span>' +
-                //'<span class="caret"></span>' +
-                '</a>' +
+                '<a class="btn" href="#"><i class="icon-comment"></i>&nbsp;<span>Chat</span></a>' +
             '</div>'
         ).find('.btn').click(sagenb.chat.toggle);
+	// put it next to the user button
+	$("#user_navbar_area").find(".btn-group").first().prepend(sagenb.chat.header_button);
 	
         sagenb.chat.message_box = $('<div id="chat_message_box"/>');
 
@@ -36,7 +35,7 @@ sagenb.chat.init = function(worksheet) {
             dialogClass: "chat",
             height: 400,
             width: 240,
-            position: { my: "right top", at: "right bottom"},
+            position: {my: "right top", at: "right bottom"},
             show: "fast",
             title: "Worksheet - Chat",
 	    // Hacky: diese buttons sind nur farce, um die Pane zu kriegen.
@@ -76,9 +75,31 @@ sagenb.chat.init = function(worksheet) {
 	*/
 };
 
+sagenb.chat.alert = function(text) {
+	// show an alert in the sagenb twitter booostrap alert region.
+	if(!$("#user_chat_alert").length) {
+		// create the alert box
+		sagenb.chat.alert_box = $('<div class="alert alert-info" id="user_chat_alert">' + 
+			'<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+			'<strong>Chatnachricht von</strong> <span class="alert-content"></span>'+
+			'<a class="btn primary btn-small open-chat" style="float:right"><i class="icon-comment"></i>&nbsp;Open chat</a>' +
+		'</div>').appendTo(".alert_container_inner");
+		sagenb.chat.alert_box.find('.open-chat').click(function(){
+			sagenb.chat.message_box.dialog('open');
+			sagenb.chat.alert_box.fadeOut(1); // aka hide()
+		});
+		
+	}
+	
+	sagenb.chat.alert_box.fadeIn(200); // fade in
+	sagenb.chat.alert_box.find(".alert-content").html(text);
+	sagenb.chat.alert_box.delay(6000).fadeOut(500); // fade out
+};
+
 sagenb.chat.toggle = function() {
 	sagenb.chat.message_box.dialog( sagenb.chat.header_button.hasClass("active") ? "close" : "open");
 	$(this).blur(); // FIXME klappt nicht gut
+	return false; // nicht aktiv werden (der link)
 }
 
 sagenb.chat.send_message = function() {
@@ -143,6 +164,11 @@ sagenb.chat.append_message = function(classes, text) {
 	if(user_was_at_bottom)
 		// user was already at bottom -.-
 		sagenb.chat.message_box[0].scrollTop = sagenb.chat.message_box[0].scrollHeight;
+	
+	if(!sagenb.chat.message_box.dialog("isOpen")) {
+		// message dialog not open, show a notificiation
+		sagenb.chat.alert(text);
+	}
 	
 	return message;
 }

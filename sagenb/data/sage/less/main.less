@@ -1,5 +1,6 @@
 @background_color: #eee;
 @the_container_width: 700px;
+@title_font_size: 42px;
 
 /* MIXINS */
 .rounded-corners (@radius: 5px) {
@@ -25,7 +26,7 @@ body {
 	background-color: @background_color;
 
 	/* this is from the bootstrap template thing not sure if its necessary */
-	/* padding-top: 60px; */ /* 60px to make the container go all the way to the bottom of the topbar */
+	/* padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
 }
 
 .navbar {
@@ -100,7 +101,6 @@ body {
 	}
 }
 
-@title_font_size: 42px;
 h1.title {
 	font-size: @title_font_size;
 	line-height: @title_font_size + 6;

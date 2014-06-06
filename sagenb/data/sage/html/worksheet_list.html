@@ -35,6 +35,14 @@
 		<a href="#import_modal" class="btn" data-toggle="modal"><i class="icon-upload"></i> {{ gettext("Upload") }}</a>
 		<a href="/download_worksheets.zip" class="btn"><i class="icon-download"></i> {{ gettext("Download All Active") }}</a>
 	</div>
+	{% else %}
+		{# im "Published Worksheets"-Modus, also anonym #}
+		<p class="pokal">
+			Diese Seite enthält eine Liste von Arbeitsblättern (Worksheets), die von
+			anderen Benutzern der POKAL-Plattform erstellt wurden. Sie eignet sich zum
+			gefahrlosen Entdecken der Funktionen von POKAL. Als <a href="/login">eingeloggter Benutzer</a>
+			besteht die Möglichkeit, auf diesen Arbeitsblättern aufzubauen.
+		</p>
 	{% endif %}
 
 	<div class="btn-toolbar" id="bottom_toolbar">

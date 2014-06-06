@@ -49,7 +49,7 @@ sagenb.worksheetapp.worksheet = function() {
 	_this.is_evaluating_all = false;
 	_this.access_to_slider = true;
 	
-	_this.WEB_SOCKET_SWF_LOCATION = '/data/sage/js/socketio/WebSocketMain.swf', 
+	_this.WEB_SOCKET_SWF_LOCATION = '/socketio/WebSocketMain.swf', 
 	_this.socket = io.connect('/worksheet');
 	
 	// other variables go here
@@ -302,8 +302,8 @@ sagenb.worksheetapp.worksheet = function() {
 			id: id
 		});
 	};
-	
-	_this.new_cell_all_after = function(response) {
+
+    _this.new_cell_all_after = function(response) {
         var X = decode_response(response);
         var new_cell = new sagenb.worksheetapp.cell(X.new_id);
         var a = $("#cell_" + X.id).parent().next();
@@ -834,7 +834,7 @@ sagenb.worksheetapp.worksheet = function() {
 		},
 			1000
 		);
-		
+
 		//////// CHATBOX ////////
 		sagenb.chat.init(_this);
 		
