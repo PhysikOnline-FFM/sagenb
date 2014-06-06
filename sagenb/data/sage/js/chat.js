@@ -19,16 +19,6 @@ sagenb.chat.init = function(worksheet) {
 
 	
         // header button
-<<<<<<< HEAD
-        sagenb.chat.header_button = $("#worksheet_chat_bar").html(
-            '<div class="btn-group pull-right nav">' +
-                '<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">' +
-                '<i class="icon-comment"></i>&nbsp;<span>Chat</span>' +
-                //'<span class="caret"></span>' +
-                '</a>' +
-            '</div>'
-        ).find('.btn').click(sagenb.chat.toggle);
-=======
         sagenb.chat.header_button = $(
             '<div class="btn-group pull-right nav">' +
                 '<a class="btn" href="#"><i class="icon-comment"></i>&nbsp;<span>Chat</span></a>' +
@@ -36,7 +26,6 @@ sagenb.chat.init = function(worksheet) {
         ).find('.btn').click(sagenb.chat.toggle);
 	// put it next to the user button
 	$("#user_navbar_area").find(".btn-group").first().prepend(sagenb.chat.header_button);
->>>>>>> 026ed5c728343cdc8a5743a00b513046f2ac9725
 	
         sagenb.chat.message_box = $('<div id="chat_message_box"/>');
 
@@ -46,11 +35,7 @@ sagenb.chat.init = function(worksheet) {
             dialogClass: "chat",
             height: 400,
             width: 240,
-<<<<<<< HEAD
-            position: { my: "right top", at: "right bottom"},
-=======
-            position: { my: "right top", at: "right bottom" },
->>>>>>> 026ed5c728343cdc8a5743a00b513046f2ac9725
+            position: {my: "right top", at: "right bottom"},
             show: "fast",
             title: "Worksheet - Chat",
 	    // Hacky: diese buttons sind nur farce, um die Pane zu kriegen.
@@ -90,11 +75,6 @@ sagenb.chat.init = function(worksheet) {
 	*/
 };
 
-<<<<<<< HEAD
-sagenb.chat.toggle = function() {
-	sagenb.chat.message_box.dialog( sagenb.chat.header_button.hasClass("active") ? "close" : "open");
-	$(this).blur(); // FIXME klappt nicht gut
-=======
 sagenb.chat.alert = function(text) {
 	// show an alert in the sagenb twitter booostrap alert region.
 	if(!$("#user_chat_alert").length) {
@@ -120,7 +100,6 @@ sagenb.chat.toggle = function() {
 	sagenb.chat.message_box.dialog( sagenb.chat.header_button.hasClass("active") ? "close" : "open");
 	$(this).blur(); // FIXME klappt nicht gut
 	return false; // nicht aktiv werden (der link)
->>>>>>> 026ed5c728343cdc8a5743a00b513046f2ac9725
 }
 
 sagenb.chat.send_message = function() {
@@ -186,13 +165,10 @@ sagenb.chat.append_message = function(classes, text) {
 		// user was already at bottom -.-
 		sagenb.chat.message_box[0].scrollTop = sagenb.chat.message_box[0].scrollHeight;
 	
-<<<<<<< HEAD
-=======
 	if(!sagenb.chat.message_box.dialog("isOpen")) {
 		// message dialog not open, show a notificiation
 		sagenb.chat.alert(text);
 	}
 	
->>>>>>> 026ed5c728343cdc8a5743a00b513046f2ac9725
 	return message;
 }
