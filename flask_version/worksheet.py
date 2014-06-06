@@ -15,7 +15,8 @@ from gevent import monkey
 
 monkey.patch_all()
 
-ws = Module('flask_server.worksheet')
+#ws = Module('flask_server.worksheet')
+ws = Module('sagenb.flask_version.worksheet')
 worksheet_locks = defaultdict(threading.Lock)
 
 def worksheet_view(f):
