@@ -182,7 +182,7 @@ def public_worksheet_cells(id, filename):
     try:
         worksheet = g.notebook.get_worksheet_with_filename(worksheet_filename)
     except KeyError:
-        return current_app.message("You do not have permission to access this worksheet") #XXX: i18n
+        return current_app.message(_("You do not have permission to access this worksheet")) #XXX: i18n
     from flask.helpers import send_from_directory
     return send_from_directory(worksheet.cells_directory(), filename)
 
@@ -239,8 +239,7 @@ def download_worksheets():
 def upload():
     if g.notebook.readonly_user(g.username):
         return current_app.message(_("Account is in read-only mode"), cont=url_for('home', username=g.username))
-    return render_template(os.path.join('html', 'upload.html'),
-                           username=g.username)
+    return render_template(os.path.join('html', 'upload.html'), username=g.username)
 
 class RetrieveError(Exception):
     """

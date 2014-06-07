@@ -98,13 +98,13 @@ def worksheet(username, id, worksheet=None):
     worksheet.sage()
     return render_template(os.path.join('html', 'worksheet.html'))
 
-published_commands_allowed = set(['alive', 'cells', 'cell_update',
-                          'data', 'download', 'edit_published_page', 'eval',
-                          'quit_sage', 'rate', 'rating_info', 'new_cell_before',
-                          'new_cell_after', 'introspect', 'delete_all_output',
-                          'copy', 'restart_sage'])
+    published_commands_allowed = set(['alive', 'cells', 'cell_update',
+                              'data', 'download', 'edit_published_page', 'eval',
+                              'quit_sage', 'rate', 'rating_info', 'new_cell_before',
+                              'new_cell_after', 'introspect', 'delete_all_output',
+                              'copy', 'restart_sage'])
 
-readonly_commands_allowed = set(['alive', 'cells', 'data', 'datafile', 'download', 'quit_sage', 'rating_info', 'delete_all_output'])
+    readonly_commands_allowed = set(['alive', 'cells', 'data', 'datafile', 'download', 'quit_sage', 'rating_info', 'delete_all_output'])
 
 def worksheet_command(target, **route_kwds):
     if 'methods' not in route_kwds:
@@ -434,7 +434,7 @@ def worksheet_eval(worksheet):
         r['interact'] = 1
         input_text = INTERACT_UPDATE_PREFIX
         variable = request.values.get('variable', '')
-        if variable!='':
+        if variable != '':
             adapt_number = int(request.values.get('adapt_number', -1))
             value = request.values.get('value', '')
             input_text += "\n_interact_.update('%s', '%s', %s, _interact_.standard_b64decode('%s'), globals())" % (id, variable, adapt_number, value)
@@ -601,9 +601,9 @@ def worksheet_invite_collab(worksheet):
     id_number = worksheet.id_number()
     old_collaborators = set(worksheet.collaborators())
     collaborators = set([u.strip() for u in request.values.get('collaborators', '').split(',') if u!=owner])
-    if len(collaborators-old_collaborators)>500:
-        # to prevent abuse, you can't add more than 500 collaborators at a time
-        return current_app.message(_("Error: can't add more than 500 collaborators at a time"), cont=url_for_worksheet(worksheet))
+    if len(collaborators - old_collaborators) > 250:
+        # to prevent abuse, you can't add more than 250 collaborators at a time
+        return current_app.message(_("Error: can't add more than 250 collaborators at a time"), cont=url_for_worksheet(worksheet))
     worksheet.set_collaborators(collaborators)
     user_manager = g.notebook.user_manager()
     # add worksheet to new collaborators
@@ -1032,13 +1032,10 @@ from flask import globals
 
 @ws.route('/socket.io/<path:remaining>')
 def socketio(remaining):
-    print "YEAH WEBSOCKET CONNECTION!!!"
     try:
-        socketio_manage(request.environ, {'/worksheet': WorksheetNamespace},
-            request)
-
+        socketio_manage(request.environ, {'/worksheet': WorksheetNamespace}, request)
     except:
-         print "Websocket Error!"
+        print "Websocket Error!"
     return Response()
     
 
@@ -1081,9 +1078,9 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         self.nicknames.append(self.session['session_nick'])
         
         print self.nicknames
+        self.emit('new_nickname_list', encode_response(self.nicknames))
         self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.nicknames))
         self.emit_to_room(self.room, 'join_message', encode_response(self.session['session_nick']))
-        self.emit('new_nickname_list', encode_response(self.nicknames))
         return True
 
     # cell operations handler
@@ -1096,15 +1093,13 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
     # evaluate handler
     def on_eval(self, result, input):
-        self.emit_to_room(self.room, 'eval_reply', result, input)
         self.emit('eval_reply', result)
-        print result
+        self.emit_to_room(self.room, 'eval_reply', result, input)
         return True
 
     def on_set_state_number(self, statenumber):
-        print statenumber
-        self.emit_to_room(self.room, 'set_state_number', statenumber)
         self.emit('set_state_number', statenumber)
+        self.emit_to_room(self.room, 'set_state_number', statenumber)
 
     def on_slider_state(self, val, div_id):
         self.emit_to_room(self.room, 'slider_state', val, div_id)
@@ -1117,10 +1112,10 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
     def recv_disconnect(self):
         if not (self.session['session_nick'] in self.nicknames):
-            print self.session['session_nick']['uuid'] + "was no more connected!"
+            print self.session['session_nick']['uuid'] + " was no more connected!"
             return True
         
-        print self.session['session_nick']['uuid'] + "disconnected"
+        print self.session['session_nick']['uuid'] + " disconnected"
         self.nicknames.remove(self.session['session_nick'])
         self.emit_to_room(self.room, 'leave_message', encode_response(self.session['session_nick']))
         self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.nicknames))
@@ -1131,5 +1126,4 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
     #input = input as string + new char
     #this message will be sent every time an input cell gets changed (every Keypress on focus)
     def on_input_change(self, input, id):
-        print "inp_change"
         self.emit_to_room(self.room, 'input_change', input, id)
