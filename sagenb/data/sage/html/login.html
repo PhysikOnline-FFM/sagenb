@@ -15,14 +15,14 @@
 	{% if username_error or password_error %}
 		<div class="alert alert-error">
 			<button class="close" data-dismiss="alert">×</button>
-			<strong>{{ gettext('Error') }}:</strong> {{ gettext('Bad login credentials') }}
+			<strong>{{ gettext('Error') }}:</strong> <span>{{ gettext('Bad login credentials') }}</span>
 		</div>
 	{% endif %}
 
 	{% if creation_error %}
 		<div class="alert alert-error">
 			<button class="close" data-dismiss="alert">×</button>
-			<strong>{{ gettext('Error') }}:</strong> {{ gettext('Creating new users is disabled by the administrator.') }}
+			<strong>{{ gettext('Error') }}:</strong> <span>{{ gettext('Creating new users is disabled by the administrator.') }}</span>
 		</div>
 	{% endif %}
 {% endblock alerts %}
@@ -66,16 +66,16 @@
 					<p>Wir haben im März 2013 den Betrieb aufgenommen. Daher ist noch nicht alles freigeschaltet. Für
 					einen Account wenden Sie sich bitte an <a href="mailto:pokal@elearning.physik.uni-frankfurt.de">pokal@elearning.physik.uni-frankfurt.de</a>.</p>
 					-->
-					<h4 style="margin-top: 26px">Öffentliche Worksheets</h4>
-					<p>Zu Demonstrationszwecken, für Vorlesungen, einfaches Teilen per Link können Benutzer Arbeitsblätter veröffentlichen.</p>
+					<h4 style="margin-top: 26px">{{ gettext('Public worksheets') }}</h4>
+					<p>{{ gettext('Users can publish worksheets for demonstration purpose, lectures or simple sharing via link ') }}</p>
 					
-					<a class="btn btn-primary" href="/pub">Anschauen</a>
+					<a class="btn btn-primary" href="/pub">{{ gettext('View') }}</a>
 				</div>
 			
 				<!--<h2 style="margin-bottom: 10px;">
 				Sign into the Sage Notebook v{{ sage_version }}</h2>-->
 				<form method="post" action="/login" id="sign-in-form" class="well">
-					<h4>Anmelden</h4>
+					<h4>{{ gettext('Login') }}</h4>
 				
 					<div>
 						<!--<label for="email">{{ gettext('Username') }}</label>-->
@@ -110,13 +110,11 @@
 		</div>
 	</div><!-- container -->
 	<div class="container" style="text-align: center; margin-bottom: 15px;">
-		<a href="https://elearning.physik.uni-frankfurt.de/go/impressum">Impressum</a>  &middot;
-		<a href="https://elearning.physik.uni-frankfurt.de/go/datenschutz">Nutzungsbedingungen</a>  &middot;
-		<a href="https://elearning.physik.uni-frankfurt.de/go/datenschutz">Datenschutzerklärung</a>   &middot;
-		<a href="https://elearning.physik.uni-frankfurt.de/projekt">Projekt</a> 
-		<div style="text-align: center;">
-			PhysikOnline ist ein Projekt des Fachbereichs Physik der Uni Frankfurt
-		</div>
+		<a href="https://elearning.physik.uni-frankfurt.de/go/impressum">{{ gettext('Impressum') }}</a>  &middot;
+		<a href="https://elearning.physik.uni-frankfurt.de/go/datenschutz">{{ gettext('Terms of Use') }}</a>  &middot;
+		<a href="https://elearning.physik.uni-frankfurt.de/go/datenschutz">{{ gettext('Privacy Policy') }}</a>   &middot;
+		<a href="https://elearning.physik.uni-frankfurt.de/projekt">{{ gettext('Project') }}</a> 
+		<div style="text-align: center;">{{ gettext('PhysikOnline ist ein Projekt des Fachbereichs Physik der Uni Frankfurt') }}</div>
 	</div><!-- container -->
 {% endblock %}
 

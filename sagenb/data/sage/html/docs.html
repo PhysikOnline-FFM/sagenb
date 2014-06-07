@@ -7,27 +7,25 @@
 	<link href="/data/bootstrap-2.0.4/css/bootstrap-responsive.min.css" rel="stylesheet">
 
 	<style type="text/css">
+	body {
+		padding-top: 25px;
+		padding-bottom: 25px;
+	}
 
-body {
-	padding-top: 25px;
-	padding-bottom: 25px;
-}
+	table {
+		margin-top: 10px;
+	}
 
-table {
-	margin-top: 10px;
-}
+	table tr td:first-child {
+		width: 30%;
+		background-color: #efefef;
+		vertical-align: middle;
+	}
 
-table tr td:first-child {
-	width: 30%;
-	background-color: #efefef;
-	vertical-align: middle;
-}
-
-footer {
-	font-size: 9pt;
-	text-align: center;
-}
-
+	footer {
+		font-size: 9pt;
+		text-align: center;
+	}
 	</style>
 </head>
 <body>
@@ -40,10 +38,10 @@ footer {
 	</header>
 	
 	<section id="pokal" class="well">
-		<h2>Some Notes about POKAL</h2>
-		<p>This is a Sage installation brand for the <a href="https://elearning.physik.uni-frankfurt.de/projekt/wiki/POKAL">POKAL</a>
+		<h2>{{ gettext('Some Notes about POKAL') }}</h2>
+		<p>{{ gettext('This is a Sage installation brand for the <a href="https://elearning.physik.uni-frankfurt.de/projekt/wiki/POKAL">POKAL</a>
 		Project. Please read the <b><a href="https://elearning.physik.uni-frankfurt.de/projekt/wiki/POKAL/Hilfe">POKAL Help Page</a></b>
-		for some basic POKAL specific issues. The POKAL administrator team is pleased to help you, too.</p>
+		for some basic POKAL specific issues. The POKAL administrator team is pleased to help you, too.') }}</p>
 	</section>
 
 	<section id="definitions">

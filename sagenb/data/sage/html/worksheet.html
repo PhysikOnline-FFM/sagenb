@@ -14,15 +14,15 @@
 	{% if not published_mode %}
 		<ul class="nav">
 			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">File <b class="caret"></b></a>
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ gettext("File") }} <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 					<li><a href="#" id="new_worksheet"><i class="icon-file"></i> {{ gettext("New Worksheet") }}</a></li>
 					<li><a href="#" id="save_worksheet"><i class="icon-ok"></i> {{ gettext("Save Worksheet") }}</a></li>
 					<li><a href="#" id="close_worksheet"><i class="icon-remove"></i> {{ gettext("Close Worksheet") }}</a></li>
 
 					<li class="divider"></li>
-					<li><a href="text" id="worksheet_text"><i class="icon-font"></i> Text View</a></li>
-					<li><a href="edit" id="worksheet_edit"><i class="icon-pencil"></i> Edit Mode</a></li>
+					<li><a href="text" id="worksheet_text"><i class="icon-font"></i> {{ gettext("Text View") }}</a></li>
+					<li><a href="edit" id="worksheet_edit"><i class="icon-pencil"></i> {{ gettext("Edit Mode") }}</a></li>
 
 					<li class="divider"></li>
 					<li><a href="#" id="export_to_file"><i class="icon-download"></i> {{ gettext("Export to File") }}</a></li>
