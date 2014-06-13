@@ -18,13 +18,12 @@ msgstr ""
 "Generated-By: Babel 1.3\n"
 
 #: sagenb/data/sage/html/docs.html:3 sagenb/data/sage/html/docs.html:36
-#, fuzzy
 msgid "Getting Started with the Sage Notebook"
-msgstr "Aus dem Sage-Notebook ausloggen"
+msgstr "Einstieg ins Sage-Notebook"
 
 #: sagenb/data/sage/html/docs.html:41
 msgid "Some Notes about POKAL"
-msgstr ""
+msgstr "Anmerkungen zu POKAL"
 
 #: sagenb/data/sage/html/docs.html:42
 msgid ""
@@ -36,33 +35,31 @@ msgid ""
 "\t\tfor some basic POKAL specific issues. The POKAL administrator team is"
 " pleased to help you, too."
 msgstr ""
+"Dies ist eine für das <a href=\"https://elearning.physik.uni-frankfurt.de/projekt/wiki/POKAL\">POKAL</a>-Projekt angepasste Sage-Installation."
+"Bitte lies die <b><a href=\"https://elearning.physik.uni-frankfurt.de/projekt/wiki/POKAL/Hilfe\">POKAL Hilfeseite</a></b> bei POKAL spezifischen Problemen."
+"Auch die POKAL-Administratoren werden dir gerne weiter helfen."
 
 #: sagenb/data/sage/html/docs.html:48
 msgid "Some Lingo"
-msgstr ""
+msgstr "Fachjargon"
 
 #: sagenb/data/sage/html/docs.html:52
 msgid "Worksheet"
 msgstr "Arbeitsblatt"
 
 #: sagenb/data/sage/html/docs.html:53
-#, fuzzy
 msgid "an ordered list of Sage calculations with output"
-msgstr ""
-"Ein <em>Arbeitsblatt</em> ist eine geordnete Liste von Berechnungen in "
-"Sage samt Ausgaben."
+msgstr "Ein <em>Arbeitsblatt</em> besteht aus einer Reihe von Sage-Berechnungen samt Ausgaben."
 
 #: sagenb/data/sage/html/docs.html:56
-#, fuzzy
 msgid "Session"
-msgstr "Version"
+msgstr "Sitzung"
 
 #: sagenb/data/sage/html/docs.html:57
 #, fuzzy
 msgid "a worksheet and a set of variables in some state"
 msgstr ""
-"Eine <em>Sitzung</em> ist ein Arbeitsblatt mit einer Menge von Variablen "
-"in einem gewissen Zustand."
+"Eine <em>Sitzung</em> ist ein Arbeitsblatt mit einer Menge von Variablen in einem gewissen Zustand."
 
 #: sagenb/data/sage/html/docs.html:60 sagenb/notebook/template.py:146
 msgid "Sage Notebook"
@@ -72,19 +69,17 @@ msgstr "Sage Notebook"
 #, fuzzy
 msgid "a collection of worksheets, saved objects, and user information"
 msgstr ""
-"<em>Sage Notebook</em> ist eine Sammlung von Arbeitsblättern, "
-"gespeicherten Objekten und Benutzerinformationen"
+"<em>Sage Notebook</em> ist eine Sammlung von Arbeitsblättern, gespeicherten Objekten und Benutzerinformationen"
 
 #: sagenb/data/sage/html/docs.html:68
 msgid "Finding More Help"
-msgstr ""
+msgstr "Weitere Hilfe suchen"
 
 #: sagenb/data/sage/html/docs.html:72 sagenb/notebook/tutorial.py:355
 msgid "Get Started with Sage"
 msgstr "Erste Schritte mit Sage"
 
 #: sagenb/data/sage/html/docs.html:73
-#, fuzzy
 msgid ""
 "Check out the <a href=\"/doc/live/tutorial/index.html\">tutorial</a>. (If"
 " you have trouble check out the <a "
@@ -106,10 +101,12 @@ msgid ""
 "after an object and press <strong>Tab</strong> to see source code for "
 "that object."
 msgstr ""
+"Tippe \"?\" direkt hinter einem Objekt und drücke <strong>Tab</strong>, um die Objekthilfe auf zu rufen. "
+"Zusätzlich kannst du \"??\" hinter einem Objekt eingeben, um den Quellcode des Objekts zu sehen."
 
 #: sagenb/data/sage/html/docs.html:80
 msgid "Search Documentation and Source"
-msgstr ""
+msgstr "Durchsuche Dokumentation und Quellcode"
 
 #: sagenb/data/sage/html/docs.html:81
 #, fuzzy
@@ -130,24 +127,22 @@ msgid "Key and Mouse Bindings"
 msgstr "Tastatur- und Mausanbindung"
 
 #: sagenb/data/sage/html/docs.html:92
-#, fuzzy
 msgid "Evaluate"
-msgstr "auswerten"
+msgstr "Auswerten"
 
 #: sagenb/data/sage/html/docs.html:93
 msgid "Press <strong>Shift-Enter</strong>"
-msgstr ""
+msgstr "Drücke <strong>Shift-Enter</strong>"
 
 #: sagenb/data/sage/html/docs.html:96
-#, fuzzy
 msgid "Auto-Completion"
-msgstr "Tabulator-Vervollständigung"
+msgstr "Auto-Vervollständigung"
 
 #: sagenb/data/sage/html/docs.html:97
 msgid ""
-"Press <strong>Tab</strong> or <strong>Ctrl-Space</strong>/<strong>Cmd-"
-"Space</strong>"
+"Press <strong>Tab</strong> or <strong>Ctrl-Space</strong>/<strong>Cmd-Space</strong>"
 msgstr ""
+"Drücke <strong>Tab</strong> oder <strong>Strg-Leertaste</strong>/<strong>Cmd-Space</strong>"
 
 #: sagenb/data/sage/html/docs.html:100 sagenb/notebook/tutorial.py:370
 msgid "Insert New Cell"
@@ -159,20 +154,19 @@ msgid ""
 "buttons. Clicking on a new cell button will create a new cell. Holding "
 "Shift and clicking a new cell button will create a text cell."
 msgstr ""
+"Klicke/Überstreiche mit der Maus den Bereich zwischen zwei Zellen, um neue Zellen zu erstellen. "
+"Halte dabei zusätzlich die Shift-Taste gedrückt, um eine Textzelle zu erstellen."
 
 #: sagenb/data/sage/html/docs.html:104 sagenb/notebook/tutorial.py:372
 msgid "Delete Cell"
 msgstr "Zelle löschen"
 
 #: sagenb/data/sage/html/docs.html:105
-#, fuzzy
 msgid "Delete all cell contents, then press <strong>Backspace</strong>."
 msgstr ""
-"Löschen Sie den gesamten Zellinhalt und drücken Sie dann "
-"<strong>Backspace</strong>."
+"Löschen Sie den gesamten Zellinhalt und drücken Sie dann <strong>Backspace</strong>."
 
 #: sagenb/data/sage/html/docs.html:108
-#, fuzzy
 msgid "Indenting"
 msgstr "Blöcke einrücken"
 
@@ -181,9 +175,9 @@ msgid ""
 "You can indent and un-indent selected blocks of text by pressing "
 "<strong>Tab</strong> and <strong>Shift-Tab</strong> respectively."
 msgstr ""
+"Du kannst ausgewählten Text ein- oder ausrücken indem du <strong>Tab</strong> oder <strong>Shift-Tab</strong> drückst."
 
 #: sagenb/data/sage/html/docs.html:116
-#, fuzzy
 msgid "Session Management"
 msgstr "Benutzerverwaltung"
 
@@ -198,8 +192,8 @@ msgid ""
 "interrupt Sage by sending many interrupt signals."
 msgstr ""
 "Klicken Sie auf <u>Unterbrechen</u> oder drücken Sie Escape in einer "
-"beliebigen Zelle. Dadurch werden viele Interrupt-Signale gesendet, die "
-"SAGE (versuchen zu) unterbrechen."
+"beliebigen Zelle. Dadurch werden viele Interrupt-Signale gesendet, die (versuchen) "
+"SAGE zu unterbrechen."
 
 #: sagenb/data/sage/html/docs.html:124 sagenb/notebook/tutorial.py:391
 msgid "Restart"
@@ -207,16 +201,15 @@ msgstr "Neu starten"
 
 #: sagenb/data/sage/html/docs.html:125
 msgid "Click <strong>Evaluation > Restart Worksheet</strong>."
-msgstr ""
+msgstr "Klicke <strong>Auswertung > Arbeitsblatt neustarten</strong>."
 
 #: sagenb/data/sage/html/docs.html:132 sagenb/notebook/tutorial.py:394
 msgid "Special Cell Blocks"
 msgstr "Spezielle Zell-Blöcke"
 
 #: sagenb/data/sage/html/docs.html:136
-#, fuzzy
 msgid "Cell System"
-msgstr "Vorausgewähltes System"
+msgstr "Zellen-System"
 
 #: sagenb/data/sage/html/docs.html:137
 #, python-format
@@ -225,11 +218,13 @@ msgid ""
 "of cell input to evaluate using that system. In addition, using "
 "<code>%%sh</code> will evaluate a cell as a shell script."
 msgstr ""
+"Schreibe <code>%%gap</code>, <code>%%singular</code>, etc. in die erste Zeile "
+"einer Zelle, um die Evaluierung mit diesem System durchzuführen. Außerdem kann "
+"<code>%%sh</code> verwendet werden, um die Zelle als Shell-Skript auszuführen."
 
 #: sagenb/data/sage/html/docs.html:140
-#, fuzzy
 msgid "Interaction"
-msgstr "Konstruktionen"
+msgstr "Interaktion"
 
 #: sagenb/data/sage/html/docs.html:141
 #, fuzzy
@@ -237,21 +232,20 @@ msgid ""
 "Put <code>@interact</code> on the line before a function definition. Type"
 " <code>interact?</code> for more details."
 msgstr ""
-"Setzen Sie @interact in die Zeile vor einer Funktionsdefinition.  Geben "
+"Setzen Sie <code>@interact</code> in die Zeile vor einer Funktionsdefinition. Geben "
 "Sie interact? ein für nähere Informationen."
 
 #: sagenb/data/sage/html/docs.html:144
-#, fuzzy
 msgid "Auto-Evaluation"
-msgstr "auswerten"
+msgstr "Auto-Auswertung"
 
 #: sagenb/data/sage/html/docs.html:145
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Cells with <code>%%auto</code> in the input will be automatically "
 "evaluated when the worksheet is loaded."
 msgstr ""
-"Alle Zellen mit \"#auto\" in der Eingabe werden beim ersten Öffnen des "
+"Alle Zellen mit <code>%%auto</code> in der Eingabe werden beim ersten Öffnen des "
 "Arbeitsblatts automatisch ausgewertet."
 
 #: sagenb/data/sage/html/docs.html:148
@@ -262,12 +256,11 @@ msgstr "Bewertung"
 #: sagenb/data/sage/html/docs.html:149
 #, python-format
 msgid "Cells with <code>%%time</code> will time evaluation."
-msgstr ""
+msgstr "Zellen mit <code>%%time</code>  werden Zeit-Evaluiert."
 
 #: sagenb/data/sage/html/docs.html:156
-#, fuzzy
 msgid "Tips and Tricks"
-msgstr "Dateien und <i>Scripte</i>"
+msgstr "Tipps und Tricks"
 
 #: sagenb/data/sage/html/docs.html:160 sagenb/notebook/tutorial.py:407
 msgid "Input Rules"
@@ -308,7 +301,7 @@ msgstr ""
 #: sagenb/data/sage/html/docs.html:168
 #, fuzzy
 msgid "Typesetting"
-msgstr "Einstellungen"
+msgstr "Schrift-Einstellungen"
 
 #: sagenb/data/sage/html/docs.html:169
 msgid ""
@@ -322,12 +315,10 @@ msgid "Files and Scripts"
 msgstr "Dateien und <i>Scripte</i>"
 
 #: sagenb/data/sage/html/docs.html:180
-#, fuzzy
 msgid "Loading Sage/Python Scripts"
 msgstr "Lade SAGE/Python-<i>Scripte</i>"
 
 #: sagenb/data/sage/html/docs.html:181
-#, fuzzy
 msgid ""
 "Use <code>load filename.sage</code> and <code>load filename.py</code>. "
 "Load is relative to the path you started the notebook in. The .sage files"
@@ -344,7 +335,6 @@ msgid "Attaching Scripts"
 msgstr "Anhängen von <i>Scripten</i>"
 
 #: sagenb/data/sage/html/docs.html:185
-#, fuzzy
 msgid ""
 "Use <code>attach filename.sage</code> or <code>attach filename.py</code>."
 " Attached files are automatically reloaded when the file changes. The "
@@ -360,7 +350,6 @@ msgid "Working Directory"
 msgstr "Arbeitsverzeichnis"
 
 #: sagenb/data/sage/html/docs.html:189
-#, fuzzy
 msgid ""
 "Each block of code is run from its own directory. If any images are "
 "created as a side effect, they will automatically be displayed."
@@ -373,7 +362,6 @@ msgid "DIR Variable"
 msgstr "DIR-Variable"
 
 #: sagenb/data/sage/html/docs.html:193
-#, fuzzy
 msgid ""
 "The variable DIR contains the directory from which you started the Sage "
 "notebook. For example, to open a file in that directory, do "
@@ -381,14 +369,13 @@ msgid ""
 msgstr ""
 "Die DIR-Variable enthält das Verzeichnis, von dem aus SAGE-Notebook "
 "gestartet wurde.  Um z.B. eine Datei in diesem Verzeichnis zu öffnen, "
-"verwenden Sie \"open(DIR+'Dateiname')\"."
+"verwenden Sie <code>open(DIR+'Dateiname')</code>."
 
 #: sagenb/data/sage/html/docs.html:196 sagenb/notebook/tutorial.py:423
 msgid "DATA Variable"
 msgstr "DATA-Variable"
 
 #: sagenb/data/sage/html/docs.html:197
-#, fuzzy
 msgid ""
 "Use the Data menu to upload images and other files, and create new files "
 "that can be shared between worksheets. The DATA variable contains the "
@@ -401,10 +388,10 @@ msgstr ""
 "sowie neue Dateien zu erstellen, auf die von mehreren Arbeitsblättern aus"
 " zugegriffen werden kann.  Die DATA-Variable enthält den Pfad zu den "
 "Daten-Dateien.  Um z.B. eine Datei in diesem Verzeichnis zu öffnen, "
-"verwenden Sie \"open(DATA+'Dateiname')\".  Wenn Beispiel.sage eine von "
-"Ihnen hochgeladene SAGE-Datei ist, geben Sie \"load Beispiel.sage\" ein."
+"verwenden Sie <code>open(DATA+'Dateiname')</code>. Wenn Beispiel.sage eine von "
+"Ihnen hochgeladene SAGE-Datei ist, geben Sie <code>load Beispiel.sage</code> ein."
 "  Wenn Beispiel.py eine Python-Datei ist, können Sie sie importieren, "
-"indem Sie \"import Beispiel\" eingeben."
+"indem Sie <code>import Beispiel</code> eingeben."
 
 #: sagenb/data/sage/html/docs.html:200 sagenb/notebook/tutorial.py:425
 msgid "Loading and Saving Objects"
@@ -417,7 +404,7 @@ msgid ""
 "This allows for easy moving of objects from one worksheet to another, and"
 " saving of objects for later use."
 msgstr ""
-"Verwenden Sie \"save obj1 obj2 ...\" und \"load obj1 obj2 ...\". Das "
+"Verwenden Sie <code>save obj1 obj2 ...</code> und <code>load obj1 obj2 ...</code>. Das "
 "macht es leicht, Objekte von einem Arbeitsblatt zu einem anderen zu "
 "bewegen oder zur späteren Verwendung zu speichern."
 
@@ -432,8 +419,8 @@ msgid ""
 " Use <code>load_session('name')</code> to merge in all variables from a "
 "saved session."
 msgstr ""
-"Verwenden Sie \"save_session('Name')\", um alle Variablen in ein Objekt "
-"zu speichern. Verwenden Sie \"load_session('Name')\", um alle Variablen "
+"Verwenden Sie <code>save_session('Name')</code>, um alle Variablen in ein Objekt "
+"zu speichern. Verwenden Sie <code>load_session('Name')</code>, um alle Variablen "
 "einer gespeicherten Sitzung <i>einzulesen</i>."
 
 #: sagenb/data/sage/html/docs.html:211
@@ -449,7 +436,7 @@ msgstr ""
 
 #: sagenb/data/sage/html/error_message.html:5
 msgid "Uh Oh"
-msgstr ""
+msgstr "Oh oh!"
 
 #: sagenb/data/sage/html/error_message.html:34
 msgid "Continue"
@@ -489,31 +476,29 @@ msgstr "Fehler"
 
 #: sagenb/data/sage/html/login.html:18
 msgid "Bad login credentials"
-msgstr ""
+msgstr "Ungültige Anmeldeinformation"
 
 #: sagenb/data/sage/html/login.html:25
 msgid "Creating new users is disabled by the administrator."
 msgstr ""
-"Die Funktion, neue Benutzer anzulegen, wurde vom Administrator "
-"deaktiviert."
+"Die Funktion, neue Benutzer anzulegen, wurde vom Administrator deaktiviert."
 
 #: sagenb/data/sage/html/login.html:69
-#, fuzzy
 msgid "Public worksheets"
-msgstr "Arbeitsblatt erneut veröffentlichen"
+msgstr "Öffentliche Arbeitsblatt"
 
 #: sagenb/data/sage/html/login.html:70
 msgid ""
 "Users can publish worksheets for demonstration purpose, lectures or "
 "simple sharing via link "
 msgstr ""
+"Benutzer können Arbeitsblätter zu Demonstrationszwecken, für Vorlesungen oder schlicht zum Teilen veröffentlichen "
 
 #: sagenb/data/sage/html/login.html:72
 msgid "View"
-msgstr ""
+msgstr "Anzeigen"
 
 #: sagenb/data/sage/html/login.html:78
-#, fuzzy
 msgid "Login"
 msgstr "Einloggen"
 
@@ -532,9 +517,8 @@ msgid "Password"
 msgstr "Passwort"
 
 #: sagenb/data/sage/html/login.html:88
-#, fuzzy
 msgid "forgot password?"
-msgstr "Passwort vergessen"
+msgstr "Passwort vergessen?"
 
 #: sagenb/data/sage/html/login.html:95
 msgid "Remember me"
@@ -544,30 +528,29 @@ msgstr "Meine Anmeldedaten merken"
 #: sagenb/data/sage/html/accounts/registration.html:2
 #: sagenb/data/sage/html/accounts/registration.html:94
 msgid "Register"
-msgstr ""
+msgstr "Registrieren"
 
 #: sagenb/data/sage/html/login.html:113
 msgid "Impressum"
-msgstr ""
+msgstr "Impressum"
 
 #: sagenb/data/sage/html/login.html:114
 msgid "Terms of Use"
-msgstr ""
+msgstr "Nutzungsbedingungen"
 
 #: sagenb/data/sage/html/login.html:115
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Datenschutzbestimmungen"
 
 #: sagenb/data/sage/html/login.html:116
 msgid "Project"
-msgstr ""
+msgstr "Projekt"
 
 #: sagenb/data/sage/html/login.html:117
-msgid "PhysikOnline ist ein Projekt des Fachbereichs Physik der Uni Frankfurt"
-msgstr ""
+msgid "PhysikOnline is a project of physics' faculty at university of Frankfurt"
+msgstr "PhysikOnline ist ein Projekt des Fachbereichs Physik der Uni Frankfurt"
 
 #: sagenb/data/sage/html/login.html:144
-#, fuzzy
 msgid "username"
 msgstr "Benutzername"
 
@@ -579,7 +562,7 @@ msgstr "Wählen Sie einen OpenID-Anbieter"
 #: sagenb/data/sage/html/worksheet_text.html:16
 #, fuzzy
 msgid "Back to worksheet"
-msgstr "Arbeitsblatt auswählen"
+msgstr "Zurück zum Arbeitsblatt"
 
 #: sagenb/data/sage/html/worksheet_edit.html:24
 msgid "Save Changes"
@@ -610,23 +593,23 @@ msgstr ""
 "können Sie Ihr Konto nicht wiederherstellen."
 
 #: sagenb/data/sage/html/accounts/account_recovery.html:18
-#, fuzzy
 msgid "Reset password"
 msgstr "Neues Passwort"
 
 #: sagenb/data/sage/html/accounts/openid_profile.html:2
 msgid "Create your profile"
-msgstr ""
+msgstr "Erstelle dein Profil"
 
 #: sagenb/data/sage/html/accounts/openid_profile.html:9
 msgid ""
 "<strong>Uh oh!</strong> There was an error creating your account. Account"
 " creation may be disabled. Please contact the Notebook administrator."
-msgstr ""
+msgstr "<strong>Ups!</strong> Beim Erstellen des Accounts ist ein Fehler aufgetreten. "
+"Möglicherweise ist diese Funktion deaktiviert. Bitte kontaktiere einen Administrator."
 
 #: sagenb/data/sage/html/accounts/openid_profile.html:17
 msgid "Create your Sage profile"
-msgstr ""
+msgstr "Erstelle dein Sage-Profil"
 
 #: sagenb/data/sage/html/accounts/openid_profile.html:26
 #: sagenb/data/sage/html/accounts/registration.html:16
@@ -656,9 +639,8 @@ msgstr ""
 #: sagenb/data/sage/html/accounts/openid_profile.html:40
 #: sagenb/data/sage/html/accounts/registration.html:58
 #: sagenb/data/sage/html/settings/account_settings.html:65
-#, fuzzy
 msgid "Email"
-msgstr "Neue E-Mail"
+msgstr "E-Mail"
 
 #: sagenb/data/sage/html/accounts/openid_profile.html:46
 #: sagenb/data/sage/html/accounts/registration.html:64
@@ -683,9 +665,8 @@ msgstr ""
 
 #: sagenb/data/sage/html/accounts/openid_profile.html:60
 #: sagenb/data/sage/html/accounts/registration.html:79
-#, fuzzy
 msgid "Challenge"
-msgstr "Art der Herausforderung"
+msgstr "Herausforderung"
 
 #: sagenb/data/sage/html/accounts/openid_profile.html:66
 #: sagenb/data/sage/html/accounts/registration.html:85
@@ -698,9 +679,8 @@ msgid "Invalid challenge response"
 msgstr "Ungültige Anfrage auf eine Herausforderung"
 
 #: sagenb/data/sage/html/accounts/openid_profile.html:77
-#, fuzzy
 msgid "Create profile"
-msgstr "Daten-Datei"
+msgstr "Profil erstellen"
 
 #: sagenb/data/sage/html/accounts/registration.html:34
 msgid "No password given"
@@ -715,7 +695,6 @@ msgid "Passwords didn't match"
 msgstr "Die Passwörter stimmen nicht überein"
 
 #: sagenb/data/sage/html/accounts/registration.html:43
-#, fuzzy
 msgid ""
 "Your password must have at least 4 characters. Your password can not "
 "contain your username or spaces."
@@ -724,7 +703,6 @@ msgstr ""
 "Ihren Benutzernamen noch Leerzeichen enthalten."
 
 #: sagenb/data/sage/html/accounts/registration.html:47
-#, fuzzy
 msgid "Re-type password"
 msgstr "Geben Sie Ihr Passwort nochmals ein"
 
@@ -734,11 +712,11 @@ msgstr "Geben Sie Ihr Passwort nochmals ein"
 
 #: sagenb/data/sage/html/alerts/connection_alert.html:2
 msgid "<strong>Uh oh!</strong> Connection to the Sage Notebook has been lost."
-msgstr ""
+msgstr "<strong>Hoppala!</strong> Verbindung zum Server ist unterbrochen worden."
 
 #: sagenb/data/sage/html/alerts/rename_alert.html:2
 msgid "<strong>\"Untitled\"</strong> Would you like to rename this worksheet?"
-msgstr ""
+msgstr "<strong>\"Untitled\"</strong> Möchtest du das Arbeitsblatt umbenennen?"
 
 #: sagenb/data/sage/html/alerts/rename_alert.html:4
 #: sagenb/data/sage/js/translated-messages.js:13
@@ -747,13 +725,13 @@ msgstr "Umbenennen"
 
 #: sagenb/data/sage/html/alerts/rename_alert.html:5
 msgid "No thanks"
-msgstr ""
+msgstr "Nein, danke"
 
 #: sagenb/data/sage/html/alerts/worksheet_locked_alert.html:3
 msgid ""
-"<strong>Nice try!</strong> This worksheet is locked. You can look but you"
-" can't touch."
+"<strong>Nice try!</strong> This worksheet is locked. You can look but you can't touch."
 msgstr ""
+"<strong>Netter Versuch!</strong> Das Arbeitsblatt ist blockiert. Du kannst es betrachten, aber nicht verändern."
 
 #: sagenb/data/sage/html/modals/add_user_modal.html:5
 #: sagenb/data/sage/html/modals/add_user_modal.html:25
@@ -773,45 +751,43 @@ msgstr ""
 
 #: sagenb/data/sage/html/modals/data_modal.html:5
 msgid "Data"
-msgstr ""
+msgstr "Daten"
 
 #: sagenb/data/sage/html/modals/data_modal.html:12
-#, fuzzy
 msgid "Manage"
-msgstr "Sprache"
+msgstr "Verwalten"
 
 #: sagenb/data/sage/html/modals/data_modal.html:14
 msgid "Import"
-msgstr ""
+msgstr "Importieren"
 
 #: sagenb/data/sage/html/modals/data_modal.html:17
 msgid "New file"
-msgstr ""
+msgstr "Neue Datei"
 
 #: sagenb/data/sage/html/modals/data_modal.html:18
 #: sagenb/data/sage/html/modals/import_modal.html:12
 #, fuzzy
 msgid "Upload file"
-msgstr "Daten-Datei"
+msgstr "Datei hochladen"
 
 #: sagenb/data/sage/html/modals/data_modal.html:19
 msgid "File from URL"
-msgstr ""
+msgstr "Datei von URL"
 
 #: sagenb/data/sage/html/modals/data_modal.html:39
 #, fuzzy
 msgid "Name"
-msgstr "Umbenennen"
+msgstr "Name"
 
 #: sagenb/data/sage/html/modals/data_modal.html:42
 msgid "Pick a name for the file."
-msgstr ""
+msgstr "Wähle einen Dateinamen."
 
 #: sagenb/data/sage/html/modals/data_modal.html:55
 #: sagenb/data/sage/html/modals/import_modal.html:37
-#, fuzzy
 msgid "File"
-msgstr "Daten-Datei"
+msgstr "Datei"
 
 #: sagenb/data/sage/html/modals/data_modal.html:62
 #: sagenb/data/sage/html/modals/data_modal.html:86
@@ -824,17 +800,17 @@ msgstr "Umbenennen"
 #: sagenb/data/sage/html/modals/data_modal.html:65
 #: sagenb/data/sage/html/modals/data_modal.html:89
 msgid "Optional. Pick a new name for the file."
-msgstr ""
+msgstr "Optional. Wähle einen Dateinamen."
 
 #: sagenb/data/sage/html/modals/data_modal.html:78
 #: sagenb/data/sage/html/modals/import_modal.html:62
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: sagenb/data/sage/html/modals/data_modal.html:81
 #: sagenb/data/sage/html/modals/import_modal.html:65
 msgid "URL of the file you would like to import."
-msgstr ""
+msgstr "URL-Adresse der zu importierenden Datei."
 
 #: sagenb/data/sage/html/modals/data_modal.html:102
 #: sagenb/data/sage/html/modals/import_modal.html:89
@@ -843,20 +819,19 @@ msgstr "Hochladen"
 
 #: sagenb/data/sage/html/modals/data_modal.html:103
 msgid "Done"
-msgstr ""
+msgstr "Fertig"
 
 #: sagenb/data/sage/html/modals/import_modal.html:5
-#, fuzzy
 msgid "Import Worksheet"
 msgstr "Arbeitsblatt kopieren"
 
 #: sagenb/data/sage/html/modals/import_modal.html:13
 msgid "From URL"
-msgstr ""
+msgstr "Von URL"
 
 #: sagenb/data/sage/html/modals/import_modal.html:17
 msgid "Supported file formats:"
-msgstr ""
+msgstr "Unterstützte Dateiformate:"
 
 #: sagenb/data/sage/html/modals/import_modal.html:19
 #, fuzzy
@@ -869,18 +844,20 @@ msgid ""
 "<code>&#123;&#123;&#123;</code> and <code>&#125;&#125;&#125;</code> that "
 "defines a worksheet"
 msgstr ""
+"Eine Text-Datei mit HTML-Code, die Zellen mit <code>&#123;&#123;&#123;</code> und <code>&#125;&#125;&#125;</code>
+"einrahmt, definiert ein Arbeitsblatt"
 
 #: sagenb/data/sage/html/modals/import_modal.html:21
 msgid ""
-"the URL of a page of the Sage Documentation, for example the URL of <a "
-"class=\"reference external\" "
-"href=\"http://www.sagemath.org/doc/reference/sage/rings/integer.html\">this"
-" page</a>"
+"the URL of a page of the Sage Documentation, for example the URL of "
+"<a class=\"reference external\" href=\"http://www.sagemath.org/doc/reference/sage/rings/integer.html\">this page</a>"
 msgstr ""
+"Die URL einer Sage-Dokumentationsseite, wie z.B. die Adresse "
+"<a class=\"reference external\" href=\"http://www.sagemath.org/doc/reference/sage/rings/integer.html\">dieser Seite</a>"
 
 #: sagenb/data/sage/html/modals/import_modal.html:22
 msgid "an HTML page generated by docutils from a ReStructuredText file"
-msgstr ""
+msgstr "Eine HTML-Seite, durch docutils aus ReStructuredText Datei generiert"
 
 #: sagenb/data/sage/html/modals/import_modal.html:23
 msgid ""
@@ -889,29 +866,30 @@ msgid ""
 "inside backticks \"<code>`</code>\" or dollar signs \"<code>$</code>\" or"
 " \"<code>$$</code>\". Math role is not supported for now.)"
 msgstr ""
+"eine ReStructuredText Datei (Füge eine Zeile \"<code>.. escape-backslashes</code>\" in die Datei ein, "
+"wenn Backslashes escaped werden sollen. Schreibe LATEX-Code in Backticks \"<code>`</code>\" oder Dollarzeichen \"<code>$</code>\" oder"
+" \"<code>$$</code>\". Mathemodus wird derzeit nicht unterstützt)"
 
 #: sagenb/data/sage/html/modals/import_modal.html:24
 msgid "a zip archive of any of the above"
-msgstr ""
+msgstr "Ein Zip-Archiv irgendeiner der genannten Typen"
 
 #: sagenb/data/sage/html/modals/import_modal.html:47
 #: sagenb/data/sage/html/modals/import_modal.html:73
 #, fuzzy
 msgid "Optional. Pick a new name for the worksheet."
-msgstr "Bitte geben Sie einen Namen ein für dieses Arbeitsblatt."
+msgstr "Bitte geben Sie einen Namen für dieses Arbeitsblatt ein."
 
 #: sagenb/data/sage/html/modals/sharing_modal.html:5
 #: sagenb/data/sage/html/modals/sharing_modal.html:12
-#, fuzzy
 msgid "Sharing"
-msgstr "Bewertung"
+msgstr "Teilen"
 
 #: sagenb/data/sage/html/modals/sharing_modal.html:15
 #, fuzzy
 msgid "Add/remove collaborators by entering their user names separated by commas."
 msgstr ""
-"Sie können Mitarbeiter hinzufügen oder entfernen (Trennen der Namen durch"
-" Kommata)."
+"Sie können Mitarbeiter hinzufügen/entfernen (Trennen der Namen durch Kommata)."
 
 #: sagenb/data/sage/html/modals/sharing_modal.html:19
 #, fuzzy
@@ -919,14 +897,12 @@ msgid "Publishing"
 msgstr "Veröffentlichen anhalten."
 
 #: sagenb/data/sage/html/modals/sharing_modal.html:21
-#, fuzzy
 msgid "Publish this worksheet"
-msgstr "Arbeitsblatt erneut veröffentlichen"
+msgstr "Arbeitsblatt veröffentlichen"
 
 #: sagenb/data/sage/html/modals/sharing_modal.html:22
-#, fuzzy
 msgid "Re-publish this worksheet when it changes"
-msgstr "Dieses Arbeitsblatt in den Mülleimer verschieben"
+msgstr "Arbeitsblatt erneut veröffentlichen"
 
 #: sagenb/data/sage/html/modals/sharing_modal.html:23
 #, fuzzy
@@ -940,19 +916,19 @@ msgstr "Änderungen speichern"
 #: sagenb/data/sage/html/modals/system_modal.html:5
 #, fuzzy
 msgid "Worksheet System"
-msgstr "Arbeitsblatt"
+msgstr "Arbeitsblattsystem"
 
 #: sagenb/data/sage/html/modals/system_modal.html:38
 msgid "Change system"
-msgstr ""
+msgstr "Änderungssystem"
 
 #: sagenb/data/sage/html/pokal/portal.html:7
 msgid "Welcome to POKAL 2.0"
-msgstr ""
+msgstr "Willkommen zu POKAL 2.0"
 
 #: sagenb/data/sage/html/pokal/portal.html:57
 msgid "Friends and Sponsors"
-msgstr ""
+msgstr "Freunde und Förderer"
 
 #: sagenb/data/sage/html/settings/account_settings.html:3
 #: sagenb/data/sage/html/settings/account_settings.html:16
@@ -963,7 +939,7 @@ msgstr "Kontoeinstellungen"
 #: sagenb/data/sage/html/settings/manage_users.html:3
 #: sagenb/data/sage/html/settings/manage_users.html:10
 msgid "Manage Users"
-msgstr "Benutzer verwalten"
+msgstr "Benutzerverwaltung"
 
 #: sagenb/data/sage/html/settings/account_settings.html:20
 #: sagenb/data/sage/html/settings/notebook_settings.html:3
@@ -973,17 +949,16 @@ msgstr "Notebook-Einstellungen"
 
 #: sagenb/data/sage/html/settings/account_settings.html:25
 msgid "Auto-Save"
-msgstr ""
+msgstr "Autom. Speichern"
 
 #: sagenb/data/sage/html/settings/account_settings.html:27
 #, fuzzy
 msgid "Auto-Save Interval"
-msgstr "Intervall für automatisches Speichern abändern"
+msgstr "Intervall für automatisches Speichern"
 
 #: sagenb/data/sage/html/settings/account_settings.html:31
-#, fuzzy
 msgid "minute(s)"
-msgstr "Minuten:"
+msgstr "Minuten"
 
 #: sagenb/data/sage/html/settings/account_settings.html:40
 msgid "Change Password"
@@ -1015,14 +990,12 @@ msgid "Save"
 msgstr "Speichern"
 
 #: sagenb/data/sage/html/settings/manage_users.html:16
-#, fuzzy
 msgid "Password Reset"
-msgstr "Kein Passwort angegeben"
+msgstr "Passwort zurücksetzen"
 
 #: sagenb/data/sage/html/settings/manage_users.html:17
-#, fuzzy
 msgid "User Suspension"
-msgstr "Sperrung"
+msgstr "Benutzersperrung"
 
 #: sagenb/data/sage/html/settings/manage_users.html:24
 msgid "Reset"
@@ -1287,21 +1260,19 @@ msgstr "Server"
 
 #: sagenb/notebook/server_conf.py:61
 msgid "LDAP"
-msgstr ""
+msgstr "LDAP"
 
 #: sagenb/notebook/server_conf.py:66
 msgid "Maximum history length"
 msgstr "Maximale Länge des Verlaufs"
 
 #: sagenb/notebook/server_conf.py:73
-#, fuzzy
 msgid "Idle timeout for normal worksheets (seconds)"
-msgstr "Beenden nach Leerlaufdauer in Sekunden"
+msgstr "Beenden normale Arbeitsblätter nach Leerlaufdauer (in Sekunden)"
 
 #: sagenb/notebook/server_conf.py:80
-#, fuzzy
 msgid "Idle timeout for live documentation (seconds)"
-msgstr "Beenden nach Leerlaufdauer in Sekunden"
+msgstr "Beenden Live-Dokumentation nach Leerlaufdauer (in Sekunden)"
 
 #: sagenb/notebook/server_conf.py:86
 msgid "Idle check interval (seconds)"
@@ -1312,13 +1283,12 @@ msgid "Save interval (seconds)"
 msgstr "Intervall für automatisches Speichern (Sekunden)"
 
 #: sagenb/notebook/server_conf.py:98
-#, fuzzy
 msgid "Doc worksheet pool size"
 msgstr "Größe des Dokumentenspeichers"
 
 #: sagenb/notebook/server_conf.py:104
 msgid "Enable published interacts (EXPERIMENTAL; USE AT YOUR OWN RISK)"
-msgstr ""
+msgstr "Erlaube interacts in öffentlichen Arbeitsblättern (EXPERIMENTELL: Benutzung auf eigenes Risiko)"
 
 #: sagenb/notebook/server_conf.py:110
 msgid "Worksheet process users (comma-separated list)"
@@ -1333,7 +1303,6 @@ msgid "Worksheet process limits"
 msgstr "Beschränkungen für den Arbeitsblatt-Prozess"
 
 #: sagenb/notebook/server_conf.py:128
-#, fuzzy
 msgid "Model Version"
 msgstr "Sage Version"
 
@@ -1351,7 +1320,7 @@ msgstr "Vorausgewählte Sprache"
 
 #: sagenb/notebook/server_conf.py:156
 msgid "Allow OpenID authentication (requires python ssl module)"
-msgstr ""
+msgstr "Erlaube OpenID Anmeldung (benötigt python ssl module)"
 
 #: sagenb/notebook/server_conf.py:163
 msgid "Enable user registration"
@@ -1378,39 +1347,36 @@ msgid "reCAPTCHA private key"
 msgstr "reCAPTCHA privater Schlüssel"
 
 #: sagenb/notebook/server_conf.py:205
-#, fuzzy
 msgid "Enable LDAP Authentication"
-msgstr "Echtheitsnachweis"
+msgstr "Erlaube LDAP-Anmeldung"
 
 #: sagenb/notebook/server_conf.py:212
 msgid "LDAP URI"
-msgstr ""
+msgstr "LDAP URL"
 
 #: sagenb/notebook/server_conf.py:219
 msgid "Bind DN"
-msgstr ""
+msgstr "Bind DN"
 
 #: sagenb/notebook/server_conf.py:226
-#, fuzzy
 msgid "Bind Password"
-msgstr "Altes Passwort"
+msgstr "Bind Passwort"
 
 #: sagenb/notebook/server_conf.py:233
 msgid "Use GSSAPI instead of Bind DN/Password"
-msgstr ""
+msgstr "Nutze GSSAPI statt Bind DN/Passwort"
 
 #: sagenb/notebook/server_conf.py:240
 msgid "Base DN"
-msgstr ""
+msgstr "Base DN"
 
 #: sagenb/notebook/server_conf.py:247
 msgid "Username Attribute (i.e. cn, uid or userPrincipalName)"
-msgstr ""
+msgstr "Benutzernamen-Attribut (z.B. cn, uid oder userPrincipalName)"
 
 #: sagenb/notebook/server_conf.py:254
-#, fuzzy
 msgid "Query timeout (seconds)"
-msgstr "Beenden nach Leerlaufdauer in Sekunden"
+msgstr "Anfrage-Timeout (Sekunden)"
 
 #: sagenb/notebook/template.py:80
 #, python-format
