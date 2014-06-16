@@ -1224,7 +1224,7 @@ msgstr ""
 "Registrierung abzuschließen, kopieren sie bitte den folgenden Link und "
 "fügen ihn in Ihren Browser ein:\n"
 "\n"
-"%s://%s:%s/confirm?key=%s\n"
+"%(url_prefix)s://%(addr)s:%(port)s/confirm?key=%(key)s\n"
 "\n"
 "Sie werden auf eine Seite geleitet, die bestätigt, dass Sie sich "
 "tatsächlich registriert haben."
@@ -1239,9 +1239,9 @@ msgid ""
 "Make sure to reset your password by going to Settings in the upper right "
 "bar."
 msgstr ""
-"Ihr neues Passwort lautet: %s\n"
+"Ihr neues Passwort lautet: %(key)s\n"
 "\n"
-"Melden Sie sich an bei: %s://%s:%s/\n"
+"Melden Sie sich an bei: %(url_prefix)s://%(addr)s:%(port)s/\n"
 "\n"
 "Vergewissern Sie sich, Ihr Passwort zurückzusetzen. Gehen Sie dazu auf "
 "Einstellungen im rechten oberen Balken."
@@ -1627,12 +1627,12 @@ msgid "Evaluate Cell using GAP, Singular, etc."
 msgstr "Zelle auswerten unter Verwendung von GAP, Singular usw."
 
 #: sagenb/notebook/tutorial.py:396
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Put \"%%gap\", \"%%singular\", etc. as the first input line of a cell; "
 "the rest of the cell is evaluated in that system."
 msgstr ""
-"Setzen Sie \"%gap\", \"%singular\" usw. als erste Eingabezeile einer "
+"Setzen Sie \"%%gap\", \"%%singular\" usw. als erste Eingabezeile einer "
 "Zelle, so wird der Rest der Zelle im jeweiligen System ausgewertet."
 
 #: sagenb/notebook/tutorial.py:397
@@ -1640,12 +1640,12 @@ msgid "Shell Scripts"
 msgstr "Shell-Scripte"
 
 #: sagenb/notebook/tutorial.py:398
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Begin a block with %%sh to have the rest of the block evaluated as a "
 "shell script.  The current working directory is maintained."
 msgstr ""
-"Beginnen Sie einen Block mit %sh, so wird der Rest des Blocks als Shell-"
+"Beginnen Sie einen Block mit %%sh, so wird der Rest des Blocks als Shell-"
 "Script ausgewertet.  Das aktuelle Arbeitsverzeichnis wird beibehalten."
 
 #: sagenb/notebook/tutorial.py:399
