@@ -61,7 +61,6 @@ function gettext(str) {
                           "My Notebook",
                           "Archive",
                           "Trash",
-                          "Published",
                           "Published Worksheets",
                           "Active",
                           "Search",
