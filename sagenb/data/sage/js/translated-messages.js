@@ -31,3 +31,42 @@
 {{ gettext("To save this image, you can try right-clicking on the image to copy it or save it to a file, or you may be able to just drag the image to your desktop.") }}
 {{ gettext("Sorry, but you need a browser that supports the &lt;canvas&gt; tag.") }}
 {{ ngettext('Trying again in %(num)d second...', 'Trying again in %(num)d seconds...', n) }}
+{{ gettext('Login') }}
+{{ gettext('Home') }}
+{{ gettext('Published') }}
+{{ gettext('Log') }}
+{{ gettext('Settings') }}
+{{ gettext('Sign out') }}
+{{ gettext('SAGE / POKAL Support') }}
+{{ gettext('Help') }}
+{{ gettext('Report a Problem') }}
+{{ gettext('collaborators') }}
+{{ gettext("Evaluate") }}
+{{ gettext("Show Static Image") }}
+{{ gettext("Popout") }}
+{{ gettext("Open Interactive View") }}
+{{ gettext("Untitled") }}
+{{ gettext("Are you sure you would like to interrupt the running computation?") }}
+{{ gettext("Copy to clipboard: ") }}
+{{ gettext("running") }}
+{{ gettext('other(s)') }}
+{{ gettext("ago") }}
+{{ gettext("Emptying the Trash is final. Are you sure?") }}
+{{ gettext("Nothing here!") }}
+{{ gettext("Published Worksheets") }}
+{{ gettext("My Notebook") }}
+{{ gettext("Archive") }}
+{{ gettext("Trash") }}
+{{ gettext("Published") }}
+{{ gettext("Published Worksheets") }}
+{{ gettext("Active") }}
+{{ gettext("Search") }}
+{{ gettext('close') }}
+{{ gettext('open') }}
+{{ gettext('Open chat') }}
+{{ gettext('Chat') }}
+{{ gettext('chat') }}
+{{ gettext('Worksheet - Chat') }}
+{{ gettext('Send') }}
+{{ gettext('send') }}
+{{ gettext('Message from') }}

@@ -453,11 +453,9 @@ msgstr "Hier klicken, um Obiges in ein Sage Arbeitsblatt umzuwandeln"
 
 #: sagenb/data/sage/html/history.html:32
 msgid ""
-"Create a new Sage worksheet version of the last 100 commands in the above"
-" log."
+"Create a new Sage worksheet version of the last 100 commands in the above log."
 msgstr ""
-"Neue Sage-Arbeitsblatt-Fassung aus den letzten 100 Befehlen im obigen "
-"Protokoll erzeugen."
+"Neue Sage-Arbeitsblatt-Fassung aus den letzten 100 Befehlen im obigen Protokoll erzeugen."
 
 #: sagenb/data/sage/html/login.html:3 sagenb/data/sage/html/login.html:99
 #: sagenb/data/sage/html/login.html:146
@@ -656,8 +654,7 @@ msgstr "Ungültige E-Mail-Adresse"
 #: sagenb/data/sage/html/accounts/registration.html:70
 msgid ""
 "Your email address is required for account confirmation and recovery. You"
-" will be emailed a confirmation link right after you successfully sign "
-"up."
+" will be emailed a confirmation link right after you successfully sign up."
 msgstr ""
 "Zur Bestätigung sowie ggf. Wiederherstellung des Kontos wird Ihre E-Mail-"
 "Adresse benötigt. Unmittelbar nach erfolgreicher Anmeldung erhalten Sie "
@@ -742,8 +739,7 @@ msgstr "Benutzer hinzufügen"
 #: sagenb/data/sage/html/modals/add_user_modal.html:15
 msgid ""
 "The username must start with a letter and be between 4 and 32 characters "
-"long. It can only consist of letters, numbers, underscores, and one dot "
-"(.)."
+"long. It can only consist of letters, numbers, underscores, and one dot (.)."
 msgstr ""
 "Der Benutzername muss mit einem Buchstaben beginnen und zwischen 4 und 32"
 " Zeichen lang sein. Er darf nur Buchstaben, Zahlen, Unterstrich sowie "

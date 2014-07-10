@@ -3,7 +3,7 @@
 //"use strict";
 
 {# If you add any new strings to this list, please also add them to translated-messages.js. This indirection and duplication
- is in place becase pybabel canoot parse this Jinja for some reason. #}
+ is in place because pybabel cannot parse this Jinja for some reason. #}
 
 function gettext(str) {
 	var translations = {
@@ -34,7 +34,46 @@ function gettext(str) {
 						  "Get Image",
 						  'Jmol Image',
 						  "To save this image, you can try right-clicking on the image to copy it or save it to a file, or you may be able to just drag the image to your desktop.",
-						  "Sorry, but you need a browser that supports the &lt;canvas&gt; tag."
+						  "Sorry, but you need a browser that supports the &lt;canvas&gt; tag.",
+                          'Login',
+                          'Home',
+                          'Published',
+                          'Log',
+                          'Settings',
+                          'Sign out',
+                          'SAGE / POKAL Support',
+                          'Help',
+                          'Report a Problem',
+                          'collaborators',
+                          "Evaluate",
+                          "Show Static Image",
+                          "Popout",
+                          "Open Interactive View",
+                          "Untitled",
+                          "Are you sure you would like to interrupt the running computation?",
+                          "Copy to clipboard: ",
+                          "running",
+                          'other(s)',
+                          "ago",
+                          "Emptying the Trash is final. Are you sure?",
+                          "Nothing here!",
+                          "Published Worksheets",
+                          "My Notebook",
+                          "Archive",
+                          "Trash",
+                          "Published",
+                          "Published Worksheets",
+                          "Active",
+                          "Search",
+                          'close',
+                          'open',
+                          'Open chat',
+                          'Chat',
+                          'chat',
+                          'Worksheet - Chat',
+                          'Send',
+                          'send',
+                          'Message from',
 						 ] %}
 		"{{ string }}" : "{{ gettext(string) }}",
 		{% endfor %}
