@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-07-10 13:14+0200\n"
+"POT-Creation-Date: 2014-07-10 20:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,7 +58,6 @@ msgid "Email Confirmed"
 msgstr ""
 
 #: flask_version/base.py:173 sagenb/data/sage/html/docs.html:164
-#: sagenb/data/sage/js/sagenb.js:29
 #: sagenb/data/sage/js/translated-messages.js:37
 msgid "Log"
 msgstr ""
@@ -67,49 +66,48 @@ msgstr ""
 msgid "You do not have permission to access this location"
 msgstr ""
 
-#: flask_version/worksheet.py:35 flask_version/worksheet.py:44
+#: flask_version/worksheet.py:36 flask_version/worksheet.py:45
 #: flask_version/worksheet_listing.py:176
 #: flask_version/worksheet_listing.py:185
 msgid "You do not have permission to access this worksheet"
 msgstr ""
 
-#: flask_version/worksheet.py:84 flask_version/worksheet.py:132
+#: flask_version/worksheet.py:85 flask_version/worksheet.py:133
 #: flask_version/worksheet_listing.py:241
 #: flask_version/worksheet_listing.py:340
 msgid "Account is in read-only mode"
 msgstr ""
 
-#: flask_version/worksheet.py:86 sagenb/data/sage/js/translated-messages.js:48
-#: sagenb/data/sage/js/worksheet.js:145 sagenb/notebook/misc.py:237
-#: sagenb/notebook/worksheet.py:713 sagenb/notebook/worksheet.py:734
-#: sagenb/notebook/worksheet.py:4133
+#: flask_version/worksheet.py:87 sagenb/data/sage/js/translated-messages.js:48
+#: sagenb/notebook/misc.py:237 sagenb/notebook/worksheet.py:713
+#: sagenb/notebook/worksheet.py:734 sagenb/notebook/worksheet.py:4134
 msgid "Untitled"
 msgstr ""
 
-#: flask_version/worksheet.py:606
+#: flask_version/worksheet.py:621
 msgid "Error: can't add more than 250 collaborators at a time"
 msgstr ""
 
-#: flask_version/worksheet.py:660 sagenb/data/sage/html/login.html:18
+#: flask_version/worksheet.py:675 sagenb/data/sage/html/login.html:18
 #: sagenb/data/sage/html/login.html:25
 #: sagenb/data/sage/js/translated-messages.js:17
 msgid "Error"
 msgstr ""
 
-#: flask_version/worksheet.py:684
+#: flask_version/worksheet.py:699
 msgid "No data file"
 msgstr ""
 
-#: flask_version/worksheet.py:762 flask_version/worksheet.py:789
-#: flask_version/worksheet.py:815
+#: flask_version/worksheet.py:777 flask_version/worksheet.py:804
+#: flask_version/worksheet.py:830
 msgid "Suspicious filename encountered uploading file."
 msgstr ""
 
-#: flask_version/worksheet.py:783
+#: flask_version/worksheet.py:798
 msgid "URL must start with http, https, or ftp."
 msgstr ""
 
-#: flask_version/worksheet.py:896
+#: flask_version/worksheet.py:911
 msgid "No such worksheet."
 msgstr ""
 
@@ -374,7 +372,7 @@ msgstr ""
 msgid "Key and Mouse Bindings"
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:92 sagenb/data/sage/js/cell.js:128
+#: sagenb/data/sage/html/docs.html:92
 #: sagenb/data/sage/js/translated-messages.js:44
 msgid "Evaluate"
 msgstr ""
@@ -613,7 +611,7 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: sagenb/data/sage/html/login.html:78 sagenb/data/sage/js/sagenb.js:15
+#: sagenb/data/sage/html/login.html:78
 #: sagenb/data/sage/js/translated-messages.js:34
 msgid "Login"
 msgstr ""
@@ -936,98 +934,6 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: sagenb/data/sage/js/chat.js:24 sagenb/data/sage/js/translated-messages.js:66
-msgid "Chat"
-msgstr ""
-
-#: sagenb/data/sage/js/chat.js:40 sagenb/data/sage/js/translated-messages.js:68
-msgid "Worksheet - Chat"
-msgstr ""
-
-#: sagenb/data/sage/js/chat.js:64 sagenb/data/sage/js/translated-messages.js:69
-msgid "Send"
-msgstr ""
-
-#: sagenb/data/sage/js/chat.js:84 sagenb/data/sage/js/translated-messages.js:71
-msgid "Message from"
-msgstr ""
-
-#: sagenb/data/sage/js/chat.js:85 sagenb/data/sage/js/translated-messages.js:65
-msgid "Open chat"
-msgstr ""
-
-#: sagenb/data/sage/js/chat.js:100
-#: sagenb/data/sage/js/translated-messages.js:63
-msgid "close"
-msgstr ""
-
-#: sagenb/data/sage/js/chat.js:100
-#: sagenb/data/sage/js/translated-messages.js:64
-msgid "open"
-msgstr ""
-
-#: sagenb/data/sage/js/chat.js:130
-#: sagenb/data/sage/js/translated-messages.js:43
-msgid "collaborators"
-msgstr ""
-
-#: sagenb/data/sage/js/chat.js:147
-msgid "joined"
-msgstr ""
-
-#: sagenb/data/sage/js/chat.js:152
-msgid "left"
-msgstr ""
-
-#: sagenb/data/sage/js/jmol.js:39 sagenb/data/sage/js/translated-messages.js:45
-msgid "Show Static Image"
-msgstr ""
-
-#: sagenb/data/sage/js/jmol.js:43 sagenb/data/sage/js/jmol.js:65
-#: sagenb/data/sage/js/translated-messages.js:46
-msgid "Popout"
-msgstr ""
-
-#: sagenb/data/sage/js/jmol.js:61 sagenb/data/sage/js/translated-messages.js:47
-msgid "Open Interactive View"
-msgstr ""
-
-#: sagenb/data/sage/js/sagenb.js:27
-#: sagenb/data/sage/js/translated-messages.js:35
-msgid "Home"
-msgstr ""
-
-#: sagenb/data/sage/js/sagenb.js:28
-#: sagenb/data/sage/js/translated-messages.js:36
-#: sagenb/data/sage/js/worksheet_list.js:348
-msgid "Published"
-msgstr ""
-
-#: sagenb/data/sage/js/sagenb.js:30
-#: sagenb/data/sage/js/translated-messages.js:38
-msgid "Settings"
-msgstr ""
-
-#: sagenb/data/sage/js/sagenb.js:31
-#: sagenb/data/sage/js/translated-messages.js:39
-msgid "Sign out"
-msgstr ""
-
-#: sagenb/data/sage/js/sagenb.js:33
-#: sagenb/data/sage/js/translated-messages.js:40
-msgid "SAGE / POKAL Support"
-msgstr ""
-
-#: sagenb/data/sage/js/sagenb.js:34
-#: sagenb/data/sage/js/translated-messages.js:41
-msgid "Help"
-msgstr ""
-
-#: sagenb/data/sage/js/sagenb.js:35
-#: sagenb/data/sage/js/translated-messages.js:42
-msgid "Report a Problem"
-msgstr ""
-
 #: sagenb/data/sage/js/translated-messages.js:4
 msgid "Click to download and install tex fonts."
 msgstr ""
@@ -1143,13 +1049,55 @@ msgid_plural "Trying again in %(num)d seconds..."
 msgstr[0] ""
 msgstr[1] ""
 
+#: sagenb/data/sage/js/translated-messages.js:35
+msgid "Home"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:36
+msgid "Published"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:38
+msgid "Settings"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:39
+msgid "Sign out"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:40
+msgid "SAGE / POKAL Support"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:41
+msgid "Help"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:42
+msgid "Report a Problem"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:43
+msgid "collaborators"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:45
+msgid "Show Static Image"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:46
+msgid "Popout"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:47
+msgid "Open Interactive View"
+msgstr ""
+
 #: sagenb/data/sage/js/translated-messages.js:49
-#: sagenb/data/sage/js/worksheet.js:223
 msgid "Are you sure you would like to interrupt the running computation?"
 msgstr ""
 
 #: sagenb/data/sage/js/translated-messages.js:50
-#: sagenb/data/sage/js/worksheet.js:471
 msgid "Copy to clipboard: "
 msgstr ""
 
@@ -1158,71 +1106,84 @@ msgid "running"
 msgstr ""
 
 #: sagenb/data/sage/js/translated-messages.js:52
-#: sagenb/data/sage/js/worksheet_list.js:60
 msgid "other(s)"
 msgstr ""
 
 #: sagenb/data/sage/js/translated-messages.js:53
-#: sagenb/data/sage/js/worksheet_list.js:70
 msgid "ago"
 msgstr ""
 
 #: sagenb/data/sage/js/translated-messages.js:54
-#: sagenb/data/sage/js/worksheet_list.js:246
 msgid "Emptying the Trash is final. Are you sure?"
 msgstr ""
 
 #: sagenb/data/sage/js/translated-messages.js:55
-#: sagenb/data/sage/js/worksheet_list.js:281
 msgid "Nothing here!"
 msgstr ""
 
 #: sagenb/data/sage/js/translated-messages.js:56
 #: sagenb/data/sage/js/translated-messages.js:60
-#: sagenb/data/sage/js/worksheet_list.js:302
-#: sagenb/data/sage/js/worksheet_list.js:303
-#: sagenb/data/sage/js/worksheet_list.js:349
 msgid "Published Worksheets"
 msgstr ""
 
 #: sagenb/data/sage/js/translated-messages.js:57
-#: sagenb/data/sage/js/worksheet_list.js:310
-#: sagenb/data/sage/js/worksheet_list.js:311
-#: sagenb/data/sage/js/worksheet_list.js:357
 msgid "My Notebook"
 msgstr ""
 
 #: sagenb/data/sage/js/translated-messages.js:58
-#: sagenb/data/sage/js/worksheet_list.js:322
-#: sagenb/data/sage/js/worksheet_list.js:323
-#: sagenb/data/sage/js/worksheet_list.js:361
 msgid "Archive"
 msgstr ""
 
 #: sagenb/data/sage/js/translated-messages.js:59
-#: sagenb/data/sage/js/worksheet_list.js:334
-#: sagenb/data/sage/js/worksheet_list.js:335
-#: sagenb/data/sage/js/worksheet_list.js:366
 msgid "Trash"
 msgstr ""
 
 #: sagenb/data/sage/js/translated-messages.js:61
-#: sagenb/data/sage/js/worksheet_list.js:356
 msgid "Active"
 msgstr ""
 
 #: sagenb/data/sage/js/translated-messages.js:62
-#: sagenb/data/sage/js/worksheet_list.js:384
-#: sagenb/data/sage/js/worksheet_list.js:385
 msgid "Search"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:63
+msgid "close"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:64
+msgid "open"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:65
+msgid "Open chat"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:66
+msgid "Chat"
 msgstr ""
 
 #: sagenb/data/sage/js/translated-messages.js:67
 msgid "chat"
 msgstr ""
 
+#: sagenb/data/sage/js/translated-messages.js:68
+msgid "Worksheet - Chat"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:69
+msgid "Send"
+msgstr ""
+
 #: sagenb/data/sage/js/translated-messages.js:70
 msgid "send"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:71
+msgid "Message from"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:72
+msgid "and"
 msgstr ""
 
 #: sagenb/notebook/challenge.py:180
