@@ -1,6 +1,6 @@
 {% extends 'html/base.html' %}
 
-{% block title %}{{ gettext("Account Settings") }} - Sage{% endblock title %}
+{% block title %}{{ gettext("Account Settings") }} - POKAL{% endblock title %}
 
 {% block navbar %}{% endblock navbar %}
 
@@ -62,7 +62,7 @@
 		</fieldset>
 
 		<fieldset>
-			<legend>Email</legend>
+			<legend>{{ gettext('Email') }}</legend>
 			<div class="control-group">
 				<label class="control-label" for="">{{ gettext('Current e-mail') }}</label>
 				<div class="controls">

@@ -21,7 +21,7 @@ sagenb.chat.init = function(worksheet) {
         // header button
         sagenb.chat.header_button = $(
             '<div class="btn-group pull-right nav">' +
-                '<a class="btn" href="#"><i class="icon-comment"></i>&nbsp;<span>Chat</span></a>' +
+                '<a class="btn" href="#"><i class="icon-comment"></i>&nbsp;<span>'+gettext('Chat')+'</span></a>' +
             '</div>'
         ).find('.btn').click(sagenb.chat.toggle);
 	// put it next to the user button
@@ -37,7 +37,7 @@ sagenb.chat.init = function(worksheet) {
             width: 240,
             position: {my: "right top", at: "right bottom"},
             show: "fast",
-            title: "Worksheet - Chat",
+            title: gettext('Worksheet - Chat'),
 	    // Hacky: diese buttons sind nur farce, um die Pane zu kriegen.
 	    // Es wird dann ein eigener Bootstrap-layouteter button hinzugefuegt
 	    buttons: [ { text: "Senden", click: sagenb.chat.send_message }  ],
@@ -61,7 +61,7 @@ sagenb.chat.init = function(worksheet) {
 	
 	// jqueryUI-Button durch Twitter button ersetzen
 	$(".chat").find(".ui-dialog-buttonset").remove();
-	$(".chat").find(".ui-dialog-buttonpane").append('<button class="btn btn-small" type="button">Senden</button>').click(sagenb.chat.send_message);
+	$(".chat").find(".ui-dialog-buttonpane").append('<button class="btn btn-small" type="button">'+gettext('Send')+'</button>').click(sagenb.chat.send_message);
 	
 	// Log into chat
 	sagenb.chat.socket.emit('join', {'worksheet': worksheet.filename, 'nickname': sagenb.username});
@@ -81,8 +81,8 @@ sagenb.chat.alert = function(text) {
 		// create the alert box
 		sagenb.chat.alert_box = $('<div class="alert alert-info" id="user_chat_alert">' + 
 			'<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-			'<strong>Chatnachricht von</strong> <span class="alert-content"></span>'+
-			'<a class="btn primary btn-small open-chat" style="float:right"><i class="icon-comment"></i>&nbsp;Open chat</a>' +
+			'<strong>'+gettext('Message from')+'</strong> <span class="alert-content"></span>'+
+			'<a class="btn primary btn-small open-chat" style="float:right"><i class="icon-comment"></i>&nbsp;'+gettext('Open chat')+'</a>' +
 		'</div>').appendTo(".alert_container_inner");
 		sagenb.chat.alert_box.find('.open-chat').click(function(){
 			sagenb.chat.message_box.dialog('open');
@@ -97,7 +97,7 @@ sagenb.chat.alert = function(text) {
 };
 
 sagenb.chat.toggle = function() {
-	sagenb.chat.message_box.dialog( sagenb.chat.header_button.hasClass("active") ? "close" : "open");
+	sagenb.chat.message_box.dialog( sagenb.chat.header_button.hasClass("active") ? gettext('close') : gettext('open'));
 	$(this).blur(); // FIXME klappt nicht gut
 	return false; // nicht aktiv werden (der link)
 }
@@ -127,7 +127,7 @@ sagenb.chat.on_new_nickname_list = function(nicknames) {
 	// nutze colorize_nickname als callback. da $.map ihm aber zwei parameter zuweist,
 	// im zweiten den Index, wird sowas wie "username1", "username2" concatenated als suffix.
 	// das ist eigentlich nicht schlimm, sondern witzigerweise sogar wuenschenswert.
-	sagenb.chat.userlist_box.html('<b>Mitarbeiter:</b> ' + $.map(nicknames, function(x){ return sagenb.chat.colorize_nickname(x); }).join(", "));
+	sagenb.chat.userlist_box.html('<b>'+gettext('collaborators')+':</b> ' + $.map(nicknames, function(x){ return sagenb.chat.colorize_nickname(x); }).join(", "));
 };
 
 /**
@@ -144,12 +144,12 @@ sagenb.chat.on_user_message = function(data) {
 
 sagenb.chat.on_join_message = function(user) {
 	user = $.parseJSON(user);
-	sagenb.chat.append_message("meta join", '<b>'+sagenb.chat.colorize_nickname(user)+'</b> joined');
+	sagenb.chat.append_message("meta join", '<b>'+sagenb.chat.colorize_nickname(user)+'</b> '+ gettext('joined'));
 }
 
 sagenb.chat.on_leave_message = function(user) {
 	user = $.parseJSON(user);
-	sagenb.chat.append_message("meta leave",'<b>'+sagenb.chat.colorize_nickname(user)+'</b> left');
+	sagenb.chat.append_message("meta leave",'<b>'+sagenb.chat.colorize_nickname(user)+'</b> '+ gettext('left'));
 }
 
 sagenb.chat.append_message = function(classes, text) {

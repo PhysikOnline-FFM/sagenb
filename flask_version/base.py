@@ -67,8 +67,7 @@ class SageNBFlask(Flask):
         """Returns an error message to the user."""
         template_dict = {'msg': msg, 'cont': cont, 'username': username}
         template_dict.update(kwds)
-        return render_template(os.path.join('html', 'error_message.html'),
-                               **template_dict)
+        return render_template(os.path.join('html', 'error_message.html'), **template_dict)
 
 base = Module('sagenb.flask_version.base')
 
