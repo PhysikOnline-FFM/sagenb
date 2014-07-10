@@ -1013,14 +1013,6 @@ sagenb.worksheetapp.cell = function(id) {
 
    };
 	
-	/////// INPUT ////////
-	// This is used by Websockethandlers to make sure input is synchrone
-	_this.set_cell_input = function(input){
-		_this.input = input;
-		_this.change_by_collab = true;
-		_this.codemirror.setValue(_this.input);
-	};
-	
 	/////// OUTPUT ///////
 	_this.delete_output = function() {
 		if(_this.worksheet.published_mode) return;

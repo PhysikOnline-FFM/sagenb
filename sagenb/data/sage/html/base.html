@@ -4,7 +4,7 @@
 		{% block head %}
 
 		<meta charset="utf-8">
-		<title>{% block title %}Sage (POKAL){% endblock title %}</title>
+		<title>{% block title %}POKAL 2.0 (Sage){% endblock title %}</title>
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="author" content="The Sagemath collaboration and PhysikOnline eLearning">
@@ -48,25 +48,25 @@
 					<!-- PhysikOnline-Navigation, sollte nur ausserhalb sein -->
 					<div class="nav-collapse collapse navbar-responsive-collapse">
 					<ul class="nav">
-						<li><a href="/">Home</a></li>
+						<li><a href="/">{{ gettext('Home') }}</a></li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">PhysikOnline <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li>
 									<div style="width:300px; padding: 18px;">
-										<img src="https://elearning.physik.uni-frankfurt.de/Customizing/global/skin/physik/src/logo_small-new.png" style="float:right;">
-										Besuche auch die anderen eLearning-Projekte von <strong>PhysikOnline</strong>!
+										<img src="//elearning.physik.uni-frankfurt.de/Customizing/global/skin/physik/src/logo_small-new.png" style="float:right;">
+										{{ gettext('Visit the other eLearning projects of <strong>PhysikOnline</strong>!') }}
 									</div>
 								</li>
 								<li class="divider"></li>
 								
-								<li class="nav-header">Projekte</li>
-								<li><a href="http://elearning.physik.uni-frankfurt.de">eLearning-Plattform</a></li>
+								<li class="nav-header">{{ gettext('Projects') }}</li>
+								<li><a href="http://elearning.physik.uni-frankfurt.de">{{ gettext('eLearning platform') }}</a></li>
 								<li><a href="http://podcast-wiki.physik.uni-frankfurt.de">PodcastWiki-Physik</a></li>
 								
 								<li class="divider"></li>
 								<!-- devel links -->
-								<li class="nav-header">Entwicklung</li>
+								<li class="nav-header">{{ gettext('Developement') }}</li>
 								
 								<li><a href="https://physikpokal.atlassian.net/">JIRA</a></li>
 								<li><a href="https://elearning.physik.uni-frankfurt.de/projekt/">POTT</a><li>
