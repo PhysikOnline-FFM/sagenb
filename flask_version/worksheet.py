@@ -12,6 +12,7 @@ from socketio import socketio_manage
 from socketio.namespace import BaseNamespace
 from socketio.mixins import RoomsMixin, BroadcastMixin
 from gevent import monkey
+import gevent
 
 monkey.patch_all()
 
@@ -182,7 +183,7 @@ def worksheet_conf(worksheet):
 def worksheet_get_username(worksheet):
     ##Returns the username of the current session for Websocket-Initialization
     ## needed in nickname[] of Websocket -> Worksheet_Namespace
-    
+
     # Sven: no more needed
     return g.username
 
@@ -480,9 +481,22 @@ def worksheet_cell_update(worksheet):
     # now get latest status on our cell
     r['status'], cell = worksheet.check_cell(id)
 
-    if r['status'] == 'd':
+    if r['status'] == 'd': # d=done
+        #######
+        # computation is done
+        #####
         r['new_input'] = cell.changed_input_text()
         r['output_html'] = cell.output_html()
+        print "\n"
+        print '/sagenb/sagenb/flask_version/worksheet.py cell_update#done  wurde aufgerufen! (Carsten)'
+        print '------------------------------------'
+        print 'output_html():'
+        print cell.output_html()
+        print "\n"
+        print 'output_text():'
+        print cell.output_text()
+        print '------------------------------------'
+        print "\n"
 
         # Update the log.
         t = time.strftime('%Y-%m-%d at %H:%M',
@@ -492,6 +506,7 @@ def worksheet_cell_update(worksheet):
                             max_out=g.notebook.HISTORY_MAX_OUTPUT)
         g.notebook.add_to_user_history(H, g.username)
     else:
+        print "Thomas: status!=d"
         r['new_input'] = ''
         r['output_html'] = ''
 
@@ -658,7 +673,7 @@ def worksheet_revisions(worksheet):
             return redirect(url_for_worksheet(W))
         else:
             return current_app.message(_('Error'))
-        
+
 ########################################################
 # Cell directories
 ########################################################
@@ -1032,15 +1047,15 @@ from flask import globals
 
 @ws.route('/socket.io/<path:remaining>')
 def socketio(remaining):
-    print "YEAH WEBSOCKET CONNECTION!!!"
+    print "WEBSOCKETS: Connection established!"
     try:
         socketio_manage(request.environ, {'/worksheet': WorksheetNamespace},
             request)
 
     except:
-         print "Websocket Error!"
+        print "WEBSOCKETS: !!!!! Connection PROBLEM!!!!! (flask_version/worksheet.py)"
     return Response()
-    
+
 
 #########################################################
 # Websocket Namespace
@@ -1051,16 +1066,31 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
     # this enables the same user opens his worksheet multiple times.
     # The UUID is chosen randomly at server site and is only used internally to
     # distinguish between sessions
-    
+
     # nicknames: a list of self.session['session_nick'] objects, each containing data like
     #  { nickname: "sage username", color: "#aabbcc", }
     # thus enabling the same user opening his worksheet multiple times.
     nicknames = []
 
+    def recv_connect(self):
+		print "Recieved Connection of ??? (flask_version/worksheet.py)"
+		def client_watcher_process():
+			userlist = self.nicknames #array of dictionaries, one for each user, with keys 'nickname', 'uuid' and 'color'
+			server = {'nickname':'Server', 'color':'#000000', 'uuid':'SERVER'}
+
+			if len(userlist) == 1: #if he is the first user in this room
+				while True:
+					msg = 'Blub!'
+					self.msg = encode_response({"user": server , "message": msg })
+					self.emit('user_message', self.msg)
+					self.emit_to_room(self.room, 'user_message', self.msg)
+					gevent.sleep(5.0) # in Sekunden, auch 0.1 okay
+		self.spawn(client_watcher_process)
+
     # client information handler
     def on_join(self, data):
         # expecting data = {nickname:"sage username", "worksheet":"worksheet-name"}
-        print "join of "+str(data)
+        print "flask_version/worksheet.py/   join of "+str(data)
         self.room = data['worksheet']
         self.join(self.room)
 
@@ -1072,14 +1102,14 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
         import uuid
         self.session['session_nick']['uuid'] = str(uuid.uuid4())
-            
+
         from sage.plot.colors import Color,get_cmap
         m = get_cmap("Accent")
         self.session['session_nick']['color'] = Color(m(len(self.nicknames) * 1./20)[:3]).html_color()
 
         # store this session in the nickname list
         self.nicknames.append(self.session['session_nick'])
-        
+
         print self.nicknames
         self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.nicknames))
         self.emit_to_room(self.room, 'join_message', encode_response(self.session['session_nick']))
@@ -1103,6 +1133,7 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
     def on_set_state_number(self, statenumber):
         print statenumber
+
         self.emit_to_room(self.room, 'set_state_number', statenumber)
         self.emit('set_state_number', statenumber)
 
@@ -1119,7 +1150,7 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         if not (self.session['session_nick'] in self.nicknames):
             print self.session['session_nick']['uuid'] + "was no more connected!"
             return True
-        
+
         print self.session['session_nick']['uuid'] + "disconnected"
         self.nicknames.remove(self.session['session_nick'])
         self.emit_to_room(self.room, 'leave_message', encode_response(self.session['session_nick']))

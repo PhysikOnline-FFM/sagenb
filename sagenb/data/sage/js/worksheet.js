@@ -55,6 +55,10 @@ sagenb.worksheetapp.worksheet = function() {
 	// other variables go here
 	
     ////////// WEBSOCKET_HANDLER ////////	
+	_this.socket.on('hello_world', function(data) {
+		console.log("Recieved Hello World", data)
+	});
+	
 	_this.socket.on('new_cell_after', function (response){
 		_this.new_cell_all_after(response);
 	});
