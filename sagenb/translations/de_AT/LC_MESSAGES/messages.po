@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sage Notebook 0.8\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-07-10 11:33+0200\n"
+"POT-Creation-Date: 2014-07-10 13:14+0200\n"
 "PO-Revision-Date: 2011-06-18 20:43-0300\n"
 "Last-Translator: Achim Faßbender <bla@achfa.de>\n"
 "Language-Team: Achim Faßbender <bla@achfa.de>\n"
@@ -20,78 +20,80 @@ msgstr ""
 #: flask_version/admin.py:40 flask_version/admin.py:80
 #, python-format
 msgid ""
-"The temporary password for the new user <strong>%(username)s</strong> is <strong>%(password)s</strong>"
-msgstr "Das temporäre Passwort für den neuen Benutzer <strong>%(username)s</strong> ist <strong>%(password)s</strong>"
+"The temporary password for the new user <strong>%(username)s</strong> is "
+"<strong>%(password)s</strong>"
+msgstr ""
 
 #: flask_version/admin.py:56
 #, python-format
 msgid "User <strong>%(username)s</strong> has been suspended/unsuspended."
-msgstr "Der Benutzer <strong>%(username)s</strong> wurde gesperrt/entsperrt."
+msgstr ""
 
 #: flask_version/admin.py:70
+#, fuzzy
 msgid "<strong>Invalid username!</strong>"
-msgstr "<strong>Ungültiger Benutzername!</strong>"
+msgstr "Drücke <strong>Shift-Enter</strong>"
 
 #: flask_version/admin.py:75
 #, python-format
 msgid "The username <strong>%(username)s</strong> is already taken!"
-msgstr "Der Benutzername <strong>%(username)s</strong> wird bereits verwendet!"
+msgstr ""
 
 #: flask_version/authentication.py:258
 msgid "The confirmation system is not active."
-msgstr "Das Bestätigungssystem ist nicht aktiv."
+msgstr ""
 
 #: flask_version/authentication.py:261
 msgid ""
 "    <h1>Invalid confirmation key</h1>\n"
-"    <p>You are reporting a confirmation key that has not been assigned by this\n"
-"    server. Please <a href=\"/register\">register</a> with the server.</p>\n"
+"    <p>You are reporting a confirmation key that has not been assigned by"
+" this\n"
+"    server. Please <a href=\"/register\">register</a> with the "
+"server.</p>\n"
 "    "
 msgstr ""
-"    <h1>Ungültiger Bestätigungsschlüssel</h1>\n"
-"    <p>Du hast einen Bestätigungsschlüssel verwendet, der nicht von diesem Server zugewiesen wurde. "
-"    Bitte <a href=\"/register\">registriere</a> dich am Server.</p>\n"
-"    "
 
 #: flask_version/authentication.py:272
 #, python-format
 msgid "<h1>Email address confirmed for user %(username)s</h1>"
-msgstr "<h1>Emailadresse für Benutzer %(username)s bestätigt</h1>"
+msgstr ""
 
 #: flask_version/authentication.py:274
 msgid "Email Confirmed"
-msgstr "Email bestätigt"
+msgstr ""
 
 #: flask_version/base.py:173 sagenb/data/sage/html/docs.html:164
+#: sagenb/data/sage/js/sagenb.js:29
 #: sagenb/data/sage/js/translated-messages.js:37
 msgid "Log"
 msgstr "Protokoll"
 
 #: flask_version/decorators.py:30
 msgid "You do not have permission to access this location"
-msgstr "Du hast keine Berechtigung diese Seite zu besuchen"
+msgstr ""
 
 #: flask_version/worksheet.py:35 flask_version/worksheet.py:44
 #: flask_version/worksheet_listing.py:176
 #: flask_version/worksheet_listing.py:185
 msgid "You do not have permission to access this worksheet"
-msgstr "Du hast keine Berechtigung dieses Arbeitsblatt aufzurufen"
+msgstr ""
 
 #: flask_version/worksheet.py:84 flask_version/worksheet.py:132
 #: flask_version/worksheet_listing.py:241
 #: flask_version/worksheet_listing.py:340
 msgid "Account is in read-only mode"
-msgstr "Dieses Konto ist im 'Read-Only'-Modus"
+msgstr ""
 
 #: flask_version/worksheet.py:86 sagenb/data/sage/js/translated-messages.js:48
-#: sagenb/notebook/misc.py:237 sagenb/notebook/worksheet.py:713
-#: sagenb/notebook/worksheet.py:734 sagenb/notebook/worksheet.py:4133
+#: sagenb/data/sage/js/worksheet.js:145 sagenb/notebook/misc.py:237
+#: sagenb/notebook/worksheet.py:713 sagenb/notebook/worksheet.py:734
+#: sagenb/notebook/worksheet.py:4133
 msgid "Untitled"
 msgstr "Unbenannt"
 
 #: flask_version/worksheet.py:606
 msgid "Error: can't add more than 250 collaborators at a time"
-msgstr "Fehler: Es können nur 250 Kollaboratoren hinzugefügt werden"
+msgstr ""
 
 #: flask_version/worksheet.py:660 sagenb/data/sage/html/login.html:18
 #: sagenb/data/sage/html/login.html:25
@@ -100,34 +102,39 @@ msgid "Error"
 msgstr "Fehler"
 
 #: flask_version/worksheet.py:684
+#, fuzzy
 msgid "No data file"
-msgstr "Keine Datei vorhanden"
+msgstr "Datei hochladen"
 
 #: flask_version/worksheet.py:762 flask_version/worksheet.py:789
 #: flask_version/worksheet.py:815
 msgid "Suspicious filename encountered uploading file."
-msgstr "Verdächtiger Dateiname wurde festgestellt."
+msgstr ""
 
 #: flask_version/worksheet.py:783
 msgid "URL must start with http, https, or ftp."
-msgstr "URL muss mit http, https oder ftp beginnen."
+msgstr ""
 
 #: flask_version/worksheet.py:896
+#, fuzzy
 msgid "No such worksheet."
-msgstr "Keine solchen Arbeitsblätter."
+msgstr "Öffentliche Arbeitsblatt"
 
 #: flask_version/worksheet_listing.py:55
+#, fuzzy
 msgid "Error displaying worksheet listing."
-msgstr "Fehler beim Anzeigen der Arbeitsblattliste."
+msgstr ""
+"Fehler beim Anwenden der Funktion auf das Arbeitsblatt / die "
+"Arbeitsblätter."
 
 #: flask_version/worksheet_listing.py:70
 #, python-format
 msgid "User '%s' does not have permission to view the home page of '%s'."
-msgstr "Benutzer '%s' hat keine Berechtigung, um die Startseite von '%s' zu sehen."
+msgstr ""
 
 #: flask_version/worksheet_listing.py:166
 msgid "Requested public worksheet does not exist"
-msgstr "Das angeforderte öffentliche Arbeitsblatt existiert nicht"
+msgstr ""
 
 #: flask_version/worksheet_listing.py:277
 #, python-format
@@ -137,16 +144,12 @@ msgid ""
 "directly from your computer.\n"
 "%(backlinks)s"
 msgstr ""
-"Diese Sage-Installation ist nicht für das Laden von Arbeitsblättern über 'https' konfiguriert."
-"Versuche eine andere URL oder lade das Worksheet herunter und lade es neu hoch.\n"
-"%(backlinks)s"
 
 #: flask_version/worksheet_listing.py:342
 msgid ""
 "Return to <a href=\"/upload\" title=\"Upload a worksheet\"><strong>Upload"
 " File</strong></a>."
 msgstr ""
-"Kehre zu <a href=\"/upload\" title=\"Upload a worksheet\"><strong>Datei hochladen</strong></a> zurück."
 
 #: flask_version/worksheet_listing.py:361
 #, python-format
@@ -154,8 +157,6 @@ msgid ""
 "Unable to load file URL's when not running on localhost.\n"
 "%(backlinks)s"
 msgstr ""
-"Es ist nicht möglich die Datei-URL zu laden, wenn der Server nicht als localhost läuft.\n"
-"%(backlinks)s"
 
 #: flask_version/worksheet_listing.py:376
 #, python-format
@@ -163,8 +164,6 @@ msgid ""
 "Please specify a worksheet to load.\n"
 "%(backlinks)s"
 msgstr ""
-"Bitte bestimme ein Arbeitsblatt, das geladen werden soll.\n"
-"%(backlinks)s"
 
 #: flask_version/worksheet_listing.py:380
 #, python-format
@@ -172,8 +171,6 @@ msgid ""
 "Invalid filename.\n"
 "%(backlinks)s"
 msgstr ""
-"Ungültiger Dateiname.\n"
-"%(backlinks)s"
 
 #: flask_version/worksheet_listing.py:421
 #, python-format
@@ -185,16 +182,11 @@ msgid ""
 "sws file is just a bzip2 tarball; take a look inside!\n"
 "%(backlinks)s"
 msgstr ""
-"Beim Hochladen des Arbeitsblattes ist ein Fehler aufgetreten. Es könnte sich um ein altes, nicht unterstützes Format handeln oder schlimmer."
-"If you desperately need its contents contact the <a href=\"http://groups.google.com/group/sage-support\">sage-"
-"support group</a> and post a link to your worksheet.  Alternatively, an "
-"sws file is just a bzip2 tarball; take a look inside!\n"
-"%(backlinks)s"
 
 #: flask_version/worksheet_listing.py:432
 #, python-format
 msgid "Error uploading worksheet '%(msg)s'.%(backlinks)s"
-msgstr "Fehler beim Hochladen des Arbeitsblatts '%(msg)s'.%(backlinks)s"
+msgstr ""
 
 #: sagenb/data/sage/html/accounts/account_recovery.html:2
 msgid "Account Recovery"
@@ -472,7 +464,7 @@ msgstr ""
 msgid "Key and Mouse Bindings"
 msgstr "Tastatur- und Mausanbindung"
 
-#: sagenb/data/sage/html/docs.html:92
+#: sagenb/data/sage/html/docs.html:92 sagenb/data/sage/js/cell.js:128
 #: sagenb/data/sage/js/translated-messages.js:44
 msgid "Evaluate"
 msgstr "Auswerten"
@@ -839,7 +831,7 @@ msgstr ""
 msgid "View"
 msgstr "Anzeigen"
 
-#: sagenb/data/sage/html/login.html:78
+#: sagenb/data/sage/html/login.html:78 sagenb/data/sage/js/sagenb.js:15
 #: sagenb/data/sage/js/translated-messages.js:34
 msgid "Login"
 msgstr "Einloggen"
@@ -1058,7 +1050,8 @@ msgstr "Teilen"
 #: sagenb/data/sage/html/modals/sharing_modal.html:15
 msgid "Add/remove collaborators by entering their user names separated by commas."
 msgstr ""
-"Sie können Mitarbeiter hinzufügen/entfernen (Trennen der Namen durch Kommata)."
+"Sie können Mitarbeiter hinzufügen/entfernen (Trennen der Namen durch "
+"Kommata)."
 
 #: sagenb/data/sage/html/modals/sharing_modal.html:19
 #, fuzzy
@@ -1194,6 +1187,99 @@ msgstr "Änderungen speichern"
 #: sagenb/data/sage/html/settings/notebook_settings.html:16
 msgid "Cancel"
 msgstr "Abbrechen"
+
+#: sagenb/data/sage/js/chat.js:24 sagenb/data/sage/js/translated-messages.js:66
+msgid "Chat"
+msgstr "Chat"
+
+#: sagenb/data/sage/js/chat.js:40 sagenb/data/sage/js/translated-messages.js:68
+msgid "Worksheet - Chat"
+msgstr "Arbeitsblatt-Chat"
+
+#: sagenb/data/sage/js/chat.js:64 sagenb/data/sage/js/translated-messages.js:69
+msgid "Send"
+msgstr "Senden"
+
+#: sagenb/data/sage/js/chat.js:84 sagenb/data/sage/js/translated-messages.js:71
+msgid "Message from"
+msgstr "Nachricht von"
+
+#: sagenb/data/sage/js/chat.js:85 sagenb/data/sage/js/translated-messages.js:65
+msgid "Open chat"
+msgstr "Öffnen"
+
+#: sagenb/data/sage/js/chat.js:100
+#: sagenb/data/sage/js/translated-messages.js:63
+msgid "close"
+msgstr "schließen"
+
+#: sagenb/data/sage/js/chat.js:100
+#: sagenb/data/sage/js/translated-messages.js:64
+msgid "open"
+msgstr "öffnen"
+
+#: sagenb/data/sage/js/chat.js:130
+#: sagenb/data/sage/js/translated-messages.js:43
+msgid "collaborators"
+msgstr "Kollaboratoren"
+
+#: sagenb/data/sage/js/chat.js:147
+#, fuzzy
+msgid "joined"
+msgstr "Fertig"
+
+#: sagenb/data/sage/js/chat.js:152
+msgid "left"
+msgstr ""
+
+#: sagenb/data/sage/js/jmol.js:39 sagenb/data/sage/js/translated-messages.js:45
+msgid "Show Static Image"
+msgstr "Zeige statisches Bild"
+
+#: sagenb/data/sage/js/jmol.js:43 sagenb/data/sage/js/jmol.js:65
+#: sagenb/data/sage/js/translated-messages.js:46
+msgid "Popout"
+msgstr "Popout"
+
+#: sagenb/data/sage/js/jmol.js:61 sagenb/data/sage/js/translated-messages.js:47
+msgid "Open Interactive View"
+msgstr "Öffne interaktive Ansicht"
+
+#: sagenb/data/sage/js/sagenb.js:27
+#: sagenb/data/sage/js/translated-messages.js:35
+msgid "Home"
+msgstr "Startseite"
+
+#: sagenb/data/sage/js/sagenb.js:28
+#: sagenb/data/sage/js/translated-messages.js:36
+#: sagenb/data/sage/js/worksheet_list.js:348
+msgid "Published"
+msgstr "Veröffentlicht"
+
+#: sagenb/data/sage/js/sagenb.js:30
+#: sagenb/data/sage/js/translated-messages.js:38
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: sagenb/data/sage/js/sagenb.js:31
+#: sagenb/data/sage/js/translated-messages.js:39
+msgid "Sign out"
+msgstr "Abmelden"
+
+#: sagenb/data/sage/js/sagenb.js:33
+#: sagenb/data/sage/js/translated-messages.js:40
+msgid "SAGE / POKAL Support"
+msgstr "SAGE/POKAL Hilfe"
+
+#: sagenb/data/sage/js/sagenb.js:34
+#: sagenb/data/sage/js/translated-messages.js:41
+msgid "Help"
+msgstr "Hilfe"
+
+#: sagenb/data/sage/js/sagenb.js:35
+#: sagenb/data/sage/js/translated-messages.js:42
+msgid "Report a Problem"
+msgstr "Problem melden"
 
 #: sagenb/data/sage/js/translated-messages.js:4
 msgid "Click to download and install tex fonts."
@@ -1339,56 +1425,13 @@ msgid_plural "Trying again in %(num)d seconds..."
 msgstr[0] "Erneuter Versuch in %(num)d Sekunde..."
 msgstr[1] "Erneuter Versuch in %(num)d Sekunden..."
 
-#: sagenb/data/sage/js/translated-messages.js:35
-msgid "Home"
-msgstr "Startseite"
-
-#: sagenb/data/sage/js/translated-messages.js:36
-#: sagenb/data/sage/js/translated-messages.js:60
-msgid "Published"
-msgstr "Veröffentlicht"
-
-#: sagenb/data/sage/js/translated-messages.js:38
-msgid "Settings"
-msgstr "Einstellungen"
-
-#: sagenb/data/sage/js/translated-messages.js:39
-msgid "Sign out"
-msgstr "Abmelden"
-
-#: sagenb/data/sage/js/translated-messages.js:40
-msgid "SAGE / POKAL Support"
-msgstr "SAGE/POKAL Hilfe"
-
-#: sagenb/data/sage/js/translated-messages.js:41
-msgid "Help"
-msgstr "Hilfe"
-
-#: sagenb/data/sage/js/translated-messages.js:42
-msgid "Report a Problem"
-msgstr "Problem melden"
-
-#: sagenb/data/sage/js/translated-messages.js:43
-msgid "collaborators"
-msgstr "Kollaboratoren"
-
-#: sagenb/data/sage/js/translated-messages.js:45
-msgid "Show Static Image"
-msgstr "Zeige statisches Bild"
-
-#: sagenb/data/sage/js/translated-messages.js:46
-msgid "Popout"
-msgstr "Popout"
-
-#: sagenb/data/sage/js/translated-messages.js:47
-msgid "Open Interactive View"
-msgstr "Öffne interaktive Ansicht"
-
 #: sagenb/data/sage/js/translated-messages.js:49
+#: sagenb/data/sage/js/worksheet.js:223
 msgid "Are you sure you would like to interrupt the running computation?"
 msgstr "Bist du sicher, dass du die laufende Berechnung unterbrechen möchtest?"
 
 #: sagenb/data/sage/js/translated-messages.js:50
+#: sagenb/data/sage/js/worksheet.js:471
 msgid "Copy to clipboard: "
 msgstr "Kopier in die Zwischenablage: "
 
@@ -1397,81 +1440,72 @@ msgid "running"
 msgstr "laufend"
 
 #: sagenb/data/sage/js/translated-messages.js:52
+#: sagenb/data/sage/js/worksheet_list.js:60
 msgid "other(s)"
 msgstr "andere"
 
 #: sagenb/data/sage/js/translated-messages.js:53
+#: sagenb/data/sage/js/worksheet_list.js:70
 msgid "ago"
 msgstr "vorher"
 
 #: sagenb/data/sage/js/translated-messages.js:54
+#: sagenb/data/sage/js/worksheet_list.js:246
 msgid "Emptying the Trash is final. Are you sure?"
 msgstr "Den Mülleimer zu Leeren ist unwiderruflich. Bist du sicher?"
 
 #: sagenb/data/sage/js/translated-messages.js:55
+#: sagenb/data/sage/js/worksheet_list.js:281
 msgid "Nothing here!"
 msgstr "Hier gibt es nichts zu sehen, gehen Sie bitte weiter!"
 
 #: sagenb/data/sage/js/translated-messages.js:56
-#: sagenb/data/sage/js/translated-messages.js:61
+#: sagenb/data/sage/js/translated-messages.js:60
+#: sagenb/data/sage/js/worksheet_list.js:302
+#: sagenb/data/sage/js/worksheet_list.js:303
+#: sagenb/data/sage/js/worksheet_list.js:349
 msgid "Published Worksheets"
 msgstr "Öffentliche Arbeitsblätter"
 
 #: sagenb/data/sage/js/translated-messages.js:57
+#: sagenb/data/sage/js/worksheet_list.js:310
+#: sagenb/data/sage/js/worksheet_list.js:311
+#: sagenb/data/sage/js/worksheet_list.js:357
 msgid "My Notebook"
 msgstr "Mein Notebook"
 
 #: sagenb/data/sage/js/translated-messages.js:58
+#: sagenb/data/sage/js/worksheet_list.js:322
+#: sagenb/data/sage/js/worksheet_list.js:323
+#: sagenb/data/sage/js/worksheet_list.js:361
 msgid "Archive"
 msgstr "Archiv"
 
 #: sagenb/data/sage/js/translated-messages.js:59
+#: sagenb/data/sage/js/worksheet_list.js:334
+#: sagenb/data/sage/js/worksheet_list.js:335
+#: sagenb/data/sage/js/worksheet_list.js:366
 msgid "Trash"
 msgstr "Mülleimer"
 
-#: sagenb/data/sage/js/translated-messages.js:62
+#: sagenb/data/sage/js/translated-messages.js:61
+#: sagenb/data/sage/js/worksheet_list.js:356
 msgid "Active"
 msgstr "Aktiv"
 
-#: sagenb/data/sage/js/translated-messages.js:63
+#: sagenb/data/sage/js/translated-messages.js:62
+#: sagenb/data/sage/js/worksheet_list.js:384
+#: sagenb/data/sage/js/worksheet_list.js:385
 msgid "Search"
 msgstr "Suche"
 
-#: sagenb/data/sage/js/translated-messages.js:64
-msgid "close"
-msgstr "schließen"
-
-#: sagenb/data/sage/js/translated-messages.js:65
-msgid "open"
-msgstr "öffnen"
-
-#: sagenb/data/sage/js/translated-messages.js:66
-msgid "Open chat"
-msgstr "Öffnen"
-
 #: sagenb/data/sage/js/translated-messages.js:67
-msgid "Chat"
-msgstr "Chat"
-
-#: sagenb/data/sage/js/translated-messages.js:68
 msgid "chat"
 msgstr "chat"
 
-#: sagenb/data/sage/js/translated-messages.js:69
-msgid "Worksheet - Chat"
-msgstr "Arbeitsblatt-Chat"
-
 #: sagenb/data/sage/js/translated-messages.js:70
-msgid "Send"
-msgstr "Senden"
-
-#: sagenb/data/sage/js/translated-messages.js:71
 msgid "send"
 msgstr "senden"
-
-#: sagenb/data/sage/js/translated-messages.js:72
-msgid "Message from"
-msgstr "Nachricht von"
 
 #: sagenb/notebook/challenge.py:180
 msgid "Please ask the server administrator to configure a challenge!"
@@ -2212,7 +2246,7 @@ msgstr "vor %(seconds)s"
 #~ msgstr "Ein neues Passwort wurde an Ihre E-Mail-Adresse gesendet."
 
 #~ msgid "The temporary password for the new user <em>%s</em> is <em>%s</em>"
-#~ msgstr "Das temporäre Passwort für den neuen Benutzer <em>%s</em> ist <em>%s</em>"
+#~ msgstr ""
 
 #~ msgid "This is an invalid page."
 #~ msgstr "Diese Seite ist ungültig."
@@ -2329,7 +2363,7 @@ msgstr "vor %(seconds)s"
 #~ msgstr "Willkommen!"
 
 #~ msgid "<strong>Sage</strong> is a different approach to mathematics software."
-#~ msgstr "<strong>Sage</strong> ist ein anderer Ansatz von mathematischer Software."
+#~ msgstr ""
 
 #~ msgid "General and Advanced Pure and Applied Mathematics"
 #~ msgstr "Allgemeine und Fortgeschrittene Reine und Angewandte Mathematik"
@@ -2410,7 +2444,7 @@ msgstr "vor %(seconds)s"
 #~ msgstr "Arbeitsblatt in Sage Notebook hochladen (sws- oder txt-Datei)"
 
 #~ msgid "Browse your computer to select a worksheet file to upload:"
-#~ msgstr "Durchsuche deinen PC nach einem Arbeitsblatt, das hochgeladen werden soll:"
+#~ msgstr ""
 
 #~ msgid "Or enter the URL of a worksheet file on the web:"
 #~ msgstr "Oder geben Sie den URL eines Arbeitsblatts im Internet ein:"
@@ -2779,10 +2813,10 @@ msgstr "vor %(seconds)s"
 #~ msgstr "Änderungen verwerfen"
 
 #~ msgid "Upload or Create Data File to attach to worksheet \"%(wn)s\""
-#~ msgstr "Erzeuge oder lade eine Datei hoch, die dem Arbeitsblatt \"%(wn)s\" beigefügt werden soll"
+#~ msgstr ""
 
 #~ msgid "Browse your computer to select a file to upload:"
-#~ msgstr "Durchsuche deinen PC, um eine Datei auszuwählen, die hochgeladen werden soll:"
+#~ msgstr ""
 
 #~ msgid "Or enter the URL of a file on the web:"
 #~ msgstr "Oder geben Sie den URL einer Datei im Internet ein:"
@@ -2860,7 +2894,7 @@ msgstr "vor %(seconds)s"
 #~ msgstr "Bitte geben Sie ein Arbeitsblatt zum Laden an.%s"
 
 #~ msgid "There was an error uploading \"%s\" (please recheck the URL).%s"
-#~ msgstr "Beim Hochladen ist ein Fehler aufgetreten \"%s\" (Bitte prüfe die URL).%s"
+#~ msgstr ""
 
 #~ msgid "Error uploading file (missing fileField file).%s"
 #~ msgstr "Fehler beim Hochladen der Datei (fehlendes Dateifeld Datei).%s"
@@ -2884,7 +2918,7 @@ msgstr "vor %(seconds)s"
 #~ msgstr "Fehler bei der Selbstüberprüfung -- ungültige Zell-ID."
 
 #~ msgid "You must <a href=\"/\">login first</a> in order to edit this worksheet."
-#~ msgstr "Du musst dich <a href=\"/\">zuerst anmelden</a>, um das Arbeitsblatt bearbeiten zu können."
+#~ msgstr ""
 
 #~ msgid "Old password not given"
 #~ msgstr "Altes Passwort nicht angegeben"
@@ -2911,7 +2945,7 @@ msgstr "vor %(seconds)s"
 #~ msgstr "kann Arbeitsblatt-Zellen nicht auswerten"
 
 #~ msgid "You must <a href=\"/\">login first</a> in order to rate this worksheet."
-#~ msgstr "Du musst dich <a href=\"/\">zuerst anmelden</a>, um das Arbeitsblatt bewerten zu können."
+#~ msgstr ""
 
 #~ msgid "Gees -- You can't fool the rating system that easily!"
 #~ msgstr "Ätsch! -- So einfach lässt sich das Bewertungssystem nicht überlisten!"
@@ -2920,19 +2954,19 @@ msgstr "vor %(seconds)s"
 #~ msgstr "Bewertung entgegengenommen"
 
 #~ msgid "No such worksheet."
-#~ msgstr "Kein solches Arbeitsblatt vorhanden."
+#~ msgstr "Keine solchen Arbeitsblätter."
 
 #~ msgid "The worksheet operation \"%s\" is not defined."
 #~ msgstr "Der Arbeitsblatt-Vorgang \"%s\" ist nicht definiert."
 
 #~ msgid "User \"%s\" does not have permission to view the home page of \"%s\"."
-#~ msgstr "Der Benutzer \"%s\" hat keine Berechtigung die Seite von \"%s\" zu betrachten."
+#~ msgstr ""
 
 #~ msgid "The user \"%s\" has no worksheet \"%s\"."
 #~ msgstr "Der Benutzer \"%s\" hat kein Arbeitsblatt \"%s\"."
 
 #~ msgid "You are not logged in or do not have access to the worksheet \"%s\"."
-#~ msgstr "Du bist nicht angemeldet oder hast keinen Zugriff auf das Arbeitsblatt \"%s\"."
+#~ msgstr ""
 
 #~ msgid "This url can only be accessed through a POST request."
 #~ msgstr "Auf diesen URL kann nur über eine POST-Anfrage zugegriffen werden."
@@ -2950,7 +2984,7 @@ msgstr "vor %(seconds)s"
 #~ msgstr "<h1>E-Mail-Adresse bestätigt für Benutzer %s</h1>"
 
 #~ msgid "Email Confirmed"
-#~ msgstr "E-Mail bestätigt"
+#~ msgstr "Email bestätigt"
 
 #~ msgid "January"
 #~ msgstr "Januar"
@@ -2987,4 +3021,49 @@ msgstr "vor %(seconds)s"
 
 #~ msgid "December"
 #~ msgstr "Dezember"
+
+#~ msgid "User <strong>%(username)s</strong> has been suspended/unsuspended."
+#~ msgstr "Der Benutzer <strong>%(username)s</strong> wurde gesperrt/entsperrt."
+
+#~ msgid "<strong>Invalid username!</strong>"
+#~ msgstr "<strong>Ungültiger Benutzername!</strong>"
+
+#~ msgid "The username <strong>%(username)s</strong> is already taken!"
+#~ msgstr "Der Benutzername <strong>%(username)s</strong> wird bereits verwendet!"
+
+#~ msgid "<h1>Email address confirmed for user %(username)s</h1>"
+#~ msgstr "<h1>Emailadresse für Benutzer %(username)s bestätigt</h1>"
+
+#~ msgid "You do not have permission to access this location"
+#~ msgstr "Du hast keine Berechtigung diese Seite zu besuchen"
+
+#~ msgid "You do not have permission to access this worksheet"
+#~ msgstr "Du hast keine Berechtigung dieses Arbeitsblatt aufzurufen"
+
+#~ msgid "Account is in read-only mode"
+#~ msgstr "Dieses Konto ist im 'Read-Only'-Modus"
+
+#~ msgid "Error: can't add more than 250 collaborators at a time"
+#~ msgstr "Fehler: Es können nur 250 Kollaboratoren hinzugefügt werden"
+
+#~ msgid "No data file"
+#~ msgstr "Keine Datei vorhanden"
+
+#~ msgid "Suspicious filename encountered uploading file."
+#~ msgstr "Verdächtiger Dateiname wurde festgestellt."
+
+#~ msgid "URL must start with http, https, or ftp."
+#~ msgstr "URL muss mit http, https oder ftp beginnen."
+
+#~ msgid "Error displaying worksheet listing."
+#~ msgstr "Fehler beim Anzeigen der Arbeitsblattliste."
+
+#~ msgid "User '%s' does not have permission to view the home page of '%s'."
+#~ msgstr ""
+
+#~ msgid "Requested public worksheet does not exist"
+#~ msgstr "Das angeforderte öffentliche Arbeitsblatt existiert nicht"
+
+#~ msgid "Error uploading worksheet '%(msg)s'.%(backlinks)s"
+#~ msgstr "Fehler beim Hochladen des Arbeitsblatts '%(msg)s'.%(backlinks)s"
 
