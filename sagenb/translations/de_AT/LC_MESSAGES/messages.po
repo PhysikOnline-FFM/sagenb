@@ -3067,41 +3067,47 @@ msgstr "vor %(seconds)s"
 #~ msgid "Error uploading worksheet '%(msg)s'.%(backlinks)s"
 #~ msgstr "Fehler beim Hochladen des Arbeitsblatts '%(msg)s'.%(backlinks)s"
 
-#~ msgid "Visit the other eLearning projects of <strong>PhysikOnline</strong>!"
-#~ msgstr "Besuche auch die anderen eLearning-Projekte von <strong>PhysikOnline</strong>!"
+msgid "Visit the other eLearning projects of <strong>PhysikOnline</strong>!"
+msgstr "Besuche auch die anderen eLearning-Projekte von <strong>PhysikOnline</strong>!"
 
-#~ msgid "Owner/Collaborators"
-#~ msgstr "Besitzer/Mitarbeiter"
+msgid "New Worksheet"
+msgstr "Neues Arbeitsblatt"
 
-#~ msgid "Last Edited"
-#~ msgstr "Zuletzt geändert"
+msgid "Action"
+msgstr "Aktion"
 
-#~ msgid "Search..."
-#~ msgstr "Suchen"
+msgid "Owner/Collaborators"
+msgstr "Besitzer/Mitarbeiter"
 
-#~ msgid "Download All Active"
-#~ msgstr "Alle aktiven herunterladen"
+msgid "Last Edited"
+msgstr "Geändert"
 
-#~ msgid "Unarchive"
-#~ msgstr "Aus Archiv holen"
+msgid "Search..."
+msgstr "Suchen"
 
-#~ msgid "Delete"
-#~ msgstr "Löschen"
+msgid "Download All Active"
+msgstr "Aktive AB herunterladen"
 
-#~ msgid "Undelete"
-#~ msgstr "Widerherstellen"
+msgid "Unarchive"
+msgstr "Aus Archiv holen"
 
-#~ msgid "Stop"
-#~ msgstr "Stopp"
+msgid "Delete"
+msgstr "Löschen"
 
-#~ msgid "Download"
-#~ msgstr "Download"
+msgid "Undelete"
+msgstr "Widerherstellen"
 
-#~ msgid "Empty Trash"
-#~ msgstr "Mülleimer leeren"
+msgid "Stop"
+msgstr "Stopp"
 
-#~ msgid "Projects"
-#~ msgstr "Projekte"
+msgid "Download"
+msgstr "Download"
 
-#~ msgid "Developement"
-#~ msgstr "Entwicklung"
+msgid "Empty Trash"
+msgstr "Mülleimer leeren"
+
+msgid "Projects"
+msgstr "Projekte"
+
+msgid "Developement"
+msgstr "Entwicklung"
