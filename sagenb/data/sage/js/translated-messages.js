@@ -69,4 +69,6 @@
 {{ gettext('Send') }}
 {{ gettext('send') }}
 {{ gettext('Message from') }}
+{{ gettext('joined') }}
+{{ gettext('left') }}
 {{ gettext('and') }}

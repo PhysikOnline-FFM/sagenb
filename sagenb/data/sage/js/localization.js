@@ -72,6 +72,8 @@ function gettext(str) {
                           'Worksheet - Chat',
                           'Send',
                           'send',
+                          'joined',
+                          'left',
                           'Message from',
                           'and',
 						 ] %}
