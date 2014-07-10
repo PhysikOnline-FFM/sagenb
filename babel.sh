@@ -1,6 +1,5 @@
 #!/bin/sh
 #run on terminal in projects root folder:
-# !!!!! Nicht getestet !!!!
 case $1 in
    compile|c)
             pybabel -v compile -d ./sagenb/translations/ -l de_AT

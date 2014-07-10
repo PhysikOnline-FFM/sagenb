@@ -1085,7 +1085,7 @@ msgstr "Änderungssystem"
 
 #: sagenb/data/sage/html/pokal/portal.html:7
 msgid "Welcome to POKAL 2.0"
-msgstr "Willkommen zu POKAL 2.0"
+msgstr "Willkommen auf POKAL 2.0"
 
 #: sagenb/data/sage/html/pokal/portal.html:57
 msgid "Friends and Sponsors"
@@ -1226,11 +1226,11 @@ msgstr "Kollaboratoren"
 #: sagenb/data/sage/js/chat.js:147
 #, fuzzy
 msgid "joined"
-msgstr "Fertig"
+msgstr "arbeitet nun auch an diesem Arbeitsblatt"
 
 #: sagenb/data/sage/js/chat.js:152
 msgid "left"
-msgstr ""
+msgstr "hat das Arbeitsblatt verlassen"
 
 #: sagenb/data/sage/js/jmol.js:39 sagenb/data/sage/js/translated-messages.js:45
 msgid "Show Static Image"
@@ -1433,7 +1433,7 @@ msgstr "Bist du sicher, dass du die laufende Berechnung unterbrechen möchtest?"
 #: sagenb/data/sage/js/translated-messages.js:50
 #: sagenb/data/sage/js/worksheet.js:471
 msgid "Copy to clipboard: "
-msgstr "Kopier in die Zwischenablage: "
+msgstr "Kopiere in die Zwischenablage: "
 
 #: sagenb/data/sage/js/translated-messages.js:51
 msgid "running"
@@ -3067,3 +3067,41 @@ msgstr "vor %(seconds)s"
 #~ msgid "Error uploading worksheet '%(msg)s'.%(backlinks)s"
 #~ msgstr "Fehler beim Hochladen des Arbeitsblatts '%(msg)s'.%(backlinks)s"
 
+#~ msgid "Visit the other eLearning projects of <strong>PhysikOnline</strong>!"
+#~ msgstr "Besuche auch die anderen eLearning-Projekte von <strong>PhysikOnline</strong>!"
+
+#~ msgid "Owner/Collaborators"
+#~ msgstr "Besitzer/Mitarbeiter"
+
+#~ msgid "Last Edited"
+#~ msgstr "Zuletzt geändert"
+
+#~ msgid "Search..."
+#~ msgstr "Suchen"
+
+#~ msgid "Download All Active"
+#~ msgstr "Alle aktiven herunterladen"
+
+#~ msgid "Unarchive"
+#~ msgstr "Aus Archiv holen"
+
+#~ msgid "Delete"
+#~ msgstr "Löschen"
+
+#~ msgid "Undelete"
+#~ msgstr "Widerherstellen"
+
+#~ msgid "Stop"
+#~ msgstr "Stopp"
+
+#~ msgid "Download"
+#~ msgstr "Download"
+
+#~ msgid "Empty Trash"
+#~ msgstr "Mülleimer leeren"
+
+#~ msgid "Projects"
+#~ msgstr "Projekte"
+
+#~ msgid "Developement"
+#~ msgstr "Entwicklung"
