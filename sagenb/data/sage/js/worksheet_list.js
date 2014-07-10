@@ -57,7 +57,7 @@ sagenb.worksheetlistapp.list_row = function() {
 		var owner_html = _this.props.owner;
 		if(_this.props.collaborators && _this.props.collaborators.length) {
 			// there are collaborators
-			owner_html += ' and <a href="#" class="collaborators_tooltip" rel="tooltip" title="' + _this.props.collaborators.join("<br>") + '">' + _this.props.collaborators.length + ' ' + gettext('other(s)') + '</a>';
+			owner_html += ' '+ gettext('and') +' <a href="#" class="collaborators_tooltip" rel="tooltip" title="' + _this.props.collaborators.join("<br>") + '">' + _this.props.collaborators.length + ' ' + gettext('other(s)') + '</a>';
 		}
 		if(_this.props.published_id_number && !_this.list.published_mode) {
 			// it's published

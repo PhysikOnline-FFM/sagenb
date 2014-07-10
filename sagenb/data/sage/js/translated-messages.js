@@ -69,3 +69,4 @@
 {{ gettext('Send') }}
 {{ gettext('send') }}
 {{ gettext('Message from') }}
+{{ gettext('and') }}

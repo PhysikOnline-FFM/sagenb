@@ -1781,7 +1781,7 @@ msgid "Delete"
 msgstr "Löschen"
 
 msgid "Undelete"
-msgstr "Widerherstellen"
+msgstr "Wiederherstellen"
 
 msgid "Stop"
 msgstr "Stopp"

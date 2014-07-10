@@ -73,6 +73,7 @@ function gettext(str) {
                           'Send',
                           'send',
                           'Message from',
+                          'and',
 						 ] %}
 		"{{ string }}" : "{{ gettext(string) }}",
 		{% endfor %}
