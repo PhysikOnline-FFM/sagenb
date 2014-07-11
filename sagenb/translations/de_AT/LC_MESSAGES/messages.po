@@ -383,10 +383,10 @@ msgid ""
 "pleased to help you, too."
 msgstr ""
 "Dies ist eine für das <a href=\"https://elearning.physik.uni-frankfurt.de/"
-"projekt/wiki/POKAL\">POKAL</a>-Projekt angepasste Sage-Installation.Bitte "
+"projekt/wiki/POKAL\">POKAL</a>-Projekt angepasste Sage-Installation. Bitte "
 "lies die <b><a href=\"https://elearning.physik.uni-frankfurt.de/projekt/wiki/"
-"POKAL/Hilfe\">POKAL Hilfeseite</a></b> bei POKAL spezifischen Problemen.Auch "
-"die POKAL-Administratoren werden dir gerne weiter helfen."
+"POKAL/Hilfe\">POKAL Hilfeseite</a></b> bei POKAL spezifischen Problemen. Auch "
+"die POKAL-Administratoren werden dir gerne weiterhelfen."
 
 #: sagenb/data/sage/html/docs.html:48
 msgid "Some Lingo"
@@ -407,18 +407,16 @@ msgid "Session"
 msgstr "Sitzung"
 
 #: sagenb/data/sage/html/docs.html:57
-#, fuzzy
 msgid "a worksheet and a set of variables in some state"
 msgstr ""
-"Eine <em>Sitzung</em> ist ein Arbeitsblatt mit einer Menge von Variablen in "
-"einem gewissen Zustand."
+"Eine <em>Sitzung</em> ist ein Arbeitsblatt mit einer Reihe von Variablen in "
+"definiertem Zustand."
 
 #: sagenb/data/sage/html/docs.html:60 sagenb/notebook/template.py:146
 msgid "Sage Notebook"
 msgstr "Sage Notebook"
 
 #: sagenb/data/sage/html/docs.html:61
-#, fuzzy
 msgid "a collection of worksheets, saved objects, and user information"
 msgstr ""
 "<em>Sage Notebook</em> ist eine Sammlung von Arbeitsblättern, gespeicherten "
@@ -443,7 +441,6 @@ msgstr ""
 "tutorial/index.html\">statische Fassung</a> ein)."
 
 #: sagenb/data/sage/html/docs.html:76
-#, fuzzy
 msgid "Introspection"
 msgstr "Konstruktionen"
 
@@ -462,7 +459,6 @@ msgid "Search Documentation and Source"
 msgstr "Durchsuche Dokumentation und Quellcode"
 
 #: sagenb/data/sage/html/docs.html:81
-#, fuzzy
 msgid ""
 "Search the Sage documentation by typing <code>search_doc(\"my query\")</"
 "code> in an input cell and press shift-enter. Search the source code of Sage "
@@ -544,12 +540,11 @@ msgid "Interrupt"
 msgstr "Unterbrechen"
 
 #: sagenb/data/sage/html/docs.html:121
-#, fuzzy
 msgid ""
 "Click <strong>Evaluation > Interrupt</strong>. This will (attempt) to "
 "interrupt Sage by sending many interrupt signals."
 msgstr ""
-"Klicken Sie auf <u>Unterbrechen</u> oder drücken Sie Escape in einer "
+"Klicken Sie auf <strong>Evaluation > Unterbrechen</strong> oder drücken Sie Escape in einer "
 "beliebigen Zelle. Dadurch werden viele Interrupt-Signale gesendet, die "
 "(versuchen) SAGE zu unterbrechen."
 
@@ -607,9 +602,8 @@ msgstr ""
 "des Arbeitsblatts automatisch ausgewertet."
 
 #: sagenb/data/sage/html/docs.html:148
-#, fuzzy
 msgid "Timing"
-msgstr "Bewertung"
+msgstr "Zeitmessung"
 
 #: sagenb/data/sage/html/docs.html:149
 #, python-format
@@ -650,7 +644,7 @@ msgid ""
 "Click <strong>Profile Menu > Log</strong> to see a log of changes you have "
 "made in any worksheet."
 msgstr ""
-"Klicke <strong>Profile Menu > Log</strong>, um die Änderungen zu sehen, die "
+"Klicke <strong>Benutzermenü > Protokoll</strong>, um die Änderungen zu sehen, die "
 "du in beliebigen Arbeitsblättern vorgenommen hast."
 
 #: sagenb/data/sage/html/docs.html:168
@@ -2799,7 +2793,7 @@ msgid "Successfully deleted \"%s\""
 msgstr "\"%s\" erfolgreich gelöscht"
 
 msgid "No data files"
-msgstr "Keine Daten-Dateien vorhanden"
+msgstr "Keine Dateien vorhanden"
 
 msgid "Error in introspection -- invalid cell id."
 msgstr "Fehler bei der Selbstüberprüfung -- ungültige Zell-ID."
@@ -2924,6 +2918,39 @@ msgstr ""
 
 msgid "New Worksheet"
 msgstr "Neues Arbeitsblatt"
+
+msgid "Save Worksheet"
+msgstr "Speichern"
+
+msgid "Close Worksheet"
+msgstr "Schließen"
+
+msgid "Text View"
+msgstr "Textansicht"
+
+msgid "Edit Mode"
+msgstr "Bearbeitungsmodus"
+
+msgid "Export to File"
+msgstr "Als Datei exportieren"
+
+msgid "Import from File"
+msgstr "Aus Datei importieren"
+
+msgid "Line numbers"
+msgstr "Zeilennummerierung"
+
+msgid "Single-cell Mode"
+msgstr "Einzelzellen-Modus"
+
+msgid "Multi-cell Mode"
+msgstr "Mehrzellen-Modus"
+
+msgid "Evaluate all Cells"
+msgstr "Alle Zellen auswerten"
+
+msgid "Restart Worksheet"
+msgstr "AB neustarten"
 
 msgid "Action"
 msgstr "Aktion"
