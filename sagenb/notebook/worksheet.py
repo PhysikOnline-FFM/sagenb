@@ -3143,7 +3143,7 @@ except (KeyError, IOError):
 
         # Finished a computation.
         self.__comp_is_running = False
-	del self.__queue[0]
+        del self.__queue[0]
 
         if C.is_no_output():
             # Clean up the temp directories associated to C, and do
