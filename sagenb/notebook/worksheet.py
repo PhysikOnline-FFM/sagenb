@@ -225,7 +225,7 @@ class Worksheet(object):
         # set the directory in which the worksheet files will be stored.
         # We also add the hash of the name, since the cleaned name loses info, e.g.,
         # it could be all _'s if all characters are funny.
-        self.__id_number = int(id_number)
+        self.__id_number = (id_number)
         filename = os.path.join(owner, str(id_number))
         self.__filename = filename
         self.__dir = os.path.join(notebook_worksheet_directory, str(id_number))
@@ -276,7 +276,7 @@ class Worksheet(object):
         try:
             return self.__id_number
         except AttributeError:
-            self.__id_number = int(os.path.split(self.__filename)[1])
+            self.__id_number = (os.path.split(self.__filename)[1])
             return self.__id_number
 
     def basic(self):
@@ -296,7 +296,7 @@ class Worksheet(object):
         d = {#############
              # basic identification
              'name': unicode(self.name()),
-             'id_number': int(self.id_number()),
+             'id_number': self.id_number(),
 
              #############
              # default type of computation system that evaluates cells
@@ -356,7 +356,7 @@ class Worksheet(object):
             d['published_time'] = strftime("%B %d, %Y %I:%M %p", self.published_version().date_edited())
 
             try:
-                d['published_id_number'] = int(os.path.split(self.__published_version)[1])
+                d['published_id_number'] = (os.path.split(self.__published_version)[1])
             except AttributeError:
                 d['published_id_number'] = None
 
@@ -3143,7 +3143,7 @@ except (KeyError, IOError):
 
         # Finished a computation.
         self.__comp_is_running = False
-	del self.__queue[0]
+        del self.__queue[0]
 
         if C.is_no_output():
             # Clean up the temp directories associated to C, and do

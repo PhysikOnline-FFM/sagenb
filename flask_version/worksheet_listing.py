@@ -37,7 +37,7 @@ def worksheet_list():
 
     r = {}
 
-    pub = 'pub' in request.args    
+    pub = 'pub' in request.args
     readonly = g.notebook.readonly_user(g.username)
     typ = request.args['type'] if 'type' in request.args else 'active'
     search = unicode_str(request.args['search']) if 'search' in request.args else None
@@ -60,7 +60,7 @@ def worksheet_list():
     r['accounts'] = g.notebook.user_manager().get_accounts()
     r['sage_version'] = SAGE_VERSION
     # r['pub'] = pub
-    
+
     return encode_response(r)
 
 @worksheet_listing.route('/home/<username>/')
