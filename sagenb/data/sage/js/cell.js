@@ -18,6 +18,8 @@ sagenb.worksheetapp.cell = function(id) {
 	_this.codemirror = null;
 
 	_this.worksheet = null;
+    // socket speichern
+    _this.socket = sagenb.worksheetapp.worksheet.socket;
 	
 	// this is the id of the interval for checking for new output
 	_this.output_check_interval_id;
@@ -243,7 +245,7 @@ sagenb.worksheetapp.cell = function(id) {
 			///////Sync///////
 			_this.codemirror.on("change", function(cm, chg) {
                 if (_this.change_by_collab === false){
-                    _this.worksheet.socket.emit("input_change", _this.codemirror.getValue(), _this.id);
+                    _this.socket.emit("cell_input_changed", _this.id, _this.codemirror.getValue());
                 }
                 _this.change_by_collab = false;
 			
@@ -257,7 +259,9 @@ sagenb.worksheetapp.cell = function(id) {
 			
 			_this.codemirror.on("focus", function() {
 				_this.worksheet.current_cell_id = _this.id;
-				
+				// inform all clients about focus for locking the cell
+                _this.socket.emit("cell_focused", _this.id, sagenb.username);
+                
 				$(".cell").removeClass("current_cell");
 				$("#cell_" + _this.id).addClass("current_cell");
 				
@@ -285,6 +289,9 @@ sagenb.worksheetapp.cell = function(id) {
 
 				// update cell properties without rendering
 				_this.update();
+                
+                // inform all clients about blur for releasing the cell
+                _this.socket.emit("cell_released", _this.id, sagenb.username);
 			});
 
 			// render the output
@@ -393,12 +400,7 @@ sagenb.worksheetapp.cell = function(id) {
 			}
 		}
 	};
-	
-	_this.eval_result_output = function(result, id) {
-        // ICH BIN HIER STEHEn geblieben! DEBUG
-
-    };
-	
+    
 	_this.render_output = function(stuff_to_render) {
 		/* Renders stuff_to_render as the cells output, 
 		 * if given. If not, then it renders _this.output.
@@ -612,52 +614,50 @@ sagenb.worksheetapp.cell = function(id) {
 			_this.input = ed.getContent();
 		}
 		
+		// inform all clients about changed input
+        _this.socket.emit("cell_input_changed", _this.id, _this.input);
 		// update the server input property
-
         sagenb.async_request(_this.worksheet.worksheet_command("eval"), sagenb.generic_callback, {
 			save_only: 1,
 			id: _this.id,
 			input: _this.input
 		});
 	};
+    
 	_this.evaluate = function() {
 		if(_this.worksheet.published_mode) return;
+		
 		if(!_this.is_evaluate_cell) {
 			// we're a text cell
 			_this.continue_evaluating_all();
 			return;
 		}
 		
-		if(_this.is_evaluating) {
-			return;
-		}
+		if(_this.is_evaluating) return;
 
 		_this.cancel_introspect();
 		_this.set_output_loading();
 
 		var nextcell = get_next_cell();
-		if(nextcell) {
-			nextcell.focus();
-		}
+		if(nextcell) nextcell.focus();
 
+        // send information event to all collaborators
+        _this.socket.emit('cell_evaluate', _this.id, sagenb.username);
 		// we're an evaluate cell
-
-        sagenb.async_request(_this.worksheet.worksheet_command("eval"), _this.emit_eval_result, {
-         //0 = false, 1 = true this needs some conditional
-            newcell: 0,
-
-            id: toint(_this.id),
-
-            /* It's necessary to get the codemirror value because the user
-             * may have made changes and not blurred the codemirror so the
-             * changes haven't been put in _this.input
-             */
-            input: _this.codemirror.getValue()
-        });
+		sagenb.async_request(_this.worksheet.worksheet_command("eval"), _this.emit_eval_result, {
+			//0 = false, 1 = true this needs some conditional
+			newcell: 0,
+			id: toint(_this.id),
+			/* It's necessary to get the codemirror value because the user
+			* may have made changes and not blurred the codemirror so the
+			* changes haven't been put in _this.input
+			*/
+			input: _this.codemirror.getValue()
+		});
 	};
 	
 	_this.emit_eval_result = function(status, response){
-          sagenb.worksheetapp.worksheet.socket.emit('eval', response, _this.codemirror.getValue());
+          _this.socket.emit('eval_result_broadcast', response, _this.codemirror.getValue());
     };
 
 	_this.evaluate_interact = function(update, recompute) {
@@ -1004,6 +1004,30 @@ sagenb.worksheetapp.cell = function(id) {
 		}
 	}
 
+	///////  Websocket functions ///////
+    _this.on_cell_focused = function(username){
+        console.log("cell.js: wss//on_cell_focused");
+        if (username != sagenb.username){
+            var tmp = $("#cell_" + _this.id);
+            $("#cell_" + _this.id).addClass('locked');
+            // change the codemirror mode
+            _this.codemirror.setOption("readOnly", 'nocursor');
+        }
+    }
+    _this.on_cell_released = function(username){
+        console.log("cell.js: wss//on_cell_released");
+        if (username != sagenb.username){
+            $("#cell_" + _this.id).removeClass('locked');
+            // change the codemirror mode
+            _this.codemirror.setOption("readOnly", false);
+        }
+    }
+    _this.on_cell_evaluate = function(username){
+        console.log("cell.js: wss//on_cell_evaluate");
+        _this.set_output_loading();
+        // thomas: doesn't work
+    }
+    
     /////// INPUT ////////
     //This is used by Websockethandlers to make sure input is synchrone
    _this.set_cell_input = function(input){
@@ -1063,7 +1087,7 @@ sagenb.worksheetapp.cell = function(id) {
 			sagenb.generic_callback(function(status, response) {
 				X = decode_response(response);
 				if(X.command === "ignore") return;
-				_this.worksheet.socket.emit('delete_cell', _this.id)
+				_this.socket.emit('delete_cell', _this.id)
 			}), 
 			{id: toint(_this.id)}
 		);

@@ -55,18 +55,14 @@ sagenb.worksheetapp.worksheet = function() {
 	// other variables go here
 	
     ////////// WEBSOCKET_HANDLER ////////	
-	_this.socket.on('hello_world', function(data) {
-		console.log("Recieved Hello World", data)
-	});
-	
 	_this.socket.on('new_cell_after', function (response){
 		_this.new_cell_all_after(response);
 	});
 	
 	_this.socket.on('delete_cell', function(id){
-		delete _this.cells[id];
 		$("#cell_" + id).parent().next().detach();
 		$("#cell_" + id).parent().detach();
+		delete _this.cells[id];
     });
 	
 	_this.socket.on('set_state_number', function(statenumber){
@@ -78,9 +74,11 @@ sagenb.worksheetapp.worksheet = function() {
 		_this.access_to_slider = false;
     });
 	
+    // Evaluation result is replied by server
     _this.socket.on('eval_reply', function (result, input){
-        var X = decode_response(result)
+        var X = decode_response(result);
         _this.cells[X.id]._evaluate_callback_ws("success", result);
+        
 		if (input != "") {
 			_this.cells[X.id].set_cell_input(input);
 		}
@@ -88,11 +86,22 @@ sagenb.worksheetapp.worksheet = function() {
     });
 	
 	// sets input everytime it gets changed
-    _this.socket.on('input_change', function (input, cid){
+    _this.socket.on('cell_input_changed', function (cid, input){
         _this.cells[cid].set_cell_input(input);
     });
-	
-	
+    // a cell has been focused by a user
+    _this.socket.on('cell_focused', function (cid, username){
+        _this.cells[cid].on_cell_focused(username);
+    });
+    // a cell has been released
+    _this.socket.on('cell_released', function (cid, username){
+        _this.cells[cid].on_cell_released(username);
+    });
+    // a cell is going to be evaluated by a user
+    _this.socket.on('cell_evaluate', function (cid, username){
+        _this.cells[cid].on_cell_evaluate(username);
+    });
+    
 	///////////// COMMANDS ////////////
 	_this.worksheet_command = function(cmd) {
 		/*

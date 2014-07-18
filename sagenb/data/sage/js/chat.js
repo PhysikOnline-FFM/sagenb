@@ -27,8 +27,8 @@ sagenb.chat.init = function(worksheet) {
     
 	// put it next to the user button
 	$("#user_navbar_area").find(".btn-group").first().prepend(sagenb.chat.header_button);
-	
-        sagenb.chat.message_box = $('<div id="chat_message_box"/>');
+    
+    sagenb.chat.message_box = $('<div id="chat_message_box"/>');
 
 	sagenb.chat.message_box.appendTo("body");
         sagenb.chat.dialog = sagenb.chat.message_box.dialog({
@@ -39,12 +39,12 @@ sagenb.chat.init = function(worksheet) {
             position: {my: "right top", at: "right bottom"},
             show: "fast",
             title: gettext('Worksheet - Chat'),
-	    // Hacky: diese buttons sind nur farce, um die Pane zu kriegen.
-	    // Es wird dann ein eigener Bootstrap-layouteter button hinzugefuegt
-	    buttons: [ { text: "Senden", click: sagenb.chat.send_message }  ],
-	    // event handler um den richtigen sync zu kriegen zum top button
-	    close: function(e,ui) { sagenb.chat.header_button.removeClass("active"); },
-	    open: function(e,ui) { sagenb.chat.header_button.addClass("active"); },
+            // Hacky: diese buttons sind nur farce, um die Pane zu kriegen.
+            // Es wird dann ein eigener Bootstrap-layouteter button hinzugefuegt
+            buttons: [ { text: gettext('Send'), click: sagenb.chat.send_message }  ],
+            // event handler um den richtigen sync zu kriegen zum top button
+            close: function(e,ui) { sagenb.chat.header_button.removeClass("active"); },
+            open: function(e,ui) { sagenb.chat.header_button.addClass("active"); },
         });
 	
 	$(".chat").find(".ui-dialog-titlebar").after('<div id="chat_userlist_box"></div>');
@@ -66,14 +66,6 @@ sagenb.chat.init = function(worksheet) {
 	
 	// Log into chat
 	sagenb.chat.socket.emit('join', {'worksheet': worksheet.filename, 'nickname': sagenb.username});
-	/*
-	sagenb.chat.socket.on('connect', function (){
-		sagenb.chat.socket.emit('join', worksheet.filename);
-		sagenb.async_request(worksheet.worksheet_command('get_username'), function(status, response){
-			sagenb.chat.socket.emit('nickname_join', response);
-		});
-	});
-	*/
 };
 
 sagenb.chat.alert = function(text) {
@@ -85,6 +77,7 @@ sagenb.chat.alert = function(text) {
 			'<strong>'+gettext('Message from')+'</strong> <span class="alert-content"></span>'+
 			'<a class="btn primary btn-small open-chat" style="float:right"><i class="icon-comment"></i>&nbsp;'+gettext('Open chat')+'</a>' +
 		'</div>').appendTo(".alert_container_inner");
+        
 		sagenb.chat.alert_box.find('.open-chat').click(function(){
 			sagenb.chat.message_box.dialog('open');
 			sagenb.chat.alert_box.fadeOut(1); // aka hide()
@@ -98,7 +91,7 @@ sagenb.chat.alert = function(text) {
 };
 
 sagenb.chat.toggle = function() {
-	sagenb.chat.message_box.dialog( sagenb.chat.header_button.hasClass("active") ? gettext('close') : gettext('open'));
+	sagenb.chat.message_box.dialog( sagenb.chat.header_button.hasClass("active") ? 'close' : 'open');
 	$(this).blur(); // FIXME klappt nicht gut
 	return false; // nicht aktiv werden (der link)
 }

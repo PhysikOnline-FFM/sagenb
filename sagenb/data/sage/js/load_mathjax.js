@@ -12,7 +12,7 @@
 	if(window.location.hostname.indexOf("localhost") > -1) {
 		mathjax_url = "/data/mathjax-MathJax-07669ac/MathJax.js";
 	} else {
-		mathjax_url = "http://cdn.mathjax.org/mathjax/latest/MathJax.js";
+		mathjax_url = "//cdn.mathjax.org/mathjax/latest/MathJax.js";
 	}
 	
 	var head = document.getElementsByTagName("head")[0];

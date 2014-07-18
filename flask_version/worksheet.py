@@ -485,6 +485,7 @@ def worksheet_cell_update(worksheet):
         #######
         # computation is done
         #####
+        print "Thomas: Computation is done! (status=d)"
         r['new_input'] = cell.changed_input_text()
         r['output_html'] = cell.output_html()
         print "\n"
@@ -506,7 +507,7 @@ def worksheet_cell_update(worksheet):
                             max_out=g.notebook.HISTORY_MAX_OUTPUT)
         g.notebook.add_to_user_history(H, g.username)
     else:
-        print "Thomas: status!=d"
+        #print "Thomas: status!=d"
         r['new_input'] = ''
         r['output_html'] = ''
 
@@ -1049,7 +1050,12 @@ from flask import globals
 def socketio(remaining):
     print "WEBSOCKETS: Connection established! (flask_version/worksheet.py)"
     try:
-        socketio_manage(request.environ, {'/worksheet': WorksheetNamespace}, request)
+        environment = request.environ.copy()
+
+        # here, information can be passed to the socket
+        environment.update({'extrainfo':'hallo', 'notebook':g.notebook})
+
+        socketio_manage(environment, {'/worksheet': WorksheetNamespace}, request)
     except:
         print "WEBSOCKETS: !!!!! Connection PROBLEM!!!!! (flask_version/worksheet.py)"
     return Response()
@@ -1069,21 +1075,24 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
     #  { nickname: "sage username", color: "#aabbcc", }
     # thus enabling the same user opening his worksheet multiple times.
     nicknames = []
+    active_cells = []
+
 
     def recv_connect(self):
-		print "Recieved Connection of ??? (flask_version/worksheet.py)"
-		def client_watcher_process():
-			userlist = self.nicknames #array of dictionaries, one for each user, with keys 'nickname', 'uuid' and 'color'
-			server = {'nickname':'Server', 'color':'#000000', 'uuid':'SERVER'}
+        print "Recieved Connection of ??? (flask_version/worksheet.py)"
 
-			if len(userlist) == 1: #if he is the first user in this room
-				while True:
-					msg = 'Blub!'
-					self.msg = encode_response({"user": server , "message": msg })
-					self.emit('user_message', self.msg)
-					self.emit_to_room(self.room, 'user_message', self.msg)
-					gevent.sleep(5.0) # in Sekunden, auch 0.1 okay
-		self.spawn(client_watcher_process)
+        #### Thomas: OMG, I think it works!
+        print(self.environ['notebook'].worksheet_names())
+        ###
+        # now we have to find the active worksheet
+        # probably with something like
+        #
+        #worksheet_filename = username + "/" + id
+        #try:
+        #    worksheet = self.environ['notebook'].get_worksheet_with_filename(worksheet_filename)
+        #except KeyError:
+        #    print("error")
+
 
     # client information handler
     def on_join(self, data):
@@ -1112,6 +1121,35 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         self.emit('new_nickname_list', encode_response(self.nicknames))
         self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.nicknames))
         self.emit_to_room(self.room, 'join_message', encode_response(self.session['session_nick']))
+        def client_watcher_process():
+            userlist = self.nicknames #array of dictionaries, one for each user, with keys 'nickname', 'uuid' and 'color'
+            server = {'nickname':'Server', 'color':'#000000', 'uuid':'SERVER'}
+            # self.room entspricht z.B. s1320604/2
+
+            if len(userlist) == 1: #if he is the first user in this room start loop
+                while len(userlist) != 0: #if everybody is gone stop the loop
+                    # get current worksheet
+                    notebook = self.environ['notebook']
+                    worksheet = notebook.get_worksheet_with_filename(self.room)
+                    for cell_id in self.active_cells:
+                        #status, cell = worksheet.check_cell(cell_id)
+                        r = self.build_result(worksheet, cell_id)
+                        if r['status'] == 'd':
+                            # chat broadcast
+                            msg = r['output_html']+r['output']
+                            #self.msg = encode_response({"user": server , "message": msg })
+                            #self.emit('user_message', self.msg)
+                            #self.emit_to_room(self.room, 'user_message', self.msg)
+
+                            # websocket broadcast
+                            reply = encode_response(r)
+                            self.emit('eval_reply', reply, r['new_input'])
+                            self.emit_to_room(self.room, 'eval_reply', reply, r['new_input'])
+                            # remove id
+                            self.active_cells.remove(cell_id)
+
+                    gevent.sleep(0.5) # in Sekunden, auch 0.1 okay
+        self.spawn(client_watcher_process)
         return True
 
     # cell operations handler
@@ -1122,15 +1160,35 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         self.emit('delete_cell', id)
         self.emit_to_room(self.room,'delete_cell', id)
 
+    # cell event handler
+    def on_cell_focused(self, id, username):
+        print "cell " + str(id) + " has been focused by " + username
+        self.emit_to_room(self.room,'cell_focused', id, username)
+
+    def on_cell_released(self, id, username):
+        print "cell " + str(id) + " has been released by " + username
+        self.emit_to_room(self.room,'cell_released', id, username)
+
+    def on_cell_evaluate(self, id, username):
+        print "cell " + str(id) + " is going to be evaluated by " + username
+        if not id in self.active_cells:
+            self.active_cells.append(id)
+        self.emit_to_room(self.room,'cell_evaluate', id, username)
+
+    #Used for Realtime Input-Synchronisation
+    #input = input as string + new char
+    #this message will be sent every time an input cell gets changed (every Keypress on focus)
+    def on_cell_input_changed(self, id, input):
+        self.emit_to_room(self.room, 'cell_input_changed', id, input)
+
     # evaluate handler
-    def on_eval(self, result, input):
+    def on_eval_result_broadcast(self, result, input):
         self.emit('eval_reply', result)
-        self.emit_to_room(self.room, 'eval_reply', result, input)
+        #self.emit_to_room(self.room, 'eval_reply', result, input)
         return True
 
     def on_set_state_number(self, statenumber):
         print statenumber
-        self.emit_to_room(self.room, 'set_state_number', statenumber)
         self.emit('set_state_number', statenumber)
         self.emit_to_room(self.room, 'set_state_number', statenumber)
 
@@ -1144,18 +1202,61 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         self.emit_to_room(self.room, 'user_message', self.msg)
 
     def recv_disconnect(self):
-        if not (self.session['session_nick'] in self.nicknames):
-            print self.session['session_nick']['uuid'] + " was no more connected!"
+        try:
+            if not (self.session['session_nick'] in self.nicknames):
+                print self.session['session_nick']['uuid'] + " was no more connected!"
+                return True
+            print self.session['session_nick']['uuid'] + " disconnected"
+            self.nicknames.remove(self.session['session_nick'])
+            self.emit_to_room(self.room, 'leave_message', encode_response(self.session['session_nick']))
+            self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.nicknames))
+            self.emit('new_nickname_list', encode_response(self.nicknames))
             return True
-        print self.session['session_nick']['uuid'] + " disconnected"
-        self.nicknames.remove(self.session['session_nick'])
-        self.emit_to_room(self.room, 'leave_message', encode_response(self.session['session_nick']))
-        self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.nicknames))
-        self.emit('new_nickname_list', encode_response(self.nicknames))
-        return True
+        except KeyError as err:
+            print "worksheet.py/recv_disconnect():: self.session['session_nick'] does not exist"
+            return False
 
-    #Used for Realtime Input-Synchronisation
-    #input = input as string + new char
-    #this message will be sent every time an input cell gets changed (every Keypress on focus)
-    def on_input_change(self, input, id):
-        self.emit_to_room(self.room, 'input_change', input, id)
+    def build_result(self, worksheet, id):
+        #import time
+
+        notebook = self.environ['notebook']
+        r = {}
+        r['id'] = id
+
+        # update the computation one "step".
+        worksheet.check_comp()
+
+        # now get latest status on our cell
+        r['status'], cell = worksheet.check_cell(id)
+
+        if r['status'] == 'd': # d=done
+            #######
+            # computation is done
+            #####
+            r['new_input'] = cell.changed_input_text()
+            r['output_html'] = cell.output_html()
+
+            # Update the log.
+            #t = time.strftime('%Y-%m-%d at %H:%M',
+            #                  time.localtime(time.time()))
+            #H = "Worksheet '%s' (%s)\n" % (worksheet.name(), t)
+            #H += cell.edit_text(ncols=g.notebook.HISTORY_NCOLS, prompts=False,
+            #                    max_out=g.notebook.HISTORY_MAX_OUTPUT)
+            #notebook.add_to_user_history(H, g.username)
+        else:
+            r['new_input'] = ''
+            r['output_html'] = ''
+
+        r['interrupted'] = cell.interrupted()
+        if 'Unhandled SIGSEGV' in cell.output_text(raw=True).split('\n'):
+            r['interrupted'] = 'restart'
+            print 'Segmentation fault detected in output!'
+
+        r['output'] = cell.output_text(html=True)
+        r['output_wrapped'] = cell.output_text(notebook.conf()['word_wrap_cols'])
+        r['introspect_output'] = cell.introspect_output()
+
+        # Compute 'em, if we got 'em.
+        #worksheet.start_next_comp()
+        return r
+
