@@ -1203,6 +1203,7 @@ class Worksheet(object):
             sage: W._Worksheet__published_version
             'pub/1'
         """
+        print(filename)
         self.__published_version = filename
 
     def published_version(self):

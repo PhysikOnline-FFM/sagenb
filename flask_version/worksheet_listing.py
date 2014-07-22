@@ -47,7 +47,8 @@ def worksheet_list():
         if not pub:
             r['worksheets'] = [x.basic() for x in g.notebook.worksheet_list_for_user(g.username, typ=typ, sort=sort, search=search, reverse=reverse)]
         else:
-            r['worksheets'] = [x.basic() for x in g.notebook.worksheet_list_for_public(g.username, sort=sort, search=search, reverse=reverse)]
+            #r['worksheets'] = [x.basic() for x in g.notebook.worksheet_list_for_public(g.username, sort=sort, search=search, reverse=reverse)]
+            return current_app.message(_("Public listing is not supported."))
 
     except ValueError as E:
         # for example, the sort key was not valid

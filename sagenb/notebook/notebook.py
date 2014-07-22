@@ -770,14 +770,21 @@ class Notebook(object):
         """
         Find the next worksheet id for the given user.
         """
-        #u = self.user(username).conf()
-        #id_number = u['next_worksheet_id_number']
-        #if id_number == -1:  # need to initialize
-        #    id_number = max([w.id_number() for w in self.worksheet_list_for_user(username)] + [-1]) + 1
-        #u['next_worksheet_id_number'] = id_number + 1
-        N = 20
-        id_number = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(N))
-        return id_number
+        if username != 'pub':
+            u = self.user(username).conf()
+            id_number = u['next_worksheet_id_number']
+            if id_number == -1:  # need to initialize
+                id_number = max([w.id_number() for w in self.worksheet_list_for_user(username)] + [-1]) + 1
+            u['next_worksheet_id_number'] = id_number + 1
+            return id_number
+        else: # username == 'pub'
+            N = 20
+            found_new_id = False
+            while not found_new_id:
+                id_number = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(N))
+                if id_number not in [w.id_number() for w in self.worksheet_list_for_user('pub')]:
+                    found_new_id = True
+            return id_number
 
     def new_worksheet_with_title_from_text(self, text, owner):
         name, _ = worksheet.extract_name(text)
