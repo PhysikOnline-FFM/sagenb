@@ -1078,11 +1078,8 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
     active_cells = []
 
 
-    def recv_connect(self):
-        print "Recieved Connection of ??? (flask_version/worksheet.py)"
+#    def recv_connect(self):
 
-        #### Thomas: OMG, I think it works!
-        print(self.environ['notebook'].worksheet_names())
         ###
         # now we have to find the active worksheet
         # probably with something like
@@ -1111,11 +1108,17 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         self.session['session_nick']['uuid'] = str(uuid.uuid4())
 
         from sage.plot.colors import Color,get_cmap
-        m = get_cmap("Accent")
+        m = get_cmap("Accent") #TODO: Aendern!!! Mehr Differenzierung
         self.session['session_nick']['color'] = Color(m(len(self.nicknames) * 1./20)[:3]).html_color()
 
         # store this session in the nickname list
-        self.nicknames.append(self.session['session_nick'])
+        found = False
+        for n in self.nicknames:
+            if data['nickname'] == n['nickname']:
+                self.session['session_nick'] = n
+                found = True
+        if not found:
+            self.nicknames.append(self.session['session_nick'])
 
         print self.nicknames
         self.emit('new_nickname_list', encode_response(self.nicknames))
