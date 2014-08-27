@@ -2990,3 +2990,6 @@ msgstr "Projekte"
 
 msgid "Developement"
 msgstr "Entwicklung"
+
+msgid  " is working on this cell. Therefore it has been locked."
+msgstr " arbeitet an dieser Zelle, daher ist sie vorübergehend gesperrt."

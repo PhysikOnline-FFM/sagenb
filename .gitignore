@@ -11,6 +11,7 @@
 *.kate-swp
 /*.gitk-tmp*
 sdist.log
+*.swp
 
 # sage files to ignore:
 /build

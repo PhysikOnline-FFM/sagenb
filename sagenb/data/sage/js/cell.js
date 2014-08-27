@@ -130,11 +130,21 @@ sagenb.worksheetapp.cell = function(id) {
 										"<button class=\"btn evaluate_button\" type=\"button\">" + gettext("Evaluate") + "</button>" +
 									"</div>" +
 								"</div> <!-- /cell -->");
-
+            $(container).find(".evaluate_button_container").hide();
 
 			// Bind the evaluate button
 			$(container).find(".evaluate_button").click(_this.evaluate);
 
+            $(container).on("focusin", function(event){
+                // Show the evaluate button
+                $(this).find(".evaluate_button_container").show();
+            });
+            
+            $(container).on("focusout", function(event){
+                // Hide the evaluate button after a short while. This gives the click event of eval-button the possibility to be triggered
+                setTimeout(function(){$(container).find(".evaluate_button_container").hide()}, 150);
+            });
+            
 			//set up extraKeys object
 			/* because of some codemirror or chrome bug, we have to
 			 * use = new Object(); instead of = {}; When we use = {};
@@ -259,6 +269,7 @@ sagenb.worksheetapp.cell = function(id) {
 			
 			_this.codemirror.on("focus", function() {
 				_this.worksheet.current_cell_id = _this.id;
+                
 				// inform all clients about focus for locking the cell
                 _this.socket.emit("cell_focused", _this.id, sagenb.username);
                 
@@ -267,10 +278,6 @@ sagenb.worksheetapp.cell = function(id) {
 				
 				// unhide if hidden
 				$("#cell_" + _this.id + " .input_cell").removeClass("input_hidden");
-
-				// Show the evaluate button
-				$("#cell_" + _this.id + " .evaluate_button_container").show();
-
             });
 
 			_this.codemirror.on("blur", function() {
@@ -283,9 +290,6 @@ sagenb.worksheetapp.cell = function(id) {
 					// so we send it back to the server
 					_this.send_input();
 				}
-				
-				// Hide the evaluate button
-				$("#cell_" + _this.id + " .evaluate_button_container").hide();
 
 				// update cell properties without rendering
 				_this.update();
@@ -643,6 +647,7 @@ sagenb.worksheetapp.cell = function(id) {
 
         // send information event to all collaborators
         _this.socket.emit('cell_evaluate', _this.id, sagenb.username);
+        
 		// we're an evaluate cell
 		sagenb.async_request(_this.worksheet.worksheet_command("eval"), _this.emit_eval_result, {
 			//0 = false, 1 = true this needs some conditional
@@ -1006,26 +1011,35 @@ sagenb.worksheetapp.cell = function(id) {
 
 	///////  Websocket functions ///////
     _this.on_cell_focused = function(username){
-        console.log("cell.js: wss//on_cell_focused");
-        if (username != sagenb.username){
-            var tmp = $("#cell_" + _this.id);
-            $("#cell_" + _this.id).addClass('locked');
-            // change the codemirror mode
-            _this.codemirror.setOption("readOnly", 'nocursor');
-        }
+        //console.log("cell.js: wss//on_cell_focused");
+        _this.lock_cell(username);
     }
     _this.on_cell_released = function(username){
-        console.log("cell.js: wss//on_cell_released");
-        if (username != sagenb.username){
-            $("#cell_" + _this.id).removeClass('locked');
-            // change the codemirror mode
-            _this.codemirror.setOption("readOnly", false);
-        }
+        //console.log("cell.js: wss//on_cell_released");
+        _this.unlock_cell();
     }
     _this.on_cell_evaluate = function(username){
-        console.log("cell.js: wss//on_cell_evaluate");
+        //console.log("cell.js: wss//on_cell_evaluate");
         _this.set_output_loading();
-        // thomas: doesn't work
+    }
+    
+    /////// Locking functions ///////
+    _this.lock_cell = function(username){
+        // DOM Manipulation
+        $("#cell_" + _this.id).addClass('locked');
+        $("#cell_" + _this.id).prepend($('<div>').addClass('lock_message').html(username + gettext(' is working on this cell. Therefore it has been locked.')));
+        $("#cell_" + _this.id + " .evaluate_button_container").hide();
+        // change the codemirror mode
+        _this.codemirror.setOption("readOnly", 'nocursor');
+    }
+    
+    _this.unlock_cell = function(){
+        // DOM Manipulation
+        $("#cell_" + _this.id).removeClass('locked');
+        $("#cell_" + _this.id + " .lock_message").remove();
+        //$("#cell_" + _this.id + " .evaluate_button_container").show(); << Not needed, because Eval-Button is hidden if cell has no focus.
+        // change the codemirror mode
+        _this.codemirror.setOption("readOnly", false);
     }
     
     /////// INPUT ////////

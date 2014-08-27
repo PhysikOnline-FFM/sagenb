@@ -328,7 +328,7 @@ sagenb.worksheetapp.worksheet = function() {
         _this.add_new_cell_button_after(wrapper);
 
         // wait for the render to finish
-        setTimeout(50);
+        // setTimeout(50); << ERROR: Wrong usage of function
 
         _this.cells[new_cell.id] = new_cell;
     }
@@ -341,7 +341,7 @@ sagenb.worksheetapp.worksheet = function() {
             }
             else{
                 _this.new_cell_all_after(response);
-                _this.socket.emit('new_cell_after', response)
+                _this.socket.emit('new_cell_after', response);
             }
         },
         {id: id}
