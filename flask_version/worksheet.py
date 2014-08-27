@@ -485,19 +485,9 @@ def worksheet_cell_update(worksheet):
         #######
         # computation is done
         #####
-        print "Thomas: Computation is done! (status=d)"
+        #print "Thomas: Computation is done! (status=d)"
         r['new_input'] = cell.changed_input_text()
         r['output_html'] = cell.output_html()
-        print "\n"
-        print '/sagenb/sagenb/flask_version/worksheet.py cell_update#done  wurde aufgerufen! (Carsten)'
-        print '------------------------------------'
-        print 'output_html():'
-        print cell.output_html()
-        print "\n"
-        print 'output_text():'
-        print cell.output_text()
-        print '------------------------------------'
-        print "\n"
 
         # Update the log.
         t = time.strftime('%Y-%m-%d at %H:%M',
@@ -1126,23 +1116,18 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         self.emit_to_room(self.room, 'join_message', encode_response(self.session['session_nick']))
         def client_watcher_process():
             userlist = self.nicknames #array of dictionaries, one for each user, with keys 'nickname', 'uuid' and 'color'
-            server = {'nickname':'Server', 'color':'#000000', 'uuid':'SERVER'}
+            #server = {'nickname':'Server', 'color':'#000000', 'uuid':'SERVER'}
             # self.room entspricht z.B. s1320604/2
 
             if len(userlist) == 1: #if he is the first user in this room start loop
+                # get current worksheet
+                notebook = self.environ['notebook']
+                worksheet = notebook.get_worksheet_with_filename(self.room)
                 while len(userlist) != 0: #if everybody is gone stop the loop
-                    # get current worksheet
-                    notebook = self.environ['notebook']
-                    worksheet = notebook.get_worksheet_with_filename(self.room)
                     for cell_id in self.active_cells:
                         #status, cell = worksheet.check_cell(cell_id)
                         r = self.build_result(worksheet, cell_id)
                         if r['status'] == 'd':
-                            # chat broadcast
-                            msg = r['output_html']+r['output']
-                            #self.msg = encode_response({"user": server , "message": msg })
-                            #self.emit('user_message', self.msg)
-                            #self.emit_to_room(self.room, 'user_message', self.msg)
 
                             # websocket broadcast
                             reply = encode_response(r)
