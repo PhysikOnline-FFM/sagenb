@@ -774,6 +774,16 @@ sagenb.worksheetapp.cell = function(id) {
 		_this.hide_popover();
 		_this.introspect_state = null;
 	};
+
+    /*
+     * important function
+     *
+     * this function is called twice at the moment
+     * once when the user requests the evaluation of a cell
+     * and another time when the server responds via websockets
+     * the second time X.status == "d"
+     *
+     */
 	_this.check_for_output = function() {
 		function stop_checking() {
 			_this.is_evaluating = false;
@@ -990,7 +1000,8 @@ sagenb.worksheetapp.cell = function(id) {
 		_this.output_check_interval_id = window.clearInterval(_this.output_check_interval_id);
 		
 		// start checking
-		_this.output_check_interval_id = window.setInterval(do_check, _this.output_check_interval);
+		//_this.output_check_interval_id = window.setInterval(do_check, _this.output_check_interval);
+        do_check();
 	};
 	
 	_this.continue_evaluating_all = function() {
