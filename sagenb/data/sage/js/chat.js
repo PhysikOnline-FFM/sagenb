@@ -36,7 +36,7 @@ sagenb.chat.init = function(worksheet) {
             dialogClass: "chat",
             height: 400,
             width: 240,
-            position: {my: "right top", at: "right bottom"},
+            position: {my: "right top", at: "right top", offset: "-20 80"}, // vorher at right bottom, no offset
             show: "fast",
             title: gettext('Worksheet - Chat'),
             // Hacky: diese buttons sind nur farce, um die Pane zu kriegen.
