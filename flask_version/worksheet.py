@@ -1071,17 +1071,7 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
 #    def recv_connect(self):
 
-        ###
-        # now we have to find the active worksheet
-        # probably with something like
-        #
-        #worksheet_filename = username + "/" + id
-        #try:
-        #    worksheet = self.environ['notebook'].get_worksheet_with_filename(worksheet_filename)
-        #except KeyError:
-        #    print("error")
-
-
+    # helper function
     def nicks(self):
         return self.nicknames[self.room]
 
@@ -1093,22 +1083,25 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         try:
             self.active_cells[self.room]
         except KeyError:
+            # we are the first in this room
             self.active_cells[self.room] = []
 
         try:
             self.nicknames[self.room]
         except KeyError:
+            # we are the first in this room
             self.nicknames[self.room] = []
 
         try:
             self.colors[self.room]
         except KeyError:
+            # we are the first in this room
             self.colors[self.room] = ['#cf4769', '#69cf47', '#cfae47', '#cf47ac', '#47cf6a', '#4869cf']
 
         self.join(self.room)
 
         import random
-        self.object_id = random.randint(0,100000)
+        self.connection_id = random.randint(0,100000)
 
         # we can't directly use the self.session object because it contains
         # room information from the room mixin which is basically a python set and not
@@ -1119,13 +1112,11 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         import uuid
         self.session['session_nick']['uuid'] = str(uuid.uuid4())
 
-        #from sage.plot.colors import Color,get_cmap
-        #m = get_cmap("hsv") #TODO: Aendern!!! Mehr Differenzierung
-        #self.session['session_nick']['color'] = Color(m(len(self.nicks()) * 1./20)[:3]).html_color()
         try:
             # take first color
             self.session['session_nick']['color'] = self.colors[self.room].pop()
         except IndexError:
+            # otherwise use black
             self.session['session_nick']['color'] = "#000000"
 
         # store this session in the nickname list
@@ -1142,13 +1133,15 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         self.emit_to_room(self.room, 'join_message', encode_response(self.session['session_nick']))
         def client_watcher_process():
             userlist = self.nicks() #array of dictionaries, one for each user, with keys 'nickname', 'uuid' and 'color'
-            #server = {'nickname':'Server', 'color':'#000000', 'uuid':'SERVER'}
             # self.room entspricht z.B. s1320604/2
 
-            if len(userlist) == 1: #if he is the first user in this room start loop
+            if len(userlist) == 1: #if this is the first user in this room start loop
+
                 # get current worksheet
                 notebook = self.environ['notebook']
                 worksheet = notebook.get_worksheet_with_filename(self.room)
+
+                # main loop
                 while len(self.nicks()) != 0: #if everybody is gone stop the loop
                     for cell_id in self.active_cells[self.room]:
                         #status, cell = worksheet.check_cell(cell_id)
@@ -1162,7 +1155,7 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
                             # remove id
                             self.active_cells[self.room].remove(cell_id)
 
-                    gevent.sleep(0.1) # in Sekunden, auch 0.1 okay
+                    gevent.sleep(0.2) # in Sekunden
         self.spawn(client_watcher_process)
         return True
 
@@ -1213,13 +1206,21 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
     def on_user_message(self, msg):
         if msg.startswith('/'):
             outtxt = ""
-            if msg == "/oid":
-                outtxt = str(self.object_id)
+            if msg == "/cid":
+                outtxt = str(self.connection_id)
             elif msg == "/uuid":
                 outtxt = self.session['session_nick']['uuid']
-            elif msg == "/activecells":
-                outtxt = ",".join([str(cell_id) for cell_id in self.active_cells[self.room]])
-            self.msg = encode_response({"user": "server", "message": outtxt })
+            elif msg == "/a":
+                outtxt = str(len(self.active_cells[self.room]) != 0)
+            elif msg == "/help":
+                outtxt = "Hilfetext"
+            else:
+                self.msg = encode_response({"user": self.session['session_nick'], "message": msg })
+                self.emit('user_message', self.msg)
+                return
+
+            server = {'nickname':'Server', 'color':'#000000', 'uuid':'SERVER'}
+            self.msg = encode_response({"user": server, "message": outtxt })
             self.emit('user_message', self.msg)
             return
         self.msg = encode_response({"user": self.session['session_nick'], "message": msg })
