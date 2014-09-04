@@ -53,7 +53,13 @@ sagenb.worksheetapp.worksheet = function() {
 	_this.socket = io.connect('/worksheet');
 	
 	// other variables go here
-	
+
+
+	////////// LEAVE WEBSITE EVENT /////////////
+	window.onbeforeunload = function (e) {
+		_this.socket.emit('disconnect');
+	}
+
     ////////// WEBSOCKET_HANDLER ////////	
 	_this.socket.on('new_cell_after', function (response){
 		_this.new_cell_all_after(response);
