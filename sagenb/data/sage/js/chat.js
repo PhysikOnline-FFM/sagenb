@@ -166,3 +166,13 @@ sagenb.chat.append_message = function(classes, text) {
 	
 	return message;
 }
+
+
+// Chat movement while SCROLLING
+$(window).scroll(function(){
+	//Animated version (The number specifies the duration of the animation in ms)
+	//$(".chat").stop().animate({"marginTop": ($(window).scrollTop()) + "px", "marginLeft":($(window).scrollLeft()) + "px"}, 1500 );
+	
+	//Non-Animated version
+	$(".chat").css({"margin-top": ($(window).scrollTop()) + "px", "margin-left":($(window).scrollLeft()) + "px"});
+});
