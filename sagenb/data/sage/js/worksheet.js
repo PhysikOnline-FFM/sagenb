@@ -440,7 +440,7 @@ sagenb.worksheetapp.worksheet = function() {
 			_this.attached_data_files = X.attached_data_files;
 
 			// update the title
-			document.title = _this.name + " - Sage";
+			document.title = _this.name + " - POKAL";
 			$(".worksheet_name h1").text(_this.name);
 			
 			// update the typesetting checkbox

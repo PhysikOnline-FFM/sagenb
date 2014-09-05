@@ -57,7 +57,7 @@ sagenb.worksheetlistapp.list_row = function() {
 		var owner_html = _this.props.owner;
 		if(_this.props.collaborators && _this.props.collaborators.length) {
 			// there are collaborators
-			owner_html += ' '+ gettext('and') +' <a href="#" class="collaborators_tooltip" rel="tooltip" title="' + _this.props.collaborators.join("<br>") + '">' + _this.props.collaborators.length + ' ' + gettext('other(s)') + '</a>';
+			owner_html += ' '+ gettext('and') +' <a href="#" class="collaborators_tooltip" rel="tooltip" title="' + _this.props.collaborators.join(", ") + '">' + _this.props.collaborators.length + ' ' + gettext('other(s)') + '</a>';
 		}
 		if(_this.props.published_id_number && !_this.list.published_mode) {
 			// it's published
@@ -300,7 +300,7 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 	_this.show_published = function() {
 		_this.load("pub", function() {
 			$(".title").text(gettext("Published Worksheets"));
-			document.title = gettext("Published Worksheets") + " - Sage";
+			document.title = gettext("Published Worksheets") + " - POKAL";
 			$("#search_input").val("");
 		});
 	};
@@ -308,7 +308,7 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 		_this.disable_actions_menu();
 		_this.load("", function() {
 			$(".title").text(gettext("My Notebook"));
-			document.title = gettext("My Notebook") + " - Sage";
+			document.title = gettext("My Notebook") + " - POKAL";
 			$("#search_input").val("");
 			$("#main_checkbox").prop("checked", false);
 
@@ -320,7 +320,7 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 		_this.disable_actions_menu();
 		_this.load("type=archive", function() {
 			$(".title").text(gettext("Archive"));
-			document.title = gettext("Archive") + " - Sage";
+			document.title = gettext("Archive") + " - POKAL";
 			$("#search_input").val("");
 			$("#main_checkbox").prop("checked", false);
 
@@ -332,7 +332,7 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 		_this.disable_actions_menu();
 		_this.load("type=trash", function() {
 			$(".title").text(gettext("Trash"));
-			document.title = gettext("Trash") + " - Sage";
+			document.title = gettext("Trash") + " - POKAL";
 			$("#search_input").val("");
 			$("#main_checkbox").prop("checked", false);
 
@@ -378,10 +378,10 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 
 		_this.load(urlq, function() {
 			if(clear_search) {
-				document.title = gettext(no_search_title) + " - Sage";
+				document.title = gettext(no_search_title) + " - POKAL";
 				$(".title").text(gettext(no_search_title));
 			} else {
-				document.title = gettext(seach_title) + " - " + gettext("Search") + " - Sage";
+				document.title = gettext(seach_title) + " - " + gettext("Search") + " - POKAL";
 				$(".title").text(gettext(seach_title) + " - " + gettext("Search"));
 			}
 			$("#main_checkbox").prop("checked", false);
