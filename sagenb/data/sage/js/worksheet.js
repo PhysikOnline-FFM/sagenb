@@ -82,13 +82,11 @@ sagenb.worksheetapp.worksheet = function() {
 	
     // Evaluation result is replied by server
     _this.socket.on('eval_reply', function (result, input){
+        console.log("ws// eval_reply");
         var X = decode_response(result);
+
+        // let the cell handle everything
         _this.cells[X.id]._evaluate_callback_ws("success", result);
-        
-		if (input != "") {
-			_this.cells[X.id].set_cell_input(input);
-		}
-        _this.cells[X.id].set_output_loading();
     });
 	
 	// sets input everytime it gets changed
@@ -228,6 +226,7 @@ sagenb.worksheetapp.worksheet = function() {
 		_this.is_evaluating_all = true;
 		
 		_this.forEachCell(function(cell) {
+            console.log("_this.evaluate_all");
 			cell.set_output_loading();
 		});
 		

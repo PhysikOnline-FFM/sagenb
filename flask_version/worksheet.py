@@ -1194,8 +1194,9 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         self.emit_to_room(self.room, 'cell_input_changed', cell_id, input)
 
     # evaluate handler
+    # this function is not needed anymore because the server handles this now
     def on_eval_result_broadcast(self, result, input):
-        self.emit('eval_reply', result)
+        #self.emit('eval_reply', result)
         #self.emit_to_room(self.room, 'eval_reply', result, input)
         return True
 
