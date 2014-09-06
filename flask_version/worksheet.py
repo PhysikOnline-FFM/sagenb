@@ -1071,10 +1071,6 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
 #    def recv_connect(self):
 
-    # helper function
-    def nicks(self):
-        return self.nicknames[self.room]
-
     # client information handler
     def on_join(self, data):
         # expecting data = {nickname:"sage username", "worksheet":"worksheet-name"}
@@ -1086,17 +1082,26 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
             # we are the first in this room
             self.active_cells[self.room] = []
 
+        # shortcut
+        self.ws_a_cells = self.active_cells[self.room]
+
         try:
             self.nicknames[self.room]
         except KeyError:
             # we are the first in this room
             self.nicknames[self.room] = []
 
+        # shortcut
+        self.ws_nicks = self.nicknames[self.room]
+
         try:
             self.colors[self.room]
         except KeyError:
             # we are the first in this room
             self.colors[self.room] = ['#cf4769', '#69cf47', '#cfae47', '#cf47ac', '#47cf6a', '#4869cf']
+
+        # shortcut
+        self.ws_colors = self.colors[self.room]
 
         self.join(self.room)
 
@@ -1114,25 +1119,25 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
         try:
             # take first color
-            self.session['session_nick']['color'] = self.colors[self.room].pop()
+            self.session['session_nick']['color'] = self.ws_colors.pop()
         except IndexError:
             # otherwise use black
             self.session['session_nick']['color'] = "#000000"
 
         # store this session in the nickname list
         found = False
-        for n in self.nicks():
+        for n in self.ws_nicks:
             if data['nickname'] == n['nickname']:
                 self.session['session_nick'] = n
                 found = True
         if not found:
-            self.nicknames[self.room].append(self.session['session_nick'])
+            self.ws_nicks.append(self.session['session_nick'])
 
-        self.emit('new_nickname_list', encode_response(self.nicks()))
-        self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.nicks()))
+        self.emit('new_nickname_list', encode_response(self.ws_nicks))
+        self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.ws_nicks))
         self.emit_to_room(self.room, 'join_message', encode_response(self.session['session_nick']))
         def client_watcher_process():
-            userlist = self.nicks() #array of dictionaries, one for each user, with keys 'nickname', 'uuid' and 'color'
+            userlist = self.ws_nicks #array of dictionaries, one for each user, with keys 'nickname', 'uuid' and 'color'
             # self.room entspricht z.B. s1320604/2
 
             if len(userlist) == 1: #if this is the first user in this room start loop
@@ -1142,8 +1147,8 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
                 worksheet = notebook.get_worksheet_with_filename(self.room)
 
                 # main loop
-                while len(self.nicks()) != 0: #if everybody is gone stop the loop
-                    for cell_id in self.active_cells[self.room]:
+                while len(self.ws_nicks) != 0: #if everybody is gone stop the loop
+                    for cell_id in self.ws_a_cells:
                         #status, cell = worksheet.check_cell(cell_id)
                         r = self.build_result(worksheet, cell_id)
                         if r['status'] == 'd':
@@ -1153,7 +1158,7 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
                             self.emit('eval_reply', reply, r['new_input'])
                             self.emit_to_room(self.room, 'eval_reply', reply, r['new_input'])
                             # remove id
-                            self.active_cells[self.room].remove(cell_id)
+                            self.ws_a_cells.remove(cell_id)
 
                     gevent.sleep(0.2) # in Sekunden
         self.spawn(client_watcher_process)
@@ -1178,8 +1183,8 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
     def on_cell_evaluate(self, cell_id, username):
         #print "cell " + str(cell_id) + " is going to be evaluated by " + username
-        if not cell_id in self.active_cells[self.room]:
-            self.active_cells[self.room].append(cell_id)
+        if not cell_id in self.ws_a_cells:
+            self.ws_a_cells.append(cell_id)
         self.emit_to_room(self.room,'cell_evaluate', cell_id, username)
 
     #Used for Realtime Input-Synchronisation
@@ -1230,14 +1235,14 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
     # connection handler
     def recv_disconnect(self):
         try:
-            if not (self.session['session_nick'] in self.nicks()):
+            if not (self.session['session_nick'] in self.ws_nicks):
                 # this should never happen?
                 return True
-            self.nicknames[self.room].remove(self.session['session_nick'])
+            self.ws_nicks.remove(self.session['session_nick'])
             self.emit_to_room(self.room, 'leave_message', encode_response(self.session['session_nick']))
-            self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.nicks()))
-            self.colors[self.room].append(self.session['session_nick']['color'])
-            #self.emit('new_nickname_list', encode_response(self.nicks()))
+            self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.ws_nicks))
+            self.ws_colors.append(self.session['session_nick']['color'])
+            #self.emit('new_nickname_list', encode_response(self.ws_nicks))
             return True
         except KeyError:
             #print "worksheet.py/recv_disconnect():: self.session['session_nick'] does not exist"
