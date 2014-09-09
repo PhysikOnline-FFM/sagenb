@@ -29,6 +29,8 @@ import time
 import bz2
 import cPickle
 from cgi import escape
+import string
+import random
 
 
 # Sage libraries
@@ -98,10 +100,10 @@ class WorksheetDict(dict):
             raise KeyError, item
 
         username, id = item.split('/')
-        try:
-            id=int(id)
-        except ValueError:
-            raise KeyError, item
+        #try:
+        #    id=int(id)
+        #except ValueError:
+        #    raise KeyError, item
         try:
             worksheet = self.storage.load_worksheet(username, id)
         except ValueError:
@@ -109,12 +111,12 @@ class WorksheetDict(dict):
 
         dict.__setitem__(self, item, worksheet)
         return worksheet
-        
-        
+
+
 class Notebook(object):
     HISTORY_MAX_OUTPUT = 92*5
     HISTORY_NCOLS = 90
-    
+
     def __init__(self, dir, user_manager = None):
 
         if isinstance(dir, basestring) and len(dir) > 0 and dir[-1] == "/":
@@ -154,14 +156,14 @@ class Notebook(object):
         # datastore
         # Store / Refresh public worksheets
         for id_number in os.listdir(self.__storage._abspath(self.__storage._user_path("pub"))):
-            if id_number.isdigit():
+            if '.' not in id_number:
                 a = "pub/" + str(id_number)
                 if a not in self.__worksheets:
                     try:
-                        self.__worksheets[a] = self.__storage.load_worksheet("pub", int(id_number))
+                        self.__worksheets[a] = self.__storage.load_worksheet("pub", (id_number))
                     except Exception:
                         import traceback
-                        print "Warning: problem loading %s/%s: %s"%("pub", int(id_number), traceback.format_exc())
+                        print "Warning: problem loading %s/%s: %s"%("pub", (id_number), traceback.format_exc())
 
         # Set the openid-user dict
         try:
@@ -213,11 +215,11 @@ class Notebook(object):
         EXAMPLES::
 
             sage: n = sagenb.notebook.notebook.Notebook(tmp_dir(ext='.sagenb'))
-            sage: n.user_manager() 
+            sage: n.user_manager()
             <sagenb.notebook.user_manager.OpenIDUserManager object at 0x...>
         """
         return self._user_manager
-        
+
     ##########################################################
     # Users
     ##########################################################
@@ -350,13 +352,13 @@ class Notebook(object):
         path = self.__storage._abspath(self.__storage._user_path("pub"))
         v = []
         for id_number in os.listdir(path):
-            if id_number.isdigit():
+            if '.' not in id_number:
                 a = "pub/" + id_number
                 if a in self.__worksheets:
                     v.append(self.__worksheets[a].worksheet_that_was_published())
                 else:
                     try:
-                        w = self.__storage.load_worksheet("pub", int(id_number)).worksheet_that_was_published()
+                        w = self.__storage.load_worksheet("pub", (id_number)).worksheet_that_was_published()
                         v.append(w)
                         self.__worksheets[a] = w
                     except Exception:
@@ -489,7 +491,7 @@ class Notebook(object):
             W = self.__worksheets[filename]
         except KeyError:
             raise KeyError, "Attempt to delete missing worksheet '%s'"%filename
-        
+
         W.quit()
         shutil.rmtree(W.directory(), ignore_errors=False)
         self.deleted_worksheets()[filename] = W
@@ -618,7 +620,7 @@ class Notebook(object):
         tbl = {'v': None, 'u': None, 't': None}
         for x in ulimit.split('-'):
             for k in tbl.keys():
-                if x.startswith(k): 
+                if x.startswith(k):
                     tbl[k] = int(x.split()[1].strip())
         if tbl['v'] is not None:
             tbl['v'] = tbl['v'] / 1000.0
@@ -642,9 +644,9 @@ class Notebook(object):
     def _python_command(self):
         """
         """
-        try: 
+        try:
             return self.__python_command
-        except AttributeError: 
+        except AttributeError:
             pass
 
 
@@ -768,12 +770,21 @@ class Notebook(object):
         """
         Find the next worksheet id for the given user.
         """
-        u = self.user(username).conf()
-        id_number = u['next_worksheet_id_number']
-        if id_number == -1:  # need to initialize
-            id_number = max([w.id_number() for w in self.worksheet_list_for_user(username)] + [-1]) + 1
-        u['next_worksheet_id_number'] = id_number + 1
-        return id_number
+        if username != 'pub':
+            u = self.user(username).conf()
+            id_number = u['next_worksheet_id_number']
+            if id_number == -1:  # need to initialize
+                id_number = max([w.id_number() for w in self.worksheet_list_for_user(username)] + [-1]) + 1
+            u['next_worksheet_id_number'] = id_number + 1
+            return id_number
+        else: # username == 'pub'
+            N = 20
+            found_new_id = False
+            while not found_new_id:
+                id_number = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(N))
+                if id_number not in [w.id_number() for w in self.worksheet_list_for_user('pub')]:
+                    found_new_id = True
+            return id_number
 
     def new_worksheet_with_title_from_text(self, text, owner):
         name, _ = worksheet.extract_name(text)
@@ -1101,7 +1112,7 @@ class Notebook(object):
         # docutils removes the backslashes if they are not escaped This is
         # not practical because backslashes are almost never escaped in
         # Sage docstrings written in ReST.  So if the user wants the
-        # backslashes to be escaped automatically, he adds the comment 
+        # backslashes to be escaped automatically, he adds the comment
         # ".. escape-backslashes" in the input file
         if re.search(r'^\.\.[ \t]+escape-backslashes', rst, re.MULTILINE) is not None:
             rst = rst.replace('\\','\\\\')
@@ -1227,9 +1238,9 @@ class Notebook(object):
             return self.__conf
         except AttributeError:
             C = server_conf.ServerConfiguration()
-            # if we are newly creating a notebook, then we want to 
+            # if we are newly creating a notebook, then we want to
             # have a default model version of 1, currently
-            # we can't just set the default value in server_conf.py 
+            # we can't just set the default value in server_conf.py
             # to 1 since it would then be 1 for notebooks without the
             # model_version property
             # TODO: distinguish between a new server config default values
@@ -1304,7 +1315,7 @@ class Notebook(object):
         # TODO: check if the worksheets are active
         #return [ws for ws in self.get_worksheets_with_viewer(username) if ws.is_active(username)]
         return self.users_worksheets_view(username)
-    
+
     def get_all_worksheets(self):
         """
         We should only call this if the user is admin!
@@ -1367,7 +1378,7 @@ class Notebook(object):
     def logout(self, username):
         r"""
         Do not do anything on logout (so far).
-        
+
         In particular, do **NOT** stop all ``username``'s worksheets!
         """
         pass
@@ -1556,17 +1567,17 @@ def migrate_old_notebook_v1(dir):
         import time
         last_change = (old_ws.last_to_edit(), old_ws.last_edited())
         try:
-            published_id_number = int(os.path.split(old_ws._Worksheet__published_version)[1])
+            published_id_number = (os.path.split(old_ws._Worksheet__published_version)[1])
         except AttributeError:
             published_id_number = None
 
         ws_pub = old_ws.worksheet_that_was_published().filename().split('/')
-        ws_pub = (ws_pub[0], int(ws_pub[1]))
+        ws_pub = (ws_pub[0], (ws_pub[1]))
 
         obj = {'name': old_ws.name(), 'system': old_ws.system(),
-               'viewers': old_ws.viewers(), 
+               'viewers': old_ws.viewers(),
                'collaborators' :old_ws.collaborators(),
-               'pretty_print': old_ws.pretty_print(), 
+               'pretty_print': old_ws.pretty_print(),
                'ratings': old_ws.ratings(),
                'auto_publish': old_ws.is_auto_publish(), 'tags': tags,
                'last_change': last_change,
@@ -1591,7 +1602,7 @@ def migrate_old_notebook_v1(dir):
         # copy over the DATA directory and cells directories
         try:
             dest = new_ws.data_directory()
-            if os.path.exists(dest): 
+            if os.path.exists(dest):
                 shutil.rmtree(dest)
             shutil.copytree(old_ws.data_directory(), dest)
         except Exception, msg:
@@ -1600,7 +1611,7 @@ def migrate_old_notebook_v1(dir):
         try:
             if os.path.exists(old_ws.cells_directory()):
                 dest = new_ws.cells_directory()
-                if os.path.exists(dest): 
+                if os.path.exists(dest):
                     shutil.rmtree(dest)
                 shutil.copytree(old_ws.cells_directory(), dest)
         except Exception, msg:

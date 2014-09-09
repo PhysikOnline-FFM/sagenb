@@ -449,7 +449,7 @@ sagenb.worksheetapp.worksheet = function() {
 			$("#system_select").val(_this.system);
 			
 			// sharing
-			if(_this.published_id_number !== null && _this.published_id_number >= 0) {
+			if(_this.published_id_number && _this.published_id_number.length > 0) {
 				$("#publish_checkbox").prop("checked", true);
 				$("#auto_republish_checkbox").removeAttr("disabled");
 				
