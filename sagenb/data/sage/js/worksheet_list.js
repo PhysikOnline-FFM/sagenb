@@ -67,7 +67,7 @@ sagenb.worksheetlistapp.list_row = function() {
 		_this.jquery_this.find("td.owner_cell .collaborators_tooltip").tooltip();
 		
 		// last change
-		_this.jquery_this.find("td.last_edit_cell").text(_this.props.last_change_pretty + " " + gettext("ago"));
+		_this.jquery_this.find("td.last_edit_cell").text(_this.props.last_change_pretty);
 	};
 	
 	_this.remove = function() {

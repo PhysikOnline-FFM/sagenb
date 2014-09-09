@@ -1,5 +1,5 @@
 #!/bin/sh
-#run on terminal in projects root folder:
+#run on terminal in projects root folder to change german translation:
 case $1 in
    compile|c)
             pybabel -v compile -d ./sagenb/translations/ -l de_AT

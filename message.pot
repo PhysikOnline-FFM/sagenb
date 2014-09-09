@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-07-10 20:39+0200\n"
+"POT-Creation-Date: 2014-09-09 11:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -66,48 +66,48 @@ msgstr ""
 msgid "You do not have permission to access this location"
 msgstr ""
 
-#: flask_version/worksheet.py:36 flask_version/worksheet.py:45
+#: flask_version/worksheet.py:37 flask_version/worksheet.py:46
 #: flask_version/worksheet_listing.py:176
 #: flask_version/worksheet_listing.py:185
 msgid "You do not have permission to access this worksheet"
 msgstr ""
 
-#: flask_version/worksheet.py:85 flask_version/worksheet.py:133
+#: flask_version/worksheet.py:86 flask_version/worksheet.py:134
 #: flask_version/worksheet_listing.py:241
 #: flask_version/worksheet_listing.py:340
 msgid "Account is in read-only mode"
 msgstr ""
 
-#: flask_version/worksheet.py:87 sagenb/data/sage/js/translated-messages.js:48
+#: flask_version/worksheet.py:88 sagenb/data/sage/js/translated-messages.js:48
 #: sagenb/notebook/misc.py:237 sagenb/notebook/worksheet.py:713
 #: sagenb/notebook/worksheet.py:734 sagenb/notebook/worksheet.py:4134
 msgid "Untitled"
 msgstr ""
 
-#: flask_version/worksheet.py:621
+#: flask_version/worksheet.py:613
 msgid "Error: can't add more than 250 collaborators at a time"
 msgstr ""
 
-#: flask_version/worksheet.py:675 sagenb/data/sage/html/login.html:18
+#: flask_version/worksheet.py:667 sagenb/data/sage/html/login.html:18
 #: sagenb/data/sage/html/login.html:25
 #: sagenb/data/sage/js/translated-messages.js:17
 msgid "Error"
 msgstr ""
 
-#: flask_version/worksheet.py:699
+#: flask_version/worksheet.py:691
 msgid "No data file"
 msgstr ""
 
-#: flask_version/worksheet.py:777 flask_version/worksheet.py:804
-#: flask_version/worksheet.py:830
+#: flask_version/worksheet.py:769 flask_version/worksheet.py:796
+#: flask_version/worksheet.py:822
 msgid "Suspicious filename encountered uploading file."
 msgstr ""
 
-#: flask_version/worksheet.py:798
+#: flask_version/worksheet.py:790
 msgid "URL must start with http, https, or ftp."
 msgstr ""
 
-#: flask_version/worksheet.py:911
+#: flask_version/worksheet.py:903
 msgid "No such worksheet."
 msgstr ""
 
@@ -214,7 +214,7 @@ msgstr ""
 
 #: sagenb/data/sage/html/accounts/openid_profile.html:40
 #: sagenb/data/sage/html/accounts/registration.html:58
-#: sagenb/data/sage/html/settings/account_settings.html:65
+#: sagenb/data/sage/html/settings/account_settings.html:40
 msgid "Email"
 msgstr ""
 
@@ -866,31 +866,15 @@ msgstr ""
 msgid "minute(s)"
 msgstr ""
 
-#: sagenb/data/sage/html/settings/account_settings.html:40
-msgid "Change Password"
-msgstr ""
-
-#: sagenb/data/sage/html/settings/account_settings.html:43
-msgid "Old password"
-msgstr ""
-
-#: sagenb/data/sage/html/settings/account_settings.html:50
-msgid "New password"
-msgstr ""
-
-#: sagenb/data/sage/html/settings/account_settings.html:57
-msgid "Retype new password"
-msgstr ""
-
-#: sagenb/data/sage/html/settings/account_settings.html:67
+#: sagenb/data/sage/html/settings/account_settings.html:42
 msgid "Current e-mail"
 msgstr ""
 
-#: sagenb/data/sage/html/settings/account_settings.html:75
+#: sagenb/data/sage/html/settings/account_settings.html:50
 msgid "New e-mail"
 msgstr ""
 
-#: sagenb/data/sage/html/settings/account_settings.html:84
+#: sagenb/data/sage/html/settings/account_settings.html:59
 #: sagenb/data/sage/html/settings/notebook_settings.html:15
 msgid "Save"
 msgstr ""
@@ -929,7 +913,7 @@ msgstr ""
 #: sagenb/data/sage/html/modals/import_modal.html:88
 #: sagenb/data/sage/html/modals/sharing_modal.html:32
 #: sagenb/data/sage/html/modals/system_modal.html:37
-#: sagenb/data/sage/html/settings/account_settings.html:85
+#: sagenb/data/sage/html/settings/account_settings.html:60
 #: sagenb/data/sage/html/settings/notebook_settings.html:16
 msgid "Cancel"
 msgstr ""
@@ -1019,7 +1003,7 @@ msgid "Interrupt attempt"
 msgstr ""
 
 #: sagenb/data/sage/js/translated-messages.js:27
-msgid "<a href='javascript:restart_sage();'>Restart</a>, instead?"
+msgid "<a href=\"javascript:restart_sage();\">Restart</a>, instead?"
 msgstr ""
 
 #: sagenb/data/sage/js/translated-messages.js:28
@@ -1183,7 +1167,19 @@ msgid "Message from"
 msgstr ""
 
 #: sagenb/data/sage/js/translated-messages.js:72
+msgid "joined"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:73
+msgid "left"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:74
 msgid "and"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:75
+msgid " is working on this cell. Therefore it has been locked."
 msgstr ""
 
 #: sagenb/notebook/challenge.py:180

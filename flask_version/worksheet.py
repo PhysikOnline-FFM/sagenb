@@ -13,6 +13,7 @@ from socketio.namespace import BaseNamespace
 from socketio.mixins import RoomsMixin, BroadcastMixin
 from gevent import monkey
 import gevent
+#import smtplib
 
 monkey.patch_all()
 
@@ -1147,7 +1148,7 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
                 worksheet = notebook.get_worksheet_with_filename(self.room)
 
                 # main loop
-                while len(self.ws_nicks) != 0: #if everybody is gone stop the loop
+                while len(self.ws_nicks)!=0: #if everybody is gone stop the loop
                     for cell_id in self.ws_a_cells:
                         #status, cell = worksheet.check_cell(cell_id)
                         r = self.build_result(worksheet, cell_id)
@@ -1159,6 +1160,10 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
                             self.emit_to_room(self.room, 'eval_reply', reply, r['new_input'])
                             # remove id
                             self.ws_a_cells.remove(cell_id)
+
+                            # send email if computation finished while all users are gone
+                            #server = smtplib.SMTP('localhost')
+                            #server.sendmail("service@pokal.uni-frankfurt.de", "receiver@abc.de", "Your computation has finished!!")
 
                     gevent.sleep(0.2) # in Sekunden
         self.spawn(client_watcher_process)
@@ -1247,11 +1252,19 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
             return True
         except KeyError:
             #print "worksheet.py/recv_disconnect():: self.session['session_nick'] does not exist"
-            return False
+             return False
 
     def on_disconnect(self):
+        # check if he is the last person leaving while a computation is still running:
+        #if len(self.ws_nicks)==1 and len(self.ws_a_cells)!=0:
+        #    # Tell client-side to show a "continue computation?" dialog and
+        #    # wait for result
+        #    self.emit('last_one_leaving')
+
+        # disconnect user from chat since he is leaving
         self.recv_disconnect()
 
+        
     def build_result(self, worksheet, cell_id):
         #import time
 

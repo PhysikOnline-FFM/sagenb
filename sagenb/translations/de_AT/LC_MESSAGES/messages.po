@@ -137,7 +137,7 @@ msgstr "Das angeforderte öffentliche Arbeitsblatt existiert nicht"
 #: flask_version/worksheet_listing.py:277
 #, python-format
 msgid ""
-"This Sage notebook is not configured to load worksheets from 'https' URLs. "
+"This POKAL notebook is not configured to load worksheets from 'https' URLs. "
 "Try a different URL or download the worksheet and upload it directly from "
 "your computer.\n"
 "%(backlinks)s"
@@ -238,8 +238,8 @@ msgstr ""
 "kontaktiere einen Administrator."
 
 #: sagenb/data/sage/html/accounts/openid_profile.html:17
-msgid "Create your Sage profile"
-msgstr "Erstelle dein Sage-Profil"
+msgid "Create your POKAL profile"
+msgstr "Erstelle dein POKAL-Profil"
 
 #: sagenb/data/sage/html/accounts/openid_profile.html:26
 #: sagenb/data/sage/html/accounts/registration.html:16
@@ -340,9 +340,9 @@ msgid "Re-type your password"
 msgstr "Geben Sie Ihr Passwort nochmals ein"
 
 #: sagenb/data/sage/html/alerts/connection_alert.html:2
-msgid "<strong>Uh oh!</strong> Connection to the Sage Notebook has been lost."
+msgid "<strong>Uh oh!</strong> Connection to the POKAL Notebook has been lost."
 msgstr ""
-"<strong>Hoppala!</strong> Verbindung zum Server ist unterbrochen worden."
+"<strong>Hoppala!</strong> Verbindung zum POKAL-Server verloren."
 
 #: sagenb/data/sage/html/alerts/rename_alert.html:2
 msgid "<strong>\"Untitled\"</strong> Would you like to rename this worksheet?"
@@ -366,8 +366,8 @@ msgstr ""
 "es betrachten, aber nicht verändern."
 
 #: sagenb/data/sage/html/docs.html:3 sagenb/data/sage/html/docs.html:36
-msgid "Getting Started with the Sage Notebook"
-msgstr "Einstieg ins Sage-Notebook"
+msgid "Getting Started with the POKAL Notebook"
+msgstr "Einstieg ins POKAL-Notebook"
 
 #: sagenb/data/sage/html/docs.html:41
 msgid "Some Notes about POKAL"
@@ -375,7 +375,7 @@ msgstr "Anmerkungen zu POKAL"
 
 #: sagenb/data/sage/html/docs.html:42
 msgid ""
-"This is a Sage installation brand for the <a href=\"https://elearning.physik."
+"This is a POKAL installation brand for the <a href=\"https://elearning.physik."
 "uni-frankfurt.de/projekt/wiki/POKAL\">POKAL</a>\n"
 "\t\tProject. Please read the <b><a href=\"https://elearning.physik.uni-"
 "frankfurt.de/projekt/wiki/POKAL/Hilfe\">POKAL Help Page</a></b>\n"
@@ -383,7 +383,7 @@ msgid ""
 "pleased to help you, too."
 msgstr ""
 "Dies ist eine für das <a href=\"https://elearning.physik.uni-frankfurt.de/"
-"projekt/wiki/POKAL\">POKAL</a>-Projekt angepasste Sage-Installation. Bitte "
+"projekt/wiki/POKAL\">POKAL</a>-Projekt angepasste POKAL-Installation. Bitte "
 "lies die <b><a href=\"https://elearning.physik.uni-frankfurt.de/projekt/wiki/"
 "POKAL/Hilfe\">POKAL Hilfeseite</a></b> bei POKAL spezifischen Problemen. Auch "
 "die POKAL-Administratoren werden dir gerne weiterhelfen."
@@ -397,9 +397,9 @@ msgid "Worksheet"
 msgstr "Arbeitsblatt"
 
 #: sagenb/data/sage/html/docs.html:53
-msgid "an ordered list of Sage calculations with output"
+msgid "an ordered list of POKAL calculations with output"
 msgstr ""
-"Ein <em>Arbeitsblatt</em> besteht aus einer Reihe von Sage-Berechnungen samt "
+"Ein <em>Arbeitsblatt</em> besteht aus einer Reihe von POKAL-Berechnungen samt "
 "Ausgaben."
 
 #: sagenb/data/sage/html/docs.html:56
@@ -413,13 +413,13 @@ msgstr ""
 "definiertem Zustand."
 
 #: sagenb/data/sage/html/docs.html:60 sagenb/notebook/template.py:146
-msgid "Sage Notebook"
-msgstr "Sage Notebook"
+msgid "POKAL Notebook"
+msgstr "POKAL Notebook"
 
 #: sagenb/data/sage/html/docs.html:61
 msgid "a collection of worksheets, saved objects, and user information"
 msgstr ""
-"<em>Sage Notebook</em> ist eine Sammlung von Arbeitsblättern, gespeicherten "
+"<em>POKAL Notebook</em> ist eine Sammlung von Arbeitsblättern, gespeicherten "
 "Objekten und Benutzerinformationen"
 
 #: sagenb/data/sage/html/docs.html:68
@@ -427,8 +427,8 @@ msgid "Finding More Help"
 msgstr "Weitere Hilfe suchen"
 
 #: sagenb/data/sage/html/docs.html:72 sagenb/notebook/tutorial.py:355
-msgid "Get Started with Sage"
-msgstr "Erste Schritte mit Sage"
+msgid "Get Started with POKAL"
+msgstr "Erste Schritte mit POKAL"
 
 #: sagenb/data/sage/html/docs.html:73
 msgid ""
@@ -460,12 +460,12 @@ msgstr "Durchsuche Dokumentation und Quellcode"
 
 #: sagenb/data/sage/html/docs.html:81
 msgid ""
-"Search the Sage documentation by typing <code>search_doc(\"my query\")</"
-"code> in an input cell and press shift-enter. Search the source code of Sage "
+"Search the POKAL documentation by typing <code>search_doc(\"my query\")</"
+"code> in an input cell and press shift-enter. Search the source code of POKAL "
 "by typing <code>search_src(\"my query\")</code> and pressing shift-enter. "
 "Arbitrary regular expressions are allowed as queries."
 msgstr ""
-"Durchsuchen Sie die Dokumentation von Sage, indem Sie "
+"Durchsuchen Sie die Dokumentation von POKAL, indem Sie "
 "<pre>search_doc(\"meine Anfrage\")</pre> in eine Input-Zelle eingeben und "
 "Shift+Enter drücken.  Beliebige reguläre Ausdrücke sind als Anfragen "
 "zulässig."
@@ -542,7 +542,7 @@ msgstr "Unterbrechen"
 #: sagenb/data/sage/html/docs.html:121
 msgid ""
 "Click <strong>Evaluation > Interrupt</strong>. This will (attempt) to "
-"interrupt Sage by sending many interrupt signals."
+"interrupt POKAL by sending many interrupt signals."
 msgstr ""
 "Klicken Sie auf <strong>Evaluation > Unterbrechen</strong> oder drücken Sie Escape in einer "
 "beliebigen Zelle. Dadurch werden viele Interrupt-Signale gesendet, die "
@@ -665,7 +665,7 @@ msgid "Files and Scripts"
 msgstr "Dateien und <i>Scripte</i>"
 
 #: sagenb/data/sage/html/docs.html:180
-msgid "Loading Sage/Python Scripts"
+msgid "Loading POKAL/Python Scripts"
 msgstr "Lade SAGE/Python-<i>Scripte</i>"
 
 #: sagenb/data/sage/html/docs.html:181
@@ -712,7 +712,7 @@ msgstr "DIR-Variable"
 
 #: sagenb/data/sage/html/docs.html:193
 msgid ""
-"The variable DIR contains the directory from which you started the Sage "
+"The variable DIR contains the directory from which you started the POKAL "
 "notebook. For example, to open a file in that directory, do <code>open(DIR"
 "+'filename')</code>."
 msgstr ""
@@ -729,7 +729,7 @@ msgid ""
 "Use the Data menu to upload images and other files, and create new files "
 "that can be shared between worksheets. The DATA variable contains the path "
 "to the data files. For example, to open a file in that directory, do "
-"<code>open(DATA+'filename')</code>. If foo.sage is a Sage file that you "
+"<code>open(DATA+'filename')</code>. If foo.sage is a POKAL file that you "
 "uploaded, type <code>load foo.sage</code>; if foo.py is a Python file, you "
 "can import it by typing <code>import foo</code>."
 msgstr ""
@@ -775,14 +775,14 @@ msgid ""
 "For more information and support see the <a href=\"https://groups.google.com/"
 "forum/?fromgroups#!forum/sage-notebook\">sage-notebook</a> Google group and "
 "the <a href=\"https://github.com/sagemath/sagenb\">Github repository</a>. "
-"The Sage Notebook was primarily written by William Stein with substantial "
+"The POKAL Notebook was primarily written by William Stein with substantial "
 "contributions from Tom Boothby, Timothy Clemans, Alex Clemesha, Mike Hansen, "
 "Bobby Moretti, Yi Qiang, and Dorian Raymer."
 msgstr ""
 "For more information and support see the <a href=\"https://groups.google.com/"
 "forum/?fromgroups#!forum/sage-notebook\">sage-notebook</a> Google group and "
 "the <a href=\"https://github.com/sagemath/sagenb\">Github repository</a>. "
-"The Sage Notebook was primarily written by William Stein with substantial "
+"The POKAL Notebook was primarily written by William Stein with substantial "
 "contributions from Tom Boothby, Timothy Clemans, Alex Clemesha, Mike Hansen, "
 "Bobby Moretti, Yi Qiang, and Dorian Raymer."
 
@@ -796,19 +796,19 @@ msgstr "Fortsetzen"
 
 #: sagenb/data/sage/html/history.html:5
 #, python-format
-msgid "Sage: History for %(u)s"
-msgstr "Sage: Verlauf für %(u)s"
+msgid "POKAL: History for %(u)s"
+msgstr "POKAL: Verlauf für %(u)s"
 
 #: sagenb/data/sage/html/history.html:32
-msgid "Click here to turn the above into a Sage worksheet"
-msgstr "Hier klicken, um Obiges in ein Sage Arbeitsblatt umzuwandeln"
+msgid "Click here to turn the above into a POKAL worksheet"
+msgstr "Hier klicken, um Obiges in ein POKAL Arbeitsblatt umzuwandeln"
 
 #: sagenb/data/sage/html/history.html:32
 msgid ""
-"Create a new Sage worksheet version of the last 100 commands in the above "
+"Create a new POKAL worksheet version of the last 100 commands in the above "
 "log."
 msgstr ""
-"Neue Sage-Arbeitsblatt-Fassung aus den letzten 100 Befehlen im obigen "
+"Neue POKAL-Arbeitsblatt-Fassung aus den letzten 100 Befehlen im obigen "
 "Protokoll erzeugen."
 
 #: sagenb/data/sage/html/login.html:3 sagenb/data/sage/html/login.html:99
@@ -818,9 +818,9 @@ msgstr "Anmelden"
 
 #: sagenb/data/sage/html/login.html:11
 #, python-format
-msgid "Congratulations %(u)s! You can now sign into the Sage Notebook."
+msgid "Congratulations %(u)s! You can now sign into the POKAL Notebook."
 msgstr ""
-"Herzlichen Glückwunsch %(u)s! Sie können sich jetzt bei Sage Notebook "
+"Herzlichen Glückwunsch %(u)s! Sie können sich jetzt bei POKAL Notebook "
 "anmelden."
 
 #: sagenb/data/sage/html/login.html:18
@@ -1008,8 +1008,8 @@ msgstr "Unterstützte Dateiformate:"
 
 #: sagenb/data/sage/html/modals/import_modal.html:19
 #, fuzzy
-msgid "a Sage worksheet"
-msgstr "Ein Sage-Arbeitsblatt"
+msgid "a POKAL worksheet"
+msgstr "Ein POKAL-Arbeitsblatt"
 
 #: sagenb/data/sage/html/modals/import_modal.html:20
 msgid ""
@@ -1022,11 +1022,11 @@ msgstr ""
 
 #: sagenb/data/sage/html/modals/import_modal.html:21
 msgid ""
-"the URL of a page of the Sage Documentation, for example the URL of <a class="
+"the URL of a page of the POKAL Documentation, for example the URL of <a class="
 "\"reference external\" href=\"http://www.sagemath.org/doc/reference/sage/"
 "rings/integer.html\">this page</a>"
 msgstr ""
-"Die URL einer Sage-Dokumentationsseite, wie z.B. die Adresse <a class="
+"Die URL einer POKAL-Dokumentationsseite, wie z.B. die Adresse <a class="
 "\"reference external\" href=\"http://www.sagemath.org/doc/reference/sage/"
 "rings/integer.html\">dieser Seite</a>"
 
@@ -1534,7 +1534,7 @@ msgstr ""
 #: sagenb/notebook/register.py:20
 #, python-format
 msgid ""
-"Thank you for registering for the Sage notebook. To complete your "
+"Thank you for registering for the POKAL notebook. To complete your "
 "registration, copy and paste the following link into your browser:\n"
 "\n"
 "%(url_prefix)s://%(addr)s:%(port)s/confirm?key=%(key)s\n"
@@ -1542,7 +1542,7 @@ msgid ""
 "You will be taken to a page which will confirm that you have indeed "
 "registered."
 msgstr ""
-"Danke, dass Sie sich bei Sage-Notebook registriert haben. Um die "
+"Danke, dass Sie sich bei POKAL-Notebook registriert haben. Um die "
 "Registrierung abzuschließen, kopieren sie bitte den folgenden Link und fügen "
 "ihn in Ihren Browser ein:\n"
 "\n"
@@ -1627,7 +1627,7 @@ msgstr "Beschränkungen für den Arbeitsblatt-Prozess"
 
 #: sagenb/notebook/server_conf.py:128
 msgid "Model Version"
-msgstr "Sage Version"
+msgstr "POKAL Version"
 
 #: sagenb/notebook/server_conf.py:135
 msgid "Number of word-wrap columns"
@@ -1780,7 +1780,7 @@ msgid ""
 "typing <pre>search_src(\"my query\")</pre> and pressing shift-enter.  "
 "Arbitrary regular expressions are allowed as queries."
 msgstr ""
-"Durchsuchen Sie die Dokumentation von Sage, indem Sie "
+"Durchsuchen Sie die Dokumentation von POKAL, indem Sie "
 "<pre>search_doc(\"meine Anfrage\")</pre> in eine Input-Zelle eingeben und "
 "Shift+Enter drücken.  Beliebige reguläre Ausdrücke sind als Anfragen "
 "zulässig."
@@ -2100,7 +2100,7 @@ msgid ""
 "Use the Data menu to upload images and other files, and create new files "
 "that can be shared between worksheets.  The DATA variable contains the path "
 "to the data files.  For example, to open a file in that directory, do "
-"\"open(DATA+'filename')\".  If foo.sage is a Sage file that you uploaded, "
+"\"open(DATA+'filename')\".  If foo.sage is a POKAL file that you uploaded, "
 "type \"load foo.sage\"; if foo.py is a Python file, you can import it by "
 "typing \"import foo\"."
 msgstr ""
@@ -2176,8 +2176,8 @@ msgstr "vor %(t)s durch %(le)s"
 msgid "%(seconds)s ago"
 msgstr "vor %(seconds)s"
 
-msgid "Sign into the Sage Notebook v%(v)s"
-msgstr "Im Sage-Notebook anmelden v%(v)s"
+msgid "Sign into the POKAL Notebook v%(v)s"
+msgstr "Im POKAL-Notebook anmelden v%(v)s"
 
 msgid "Problem inserting new input cell before current input cell."
 msgstr "Fehler beim Einfügen einer neuen Input-Zelle vor der aktuellen."
@@ -2191,8 +2191,8 @@ msgstr "einfach"
 msgid "recaptcha"
 msgstr "recaptcha"
 
-msgid "Sage Notebook Registration"
-msgstr "Sage-Notebook-Registrierung"
+msgid "POKAL Notebook Registration"
+msgstr "POKAL-Notebook-Registrierung"
 
 msgid "The account recovery system is not active."
 msgstr "Das Kontowiederherstellungssystem ist nicht aktiv."
@@ -2203,8 +2203,8 @@ msgstr "Ungültiger Benutzername."
 msgid "The e-mail address hasn't been confirmed."
 msgstr "Die E-Mail-Adresse wurde nicht unbestätigt."
 
-msgid "Sage Notebook Account Recovery"
-msgstr "Sage-Notebook-Kontowiederherstellung"
+msgid "POKAL Notebook Account Recovery"
+msgstr "POKAL-Notebook-Kontowiederherstellung"
 
 msgid "The new password couldn't be sent to %s."
 msgstr "Das neue Passwort konnte nicht an %s gesendet werden."
@@ -2233,14 +2233,14 @@ msgstr "Keine Daten-Datei (%s)"
 msgid "ago by %s"
 msgstr "durch %s"
 
-msgid "The Sage Notebook"
-msgstr "Sage Notebook"
+msgid "The POKAL Notebook"
+msgstr "POKAL Notebook"
 
-msgid "Searching for Sage server..."
-msgstr "Suche Sage-Server..."
+msgid "Searching for POKAL server..."
+msgstr "Suche POKAL-Server..."
 
-msgid "Please log in to the Sage notebook"
-msgstr "Bitte loggen Sie sich ins Sage-Notebook ein"
+msgid "Please log in to the POKAL notebook"
+msgstr "Bitte loggen Sie sich ins POKAL-Notebook ein"
 
 msgid "Toggle the top bar"
 msgstr "Die Kopfleiste wechseln"
@@ -2263,32 +2263,32 @@ msgstr "Kontoeinstellungen ändern, einschließlich Passwort"
 msgid "Documentation"
 msgstr "Dokumentation"
 
-msgid "Report a problem or submit a bug to improve Sage"
+msgid "Report a problem or submit a bug to improve POKAL"
 msgstr "Problem melden oder auf Fehler aufmerksam machen"
 
-msgid "Sage Documentation"
-msgstr "Dokumentation zu Sage"
+msgid "POKAL Documentation"
+msgstr "Dokumentation zu POKAL"
 
-msgid "To quickly try out Sage start here"
-msgstr "Starten Sie hier, um Sage mal eben auszuprobieren"
+msgid "To quickly try out POKAL start here"
+msgstr "Starten Sie hier, um POKAL mal eben auszuprobieren"
 
 msgid "Tutorial"
 msgstr "Lehrpfad"
 
-msgid "View a 4000+ page reference manual about Sage"
-msgstr "Mehr als 4000 Seiten des Referenzhandbuchs zu Sage anzeigen"
+msgid "View a 4000+ page reference manual about POKAL"
+msgstr "Mehr als 4000 Seiten des Referenzhandbuchs zu POKAL anzeigen"
 
 msgid "Reference Manual"
 msgstr "Referenzhandbuch"
 
-msgid "Learn to write Sage programs"
-msgstr "Lernen Sie Sage-Programme zu schreiben"
+msgid "Learn to write POKAL programs"
+msgstr "Lernen Sie POKAL-Programme zu schreiben"
 
 msgid "Developer Guide"
 msgstr "Anleitung für Entwickler"
 
-msgid "How do I construct ... in Sage?"
-msgstr "Wie erstelle ich ... in Sage?"
+msgid "How do I construct ... in POKAL?"
+msgstr "Wie erstelle ich ... in POKAL?"
 
 msgid "Static version..."
 msgstr "Statische Fassung..."
@@ -2299,8 +2299,8 @@ msgstr "Schnelle statische Fassungen der Dokumentation"
 msgid "Help via Internet Chat (IRC)"
 msgstr "Hilfe per Internet-Chat beziehen (IRC)"
 
-msgid "How to use the Sage Notebook"
-msgstr "Benutzung von Sage Notebook"
+msgid "How to use the POKAL Notebook"
+msgstr "Benutzung von POKAL Notebook"
 
 msgid "Welcome!"
 msgstr "Willkommen!"
@@ -2311,9 +2311,9 @@ msgstr "Allgemeine und Fortgeschrittene Reine und Angewandte Mathematik"
 msgid "Use an Open Source Alternative"
 msgstr "Nutzen Sie eine freie Alternative"
 
-msgid "Use Most Mathematics Software from Within Sage"
+msgid "Use Most Mathematics Software from Within POKAL"
 msgstr ""
-"Du kannst die meiste Mathematik-Software innerhalb von Sage benutzer"
+"Du kannst die meiste Mathematik-Software innerhalb von POKAL benutzer"
 
 msgid "Use a Mainstream Programming Language"
 msgstr "Benutzen Sie eine gängige Programmiersprache"
@@ -2324,24 +2324,24 @@ msgstr "Der Benutzername ist dem System unbekannt"
 msgid "Wrong password"
 msgstr "Falsches Passwort"
 
-msgid "Sign up for a new Sage Notebook account"
-msgstr "Anmelden für neues Sage-Notebook-Konto"
+msgid "Sign up for a new POKAL Notebook account"
+msgstr "Anmelden für neues POKAL-Notebook-Konto"
 
-msgid "Browse published Sage worksheets<br>(no login required)"
+msgid "Browse published POKAL worksheets<br>(no login required)"
 msgstr ""
 "Durchsuche veröffentlichte Arbeitsblätter<br>(kein Login erforderlich)"
 
-msgid "Javascript must be enabled in order to use the Sage Notebook."
-msgstr "Um Sage Notebook zu benutzen, muss Javascript muss aktiv sein."
+msgid "Javascript must be enabled in order to use the POKAL Notebook."
+msgstr "Um POKAL Notebook zu benutzen, muss Javascript muss aktiv sein."
 
-msgid "Sage Source Browser"
-msgstr "Sage Quelltext-Browser"
+msgid "POKAL Source Browser"
+msgstr "POKAL Quelltext-Browser"
 
 msgid "browse directory"
 msgstr "Verzeichnis durchsuchen"
 
-msgid "Sage Notebook version"
-msgstr "Sage Notebook Version"
+msgid "POKAL Notebook version"
+msgstr "POKAL Notebook Version"
 
 msgid "Environment"
 msgstr "Umgebung"
@@ -2379,8 +2379,8 @@ msgstr "Anzahl"
 msgid "Totals"
 msgstr "Insgesamt"
 
-msgid "Upload worksheet (an sws or txt file) to the Sage Notebook"
-msgstr "Arbeitsblatt in Sage Notebook hochladen (sws- oder txt-Datei)"
+msgid "Upload worksheet (an sws or txt file) to the POKAL Notebook"
+msgstr "Arbeitsblatt in POKAL Notebook hochladen (sws- oder txt-Datei)"
 
 msgid "Or enter the URL of a worksheet file on the web:"
 msgstr "Oder geben Sie den URL eines Arbeitsblatts im Internet ein:"
@@ -2437,8 +2437,8 @@ msgstr "Abschicken"
 msgid "Sign up"
 msgstr "Anmelden"
 
-msgid "Sign up for a Sage Notebook account"
-msgstr "Anmelden für ein Konto in Sage Notebook"
+msgid "Sign up for a POKAL Notebook account"
+msgstr "Anmelden für ein Konto in POKAL Notebook"
 
 msgid "Errors found"
 msgstr "Fehler gefunden"
@@ -2728,8 +2728,8 @@ msgstr "Den obigen Mitarbeitern Zugang zu Ihrem Arbeitsblatt gewähren"
 msgid "Invite Collaborators"
 msgstr "Mitarbeiter einladen"
 
-msgid "Sage Users:"
-msgstr "Sage-Benutzer:"
+msgid "POKAL Users:"
+msgstr "POKAL-Benutzer:"
 
 msgid "Change E-mail Address"
 msgstr "E-Mail-Adresse ändern"
@@ -2959,7 +2959,7 @@ msgid "Owner/Collaborators"
 msgstr "Besitzer/Mitarbeiter"
 
 msgid "Last Edited"
-msgstr "Geändert"
+msgstr "Letzte Änderung"
 
 msgid "Search..."
 msgstr "Suchen"
@@ -2993,3 +2993,6 @@ msgstr "Entwicklung"
 
 msgid  " is working on this cell. Therefore it has been locked."
 msgstr " arbeitet an dieser Zelle, daher ist sie vorübergehend gesperrt."
+
+msgid "Continue computation on leave"
+msgstr "Weiterrechnen beim Verlassen"
