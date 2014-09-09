@@ -69,7 +69,8 @@ sagenb.worksheetlistapp.list_row = function() {
 		// last change
 		_this.jquery_this.find("td.last_edit_cell").text(_this.props.last_change_pretty);
 	};
-	
+
+	// delete worksheet (animation)
 	_this.remove = function() {
 		_this.jquery_this.hide("slow", function() {
 			_this.jquery_this.detach();
@@ -124,7 +125,15 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 		$("#show_trash").click(_this.show_trash);
 		
 		$("#submit_search").click(_this.do_search);
-		
+	
+		$("#pokal_logo").click(function(e) {
+			window.location.href="/";
+		});
+
+		$("#home").click(function(e) {
+			window.location.href="/";
+		});
+
 		// not going to mess with this for now
 		// $("#action_buttons button").addClass("disabled");
 		
@@ -206,6 +215,8 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 			});
 		});
 	};
+
+	// delete worksheet
 	_this.delete = function() {
 		if($("#delete_button").hasClass("disabled")) return;
 		_this.checked_action("/send_to_trash", function(status, response) {

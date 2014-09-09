@@ -25,16 +25,17 @@ class SageNBFlask(Flask):
         Flask.__init__(self, *args, **kwds)
 
         self.config['SESSION_COOKIE_HTTPONLY'] = False
+        self.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/pokaldb"
 
         self.root_path = SAGENB_ROOT
 
         # I think it would make more sense just to have one /data/ path and not do one for every kind of file
         self.add_static_path('/data', os.path.join(DATA))
-        
+
         # this one is special though since it points to SAGE_ROOT
         self.add_static_path('/java/jmol', os.path.join(os.environ["SAGE_ROOT"], "local", "share", "jmol"))
-        
-        
+
+
         import mimetypes
         mimetypes.add_type('text/plain', '.jmol')
         mimetypes.add_type('font/opentype', '.otf')
@@ -340,6 +341,7 @@ def notebook_updates():
 
 
 notebook = None
+db = None
 
 #CLEAN THIS UP!
 def create_app(path_to_notebook, *args, **kwds):
@@ -366,9 +368,16 @@ def create_app(path_to_notebook, *args, **kwds):
     oid.init_app(app)
     app.debug = True
 
+    from sqlalchemy import create_engine
+    from sqlalchemy.orm import sessionmaker
+    engine = create_engine('postgresql://pokal:lakop14@localhost:5432/pokaldb')
+    Session = sessionmaker(bind=engine)
+    sess = Session()
+
     @app.before_request
     def set_notebook_object():
         g.notebook = notebook
+        g.db = sess
 
     ####################################
     # create Babel translation manager #
@@ -399,6 +408,11 @@ def create_app(path_to_notebook, *args, **kwds):
 
     from settings import settings
     app.register_blueprint(settings)
+
+    #from flask.ext.sqlalchemy import SQLAlchemy
+    #db = SQLAlchemy(app)
+    #db.session.flush()
+
 
     #autoindex v0.3 doesnt seem to work with modules
     #routing with app directly does the trick

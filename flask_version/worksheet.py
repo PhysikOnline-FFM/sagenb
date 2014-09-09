@@ -14,6 +14,7 @@ from socketio.mixins import RoomsMixin, BroadcastMixin
 from gevent import monkey
 import gevent
 #import smtplib
+from models import *
 
 monkey.patch_all()
 
@@ -86,6 +87,10 @@ def new_worksheet():
         return current_app.message(_("Account is in read-only mode"), cont=url_for('worksheet_listing.home', username=g.username))
 
     W = g.notebook.create_new_worksheet(gettext("Untitled"), g.username)
+    ws = Worksheet(W.id_number(), gettext("Untitled"), "", False)
+    ws.owner = g.db.query(User).filter_by(hrz=g.username).one()
+    g.db.add(ws)
+    g.db.commit()
     return redirect(url_for_worksheet(W))
 
 @ws.route('/home/<username>/<id>/')
@@ -1044,7 +1049,7 @@ def socketio(remaining):
         environment = request.environ.copy()
 
         # here, information can be passed to the socket
-        environment.update({'extrainfo':'hallo', 'notebook':g.notebook})
+        environment.update({'extrainfo':'hallo', 'notebook':g.notebook, 'db':g.db})
 
         socketio_manage(environment, {'/worksheet': WorksheetNamespace}, request)
     except:
@@ -1167,6 +1172,10 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
                     gevent.sleep(0.2) # in Sekunden
         self.spawn(client_watcher_process)
+        c1 = Chatlog_entry("test")
+        db = self.environ['db']
+        db.add(c1)
+        db.commit()
         return True
 
     # cell operations handler
@@ -1264,7 +1273,7 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         # disconnect user from chat since he is leaving
         self.recv_disconnect()
 
-        
+
     def build_result(self, worksheet, cell_id):
         #import time
 

@@ -162,8 +162,7 @@ sagenb.worksheetapp.worksheet = function() {
 		if(_this.name === gettext("Untitled") && !_this.published_mode) {
 			$(".alert_rename").show();
 		} else {
-			// maybe other stuff here??
-			close_window();
+			window.location.href = "/";
 		}
 	};
 	_this.print = function() {
@@ -736,7 +735,10 @@ sagenb.worksheetapp.worksheet = function() {
 			$(".worksheet_name").click();
 			$(".alert_rename").hide();
 		});
-		$(".alert_rename .cancel").click(close_window);
+		//$(".alert_rename .cancel").click(close_window);
+		$(".alert_rename .cancel").click(function(e) {
+			window.location.href = "/";
+		});
 		
 		///////// LOCKED ALERT //////////
 		$(".alert_locked button").click(function(e) {
@@ -871,6 +873,8 @@ sagenb.worksheetapp.worksheet = function() {
 		$("#new_worksheet").click(_this.new_worksheet);
 		$("#save_worksheet").click(_this.save);
 		$("#close_worksheet").click(_this.close);
+		$("#pokal_logo").click(_this.close);
+		$("#home").click(_this.close);
 		$("#export_to_file").click(_this.export_worksheet);
 		// $("#import_from_file").click(_this.import_worksheet);
 		$("#print").click(_this.print);

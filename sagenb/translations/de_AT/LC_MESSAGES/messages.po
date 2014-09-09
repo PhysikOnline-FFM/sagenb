@@ -537,7 +537,7 @@ msgstr "Benutzerverwaltung"
 
 #: sagenb/data/sage/html/docs.html:120
 msgid "Interrupt"
-msgstr "Unterbrechen"
+msgstr "Stop"
 
 #: sagenb/data/sage/html/docs.html:121
 msgid ""
@@ -1077,7 +1077,7 @@ msgstr "Arbeitsblatt veröffentlichen"
 
 #: sagenb/data/sage/html/modals/sharing_modal.html:22
 msgid "Re-publish this worksheet when it changes"
-msgstr "Arbeitsblatt erneut veröffentlichen"
+msgstr "Bei Änderung automatisch aktualisieren"
 
 #: sagenb/data/sage/html/modals/sharing_modal.html:23
 msgid "Worksheet viewable at"
