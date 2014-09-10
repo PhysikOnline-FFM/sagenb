@@ -87,10 +87,11 @@ def new_worksheet():
         return current_app.message(_("Account is in read-only mode"), cont=url_for('worksheet_listing.home', username=g.username))
 
     W = g.notebook.create_new_worksheet(gettext("Untitled"), g.username)
-    ws = Worksheet(W.id_number(), gettext("Untitled"))
-    ws.owner = g.db.query(User).filter_by(hrz=g.username).one()
-    g.db.add(ws)
+
+    # add worksheet to the database
+    newDBWorksheet(g.db, W)
     g.db.commit()
+
     return redirect(url_for_worksheet(W))
 
 @ws.route('/home/<username>/<id>/')
@@ -163,11 +164,11 @@ def worksheet_command(target, **route_kwds):
 def worksheet_rename(worksheet):
     wsname = request.values['name']
     try:
-        usertemp = getUserbyHRZ(g.db, worksheet.owner_from_filename())
-        wstemp = g.db.query(Worksheet).filter_by(ws_num=worksheet.id_number(), owner_id=usertemp.id).one()
-        wstemp.name = wsname
-        g.db.commit()
         worksheet.set_name(wsname)
+
+        # update database
+        getDBWorksheet(g.db, worksheet).name = wsname
+        g.db.commit()
     except:
         print "DB Error during renaming of worksheet!"
 
@@ -857,14 +858,17 @@ def worksheet_publish(worksheet):
     """
     if 'publish_on' in request.values:
         g.notebook.publish_worksheet(worksheet, g.username)
-        usertemp = getUserbyHRZ(g.db, worksheet.owner_from_filename())
-        ws_db = g.db.query(Worksheet).filter_by(ws_num=worksheet.id_number(), owner_id=usertemp.id).one()
+
+        # update database
+        ws_db = getDBWorksheet(worksheet)
         ws_db.public_id = worksheet.published_version().id_number()
         g.db.commit()
+
     if 'publish_off' in request.values and worksheet.has_published_version():
         g.notebook.delete_worksheet(worksheet.published_version().filename())
-        usertemp = getUserbyHRZ(g.db, worksheet.owner_from_filename())
-        ws_db = g.db.query(Worksheet).filter_by(ws_num=worksheet.id_number(), owner_id=usertemp.id).one()
+
+        # update database
+        ws_db = getDBWorksheet(worksheet)
         ws_db.public_id = None
         g.db.commit()
 
@@ -1270,12 +1274,8 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         self.emit('user_message', self.msg)
         self.emit_to_room(self.room, 'user_message', self.msg)
         user_db = getUserbyHRZ(self.db, self.session['session_nick']['nickname'])
-        owner, ws_num = self.room.split("/")
-        ws_user_db = getUserbyHRZ(self.db, owner)
-        ws_db = self.db.query(Worksheet).filter_by(owner_id=ws_user_db.id, ws_num=ws_num).one()
-        msg_db = Chatlog_entry(msg)
-        msg_db.ws = ws_db
-        msg_db.user = user_db
+        ws_db = getDBWorksheetByFilename(self.db, self.room)
+        msg_db = Chatlog_entry(msg, user_db, ws_db)
         self.db.add(msg_db)
         self.db.commit()
 

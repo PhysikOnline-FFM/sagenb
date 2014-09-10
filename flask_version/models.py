@@ -17,8 +17,10 @@ class Chatlog_entry(Base):
     time = Column(DateTime)
     msg = Column(Text)
 
-    def __init__(self, msg):
+    def __init__(self, msg, user, ws):
         self.msg = msg
+        self.user = user
+        self.ws = ws
         self.time = datetime.datetime.now()
 
     def __repr__(self):
@@ -75,3 +77,18 @@ class User(Base):
 
 def getUserbyHRZ(db, hrz_name):
     return db.query(User).filter_by(hrz=hrz_name).one()
+
+def newDBWorksheet(db, W):
+    ws = Worksheet(W.id_number(), W.name())
+    ws.owner = getUserbyHRZ(db, W.owner_from_filename())
+    db.add(ws)
+
+def getDBWorksheet(db, W):
+    ws_user_db = getUserbyHRZ(db, W.owner_from_filename())
+    ws_num = W.id_number()
+    return db.query(Worksheet).filter_by(owner_id=ws_user_db.id, ws_num=ws_num).one()
+
+def getDBWorksheetByFilename(db, filename):
+    owner, ws_num = filename.split("/")
+    ws_user_db = getUserbyHRZ(db, owner)
+    return db.query(Worksheet).filter_by(owner_id=ws_user_db.id, ws_num=ws_num).one()

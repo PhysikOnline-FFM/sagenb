@@ -109,9 +109,9 @@ def get_worksheets_from_request():
 def send_worksheet_to_trash():
     for W in get_worksheets_from_request():
         W.move_to_trash(g.username)
-        usertemp = getUserbyHRZ(g.db, W.owner_from_filename())
-        wstemp = g.db.query(Worksheet).filter_by(owner_id=usertemp.id, ws_num=W.id_number()).one()
-        wstemp.folder = 2
+
+        # update database
+        getDBWorksheet(g.db, W).folder = 2
     g.db.commit()
     return ''
 
@@ -120,9 +120,9 @@ def send_worksheet_to_trash():
 def send_worksheet_to_archive():
     for W in get_worksheets_from_request():
         W.move_to_archive(g.username)
-        usertemp = getUserbyHRZ(g.db, W.owner_from_filename())
-        wstemp = g.db.query(Worksheet).filter_by(owner_id=usertemp.id, ws_num=W.id_number()).one()
-        wstemp.folder = 1
+
+        # update database
+        getDBWorksheet(g.db, W).folder = 1
     g.db.commit()
 
     return ''
@@ -132,9 +132,9 @@ def send_worksheet_to_archive():
 def send_worksheet_to_active():
     for W in get_worksheets_from_request():
         W.set_active(g.username)
-        usertemp = getUserbyHRZ(g.db, W.owner_from_filename())
-        wstemp = g.db.query(Worksheet).filter_by(owner_id=usertemp.id, ws_num=W.id_number()).one()
-        wstemp.folder = 0
+
+        # update database
+        getDBWorksheet(g.db, W).folder = 0
     g.db.commit()
 
     return ''
@@ -144,9 +144,9 @@ def send_worksheet_to_active():
 def send_worksheet_to_stop():
     for W in get_worksheets_from_request():
         W.quit()
-        usertemp = getUserbyHRZ(g.db, W.owner_from_filename())
-        wstemp = g.db.query(Worksheet).filter_by(owner_id=usertemp.id, ws_num=W.id_number()).one()
-        wstemp.running = False
+
+        # update database
+        getDBWorksheet(g.db, W).running = False
     g.db.commit()
     return ''
 
@@ -425,9 +425,7 @@ def upload_worksheet():
                         if new_name:
                             W.set_name("%s - %s" % (new_name, W.name()))
                         #Insert imported file to db
-                        wstemp = Worksheet(W.id_number(),W.name())
-                        wstemp.owner = getUserbyHRZ(g.db,g.username)
-                        g.db.add(wstemp)
+                        newDBWorksheet(g.db, W)
                     else:
                         print "Unknown extension, file %s is ignored" % subfilename
                 g.db.commit()
@@ -445,13 +443,6 @@ def upload_worksheet():
                         except RetrieveError as err:
                             return current_app.message(str(err))
                 W = g.notebook.import_worksheet(filename, g.username)
-                if new_name:
-                    wstemp = Worksheet(W.id_number(),new_name)
-                else:
-                    wstemp = Worksheet(W.id_number(),W.name())
-                wstemp.owner = getUserbyHRZ(g.db,g.username)
-                g.db.add(wstemp)
-                g.db.commit()
 
         except Exception, msg:
             print 'error uploading worksheet', msg
@@ -471,6 +462,8 @@ def upload_worksheet():
 
     if new_name:
         W.set_name(new_name)
+    newDBWorksheet(g.db, W)
+    g.db.commit()
 
     from worksheet import url_for_worksheet
     return redirect(url_for_worksheet(W))
