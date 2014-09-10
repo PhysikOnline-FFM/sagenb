@@ -4,6 +4,7 @@ from flask import Module, url_for, render_template, request, session, redirect, 
 from decorators import with_lock
 from flask.ext.babel import gettext, ngettext, lazy_gettext
 _ = gettext
+from models import *
 
 authentication = Module('sagenb.flask_version.authentication')
 
@@ -37,8 +38,10 @@ def login(template_dict={}):
 
         # we only handle ascii usernames.
         from sagenb.notebook.misc import is_valid_username, is_valid_password
+        new_user = False
         if is_valid_username(username):
             try:
+                new_user = not g.notebook.user_manager().is_user_known(username)
                 U = g.notebook.user_manager().user(username)
             except (KeyError, LookupError):
                 U = None
@@ -63,6 +66,10 @@ def login(template_dict={}):
                 return "Your account is currently suspended"
             else:
                 #Valid user, everything is okay
+                if new_user:
+                    usertemp = User(username)
+                    g.db.add(usertemp)
+                    g.db.commit()
                 session['username'] = username
                 session.modified = True
                 return redirect(request.values.get('next', url_for('base.index')))

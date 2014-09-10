@@ -87,7 +87,7 @@ def new_worksheet():
         return current_app.message(_("Account is in read-only mode"), cont=url_for('worksheet_listing.home', username=g.username))
 
     W = g.notebook.create_new_worksheet(gettext("Untitled"), g.username)
-    ws = Worksheet(W.id_number(), gettext("Untitled"), "", False)
+    ws = Worksheet(W.id_number(), gettext("Untitled"))
     ws.owner = g.db.query(User).filter_by(hrz=g.username).one()
     g.db.add(ws)
     g.db.commit()
@@ -161,7 +161,16 @@ def worksheet_command(target, **route_kwds):
 
 @worksheet_command('rename')
 def worksheet_rename(worksheet):
-    worksheet.set_name(request.values['name'])
+    wsname = request.values['name']
+    try:
+        usertemp = getUserbyHRZ(g.db, worksheet.owner_from_filename())
+        wstemp = g.db.query(Worksheet).filter_by(ws_num=worksheet.id_number(), owner_id=usertemp.id).one()
+        wstemp.name = wsname
+        g.db.commit()
+        worksheet.set_name(wsname)
+    except:
+        print "DB Error during renaming of worksheet!"
+
     return 'done'
 
 @worksheet_command('alive')
@@ -176,6 +185,11 @@ def worksheet_system(worksheet, system):
 @worksheet_command('pretty_print/<enable>')
 def worksheet_pretty_print(worksheet, enable):
     worksheet.set_pretty_print(enable)
+    return 'success'
+
+@worksheet_command('continue_computation/<enable>')
+def worksheet_continue_computation(worksheet, enable):
+    worksheet.set_continue_computation(enable)
     return 'success'
 
 @worksheet_command('conf')
@@ -843,8 +857,16 @@ def worksheet_publish(worksheet):
     """
     if 'publish_on' in request.values:
         g.notebook.publish_worksheet(worksheet, g.username)
+        usertemp = getUserbyHRZ(g.db, worksheet.owner_from_filename())
+        ws_db = g.db.query(Worksheet).filter_by(ws_num=worksheet.id_number(), owner_id=usertemp.id).one()
+        ws_db.public_id = worksheet.published_version().id_number()
+        g.db.commit()
     if 'publish_off' in request.values and worksheet.has_published_version():
         g.notebook.delete_worksheet(worksheet.published_version().filename())
+        usertemp = getUserbyHRZ(g.db, worksheet.owner_from_filename())
+        ws_db = g.db.query(Worksheet).filter_by(ws_num=worksheet.id_number(), owner_id=usertemp.id).one()
+        ws_db.public_id = None
+        g.db.commit()
 
     if 'auto_on' in request.values:
         worksheet.set_auto_publish(True)
@@ -1079,6 +1101,7 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
     # client information handler
     def on_join(self, data):
+        self.db = self.environ['db']
         # expecting data = {nickname:"sage username", "worksheet":"worksheet-name"}
         self.room = data['worksheet']
 
@@ -1090,6 +1113,8 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
         # shortcut
         self.ws_a_cells = self.active_cells[self.room]
+        for cell_id in self.ws_a_cells:
+            self.emit('cell_evaluate', cell_id)
 
         try:
             self.nicknames[self.room]
@@ -1171,11 +1196,9 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
                             #server.sendmail("service@pokal.uni-frankfurt.de", "receiver@abc.de", "Your computation has finished!!")
 
                     gevent.sleep(0.2) # in Sekunden
+                if not worksheet.continue_computation():
+                    worksheet.sage().interrupt()
         self.spawn(client_watcher_process)
-        c1 = Chatlog_entry("test")
-        db = self.environ['db']
-        db.add(c1)
-        db.commit()
         return True
 
     # cell operations handler
@@ -1246,6 +1269,15 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         self.msg = encode_response({"user": self.session['session_nick'], "message": msg })
         self.emit('user_message', self.msg)
         self.emit_to_room(self.room, 'user_message', self.msg)
+        user_db = getUserbyHRZ(self.db, self.session['session_nick']['nickname'])
+        owner, ws_num = self.room.split("/")
+        ws_user_db = getUserbyHRZ(self.db, owner)
+        ws_db = self.db.query(Worksheet).filter_by(owner_id=ws_user_db.id, ws_num=ws_num).one()
+        msg_db = Chatlog_entry(msg)
+        msg_db.ws = ws_db
+        msg_db.user = user_db
+        self.db.add(msg_db)
+        self.db.commit()
 
     # connection handler
     def recv_disconnect(self):
@@ -1264,12 +1296,6 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
              return False
 
     def on_disconnect(self):
-        # check if he is the last person leaving while a computation is still running:
-        #if len(self.ws_nicks)==1 and len(self.ws_a_cells)!=0:
-        #    # Tell client-side to show a "continue computation?" dialog and
-        #    # wait for result
-        #    self.emit('last_one_leaving')
-
         # disconnect user from chat since he is leaving
         self.recv_disconnect()
 

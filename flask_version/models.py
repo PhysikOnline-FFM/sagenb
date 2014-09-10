@@ -40,13 +40,14 @@ class Worksheet(Base):
     owner = relationship("User")
 
     public_id = Column(String(20))
-    continue_computation = Column(Boolean)
+    folder = Column(Integer, default=0)
+    running = Column(Boolean, default=False)
 
-    def __init__(self, ws_num, name, public_id, continue_computation):
+    def __init__(self, ws_num, name, owner_id=None):
         self.ws_num = ws_num
         self.name = name
-        self.public_id = public_id
-        self.continue_computation = continue_computation
+        if not owner_id is None:
+            self.owner_id = owner_id
 
 class Tag(Base):
     __tablename__ = 'tags'
@@ -65,6 +66,12 @@ class User(Base):
     hrz = Column(String(20))
     nickname = Column(String(10))
 
-    def __init__(self, hrz, nickname):
+    def __init__(self, hrz, nickname=None):
         self.hrz = hrz
-        self.nickname = nickname
+        if nickname is None:
+            self.nickname = hrz
+        else:
+            self.nickname = nickname
+
+def getUserbyHRZ(db, hrz_name):
+    return db.query(User).filter_by(hrz=hrz_name).one()

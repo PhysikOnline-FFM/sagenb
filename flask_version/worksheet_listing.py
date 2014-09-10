@@ -6,6 +6,7 @@ from flask import Module, url_for, render_template, request, session, redirect, 
 from decorators import login_required, guest_or_login_required, with_lock
 from flask.ext.babel import Babel, gettext, ngettext, lazy_gettext
 _ = gettext
+from models import *
 
 worksheet_listing = Module('sagenb.flask_version.worksheet_listing')
 
@@ -108,6 +109,10 @@ def get_worksheets_from_request():
 def send_worksheet_to_trash():
     for W in get_worksheets_from_request():
         W.move_to_trash(g.username)
+        usertemp = getUserbyHRZ(g.db, W.owner_from_filename())
+        wstemp = g.db.query(Worksheet).filter_by(owner_id=usertemp.id, ws_num=W.id_number()).one()
+        wstemp.folder = 2
+    g.db.commit()
     return ''
 
 @worksheet_listing.route('/send_to_archive', methods=['POST'])
@@ -115,6 +120,11 @@ def send_worksheet_to_trash():
 def send_worksheet_to_archive():
     for W in get_worksheets_from_request():
         W.move_to_archive(g.username)
+        usertemp = getUserbyHRZ(g.db, W.owner_from_filename())
+        wstemp = g.db.query(Worksheet).filter_by(owner_id=usertemp.id, ws_num=W.id_number()).one()
+        wstemp.folder = 1
+    g.db.commit()
+
     return ''
 
 @worksheet_listing.route('/send_to_active', methods=['POST'])
@@ -122,6 +132,11 @@ def send_worksheet_to_archive():
 def send_worksheet_to_active():
     for W in get_worksheets_from_request():
         W.set_active(g.username)
+        usertemp = getUserbyHRZ(g.db, W.owner_from_filename())
+        wstemp = g.db.query(Worksheet).filter_by(owner_id=usertemp.id, ws_num=W.id_number()).one()
+        wstemp.folder = 0
+    g.db.commit()
+
     return ''
 
 @worksheet_listing.route('/send_to_stop', methods=['POST'])
@@ -129,12 +144,20 @@ def send_worksheet_to_active():
 def send_worksheet_to_stop():
     for W in get_worksheets_from_request():
         W.quit()
+        usertemp = getUserbyHRZ(g.db, W.owner_from_filename())
+        wstemp = g.db.query(Worksheet).filter_by(owner_id=usertemp.id, ws_num=W.id_number()).one()
+        wstemp.running = False
+    g.db.commit()
     return ''
 
 @worksheet_listing.route('/empty_trash', methods=['POST'])
 @login_required
 def empty_trash():
     g.notebook.empty_trash(g.username)
+    usertemp = getUserbyHRZ(g.db, g.username)
+    g.db.query(Worksheet).filter_by(owner_id=usertemp.id, folder=2).delete()
+    g.db.commit()
+
     if 'referer' in request.headers:
         return redirect(request.headers['referer'])
     else:
@@ -401,8 +424,13 @@ def upload_worksheet():
                         W = g.notebook.import_worksheet(tmpfilename, g.username)
                         if new_name:
                             W.set_name("%s - %s" % (new_name, W.name()))
+                        #Insert imported file to db
+                        wstemp = Worksheet(W.id_number(),W.name())
+                        wstemp.owner = getUserbyHRZ(g.db,g.username)
+                        g.db.add(wstemp)
                     else:
                         print "Unknown extension, file %s is ignored" % subfilename
+                g.db.commit()
                 return redirect(url_for('home', username=g.username))
 
             else:
@@ -417,6 +445,14 @@ def upload_worksheet():
                         except RetrieveError as err:
                             return current_app.message(str(err))
                 W = g.notebook.import_worksheet(filename, g.username)
+                if new_name:
+                    wstemp = Worksheet(W.id_number(),new_name)
+                else:
+                    wstemp = Worksheet(W.id_number(),W.name())
+                wstemp.owner = getUserbyHRZ(g.db,g.username)
+                g.db.add(wstemp)
+                g.db.commit()
+
         except Exception, msg:
             print 'error uploading worksheet', msg
             s = _('There was an error uploading the worksheet.  It could be an old unsupported format or worse.  If you desperately need its contents contact the <a href="http://groups.google.com/group/sage-support">sage-support group</a> and post a link to your worksheet.  Alternatively, an sws file is just a bzip2 tarball; take a look inside!\n%(backlinks)s', backlinks=backlinks)

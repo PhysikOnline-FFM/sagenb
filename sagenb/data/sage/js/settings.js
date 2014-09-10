@@ -35,7 +35,7 @@ sagenb.settings.setup_manage_users_page = function() {
 			username: $(this).parent().parent().data("username")
 		});
 	});
-	$(".suspend_user_button").click(function(e) {
+   	$(".suspend_user_button").click(function(e) {
 		// TODO gettext
 		if(!confirm("Are you sure you want to suspend/unsuspend " + 
 			$(this).parent().parent().data("username") + 

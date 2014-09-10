@@ -996,7 +996,7 @@ msgstr "Fertig"
 
 #: sagenb/data/sage/html/modals/import_modal.html:5
 msgid "Import Worksheet"
-msgstr "Arbeitsblatt kopieren"
+msgstr "Arbeitsblatt importieren"
 
 #: sagenb/data/sage/html/modals/import_modal.html:13
 msgid "From URL"
@@ -1036,15 +1036,9 @@ msgstr "Eine HTML-Seite, durch docutils aus ReStructuredText Datei generiert"
 
 #: sagenb/data/sage/html/modals/import_modal.html:23
 msgid ""
-"a ReStructuredText file (Add \"<code>.. escape-backslashes</code>\" as a "
-"line in the file if you want backslashes to be escaped. Put latex code "
-"inside backticks \"<code>`</code>\" or dollar signs \"<code>$</code>\" or "
-"\"<code>$$</code>\". Math role is not supported for now.)"
+"a ReStructuredText file"
 msgstr ""
-"eine ReStructuredText Datei (Füge eine Zeile \"<code>.. escape-backslashes</"
-"code>\" in die Datei ein, wenn Backslashes escaped werden sollen. Schreibe "
-"LATEX-Code in Backticks \"<code>`</code>\" oder Dollarzeichen \"<code>$</"
-"code>\" oder \"<code>$$</code>\". Mathemodus wird derzeit nicht unterstützt)"
+"eine ReStructuredText Datei"
 
 #: sagenb/data/sage/html/modals/import_modal.html:24
 msgid "a zip archive of any of the above"

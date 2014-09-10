@@ -208,6 +208,7 @@ class Worksheet(object):
         # Record the basic properties of the worksheet
         self.__system = system
         self.__pretty_print = pretty_print
+        self.__continue_computation = False;
         self.__owner = owner
         self.__viewers = []
         self.__collaborators = []
@@ -311,6 +312,7 @@ class Worksheet(object):
              # Appearance: e.g., whether to pretty print this
              # worksheet by default
              'pretty_print': self.pretty_print(),
+             'continue_computation': self.continue_computation(),
 
              # what other users think of this worksheet: list of
              # triples
@@ -405,7 +407,7 @@ class Worksheet(object):
                     self.__filename = filename
                     self.__dir = os.path.join(notebook_worksheet_directory, str(value))
             elif key in ['system', 'owner', 'viewers', 'collaborators',
-                         'pretty_print', 'ratings']:
+                         'pretty_print', 'continue_computation', 'ratings']:
                 # ugly
                 setattr(self, '_Worksheet__' + key, value)
             elif key == 'auto_publish':
@@ -799,6 +801,13 @@ class Worksheet(object):
         """
         return self.__filename
 
+    def owner_from_filename(self):
+        """
+        Return the part of the worksheet filename before the /, i.e.,
+        the information about the owner of this worksheet.
+        """
+        return os.path.split(self.__filename)[0]
+
     def filename_without_owner(self):
         """
         Return the part of the worksheet filename after the last /, i.e.,
@@ -1017,6 +1026,13 @@ class Worksheet(object):
             self.__pretty_print = False
             return self.__pretty_print
 
+    def continue_computation(self):
+        try:
+            return self.__continue_computation
+        except AttributeError:
+            self.__continue_computation = False
+            return self.__continue_computation
+
     def set_pretty_print(self, check='false'):
         """
         Set whether or not output should be pretty printed by default.
@@ -1054,6 +1070,15 @@ class Worksheet(object):
             check = True
         self.__pretty_print = check
         self.eval_asap_no_output("pretty_print_default(%r)" % check)
+
+    def set_continue_computation(self, check='false'):
+        if check == 'false':
+            check = False
+        else:
+            check = True
+        self.__continue_computation = check
+        self.eval_asap_no_output("continue_computation_default(%r)" % check)
+
 
     ##########################################################
     # Publication

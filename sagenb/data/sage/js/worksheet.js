@@ -31,6 +31,7 @@ sagenb.worksheetapp.worksheet = function() {
 	_this.is_published = false;
 	_this.system = "";
 	_this.pretty_print = false;
+	_this.continue_computation = false;
 	
 	// sharing
 	_this.collaborators = [];
@@ -54,11 +55,14 @@ sagenb.worksheetapp.worksheet = function() {
 	
 	// other variables go here
 
+	$("#pokal_logo").attr("href", "#");
+	$("#home").attr("href", "#");
 
-	////////// LEAVE WEBSITE EVENT /////////////
+	////////// JOIN/LEAVE WEBSITE EVENT /////////////
 	window.onbeforeunload = function (e) {
 		_this.socket.emit('disconnect');
 	}
+
 
     ////////// WEBSOCKET_HANDLER ////////	
 	_this.socket.on('new_cell_after', function (response){
@@ -290,7 +294,12 @@ sagenb.worksheetapp.worksheet = function() {
 		if(_this.published_mode) return;
 		sagenb.async_request(_this.worksheet_command("pretty_print/" + s), sagenb.generic_callback());
 	};
-	
+
+	_this.set_continue_computation = function(s) {
+		if(_this.published_mode) return;
+		sagenb.async_request(_this.worksheet_command("continue_computation/" + s), sagenb.generic_callback());
+	};
+
 	//// NEW CELL /////
 	_this.new_cell_before = function(id) {
 		if(_this.published_mode) return;
@@ -418,6 +427,7 @@ sagenb.worksheetapp.worksheet = function() {
 			_this.owner = X.owner;
 			_this.system = X.system;
 			_this.pretty_print = X.pretty_print;
+			_this.continue_computation = X.continue_computation;
 			_this.collaborators = X.collaborators;
 			
 			if(X.published) {
@@ -443,6 +453,7 @@ sagenb.worksheetapp.worksheet = function() {
 			
 			// update the typesetting checkbox
 			$("#typesetting_checkbox").prop("checked", _this.pretty_print);
+			$("#continue_computation_checkbox").prop("checked", _this.continue_computation);
 			
 			// set the system select
 			$("#system_select").val(_this.system);
@@ -644,6 +655,17 @@ sagenb.worksheetapp.worksheet = function() {
 			// update
 			_this.worksheet_update();
 		});
+
+
+
+		////////// CONTINUE COMPUTATION CHECKBOX //////////
+		$("#continue_computation_checkbox").change(function(e) {
+			_this.set_continue_computation($("#continue_computation_checkbox").prop("checked"));
+
+			// update
+			_this.worksheet_update();
+		});
+
 		
 		////////// SINGLE/MULTI CELL ///////////
 		function update_single_cell_controls() {

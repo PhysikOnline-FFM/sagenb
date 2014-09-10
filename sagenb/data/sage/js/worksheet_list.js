@@ -61,7 +61,7 @@ sagenb.worksheetlistapp.list_row = function() {
 		}
 		if(_this.props.published_id_number && !_this.list.published_mode) {
 			// it's published
-			owner_html += '<span class="published_badge badge badge-info pull-right"><i class="icon-share-alt icon-white"></i></span>';
+			owner_html += '<span class="published_badge badge badge-info pull-right"><i class="icon-eye-open icon-white"></i></span>';
 		}
 		_this.jquery_this.find("td.owner_cell").html(owner_html);
 		_this.jquery_this.find("td.owner_cell .collaborators_tooltip").tooltip();
@@ -126,19 +126,20 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 		
 		$("#submit_search").click(_this.do_search);
 	
-		$("#pokal_logo").click(function(e) {
+		/*$("#pokal_logo").click(function(e) {
 			window.location.href="/";
 		});
 
 		$("#home").click(function(e) {
 			window.location.href="/";
-		});
+		});*/
 
 		// not going to mess with this for now
 		// $("#action_buttons button").addClass("disabled");
 		
 		// Bind hotkeys
 		$(document).bind("keydown", sagenb.ctrlkey + "+N", function(evt) { _this.new_worksheet(); return false; });
+		$(document).bind("keydown", "DEL", function(evt) { _this.delete(); return false; });
 	};
 	
 	///////// FOR EACH ///////////
