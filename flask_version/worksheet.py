@@ -647,7 +647,6 @@ def worksheet_invite_collab(worksheet):
         except KeyError:
             # user doesn't exist
             pass
-
     return ''
 
 ########################################################

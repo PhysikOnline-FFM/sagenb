@@ -778,6 +778,8 @@ sagenb.worksheetapp.worksheet = function() {
 			sagenb.async_request(_this.worksheet_command("invite_collab"), sagenb.generic_callback(), {
 				collaborators: $("#collaborators").val()
 			});
+			sagenb.async_request(_this.worksheet_command("save_snapshot"), sagenb.generic_callback());
+
 		});
 		$("#publish_checkbox").change(function(e) {
 			var command;
