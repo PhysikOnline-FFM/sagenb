@@ -22,34 +22,39 @@
 	{% endif %}
 	<form action="/settings" class="form-horizontal" method="post" id="account_settings_form">
 		<fieldset>
+			<legend>{{ gettext('User') }}</legend>
+			<div class="control-group">
+				<label class="control-label" for="">{{ gettext('HRZ account') }}</label>
+				<div class="controls">
+					<input type="text" disabled="disabled" value="{{ hrz }}">
+					<p class="help-block"></p>
+				</div>
+				<label class="control-label" for="">{{ gettext('Email') }}</label>
+				<div class="controls">
+					<input type="email" id="email" disabled="disabled" value="{{ email_address }}">
+					<p class="help-block"></p>
+			    </div>
+				<label class="control-label" for="">{{ gettext('Nickname') }}</label>
+				<div class="controls">
+					<input type="text" id="nickname" name="nickname" value="{{ nickname }}">
+					<p class="help-block"></p>
+			    </div>
+
+			</div>
+
+		</fieldset>
+
+
+		<fieldset>
 			<legend>{{ gettext("Auto-Save") }}</legend>
 			<div class="control-group">
-				<label class="control-label" for="autosave">{{ gettext('Auto-Save Interval') }}</label>
+				<label class="control-label" for="autosave">{{ gettext('Interval') }}</label>
 				<div class="controls">
 					<select name="autosave" id="autosave">
 						{% for i, selected in autosave_intervals %}
 							<option value="{{ i }}"{{ selected }}>{{ i }} {{ gettext('minute(s)') }}</option>
 						{% endfor %}
 					</select>
-					<p class="help-block"></p>
-				</div>
-			</div>
-		</fieldset>
-
-		<fieldset>
-			<legend>{{ gettext('Email') }}</legend>
-			<div class="control-group">
-				<label class="control-label" for="">{{ gettext('Current e-mail') }}</label>
-				<div class="controls">
-					<input type="email" disabled="disabled" value="{{ email_address }}">
-					<p class="help-block">{{ email_confirmed }}</p>
-				</div>
-			</div>
-
-			<div class="control-group">
-				<label class="control-label" for="new-email">{{ gettext('New e-mail') }}</label>
-				<div class="controls">
-					<input type="email" value="{{ email_address }}" name="new-email" id="new-email">
 					<p class="help-block"></p>
 				</div>
 			</div>

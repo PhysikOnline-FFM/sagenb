@@ -834,7 +834,11 @@ msgstr ""
 
 #: sagenb/data/sage/html/login.html:69
 msgid "Public worksheets"
-msgstr "Öffentliche Arbeitsblatt"
+msgstr "Öffentlicher Arbeitsblatt-Katalog"
+
+#: sagenb/data/sage/html/login.html:69
+msgid "Open POAK"
+msgstr "POAK öffnen"
 
 #: sagenb/data/sage/html/login.html:70
 msgid ""
@@ -842,7 +846,7 @@ msgid ""
 "sharing via link "
 msgstr ""
 "Benutzer können Arbeitsblätter zu Demonstrationszwecken, für Vorlesungen "
-"oder schlicht zum Teilen veröffentlichen "
+"oder schlicht zum Verbreiten via Link veröffentlichen. "
 
 #: sagenb/data/sage/html/login.html:72
 msgid "View"
@@ -873,7 +877,7 @@ msgstr "Passwort vergessen?"
 
 #: sagenb/data/sage/html/login.html:95
 msgid "Remember me"
-msgstr "Meine Anmeldedaten merken"
+msgstr "Anmeldedaten merken"
 
 #: sagenb/data/sage/html/login.html:101
 #: sagenb/data/sage/html/accounts/registration.html:2
@@ -899,8 +903,8 @@ msgstr "Projekt"
 
 #: sagenb/data/sage/html/login.html:117
 msgid ""
-"PhysikOnline is a project of physics' faculty at university of Frankfurt"
-msgstr "PhysikOnline ist ein Projekt des Fachbereichs Physik der Uni Frankfurt"
+"PhysikOnline is a student project of physics' faculty at university of Frankfurt"
+msgstr "PhysikOnline ist ein studentisches Projekt der Goethe-Universität"
 
 #: sagenb/data/sage/html/login.html:144
 msgid "username"
@@ -1119,8 +1123,21 @@ msgid "Auto-Save"
 msgstr "Autom. Speichern"
 
 #: sagenb/data/sage/html/settings/account_settings.html:27
-msgid "Auto-Save Interval"
-msgstr "Intervall für automatisches Speichern"
+msgid "Interval"
+msgstr "Interval"
+
+#: sagenb/data/sage/html/settings/account_settings.html:27
+msgid "HRZ account"
+msgstr "HRZ Name"
+
+#: sagenb/data/sage/html/settings/account_settings.html:27
+msgid "Interval"
+msgstr "Intervall"
+
+#: sagenb/data/sage/html/settings/account_settings.html:27
+msgid "Nickname"
+msgstr "Nickname"
+
 
 #: sagenb/data/sage/html/settings/account_settings.html:31
 msgid "minute(s)"
@@ -1143,12 +1160,12 @@ msgid "Retype new password"
 msgstr "Neues Passwort nochmals eingeben"
 
 #: sagenb/data/sage/html/settings/account_settings.html:67
-msgid "Current e-mail"
-msgstr "Aktuelle E-mail"
+msgid "Email"
+msgstr "Email"
 
 #: sagenb/data/sage/html/settings/account_settings.html:75
-msgid "New e-mail"
-msgstr "Neue E-Mail"
+msgid "New Email"
+msgstr "Neue Email"
 
 #: sagenb/data/sage/html/settings/account_settings.html:84
 #: sagenb/data/sage/html/settings/notebook_settings.html:15
@@ -1353,7 +1370,7 @@ msgstr "Abmelden"
 
 #: sagenb/data/sage/js/translated-messages.js:40
 msgid "SAGE / POKAL Support"
-msgstr "SAGE/POKAL Hilfe"
+msgstr "POKAL Hilfe"
 
 #: sagenb/data/sage/js/translated-messages.js:41
 msgid "Help"

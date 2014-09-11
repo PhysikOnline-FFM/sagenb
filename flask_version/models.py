@@ -66,7 +66,7 @@ class User(Base):
 
     id = Column(Integer, primary_key=True)
     hrz = Column(String(20))
-    nickname = Column(String(10))
+    nickname = Column(String(20))
 
     def __init__(self, hrz, nickname=None):
         self.hrz = hrz

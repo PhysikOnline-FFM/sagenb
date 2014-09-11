@@ -30,7 +30,7 @@ sagenb.init = function() {
 		'<li><a href="/settings" id="settings"><i class="icon-wrench"></i> ' + gettext('Settings') + '</a></li>' +
 		'<li><a href="/logout" id="sign_out"><i class="icon-off"></i> ' + gettext('Sign out') + '</a></li>' +
 		'<li class="divider"></li>' +
-		'<li class="nav-header">' + gettext('SAGE / POKAL Support') + '</li>' +
+		'<li class="nav-header">' + gettext('POKAL Hilfe') + '</li>' +
 		'<li><a href="#" id="help"><i class="icon-book"></i> ' + gettext('Help') + '</a></li>' +
 		'<li><a href="#" id="report_a_problem"><i class="icon-exclamation-sign"></i> ' + gettext('Report a Problem') + '</a></li>' +
 	'</ul>' +

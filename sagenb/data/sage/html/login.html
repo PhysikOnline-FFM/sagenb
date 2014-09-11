@@ -60,16 +60,16 @@
 			
 			<div id="sign-in-box" class="span4">
 				<div class="well">
-					{#
-					<img src="//lab2cloud.com/Content/img/beta_icon.png" style="float:right; margin: -41px -38px 0 0;" title="BETA!">
-					<h4>POKAL ist brandneu</h4>
+					
+						{#					<img src="//lab2cloud.com/Content/img/beta_icon.png" style="float:right; margin: -41px -38px 0 0;" title="BETA!"> #}
+					{#<h4>POKAL ist brandneu</h4>
 					<p>Wir haben im März 2013 den Betrieb aufgenommen. Daher ist noch nicht alles freigeschaltet. Für
 					einen Account wenden Sie sich bitte an <a href="mailto:pokal@elearning.physik.uni-frankfurt.de">pokal@elearning.physik.uni-frankfurt.de</a>.</p>
 					#}
 					<h4 style="margin-top: 26px">{{ gettext('Public worksheets') }}</h4>
 					<p>{{ gettext('Users can publish worksheets for demonstration purpose, lectures or simple sharing via link ') }}</p>
 					
-					<a class="btn btn-primary" href="/pub">{{ gettext('View') }}</a>
+					<a class="btn btn-primary" href="/poak">{{ gettext('POAK öffnen') }}</a>
 				</div>
 			
 				<!--<h2 style="margin-bottom: 10px;">
@@ -79,7 +79,7 @@
 				
 					<div>
 						<!--<label for="email">{{ gettext('Username') }}</label>-->
-						<input placeholder="{{ gettext('Username') }}" type="text" type="email" name="email" id="email" style="width: 97%;" />
+						<input placeholder="{{ gettext('HRZ account') }}" autofocus="autofocus" type="text" type="email" name="email" id="email" style="width: 97%;" />
 					</div>
 					<div>
 						<div style="margin-bottom: 5px">
@@ -111,10 +111,10 @@
 	</div><!-- container -->
 	<div class="container" style="text-align: center; margin-bottom: 15px;">
 		<a href="https://elearning.physik.uni-frankfurt.de/go/impressum">{{ gettext('Impressum') }}</a>  &middot;
-		<a href="https://elearning.physik.uni-frankfurt.de/go/datenschutz">{{ gettext('Terms of Use') }}</a>  &middot;
+		{#<a href="https://elearning.physik.uni-frankfurt.de/go/datenschutz">{{ gettext('Terms of Use') }}</a>  &middot; #}
 		<a href="https://elearning.physik.uni-frankfurt.de/go/datenschutz">{{ gettext('Privacy Policy') }}</a>   &middot;
 		<a href="https://elearning.physik.uni-frankfurt.de/projekt">{{ gettext('Project') }}</a> 
-		<div style="text-align: center;">{{ gettext("PhysikOnline is a project of physics' faculty at university of Frankfurt") }}</div>
+		<div style="text-align: center;">{{ gettext("PhysikOnline is a student project of physics' faculty at university of Frankfurt") }}</div>
 	</div><!-- container -->
 {% endblock %}
 
