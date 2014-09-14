@@ -109,6 +109,9 @@
 		<script type="text/javascript" src="{{ ASSET_URL }}"></script>
 	{% endassets %}
 	
+	<!-- jQuery UI -->
+	<link rel="stylesheet" href="/data/jqueryui/css/sage/jquery-ui-1.8.11.custom.css" />
+	<script type="text/javascript" src="/data/jqueryui/js/jquery-ui-1.8.11.custom.min.js"></script>
 	<!-- TagIt -->
     <script src="/data/jquery/plugins/tagit/tag-it.js"></script>
 	
@@ -123,9 +126,6 @@
 			sagenb.worksheetlistapp.worksheet_list.published_mode = true;
 			{% endif %}
 			sagenb.worksheetlistapp.worksheet_list.init();
-			
-			// init tagit (worksheet tags)
-			$(".tagit").tagit();
 		});
 	</script>
 {% endblock extra_javascript %}

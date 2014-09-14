@@ -60,6 +60,9 @@ sagenb.worksheetlistapp.list_row = function() {
 			_this.jquery_this.find("a").css('color','#004263')
 		}
 
+		// init tagit (worksheet tags)
+		_this.jquery_this.find(".tagit").tagit();
+		
 		// owner/collaborators/published
 		var owner_html = _this.props.owner;
 		if(_this.props.collaborators && _this.props.collaborators.length) {
