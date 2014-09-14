@@ -11,17 +11,9 @@
 		}
 	</style>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
-	<link href="/data/sage/html/tagit/jquery.tagit.css" rel="stylesheet" type="text/css">
-    <link href="/data/sage/html/tagit/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
-    <script src="/data/sage/html/tagit/tag-it.js"></script>	
-
-	<script>
-		$(document).ready(function() {
-			$(".tagit").tagit();
-		});
-	</script>
+	<!-- TagIt -->
+	<link href="/data/jquery/plugins/tagit/jquery.tagit.css" rel="stylesheet" type="text/css">
+    <link href="/data/jquery/plugins/tagit/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
 {% endblock head %}
 
 {% block navbar %}
@@ -116,6 +108,10 @@
 	%}
 		<script type="text/javascript" src="{{ ASSET_URL }}"></script>
 	{% endassets %}
+	
+	<!-- TagIt -->
+    <script src="/data/jquery/plugins/tagit/tag-it.js"></script>
+	
 	<script type="text/javascript">
 		$(function() {
 			// init notebook stuff
@@ -127,6 +123,9 @@
 			sagenb.worksheetlistapp.worksheet_list.published_mode = true;
 			{% endif %}
 			sagenb.worksheetlistapp.worksheet_list.init();
+			
+			// init tagit (worksheet tags)
+			$(".tagit").tagit();
 		});
 	</script>
 {% endblock extra_javascript %}
