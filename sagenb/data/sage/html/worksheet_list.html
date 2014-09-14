@@ -10,6 +10,18 @@
 			display: none;
 		}
 	</style>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
+	<link href="/data/sage/html/tagit/jquery.tagit.css" rel="stylesheet" type="text/css">
+    <link href="/data/sage/html/tagit/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
+    <script src="/data/sage/html/tagit/tag-it.js"></script>	
+
+	<script>
+		$(document).ready(function() {
+			$(".tagit").tagit();
+		});
+	</script>
 {% endblock head %}
 
 {% block navbar %}
@@ -104,7 +116,6 @@
 	%}
 		<script type="text/javascript" src="{{ ASSET_URL }}"></script>
 	{% endassets %}
-	
 	<script type="text/javascript">
 		$(function() {
 			// init notebook stuff

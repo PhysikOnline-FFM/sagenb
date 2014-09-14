@@ -17,7 +17,7 @@ sagenb.worksheetlistapp.list_row = function() {
 	_this.list = null;
 	
 	_this.init = function() {
-		
+
 	};
 	
 	_this.render = function() {
@@ -47,12 +47,19 @@ sagenb.worksheetlistapp.list_row = function() {
 		}
 		else {
 			name_html += '<a href="/home/' + _this.props.filename + '" >' + _this.props.name + '</a>';
+			/* Tags */
+			wsidtxt = _this.props.id_number;
+			name_html += '<ul name="'+wsidtxt+'" class="tagit"></ul>';
 		}
 		/*if(_this.props.running && !_this.list.published_mode) {
 			name_html += '<span class="label label-important pull-right running_label">' + gettext("running") + '</span>';
 		}*/
 		_this.jquery_this.find("td.worksheet_name_cell").html(name_html);
-		
+	
+		if(_this.props.computing) {
+			_this.jquery_this.find("a").css('color','#004263')
+		}
+
 		// owner/collaborators/published
 		var owner_html = _this.props.owner;
 		if(_this.props.collaborators && _this.props.collaborators.length) {
