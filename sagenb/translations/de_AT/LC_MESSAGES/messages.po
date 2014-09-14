@@ -537,7 +537,7 @@ msgstr "Benutzerverwaltung"
 
 #: sagenb/data/sage/html/docs.html:120
 msgid "Interrupt"
-msgstr "Stop"
+msgstr "Abbrechen"
 
 #: sagenb/data/sage/html/docs.html:121
 msgid ""

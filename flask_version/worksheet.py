@@ -939,12 +939,16 @@ def unconditional_download(worksheet, title):
 @worksheet_command('restart_sage')
 def worksheet_restart_sage(worksheet):
     #XXX: TODO -- this must not block long (!)
+    getDBWorksheet(g.db,worksheet).running = False
+    g.db.commit()
     worksheet.restart_sage()
     return 'done'
 
 @worksheet_command('quit_sage')
 def worksheet_quit_sage(worksheet):
     #XXX: TODO -- this must not block long (!)
+    getDBWorksheet(g.db,worksheet).running = False
+    g.db.commit()
     worksheet.quit()
     return 'done'
 
@@ -952,7 +956,12 @@ def worksheet_quit_sage(worksheet):
 def worksheet_interrupt(worksheet):
     #XXX: TODO -- this must not block long (!)
     worksheet.sage().interrupt()
-    return 'failed' if worksheet.sage().is_computing() else 'success'
+    if worksheet.sage().is_computing():
+        return 'failed'
+    else:
+        getDBWorksheet(g.db,worksheet).running = False
+        g.db.commit()
+        return 'success'
 
 @worksheet_command('hide_all')
 def worksheet_hide_all(worksheet):
@@ -1194,13 +1203,20 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
                             # remove id
                             self.ws_a_cells.remove(cell_id)
 
+                            # Update 'running' status in database
+                            getDBWorksheet(self.db,worksheet).running = False
+                            self.db.commit()
+
                             # send email if computation finished while all users are gone
                             #server = smtplib.SMTP('localhost')
                             #server.sendmail("service@pokal.uni-frankfurt.de", "receiver@abc.de", "Your computation has finished!!")
 
                     gevent.sleep(0.2) # in Sekunden
-                if not worksheet.continue_computation():
-                    worksheet.sage().interrupt()
+                if worksheet.continue_computation()==False or worksheet.computing()==False:
+                    worksheet.sage().quit()
+                    worksheet.quit()
+                    getDBWorksheet(self.db,worksheet).running = False
+                    self.db.commit()
         self.spawn(client_watcher_process)
         return True
 
@@ -1226,6 +1242,10 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         if not cell_id in self.ws_a_cells:
             self.ws_a_cells.append(cell_id)
         self.emit_to_room(self.room,'cell_evaluate', cell_id, username)
+        # update running status in database
+        # get current worksheet
+        getDBWorksheetByFilename(self.db,self.room).running=True
+        self.db.commit()
 
     #Used for Realtime Input-Synchronisation
     #input = input as string + new char

@@ -337,6 +337,8 @@ class Worksheet(object):
 
              'running': self.compute_process_has_been_started(),
 
+             'computing': self.computing(),
+
              'attached_data_files': self.attached_data_files()
         }
 

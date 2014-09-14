@@ -47,6 +47,11 @@ def worksheet_list():
     try:
         if not pub:
             r['worksheets'] = [x.basic() for x in g.notebook.worksheet_list_for_user(g.username, typ=typ, sort=sort, search=search, reverse=reverse)]
+            # Following not working, why?
+            #for W in g.notebook.worksheet_list_for_user(g.username, typ=typ, sort=sort, search=search, reverse=reverse):
+            #    if W.computing() == False:
+            #        getDBWorksheet(g.db,W).running=False
+            #g.db.commit()
         else:
             #r['worksheets'] = [x.basic() for x in g.notebook.worksheet_list_for_public(g.username, sort=sort, search=search, reverse=reverse)]
             return current_app.message(_("Public listing is not supported."))
@@ -145,7 +150,6 @@ def send_worksheet_to_stop():
     for W in get_worksheets_from_request():
         W.quit()
 
-        # update database
         getDBWorksheet(g.db, W).running = False
     g.db.commit()
     return ''
