@@ -1410,7 +1410,7 @@ msgstr "laufend"
 
 #: sagenb/data/sage/js/translated-messages.js:52
 msgid "other(s)"
-msgstr "andere"
+msgstr "anderer"
 
 #: sagenb/data/sage/js/translated-messages.js:53
 msgid "ago"

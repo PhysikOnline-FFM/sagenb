@@ -1,5 +1,5 @@
 from sqlalchemy import Table, Column, Integer, ForeignKey, DateTime, Text, String, Boolean
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy.orm import relationship, backref, exc
 from sqlalchemy.ext.declarative import declarative_base
 import datetime
 #from sqlalchemy.dialects.postgresql import *
@@ -44,6 +44,7 @@ class Worksheet(Base):
     public_id = Column(String(20))
     folder = Column(Integer, default=0)
     running = Column(Boolean, default=False)
+    #tags = relationship("Tag", secondary=association_table) #carsten
 
     def __init__(self, ws_num, name, owner_id=None):
         self.ws_num = ws_num
@@ -92,3 +93,23 @@ def getDBWorksheetByFilename(db, filename):
     owner, ws_num = filename.split("/")
     ws_user_db = getUserbyHRZ(db, owner)
     return db.query(Worksheet).filter_by(owner_id=ws_user_db.id, ws_num=ws_num).one()
+
+def getDBTagByTagname(db, tag_name):
+    return db.query(Tag).filter_by(name=tag_name).one()
+    
+def addTagToWorksheetByTagname(db, W, tag_name):
+    try:
+        tag_db = getDBTagByTagname(db, tag_name)
+    except exc.NoResultFound, e:
+        tag_db = Tag(tag_name)
+    ws_db = getDBWorksheet(db, W)
+    ws_db.tags.append(tag_db)
+
+def removeTagFromWorksheetByTagname(db, W, tag_name):
+    try:
+        tag_db = getDBTagByTagname(db, tag_name)
+        ws_db = getDBWorksheet(db, W)
+    except exc.NoResultFound, e:
+        return False
+    ws_db.tags.remove(tag_db)
+    return True

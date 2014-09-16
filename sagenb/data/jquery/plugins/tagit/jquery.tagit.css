@@ -18,7 +18,8 @@ input.tagit-hidden-field {
 }
 ul.tagit li.tagit-choice-read-only, ul.tagit li.tagit-choice-editable, ul.tagit li.tagit-new { 
     padding: 0 .2em; 
-} 
+	font-size:13px;
+}
 
 ul.tagit li.tagit-choice-editable { 
     padding-right: 18px; 
@@ -54,4 +55,5 @@ ul.tagit input[type="text"] {
     width: inherit;
     background-color: inherit;
     outline: none;
+	font-size:13px;
 }

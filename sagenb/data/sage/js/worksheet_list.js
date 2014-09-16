@@ -23,7 +23,8 @@ sagenb.worksheetlistapp.list_row = function() {
 	_this.render = function() {
 		$("tbody").append('<tr id="row_' + _this.props.filename.replace("/", "_") + '">' + 
 				'<td class="checkbox_cell"><input type="checkbox"></td>' + 
-				'<td class="worksheet_name_cell"></td>' + 
+				'<td class="worksheet_name_cell"></td>' +
+			    '<td class="tags_cell"></td>' +	
 				'<td class="owner_cell"></td>' + 
 				'<td class="last_edit_cell"></td>' + 
 			'</tr>');
@@ -49,7 +50,7 @@ sagenb.worksheetlistapp.list_row = function() {
 			name_html += '<a href="/home/' + _this.props.filename + '" >' + _this.props.name + '</a>';
 			/* Tags */
 			wsidtxt = _this.props.id_number;
-			name_html += '<ul name="'+wsidtxt+'" class="tagit"></ul>';
+			tags_html = '<ul name="'+wsidtxt+'" class="tagit"></ul>';
 		}
 		/*if(_this.props.running && !_this.list.published_mode) {
 			name_html += '<span class="label label-important pull-right running_label">' + gettext("running") + '</span>';
@@ -60,22 +61,30 @@ sagenb.worksheetlistapp.list_row = function() {
 			_this.jquery_this.find("a").css('color','#004263')
 		}
 
-		// init tagit (worksheet tags)
-		_this.jquery_this.find(".tagit").tagit();
-		
+				
 		// owner/collaborators/published
 		var owner_html = _this.props.owner;
 		if(_this.props.collaborators && _this.props.collaborators.length) {
 			// there are collaborators
-			owner_html += ' '+ gettext('and') +' <a href="#" class="collaborators_tooltip" rel="tooltip" title="' + _this.props.collaborators.join(", ") + '">' + _this.props.collaborators.length + ' ' + gettext('other(s)') + '</a>';
-		}
+			if(_this.props.collaborators.length == 1) {
+				owner_html += ' '+ gettext('and') +' <a href="#" class="collaborators_tooltip" rel="tooltip" title="' + _this.props.collaborators.join(", ") + '">' + _this.props.collaborators.length + ' anderer</a>';
+			} else {
+				owner_html += ' '+ gettext('and') +' <a href="#" class="collaborators_tooltip" rel="tooltip" title="' + _this.props.collaborators.join(", ") + '">' + _this.props.collaborators.length + ' andere</a>';
+			}
+		}	
 		if(_this.props.published_id_number && !_this.list.published_mode) {
 			// it's published
 			owner_html += '<span class="published_badge badge badge-info pull-right"><i class="icon-eye-open icon-white"></i></span>';
 		}
 		_this.jquery_this.find("td.owner_cell").html(owner_html);
 		_this.jquery_this.find("td.owner_cell .collaborators_tooltip").tooltip();
+		_this.jquery_this.find("td.tags_cell").html(tags_html);
 		
+		// init tagit (worksheet tags)
+		_this.jquery_this.find(".tagit").tagit({
+				removeConfirmation: true
+		});
+
 		// last change
 		_this.jquery_this.find("td.last_edit_cell").text(_this.props.last_change_pretty);
 	};

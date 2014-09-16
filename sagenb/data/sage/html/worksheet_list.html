@@ -9,11 +9,14 @@
 		.navbar .btn-navbar {
 			display: none;
 		}
+		.tagit {
+				border: solid thin black;
+		}
 	</style>
 
 	<!-- TagIt -->
 	<link href="/data/jquery/plugins/tagit/jquery.tagit.css" rel="stylesheet" type="text/css">
-    <link href="/data/jquery/plugins/tagit/tagit.ui-zendesk.css" rel="stylesheet" type="text/css">
+	<!-- <link href="/data/jquery/plugins/tagit/tagit.ui-zendesk.css" rel="stylesheet" type="text/css"> !-->
 {% endblock head %}
 
 {% block navbar %}
@@ -88,6 +91,7 @@
 				<th class="checkbox_cell"><input type="checkbox" id="main_checkbox"></th>
 				{% endif %}
 				<th class="worksheet_name_cell">{{ gettext("Worksheet") }}</th>
+				<th class="tags_cell">{{ gettext("Tags") }}</th>
 				<th>{{ gettext("Owner/Collaborators") }}</th>
 				<th class="last_edit_cell">{{ gettext("Last Edited") }}</th>
 			</tr>

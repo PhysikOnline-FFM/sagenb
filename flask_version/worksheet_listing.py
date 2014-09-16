@@ -35,6 +35,7 @@ def worksheet_list():
     from sagenb.notebook.notebook import sort_worksheet_list
     from sagenb.misc.misc import unicode_str, SAGE_VERSION
     from sagenb.notebook.misc import encode_response
+    import re
 
     r = {}
 
@@ -42,12 +43,28 @@ def worksheet_list():
     readonly = g.notebook.readonly_user(g.username)
     typ = request.args['type'] if 'type' in request.args else 'active'
     search = unicode_str(request.args['search']) if 'search' in request.args else None
+    # Support for the 'tag:' and 'tags:' keyword
+    if search != None:
+        searchlow = search.lower()
+        strs = searchlow.split()
+        singletags = [s[4:] for s in strs if s.startswith('tag:')]
+        multitags = [s[5:].split(',') for s in strs if s.startswith('tags:')]
+        tags = singletags + [tag for m in multitags for tag in m]
+        search = " ".join([s for s in strs if not s.startswith('tag:') and not s.startswith('tags:')])
+
     sort = request.args['sort'] if 'sort' in request.args else 'last_edited'
     reverse = (request.args['reverse'] == 'True') if 'reverse' in request.args else False
     try:
         if not pub:
-            r['worksheets'] = [x.basic() for x in g.notebook.worksheet_list_for_user(g.username, typ=typ, sort=sort, search=search, reverse=reverse)]
-            # Following not working, why?
+            WList = [x for x in g.notebook.worksheet_list_for_user(g.username, typ=typ, sort=sort, search=search, reverse=reverse)]
+            # Check if the above worksheets that passed the normal search test also have the correct tags
+            if search == None or tags == []:
+                r['worksheets'] = [W.basic() for W in WList]
+            else:
+                r['worksheets'] = [W.basic() for W in WList if all([t in getDBWorksheet(g.db, W).tags for t in tags])]
+
+            
+            # Following not working, why? (carsten)
             #for W in g.notebook.worksheet_list_for_user(g.username, typ=typ, sort=sort, search=search, reverse=reverse):
             #    if W.computing() == False:
             #        getDBWorksheet(g.db,W).running=False
