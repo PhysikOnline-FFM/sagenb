@@ -1304,7 +1304,7 @@ class Notebook(object):
         else: # typ must be archived
             W = [x for x in X if not (x.is_trashed(user) or x.is_active(user))]
         if search:
-            W = [x for x in W if x.satisfies_search(search)]
+            W = [x for x in W if x.satisfies_search(search,user)]
         sort_worksheet_list(W, sort, reverse)  # changed W in place
         return W
 
@@ -1371,6 +1371,13 @@ class Notebook(object):
         if hasattr(self, '_user_history'):
             for username, H in self._user_history.iteritems():
                 S.save_user_history(username, H)
+
+    def save_users(self):
+        S = self.__storage
+        S.save_users(self.user_manager().users())
+        S.save_server_conf(self.conf())
+        self._user_manager.save(S)
+
 
     def save_worksheet(self, W, conf_only=False):
         self.__storage.save_worksheet(W, conf_only=conf_only)

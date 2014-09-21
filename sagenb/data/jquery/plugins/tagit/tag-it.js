@@ -187,9 +187,22 @@
                         // Sets the focus() to the input field, if the user
                         // clicks anywhere inside the UL. This is needed
                         // because the input field needs to be of a small size.
-                        that.tagInput.focus();
+                        //that.tagInput.focus();
                     }
-                });
+                });	
+				/*.hover(function(e) {
+					$(this).find(".tagit-new").fadeIn("fast");
+				},function(e) {
+					$(this).find(".tagit-new").fadeOut("fast");
+				});*/
+				/*.hover(function(e) {
+					timeout = setTimeout(function(e) {
+						$(this).find(".tagit-new").show();
+					}, 10);
+				}, function(e) {
+					clearTimeout(timeout);
+					$(this).find(".tagit-new").hide();
+				});*/
 
             // Single field support.
             var addedExistingFromSingleFieldNode = false;
@@ -277,7 +290,20 @@
                     if (!that.tagInput.data('autocomplete-open')) {
                         that.createTag(that._cleanedInput());
                     }
-                });
+                })
+				.focus(function(e) {
+						that.tagInput.css("border","1px solid #aaa");
+				})
+				.focusout(function(e) {
+						that.tagInput.css("border","none");
+				})
+				.hover(function(){
+						that.tagInput.css("border","1px solid #aaa");
+				}, function() {
+						if (!that.tagInput.is(":focus")) {
+						that.tagInput.css("border","none");
+						}
+				});
 
             // Autocomplete.
             if (this.options.availableTags || this.options.tagSource || this.options.autocomplete.source) {
@@ -456,7 +482,7 @@
                     duringInitialization: duringInitialization
                 }) !== false) {
                     if (this._effectExists('highlight')) {
-                        existingTag.effect('highlight');
+                        existingTag.effect('highlight',{color: '#215368'});
                     }
                 }
                 return false;

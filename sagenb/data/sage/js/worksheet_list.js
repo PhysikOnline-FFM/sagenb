@@ -24,7 +24,6 @@ sagenb.worksheetlistapp.list_row = function() {
 		$("tbody").append('<tr id="row_' + _this.props.filename.replace("/", "_") + '">' + 
 				'<td class="checkbox_cell"><input type="checkbox"></td>' + 
 				'<td class="worksheet_name_cell"></td>' +
-			    '<td class="tags_cell"></td>' +	
 				'<td class="owner_cell"></td>' + 
 				'<td class="last_edit_cell"></td>' + 
 			'</tr>');
@@ -49,40 +48,72 @@ sagenb.worksheetlistapp.list_row = function() {
 		else {
 			name_html += '<a href="/home/' + _this.props.filename + '" >' + _this.props.name + '</a>';
 			/* Tags */
-			wsidtxt = _this.props.id_number;
-			tags_html = '<ul name="'+wsidtxt+'" class="tagit"></ul>';
+			try {
+				name_html += '<input type="text" name="'+_this.props.filename+'" class="tagit" value="'+ _this.props.pokaltags[sagenb.username].join(',') +'">';
+			}
+			catch(e) {
+				name_html += '<input type="text" name="'+_this.props.filename+'" class="tagit" value="">';
+			}
+            //name_html += '<span class="icon-plus-sign add-tag-sign"></span>';
 		}
-		/*if(_this.props.running && !_this.list.published_mode) {
-			name_html += '<span class="label label-important pull-right running_label">' + gettext("running") + '</span>';
-		}*/
+		if(_this.props.running && !_this.list.published_mode) {
+			name_html += '<span class="label label-important pull-right running_label">aktiv</span>';
+		}
 		_this.jquery_this.find("td.worksheet_name_cell").html(name_html);
 	
-		if(_this.props.computing) {
+		/*if(_this.props.computing) {
 			_this.jquery_this.find("a").css('color','#004263')
-		}
+		}*/
 
 				
 		// owner/collaborators/published
-		var owner_html = _this.props.owner;
-		if(_this.props.collaborators && _this.props.collaborators.length) {
-			// there are collaborators
-			if(_this.props.collaborators.length == 1) {
-				owner_html += ' '+ gettext('and') +' <a href="#" class="collaborators_tooltip" rel="tooltip" title="' + _this.props.collaborators.join(", ") + '">' + _this.props.collaborators.length + ' anderer</a>';
-			} else {
-				owner_html += ' '+ gettext('and') +' <a href="#" class="collaborators_tooltip" rel="tooltip" title="' + _this.props.collaborators.join(", ") + '">' + _this.props.collaborators.length + ' andere</a>';
-			}
-		}	
+		var owner_html = _this.props.owner_nickname;
+        try {
+            if(_this.props.collaborators && _this.props.collaborators.length) {
+                // there are collaborators
+                if(_this.props.collaborators.length == 1) {
+                    owner_html += ' '+ gettext('and') +' <a href="#" class="collaborators_tooltip" rel="tooltip" title="' + _this.props.collaborators_nicknames.join(", ") + '">' + _this.props.collaborators.length + ' anderer</a>';
+                } else {
+                    owner_html += ' '+ gettext('and') +' <a href="#" class="collaborators_tooltip" rel="tooltip" title="' + _this.props.collaborators_nicknames.join(", ") + '">' + _this.props.collaborators.length + ' andere</a>';
+                }
+            }	
+        } catch(e) {
+        }
 		if(_this.props.published_id_number && !_this.list.published_mode) {
 			// it's published
 			owner_html += '<span class="published_badge badge badge-info pull-right"><i class="icon-eye-open icon-white"></i></span>';
 		}
 		_this.jquery_this.find("td.owner_cell").html(owner_html);
 		_this.jquery_this.find("td.owner_cell .collaborators_tooltip").tooltip();
-		_this.jquery_this.find("td.tags_cell").html(tags_html);
 		
-		// init tagit (worksheet tags)
-		_this.jquery_this.find(".tagit").tagit({
-				removeConfirmation: true
+		// Init tagit (worksheet tags)
+		var tagitelements = _this.jquery_this.find(".tagit");
+
+		tagitelements.tagit({
+				removeConfirmation: true,
+                onTagClicked: function(evt, ui) {
+	            	//tagitelements.tagit('tagLabel', ui.tag)
+					$("#search_input").val("tag:"+tagitelements.tagit('tagLabel', ui.tag));
+					sagenb.worksheetlistapp.worksheet_list.do_search();
+	            },
+                afterTagAdded: function(evt, ui) {
+					if (!ui.duringInitialization) {
+						sagenb.async_request("/add_tag", sagenb.generic_callback(function(status, response) {
+							// nothing here
+						}), {
+								filename: _this.props.filename,
+								tag_name: tagitelements.tagit('tagLabel', ui.tag)
+						});
+					}
+				},
+				afterTagRemoved: function(evt, ui) {
+					sagenb.async_request("/remove_tag", sagenb.generic_callback(function(status, response) {
+						// nothing here
+					}), {
+							filename: _this.props.filename,
+							tag_name: tagitelements.tagit('tagLabel', ui.tag)
+					});
+				}
 		});
 
 		// last change
@@ -144,6 +175,14 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 		$("#show_trash").click(_this.show_trash);
 		
 		$("#submit_search").click(_this.do_search);
+        $("#search_clear").click(function() {
+            $("#search_input").val('');
+			_this.do_search();
+        });
+        console.log("add handler");
+        $("span.add-tag-sign").click(function() {
+            alert("hi");
+        });
 	
 		/*$("#pokal_logo").click(function(e) {
 			window.location.href="/";
@@ -157,7 +196,12 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 		// $("#action_buttons button").addClass("disabled");
 		
 		// Bind hotkeys
+		// $(document).bind('keydown',function(e){
+		//    $('#search_input').focus();
+		//    $(document).unbind('keydown');
+		//});
 		$(document).bind("keydown", sagenb.ctrlkey + "+N", function(evt) { _this.new_worksheet(); return false; });
+		//If below is uncommented, DEL key doesnt work in search box any more
 		$(document).bind("keydown", "DEL", function(evt) { _this.delete(); return false; });
 	};
 	

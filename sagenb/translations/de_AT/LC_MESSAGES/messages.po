@@ -340,9 +340,9 @@ msgid "Re-type your password"
 msgstr "Geben Sie Ihr Passwort nochmals ein"
 
 #: sagenb/data/sage/html/alerts/connection_alert.html:2
-msgid "<strong>Uh oh!</strong> Connection to the POKAL Notebook has been lost."
+msgid "<strong>Uh oh!</strong> Connection to the Sage Notebook has been lost."
 msgstr ""
-"<strong>Hoppala!</strong> Verbindung zum POKAL-Server verloren."
+"<strong>Hoppala!</strong> Da ist was schief gelaufen."
 
 #: sagenb/data/sage/html/alerts/rename_alert.html:2
 msgid "<strong>\"Untitled\"</strong> Would you like to rename this worksheet?"
@@ -1022,7 +1022,7 @@ msgid ""
 "worksheet"
 msgstr ""
 "Eine Text-Datei mit HTML-Code, die Zellen mit <code>&#123;&#123;&#123;</"
-"code> und <code>&#125;&#125;&#125;</codeeinrahmt, definiert ein Arbeitsblatt"
+"code> und <code>&#125;&#125;&#125;</code>einrahmt, definiert ein Arbeitsblatt"
 
 #: sagenb/data/sage/html/modals/import_modal.html:21
 msgid ""
@@ -1410,7 +1410,7 @@ msgstr "laufend"
 
 #: sagenb/data/sage/js/translated-messages.js:52
 msgid "other(s)"
-msgstr "anderer"
+msgstr "andere(r)"
 
 #: sagenb/data/sage/js/translated-messages.js:53
 msgid "ago"
@@ -1422,7 +1422,7 @@ msgstr "Den Mülleimer zu Leeren ist unwiderruflich. Bist du sicher?"
 
 #: sagenb/data/sage/js/translated-messages.js:55
 msgid "Nothing here!"
-msgstr "Hier gibt es nichts zu sehen, gehen Sie bitte weiter!"
+msgstr "Keine passenden Arbeitsblätter gefunden."
 
 #: sagenb/data/sage/js/translated-messages.js:56
 #: sagenb/data/sage/js/translated-messages.js:60
@@ -3007,3 +3007,6 @@ msgstr " arbeitet an dieser Zelle, daher ist sie vorübergehend gesperrt."
 
 msgid "Continue computation on leave"
 msgstr "Weiterrechnen beim Verlassen"
+
+msgid "Change"
+msgstr "Ändern"

@@ -20,7 +20,7 @@ sagenb.init = function() {
 		$("#user_navbar_area").html(
 '<div class="pull-right nav"><div class="btn-group">' +
 	'<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">' +
-		'<i class="icon-user"></i> <span id="username">' + sagenb.username + ' </span>' +
+		'<i class="icon-user"></i> <span id="username">' + sagenb.nickname + ' </span>' +
 		'<span class="caret"></span>' +
 	'</a>' +
 	'<ul class="dropdown-menu">' +
@@ -70,7 +70,7 @@ sagenb.start_loading = function() {
 	sagenb.spinner.spin($("body")[0]);
 };
 sagenb.done_loading = function() {
-	$(".the_page").fadeTo('slow', 1);
+	$(".the_page").fadeTo('fast', 1);
 	sagenb.spinner.stop();
 };
 

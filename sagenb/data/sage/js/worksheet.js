@@ -418,7 +418,7 @@ sagenb.worksheetapp.worksheet = function() {
 	
 	
 	/////////////// WORKSHEET UPDATE //////////////////////
-	_this.worksheet_update = function() {
+	_this.worksheet_update = function() {		
 		sagenb.async_request(_this.worksheet_command("worksheet_properties"), sagenb.generic_callback(function(status, response) {
 			var X = decode_response(response);
 			
@@ -429,6 +429,7 @@ sagenb.worksheetapp.worksheet = function() {
 			_this.pretty_print = X.pretty_print;
 			_this.continue_computation = X.continue_computation;
 			_this.collaborators = X.collaborators;
+			_this.collaborators_nicknames = X.collaborators_nicknames;
 			
 			if(X.published) {
 				_this.published_url = X.published_url;
@@ -466,6 +467,7 @@ sagenb.worksheetapp.worksheet = function() {
 				$("#auto_republish_checkbox").prop("checked", _this.auto_publish);
 				
 				$("#worksheet_url a").text(_this.published_url);
+                $("#worksheet_url a").attr("href", _this.published_url);
 				$("#worksheet_url").show();
 			} else {
 				$("#publish_checkbox").prop("checked", false);
@@ -475,8 +477,21 @@ sagenb.worksheetapp.worksheet = function() {
 				$("#worksheet_url").hide();
 			}
 
-			$("#collaborators").val(_this.collaborators.join(", "));
-			
+			$("#collaborators").val(_this.collaborators_nicknames.join(", "));
+		
+			/////////// setup up the title stuff ////////////
+			if(!_this.published_mode) {
+				if (sagenb.username == _this.owner) {
+					$(".worksheet_name").click(function(e) {
+						if(!$(".worksheet_name").hasClass("edit")) {
+							$(".worksheet_name input").val(_this.name);
+							$(".worksheet_name").addClass("edit");
+							$(".worksheet_name input").focus();
+						}
+					});
+				}
+			}
+
 			// data
 			$("#data_list ul *").detach();
 			for(var i in _this.attached_data_files) {
@@ -602,6 +617,9 @@ sagenb.worksheetapp.worksheet = function() {
 	
 	//////////////// INITIALIZATION ////////////////////
 	_this.init = function() {
+		// Hide POKAL navigation entry in worksheet view
+		$("#pokal_navigation").hide();
+
 		// show the spinner
 		sagenb.start_loading();
 		
@@ -615,17 +633,7 @@ sagenb.worksheetapp.worksheet = function() {
 			$("body").addClass("published_mode");
 		}
 
-		/////////// setup up the title stuff ////////////
-		if(!_this.published_mode) {
-			$(".worksheet_name").click(function(e) {
-				if(!$(".worksheet_name").hasClass("edit")) {
-					$(".worksheet_name input").val(_this.name);
-					$(".worksheet_name").addClass("edit");
-					$(".worksheet_name input").focus();
-				}
-			});
-		}
-		
+			
 		// this is the event handler for the input
 		var worksheet_name_input_handler = function(e) {
 			$(".worksheet_name").removeClass("edit");
@@ -891,7 +899,16 @@ sagenb.worksheetapp.worksheet = function() {
 		$(document).bind("keydown", sagenb.ctrlkey + "+S", function(evt) { _this.save(); return false; });
 		$(document).bind("keydown", sagenb.ctrlkey + "+W", function(evt) { _this.close(); return false; });
 		$(document).bind("keydown", sagenb.ctrlkey + "+P", function(evt) { _this.print(); return false; });
-		$(document).bind("keydown", "esc", function(evt) { _this.interrupt_with_confirm(); return false; });
+		$(document).bind("keydown", "esc", function(evt) { 
+				if ($("#sharing_modal").hasClass("in")){
+						$("#sharing_modal").modal("toggle");
+						return false;
+				}else if ($("#data_modal").hasClass("in")) {
+						$("#data_modal").modal("toggle");
+						return false;
+				}
+				_this.interrupt_with_confirm();	return false;
+		});
 				
 		/////// FILE MENU ////////
 		$("#new_worksheet").click(_this.new_worksheet);

@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>{{ gettext('Getting Started with the Sage Notebook') }}</title>
+	<title>POKAL Hilfe</title>
 
 	<!-- styles -->
 	<link href="/data/bootstrap-2.0.4/css/bootstrap.min.css" rel="stylesheet">
@@ -33,81 +33,46 @@
 <div class="container">
 
 	<header class="jumbotron subhead">
-		<h1>{{ gettext('Getting Started with the Sage Notebook') }}</h1>
+		<h1>POKAL: Einstieg und Funktionen</h1>
 		<p class="lead"></p>
 	</header>
 	
 	<section id="pokal" class="well">
-		<h2>{{ gettext('Some Notes about POKAL') }}</h2>
-		<p>{{ gettext('This is a Sage installation brand for the <a href="https://elearning.physik.uni-frankfurt.de/projekt/wiki/POKAL">POKAL</a>
-		Project. Please read the <b><a href="https://elearning.physik.uni-frankfurt.de/projekt/wiki/POKAL/Hilfe">POKAL Help Page</a></b>
-		for some basic POKAL specific issues. The POKAL administrator team is pleased to help you, too.') }}</p>
+		<h2>Was ist POKAL?</h2>
+		<p>POKAL ist eine studentische Online-Plattform zum kollaborativen Arbeiten- und Lernen. Dir steht als Nutzer eine leistungsstrake Mathematikengine zur Verf&uuml;gung, mit der Du sowohl numerisch als auch symbolisch rechnen kannst. Durch die zus&auml;tzlichen Kollaborationsfunktionen, die das gleichzeitige Arbeiten von mehreren Nutzern and einem Worksheet erlauben, kannst Du somit gemeinsam mit Kommilitonen &Uuml;bungsbl&auml;tter bearbeiten, ASCII Daten visualisieren oder einfach Programmieren lernen. Genauer gesagt l&auml;sst sich in jeder Zelle nicht nur SAGE Code sondern auch gew&ouml;hnliches Python ausf&uuml;hren. Die Einsatzm&ouml;glichkeiten von POKAL sind daher sehr vielf&auml;ltig.</p>
+		
 	</section>
 
-	<section id="definitions">
-		<h2>{{ gettext('Some Lingo') }}</h2>
-		<table class="table table-bordered">
-			<tbody>
-				<tr>
-					<td><i>{{ gettext('Worksheet') }}</i></td>
-					<td>{{ gettext('an ordered list of Sage calculations with output') }}</td>
-				</tr>
-				<tr>
-					<td><i>{{ gettext('Session') }}</i></td>
-					<td>{{ gettext('a worksheet and a set of variables in some state') }}</td>
-				</tr>
-				<tr>
-					<td><i>{{ gettext('Sage Notebook') }}</i></td>
-					<td>{{ gettext('a collection of worksheets, saved objects, and user information') }}</td>
-				</tr>
-			</tbody>
-		</table>
-	</section>
-
-	<section id="morehelp">
-		<h2>{{ gettext('Finding More Help') }}</h2>
-		<table class="table table-bordered">
-			<tbody>
-				<tr>
-					<td>{{ gettext('Get Started with Sage') }}</td>
-					<td>{{ gettext('Check out the <a href="/doc/live/tutorial/index.html">tutorial</a>. (If you have trouble check out the <a href="/doc/static/tutorial/index.html">static version</a>.)') }}</td>
-				</tr>
-				<tr>
-					<td>{{ gettext('Introspection') }}</td>
-					<td>{{ gettext('Type "?" immediately after an object and press <strong>Tab</strong> to see help for the object. In addition, you may type "??" immediately after an object and press <strong>Tab</strong> to see source code for that object.') }}</td>
-				</tr>
-				<tr>
-					<td>{{ gettext('Search Documentation and Source') }}</td>
-					<td>{{ gettext('Search the Sage documentation by typing <code>search_doc("my query")</code> in an input cell and press shift-enter. Search the source code of Sage by typing <code>search_src("my query")</code> and pressing shift-enter. Arbitrary regular expressions are allowed as queries.') }}</td>
-				</tr>
-			</tbody>
-		</table>
-	</section>
-
+	
 	<section id="bindings">
-		<h2>{{ gettext('Key and Mouse Bindings') }}</h2>
+		<h2>Grundlagen</h2>
 		<table class="table table-bordered">
 			<tbody>
 				<tr>
-					<td>{{ gettext('Evaluate') }}</td>
-					<td>{{ gettext('Press <strong>Shift-Enter</strong>') }}</td>
+					<td>Neue Zelle</td>
+					<td>&Uuml;berstreiche mit der Maus den Bereich zwischen zwei Zellen (oder der Zelle und dem Arbeitsblatt-Anfang/Ende) und klicke auf die erscheinende horizontale Linie.</td>
+				</tr>
+				<tr>
+					<td>Auswerten einer Zelle</td>
+					<td>Dr&uuml;cke <strong>Shift+Enter</strong> oder klicke auf den Auswerten Button.</td>
 				</tr>
 				<tr>
 					<td>{{ gettext('Auto-Completion') }}</td>
 					<td>{{ gettext('Press <strong>Tab</strong> or <strong>Ctrl-Space</strong>/<strong>Cmd-Space</strong>') }}</td>
 				</tr>
 				<tr>
-					<td>{{ gettext('Insert New Cell') }}</td>
-					<td>{{ gettext('Hover the mouse on the area between two cells to see the new cell buttons. Clicking on a new cell button will create a new cell. Holding Shift and clicking a new cell button will create a text cell.') }}</td>
-				</tr>
-				<tr>
 					<td>{{ gettext('Delete Cell') }}</td>
 					<td>{{ gettext('Delete all cell contents, then press <strong>Backspace</strong>.') }}</td>
 				</tr>
 				<tr>
+					<td>Arbeitsblatt umbenennen</td>
+					<td>Klicke einfach in der Arbeitsblatt-Ansicht auf den Titel, gebe einen neuen Titel ein und best&auml;tige mit <strong>Enter</strong>.</td>
+				</tr>
+
+				<!-- <tr>
 					<td>{{ gettext('Indenting') }}</td>
 					<td>{{ gettext('You can indent and un-indent selected blocks of text by pressing <strong>Tab</strong> and <strong>Shift-Tab</strong> respectively.') }}</td>
-				</tr>
+			</tr> !-->
 			</tbody>
 		</table>
 	</section>
@@ -117,8 +82,8 @@
 		<table class="table table-bordered">
 			<tbody>
 				<tr>
-					<td>{{ gettext('Interrupt') }}</td>
-					<td>{{ gettext('Click <strong>Evaluation > Interrupt</strong>. This will (attempt) to interrupt Sage by sending many interrupt signals.') }}</td>
+					<td>Berechnungen abbrechen</td>
+					<td>Im Men&uuml; findest Du den Punkt <strong>Evaluation > Abbrechen</strong>. Das wird alle aktiven Rechnungen abbrechen. Alternativ kannst Du es mit der <strong>Escape</strong> Taste versuchen.</td>
 				</tr>
 				<tr>
 					<td>{{ gettext('Restart') }}</td>
@@ -204,6 +169,26 @@
 					<td>{{ gettext('Loading and Saving Sessions') }}</td>
 					<td>{{ gettext('Use <code>save_session(\'name\')</code> to save all variables to an object. Use <code>load_session(\'name\')</code> to merge in all variables from a saved session.') }}</td>
 				</tr>
+			</tbody>
+		</table>
+	</section>
+	<section id="morehelp">
+		<h2>Weitere Hilfe</h2>
+		<table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td>SAGE Hilfe/Tutorials</td>
+					<td>POKAL verwendet für Berechnungen standardmäßig die OpenSource Mathematik-Engine SAGE. Einen sinnvollen Einstieg stellen somit die SAGE <a href="https://dev.pokal.uni-frankfurt.de/doc/live/tutorial/index.html">Einsteiger-Tutorials</a> dar. Alternativ gibt es thematisch geordnete <a href="http://www.sagemath.org/doc/thematic_tutorials/">Tutorials</a> und die allgemeine <a href="http://www.sagemath.org/help.html">SAGE Hilfe</a>. </td>
+				</tr>
+				<tr>
+					<td>SAGE Dokumentation durchsuchen</td>
+					<td>Durchsuche die SAGE Dokumentation direkt in einem Worksheet indem du <code>search_doc("Suchbegriff")</code> in einer Zelle evaluierst. Jeder regul&auml;re Ausdruck ist als Suchbegriff geeignet.</td>
+				</tr>
+				<tr>
+					<td>Objekthilfe</td>
+					<td>Schreibe ein '?' hinter ein Objekt und evaluiere die Zelle. Beispiel: plot?</td>
+				</tr>
+
 			</tbody>
 		</table>
 	</section>

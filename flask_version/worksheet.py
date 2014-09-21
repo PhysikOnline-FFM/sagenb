@@ -89,8 +89,8 @@ def new_worksheet():
     W = g.notebook.create_new_worksheet(gettext("Untitled"), g.username)
 
     # add worksheet to the database
-    newDBWorksheet(g.db, W)
-    g.db.commit()
+    #newDBWorksheet(g.db, W)
+    #g.db.commit()
 
     return redirect(url_for_worksheet(W))
 
@@ -164,11 +164,12 @@ def worksheet_command(target, **route_kwds):
 def worksheet_rename(worksheet):
     wsname = request.values['name']
     try:
-        worksheet.set_name(wsname)
+        if g.username == worksheet.owner():
+            worksheet.set_name(wsname)
 
         # update database
-        getDBWorksheet(g.db, worksheet).name = wsname
-        g.db.commit()
+        #getDBWorksheet(g.db, worksheet).name = wsname
+        #g.db.commit()
     except:
         print "DB Error during renaming of worksheet!"
 
@@ -267,6 +268,8 @@ def worksheet_properties(worksheet):
     from sagenb.notebook.misc import encode_response
 
     r = worksheet.basic()
+    temp = r['collaborators']
+    r.update({'collaborators_nicknames':[g.notebook.user_manager().user(x).get_nickname() for x in temp]})
 
     if worksheet.has_published_version():
         hostname = request.headers.get('host', g.notebook.interface + ':' + str(g.notebook.port))
@@ -624,29 +627,44 @@ def worksheet_edit_published_page(worksheet):
 ########################################################
 @worksheet_command('invite_collab')
 def worksheet_invite_collab(worksheet):
+    user_manager = g.notebook.user_manager()
     owner = worksheet.owner()
+    owner_nickname = user_manager.user(owner).get_nickname()
     id_number = worksheet.id_number()
     old_collaborators = set(worksheet.collaborators())
-    collaborators = set([u.strip() for u in request.values.get('collaborators', '').split(',') if u!=owner])
+    collaborators = set([u.strip() for u in request.values.get('collaborators', '').split(',') if u!=owner and u!=owner_nickname])
     if len(collaborators - old_collaborators) > 250:
         # to prevent abuse, you can't add more than 250 collaborators at a time
         return current_app.message(_("Error: can't add more than 250 collaborators at a time"), cont=url_for_worksheet(worksheet))
-    worksheet.set_collaborators(collaborators)
-    user_manager = g.notebook.user_manager()
+
+    collaborators_usernames = set()
+    for k in collaborators:
+        u = False
+        # if no hrz type
+        if not k.startswith('s') or not re.match("^[0-9]*$",k[1:]):
+            if user_manager.is_nickname_known(k):
+                u = user_manager.user(k,True).username()
+            else:
+                pass
+        else:
+            if user_manager.is_user_known(k):
+                u = k
+            elif user_manager.is_nickname_known(k):
+                u = user_manager.user(k,True).username()
+            else:
+                pass
+
+        if u!=False:
+            collaborators_usernames.add(u)
+
+    worksheet.set_collaborators(collaborators_usernames)
+
     # add worksheet to new collaborators
-    for u in collaborators-old_collaborators:
-        try:
-            user_manager.user(u).viewable_worksheets().add((owner, id_number))
-        except KeyError:
-            # user doesn't exist
-            pass
+    for k in collaborators_usernames-old_collaborators:
+        user_manager.user(k).viewable_worksheets().add((owner, id_number))
     # remove worksheet from ex-collaborators
-    for u in old_collaborators-collaborators:
-        try:
-            user_manager.user(u).viewable_worksheets().discard((owner, id_number))
-        except KeyError:
-            # user doesn't exist
-            pass
+    for k in old_collaborators-collaborators_usernames:
+        user_manager.user(k).viewable_worksheets().discard((owner, id_number))
     return ''
 
 ########################################################
@@ -859,17 +877,17 @@ def worksheet_publish(worksheet):
         g.notebook.publish_worksheet(worksheet, g.username)
 
         # update database
-        ws_db = getDBWorksheet(worksheet)
-        ws_db.public_id = worksheet.published_version().id_number()
-        g.db.commit()
+        #ws_db = getDBWorksheet(worksheet)
+        #ws_db.public_id = worksheet.published_version().id_number()
+        #g.db.commit()
 
     if 'publish_off' in request.values and worksheet.has_published_version():
         g.notebook.delete_worksheet(worksheet.published_version().filename())
 
         # update database
-        ws_db = getDBWorksheet(worksheet)
-        ws_db.public_id = None
-        g.db.commit()
+        #ws_db = getDBWorksheet(worksheet)
+        #ws_db.public_id = None
+        #g.db.commit()
 
     if 'auto_on' in request.values:
         worksheet.set_auto_publish(True)
@@ -939,16 +957,16 @@ def unconditional_download(worksheet, title):
 @worksheet_command('restart_sage')
 def worksheet_restart_sage(worksheet):
     #XXX: TODO -- this must not block long (!)
-    getDBWorksheet(g.db,worksheet).running = False
-    g.db.commit()
+    #getDBWorksheet(g.db,worksheet).running = False
+    #g.db.commit()
     worksheet.restart_sage()
     return 'done'
 
 @worksheet_command('quit_sage')
 def worksheet_quit_sage(worksheet):
     #XXX: TODO -- this must not block long (!)
-    getDBWorksheet(g.db,worksheet).running = False
-    g.db.commit()
+    #getDBWorksheet(g.db,worksheet).running = False
+    #g.db.commit()
     worksheet.quit()
     return 'done'
 
@@ -959,8 +977,8 @@ def worksheet_interrupt(worksheet):
     if worksheet.sage().is_computing():
         return 'failed'
     else:
-        getDBWorksheet(g.db,worksheet).running = False
-        g.db.commit()
+        #getDBWorksheet(g.db,worksheet).running = False
+        #g.db.commit()
         return 'success'
 
 @worksheet_command('hide_all')
@@ -1113,7 +1131,7 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
     # client information handler
     def on_join(self, data):
-        self.db = self.environ['db']
+        #self.db = self.environ['db']
         # expecting data = {nickname:"sage username", "worksheet":"worksheet-name"}
         self.room = data['worksheet']
 
@@ -1204,8 +1222,8 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
                             self.ws_a_cells.remove(cell_id)
 
                             # Update 'running' status in database
-                            getDBWorksheet(self.db,worksheet).running = False
-                            self.db.commit()
+                            #getDBWorksheet(self.db,worksheet).running = False
+                            #self.db.commit()
 
                             # send email if computation finished while all users are gone
                             #server = smtplib.SMTP('localhost')
@@ -1213,10 +1231,11 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
                     gevent.sleep(0.2) # in Sekunden
                 if worksheet.continue_computation()==False or worksheet.computing()==False:
-                    worksheet.sage().quit()
+                    worksheet.set_not_computing()
                     worksheet.quit()
-                    getDBWorksheet(self.db,worksheet).running = False
-                    self.db.commit()
+                    #worksheet.get_sage().quit()
+                    #getDBWorksheet(self.db,worksheet).running = False
+                    #self.db.commit()
         self.spawn(client_watcher_process)
         return True
 
@@ -1244,8 +1263,8 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         self.emit_to_room(self.room,'cell_evaluate', cell_id, username)
         # update running status in database
         # get current worksheet
-        getDBWorksheetByFilename(self.db,self.room).running=True
-        self.db.commit()
+        #getDBWorksheetByFilename(self.db,self.room).running=True
+        #self.db.commit()
 
     #Used for Realtime Input-Synchronisation
     #input = input as string + new char
@@ -1292,11 +1311,11 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         self.msg = encode_response({"user": self.session['session_nick'], "message": msg })
         self.emit('user_message', self.msg)
         self.emit_to_room(self.room, 'user_message', self.msg)
-        user_db = getUserbyHRZ(self.db, self.session['session_nick']['nickname'])
-        ws_db = getDBWorksheetByFilename(self.db, self.room)
-        msg_db = Chatlog_entry(msg, user_db, ws_db)
-        self.db.add(msg_db)
-        self.db.commit()
+        #user_db = getUserbyHRZ(self.db, self.session['session_nick']['nickname'])
+        #ws_db = getDBWorksheetByFilename(self.db, self.room)
+        #msg_db = Chatlog_entry(msg, user_db, ws_db)
+        #self.db.add(msg_db)
+        #self.db.commit()
 
     # connection handler
     def recv_disconnect(self):
@@ -1362,7 +1381,11 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
         r['output'] = cell.output_text(html=True)
         r['output_wrapped'] = cell.output_text(notebook.conf()['word_wrap_cols'])
-        r['introspect_output'] = cell.introspect_output()
+
+        # the following line had to be commented
+        # because it wasn't supposed to be called at the times that this whole
+        # function here is called
+        #r['introspect_output'] = cell.introspect_output()
 
         # without this the next computations are not started
         worksheet.start_next_comp()

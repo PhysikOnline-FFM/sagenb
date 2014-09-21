@@ -104,6 +104,7 @@ def addTagToWorksheetByTagname(db, W, tag_name):
         tag_db = Tag(tag_name)
     ws_db = getDBWorksheet(db, W)
     ws_db.tags.append(tag_db)
+    return True
 
 def removeTagFromWorksheetByTagname(db, W, tag_name):
     try:

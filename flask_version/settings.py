@@ -7,6 +7,24 @@ from models import *
 
 settings = Module('sagenb.flask_version.settings')
 
+# Checks wether a nickname is valid or not. Returns either True or an error string.
+def valid_nickname(nickname,old_nickname):
+    r = True
+    if len(nickname)<2 or len(nickname)>20:
+        r = "Dein Nickname muss mindestens drei Zeichen lang sein und darf 20 Zeichen nicht &uuml;berschreiten."
+    if not re.match("^[a-zA-Z0-9_]*$", nickname):
+        r = "Dein Nickname darf nur aus Zahlen, Gro&szlig;- und Kleinbuchstaben oder einem Unterstrich bestehen."
+    # Forbid hrz-like nicknames like 's1234567' ('sNUMBERS' type is forbidden)
+    if nickname.startswith('s') and re.match("^[0-9]*$",nickname[1:]):
+        r = "Dein Nickname &auml;hnelt einem HRZ-Namen. Bitte versuche etwas anderes."
+    if nickname in ["Admin","administrator","Administrator","PhysikOnline","Service","service"]:
+        r = "Dieser Nickname ist gesperrt. W&auml;hle bitte einen anderen."
+    if g.notebook.user_manager().is_nickname_occupied(nickname) and not nickname.lower()==old_nickname.lower():
+        r = "Dieser Nickname wird leider bereits verwendet. Bitte suche Dir einen anderen aus."
+    return r
+
+
+
 @settings.route('/settings', methods = ['GET','POST'])
 @login_required
 @with_lock
@@ -22,16 +40,15 @@ def settings_page():
         #redirect_to_home = True
 
     # Check for nickname change
-    nickname = request.values.get('nickname',"firstload")
-    usertemp = getUserbyHRZ(g.db, g.username)
-    if nickname and nickname != "firstload" and nickname != usertemp.nickname and len(nickname)>2 and len(nickname)<20 and re.match("^[a-zA-Z0-9_]*$", nickname):
-        usertemp.nickname = nickname
-        g.db.commit()
-    elif nickname and nickname != "firstload" and nickname != usertemp.nickname and (len(nickname)<3 or len(nickname>20)):
-        error = "Nickname muss mindestens drei Zeichen lang sein und darf 20 Zeichen nicht &uuml;berschreiten."
-    elif nickname and nickname != "firstload" and nickname != usertemp.nickname and not re.match("^[a-zA-Z0-9_]*$", nickname):
-        error = "Nickname darf nur aus Zahlen, Gro&szlig;- und Kleinbuchstaben oder einem Unterstrich bestehen."
-
+    nickname = request.values.get('nickname',"firstload!")
+    #usertemp = getUserbyHRZ(g.db, g.username)
+    if nickname and nickname != "firstload!" and nickname != nu.get_nickname():
+        if valid_nickname(nickname,nu.get_nickname())==True:
+            nu.set_nickname(nickname)
+            #usertemp.nickname = nickname
+            #g.db.commit()
+        else:
+            error = valid_nickname(nickname,nu.get_nickname())
     #old = request.values.get('old-pass', None)
     #new = request.values.get('new-pass', None)
     #two = request.values.get('retype-pass', None)
@@ -67,6 +84,8 @@ def settings_page():
         td["error_msg"] = error
         redirect_to_home = False
         redirect_to_logout = False
+    else:
+        g.notebook.save()
 
     if redirect_to_logout:
         return redirect(url_for('authentication.logout'))
@@ -88,8 +107,9 @@ def settings_page():
 
     td['admin'] = nu.is_admin()
 
-    td['nickname'] = usertemp.nickname
-    td['hrz'] = usertemp.hrz
+    #td['nickname'] = usertemp.nickname
+    td['nickname'] = nu.get_nickname()
+    td['hrz'] = g.username
 
     return render_template(os.path.join('html', 'settings', 'account_settings.html'), **td)
 

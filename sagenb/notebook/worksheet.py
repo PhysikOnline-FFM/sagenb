@@ -208,7 +208,8 @@ class Worksheet(object):
         # Record the basic properties of the worksheet
         self.__system = system
         self.__pretty_print = pretty_print
-        self.__continue_computation = False;
+        self.__continue_computation = False
+        self.__pokaltags = {}
         self.__owner = owner
         self.__viewers = []
         self.__collaborators = []
@@ -326,6 +327,7 @@ class Worksheet(object):
              # or a string (not yet supported).
              # This is used for now to fill in the __user_views.
              'tags': self.tags(),
+             'pokaltags': self.pokaltags(),
 
              # information about when this worksheet was last changed,
              # and by whom:
@@ -409,7 +411,7 @@ class Worksheet(object):
                     self.__filename = filename
                     self.__dir = os.path.join(notebook_worksheet_directory, str(value))
             elif key in ['system', 'owner', 'viewers', 'collaborators',
-                         'pretty_print', 'continue_computation', 'ratings']:
+                         'pretty_print', 'continue_computation', 'ratings','pokaltags']:
                 # ugly
                 setattr(self, '_Worksheet__' + key, value)
             elif key == 'auto_publish':
@@ -1529,6 +1531,32 @@ class Worksheet(object):
                 d[user] = [val]
         return d
 
+    def pokaltags(self):
+        try:
+            return self.__pokaltags
+        except AttributeError:
+            self.__pokaltags = {}
+            return self.__pokaltags
+
+    def add_pokaltag(self,user,tag_name):
+        try:
+            if tag_name not in self.__pokaltags[user]:
+                self.__pokaltags[user].append(tag_name)
+        except KeyError:
+            self.__pokaltags[user] = [tag_name]
+        return True
+    
+    def remove_pokaltag(self,user,tag_name):
+        try:
+            if tag_name in self.__pokaltags[user]:
+                self.__pokaltags[user].remove(tag_name)
+        except KeyError:
+            return False
+        return True
+
+    def empty_pokaltags(self):
+        self.__pokaltags = {}
+
     def set_tags(self, tags):
         """
         Set the tags -- for now we ignore everything except ACTIVE,
@@ -1979,7 +2007,7 @@ class Worksheet(object):
     ##########################################################
     # Searching
     ##########################################################
-    def satisfies_search(self, search):
+    def satisfies_search(self, search, username=''):
         """
         Return True if all words in search are in the saved text of the
         worksheet.
@@ -2003,6 +2031,10 @@ class Worksheet(object):
 
         try:
             r = [unicode(x.lower()) for x in [self.owner(), self.publisher(), self.name(), contents]]
+            try:
+                r = r + [unicode(x.lower()) for x in self.pokaltags()[username]]
+            except KeyError:
+                pass
             r = u" ".join(r)
         except UnicodeDecodeError as e:
             return False
@@ -2976,6 +3008,9 @@ except (KeyError, IOError):
         # have fixed that issue, we can remove this next statement
         S = self.__sage
 
+        return self.__sage
+
+    def get_sage(self):
         return self.__sage
 
     def eval_asap_no_output(self, cmd, username=None):

@@ -44,9 +44,9 @@ def worksheet_list():
     typ = request.args['type'] if 'type' in request.args else 'active'
     search = unicode_str(request.args['search']) if 'search' in request.args else None
     # Support for the 'tag:' and 'tags:' keyword
+    tags = []
     if search != None:
-        searchlow = search.lower()
-        strs = searchlow.split()
+        strs = search.split()
         singletags = [s[4:] for s in strs if s.startswith('tag:')]
         multitags = [s[5:].split(',') for s in strs if s.startswith('tags:')]
         tags = singletags + [tag for m in multitags for tag in m]
@@ -57,12 +57,23 @@ def worksheet_list():
     try:
         if not pub:
             WList = [x for x in g.notebook.worksheet_list_for_user(g.username, typ=typ, sort=sort, search=search, reverse=reverse)]
-            # Check if the above worksheets that passed the normal search test also have the correct tags
-            if search == None or tags == []:
-                r['worksheets'] = [W.basic() for W in WList]
+            if tags != []:
+                r['worksheets'] = []
+                for W in WList:
+                    try:
+                        if all([t in W.pokaltags()[g.username] for t in tags]):
+                            r['worksheets'].append(W.basic())
+                    except KeyError:
+                        pass
             else:
-                r['worksheets'] = [W.basic() for W in WList if all([t in getDBWorksheet(g.db, W).tags for t in tags])]
+                r['worksheets'] = []
+                for W in WList:
+                    d = W.basic()
+                    d.update({'owner_nickname': g.notebook.user_manager().user(W.owner()).get_nickname()})
 
+                    temp = W.basic()['collaborators']
+                    d.update({'collaborators_nicknames':[g.notebook.user_manager().user(x).get_nickname() for x in temp]})
+                    r['worksheets'].append(d)
             
             # Following not working, why? (carsten)
             #for W in g.notebook.worksheet_list_for_user(g.username, typ=typ, sort=sort, search=search, reverse=reverse):
@@ -133,8 +144,8 @@ def send_worksheet_to_trash():
         W.move_to_trash(g.username)
 
         # update database
-        getDBWorksheet(g.db, W).folder = 2
-    g.db.commit()
+        #getDBWorksheet(g.db, W).folder = 2
+    #g.db.commit()
     return ''
 
 @worksheet_listing.route('/send_to_archive', methods=['POST'])
@@ -144,8 +155,8 @@ def send_worksheet_to_archive():
         W.move_to_archive(g.username)
 
         # update database
-        getDBWorksheet(g.db, W).folder = 1
-    g.db.commit()
+        #getDBWorksheet(g.db, W).folder = 1
+    #g.db.commit()
 
     return ''
 
@@ -156,8 +167,8 @@ def send_worksheet_to_active():
         W.set_active(g.username)
 
         # update database
-        getDBWorksheet(g.db, W).folder = 0
-    g.db.commit()
+        #getDBWorksheet(g.db, W).folder = 0
+    #g.db.commit()
 
     return ''
 
@@ -167,22 +178,54 @@ def send_worksheet_to_stop():
     for W in get_worksheets_from_request():
         W.quit()
 
-        getDBWorksheet(g.db, W).running = False
-    g.db.commit()
-    return ''
+        #getDBWorksheet(g.db, W).running = False
+    #g.db.commit()
+    return '' 
 
 @worksheet_listing.route('/empty_trash', methods=['POST'])
 @login_required
 def empty_trash():
     g.notebook.empty_trash(g.username)
-    usertemp = getUserbyHRZ(g.db, g.username)
-    g.db.query(Worksheet).filter_by(owner_id=usertemp.id, folder=2).delete()
-    g.db.commit()
+    #usertemp = getUserbyHRZ(g.db, g.username)
+    #g.db.query(Worksheet).filter_by(owner_id=usertemp.id, folder=2).delete()
+    #g.db.commit()
 
     if 'referer' in request.headers:
         return redirect(request.headers['referer'])
     else:
         return redirect(url_for('home', typ='trash'))
+
+########
+# Tags #
+########
+
+@worksheet_listing.route('/add_tag', methods=['POST'])
+@login_required
+def add_tag_to_worksheet():
+    filename = request.values['filename']
+    W = g.notebook.get_worksheet_with_filename(filename)
+    if 'tag_name' in request.values:
+        tag_name = request.values['tag_name']
+        W.add_pokaltag(g.username,tag_name)
+        W.save_snapshot(g.username)
+        # update database
+        #addTagToWorksheetByTagname(g.db,W,tag_name)
+    #g.db.commit()
+    return ''
+
+@worksheet_listing.route('/remove_tag', methods=['POST'])
+@login_required
+def remove_tag_from_worksheet(): 
+    filename = request.values['filename']
+    W = g.notebook.get_worksheet_with_filename(filename)
+    if 'tag_name' in request.values:
+        tag_name = request.values['tag_name']
+        W.remove_pokaltag(g.username,tag_name)
+        W.save_snapshot(g.username)
+        # update database
+        #removeTagFromWorksheetByTagname(g.db,W,tag_name)
+    #g.db.commit()
+    return ''
 
 
 #####################
@@ -446,10 +489,10 @@ def upload_worksheet():
                         if new_name:
                             W.set_name("%s - %s" % (new_name, W.name()))
                         #Insert imported file to db
-                        newDBWorksheet(g.db, W)
+                        #newDBWorksheet(g.db, W)
                     else:
                         print "Unknown extension, file %s is ignored" % subfilename
-                g.db.commit()
+                #g.db.commit()
                 return redirect(url_for('home', username=g.username))
 
             else:
@@ -483,8 +526,8 @@ def upload_worksheet():
 
     if new_name:
         W.set_name(new_name)
-    newDBWorksheet(g.db, W)
-    g.db.commit()
+    #newDBWorksheet(g.db, W)
+    #g.db.commit()
 
     from worksheet import url_for_worksheet
     return redirect(url_for_worksheet(W))

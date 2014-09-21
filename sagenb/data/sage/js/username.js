@@ -2,3 +2,4 @@
  * scripts can be cached by the browser
  */
 sagenb.username = "{{ username }}";
+sagenb.nickname = "{{ nickname }}";

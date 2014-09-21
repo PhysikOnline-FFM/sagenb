@@ -74,7 +74,15 @@ class UserManager(object):
         """
         return self._users
 
-    def user(self, username):
+    def is_nickname_occupied(self, nickname):
+        lownickname = nickname.lower()
+        if lownickname in [val.get_nickname().lower() for key, val in self._users.iteritems()]:
+            return True
+        if lownickname in ['admin', 'pub', 'guest']:
+            return True
+        return False
+
+    def user(self, username, is_nickname=False):
         """
         Returns a user object for the user username.
 
@@ -103,6 +111,18 @@ class UserManager(object):
             ...
             ValueError: no user 'hello/'
         """
+        if is_nickname:
+            nickname = username
+
+            for nu in self.users().itervalues():
+                if nickname == nu.get_nickname():
+                    user_obj = nu
+                    break
+            try:
+                return user_obj
+            except:
+                raise LookupError("no nickname '{}'".format(nickname))
+
         if not isinstance(username, (str, unicode)) or '/' in username:
             raise ValueError, "no user '%s'"%username
         if username in self.users():
@@ -116,12 +136,14 @@ class UserManager(object):
         raise LookupError("no user '{}'".format(username))
 
     def is_user_known(self, username):
-        known_user = False
         if not isinstance(username, (str, unicode)) or '/' in username:
             raise ValueError, "no user '%s'"%username
         if username in self.users():
-            known_user = True
-        return known_user
+            return True
+        return False
+
+    def is_nickname_known(self, nickname):
+        return nickname in [nu.get_nickname() for nu in self.users().itervalues()]
 
 
     def valid_login_names(self):
