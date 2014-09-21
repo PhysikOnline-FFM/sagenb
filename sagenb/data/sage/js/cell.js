@@ -137,6 +137,7 @@ sagenb.worksheetapp.cell = function(id) {
 
             $(container).on("focusin", function(event){
                 // Show the evaluate button
+				if(_this.worksheet.published_mode) return;
                 $(this).find(".evaluate_button_container").show();
             });
             

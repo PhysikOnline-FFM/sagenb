@@ -66,10 +66,12 @@ sagenb.worksheetapp.worksheet = function() {
 
     ////////// WEBSOCKET_HANDLER ////////	
 	_this.socket.on('new_cell_after', function (response){
+		if(_this.published_mode) return false;
 		_this.new_cell_all_after(response);
 	});
 	
 	_this.socket.on('delete_cell', function(id){
+		if(_this.published_mode) return false;
 		$("#cell_" + id).parent().next().detach();
 		$("#cell_" + id).parent().detach();
 		delete _this.cells[id];
@@ -95,18 +97,22 @@ sagenb.worksheetapp.worksheet = function() {
 	
 	// sets input everytime it gets changed
     _this.socket.on('cell_input_changed', function (cid, input){
+		if(_this.published_mode) return false;
         _this.cells[cid].set_cell_input(input);
     });
     // a cell has been focused by a user
     _this.socket.on('cell_focused', function (cid, username){
+		if(_this.published_mode) return false;
         _this.cells[cid].on_cell_focused(username);
     });
     // a cell has been released
     _this.socket.on('cell_released', function (cid, username){
+		if(_this.published_mode) return false;
         _this.cells[cid].on_cell_released(username);
     });
     // a cell is going to be evaluated by a user
     _this.socket.on('cell_evaluate', function (cid, username){
+		if(_this.published_mode) return false;
         _this.cells[cid].on_cell_evaluate(username);
     });
     
@@ -198,6 +204,7 @@ sagenb.worksheetapp.worksheet = function() {
 		
 		button.insertAfter(obj);
 		button.click(function(event) {
+			if(_this.published_mode) return false;
 			// get the cell above this button in the dom
 			// here 'this' references the button that was clicked
 			if($(this).prev(".cell_wrapper").find(".cell").length > 0) {
@@ -330,6 +337,7 @@ sagenb.worksheetapp.worksheet = function() {
 	};
 
     _this.new_cell_all_after = function(response) {
+		if(_this.published_mode) return false;
         var X = decode_response(response);
         var new_cell = new sagenb.worksheetapp.cell(X.new_id);
         var a = $("#cell_" + X.id).parent().next();
@@ -347,6 +355,7 @@ sagenb.worksheetapp.worksheet = function() {
     }
 
     _this.new_cell_after = function(id){
+		if(_this.published_mode) return false;
         sagenb.async_request(_this.worksheet_command("new_cell_after"), function(status, response){
             if (response === "locked") {
                 $(".alert_locked").show();
