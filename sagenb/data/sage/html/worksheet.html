@@ -21,8 +21,8 @@
 					<li><a href="#" id="close_worksheet"><i class="icon-remove"></i> {{ gettext("Close Worksheet") }}</a></li>
 
 					<li class="divider"></li>
-					<li><a href="text" id="worksheet_text"><i class="icon-font"></i> {{ gettext("Text View") }}</a></li>
-					<li><a href="edit" id="worksheet_edit"><i class="icon-pencil"></i> {{ gettext("Edit Mode") }}</a></li>
+					<li><a href="text" id="worksheet_text"><i class="icon-font"></i> Textansicht</a></li>
+					<li><a href="edit" id="worksheet_edit"><i class="icon-pencil"></i> Textansicht (Editieren)</a></li>
 
 					<li class="divider"></li>
 					<li><a href="#" id="export_to_file"><i class="icon-download"></i> {{ gettext("Export to File") }}</a></li>
@@ -35,7 +35,7 @@
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ gettext("View")}} <b class="caret"></b></a>
 				<ul class="dropdown-menu">
-					<li><a href="#"><label for="typesetting_checkbox" class="checkbox"><input name="typesetting_checkbox" type="checkbox" id="typesetting_checkbox"> {{ gettext("Typesetting") }}</label></a></li>
+						<!-- <li><a href="#"><label for="typesetting_checkbox" class="checkbox"><input name="typesetting_checkbox" type="checkbox" id="typesetting_checkbox"> {{ gettext("Typesetting") }}</label></a></li> --!>
 					<li><a href="#"><label for="line_numbers_checkbox" class="checkbox"><input name="line_numbers_checkbox" type="checkbox" id="line_numbers_checkbox"> {{ gettext("Line numbers") }}</label></a></li>
 					<li class="divider"></li>
 					<li><a href="#"><label class="radio"><input name="cell_mode_radio" type="radio" id="single_cell_mode_radio" value="single"> {{ gettext("Single-cell Mode") }}</label></a></li>
@@ -60,6 +60,7 @@
 			</li>
 			<li><a href="#data_modal" data-toggle="modal">{{ gettext("Data") }}</a></li>
 			<li><a href="#sharing_modal" id="sharing" data-toggle="modal">{{ gettext("Sharing") }}</a></li>
+			<li><a href="#" id="navhelp">Hilfe</a></li>
 		</ul>
 	{% endif %}
 {% endblock navbar %}

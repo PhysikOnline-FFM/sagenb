@@ -158,11 +158,11 @@ sagenb.worksheetapp.cell = function(id) {
 				_this.introspect();
 			};
 			
-			extrakeys["Tab"] = function(cm) {
+			/*extrakeys["Tab"] = function(cm) {
 				if(!_this.introspect() && cm.getCursor(true).line != cm.getCursor().line) {
 					CodeMirror.commands.indentMore(cm);
 				}
-			};
+			};*/
 			
 			extrakeys["Shift-Tab"] = "indentLess";
 			

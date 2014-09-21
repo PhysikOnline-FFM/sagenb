@@ -39,7 +39,7 @@
 	
 	<section id="pokal" class="well">
 		<h2>Was ist POKAL?</h2>
-		<p>POKAL ist eine studentische Online-Plattform zum kollaborativen Arbeiten- und Lernen. Dir steht als Nutzer eine leistungsstrake Mathematikengine zur Verf&uuml;gung, mit der Du sowohl numerisch als auch symbolisch rechnen kannst. Durch die zus&auml;tzlichen Kollaborationsfunktionen, die das gleichzeitige Arbeiten von mehreren Nutzern and einem Worksheet erlauben, kannst Du somit gemeinsam mit Kommilitonen &Uuml;bungsbl&auml;tter bearbeiten, ASCII Daten visualisieren oder einfach Programmieren lernen. Genauer gesagt l&auml;sst sich in jeder Zelle nicht nur SAGE Code sondern auch gew&ouml;hnliches Python ausf&uuml;hren. Die Einsatzm&ouml;glichkeiten von POKAL sind daher sehr vielf&auml;ltig.</p>
+		<p>POKAL ist eine studentische Online-Plattform zum kollaborativen Arbeiten- und Lernen. Dir steht als Nutzer eine leistungsstrake Mathematikengine zur Verf&uuml;gung, mit der Du sowohl numerisch als auch symbolisch rechnen kannst. Durch die zus&auml;tzlichen Kollaborationsfunktionen, die das gleichzeitige Arbeiten von mehreren Nutzern and einem Arbeitsblatt erlauben, kannst Du somit gemeinsam mit Kommilitonen &Uuml;bungsbl&auml;tter bearbeiten, ASCII Daten visualisieren oder einfach Programmieren lernen. Genauer gesagt l&auml;sst sich in jeder Zelle nicht nur SAGE Code sondern auch gew&ouml;hnliches Python ausf&uuml;hren. Die Einsatzm&ouml;glichkeiten von POKAL sind daher sehr vielf&auml;ltig.</p>
 		
 	</section>
 
@@ -53,21 +53,30 @@
 					<td>&Uuml;berstreiche mit der Maus den Bereich zwischen zwei Zellen (oder der Zelle und dem Arbeitsblatt-Anfang/Ende) und klicke auf die erscheinende horizontale Linie.</td>
 				</tr>
 				<tr>
+					<td>Neue Text-Zelle</td>
+					<td>Verfahre wie unter 'Neue Zelle' nur halte beim Klicken die <strong>Shift</strong>-Taste gedrückt. Es öffnet sich ein Rich-Text-Editor mit vielen Formatierungsoptionen. Er unterstützt außerdem LaTex innerhalb von $-Zeichen. Um den RTE nachträglich nochmal zu öffnen, klicke doppelt auf eine Text-Zelle.</td>
+				</tr>
+				<tr>
 					<td>Auswerten einer Zelle</td>
 					<td>Dr&uuml;cke <strong>Shift+Enter</strong> oder klicke auf den Auswerten Button.</td>
 				</tr>
 				<tr>
-					<td>{{ gettext('Auto-Completion') }}</td>
-					<td>{{ gettext('Press <strong>Tab</strong> or <strong>Ctrl-Space</strong>/<strong>Cmd-Space</strong>') }}</td>
-				</tr>
+					<td>Zelle löschen</td>
+					<td>Nachdem Du den gesamten Inhalt der Zelle gelöscht hast, drücke <strong>Backspace</strong> um die Zelle zu löschen.</td>
 				<tr>
-					<td>{{ gettext('Delete Cell') }}</td>
-					<td>{{ gettext('Delete all cell contents, then press <strong>Backspace</strong>.') }}</td>
+					<td>Berechnungen abbrechen</td>
+					<td>Im Men&uuml; findest Du den Punkt <strong>Evaluation > Abbrechen</strong>. Das wird alle aktiven Rechnungen abbrechen. Alternativ kannst Du es mit der <strong>Escape</strong> Taste versuchen.</td>
+				</tr>
 				</tr>
 				<tr>
 					<td>Arbeitsblatt umbenennen</td>
 					<td>Klicke einfach in der Arbeitsblatt-Ansicht auf den Titel, gebe einen neuen Titel ein und best&auml;tige mit <strong>Enter</strong>.</td>
 				</tr>
+				<tr>
+					<td>Auto-Vervollständigung</td>
+					<td>Drücke <strong>Strg-Leertaste</strong> um die Auto-Vervollständigungsoption aufzurufen.</td>
+				</tr>
+
 
 				<!-- <tr>
 					<td>{{ gettext('Indenting') }}</td>
@@ -77,24 +86,62 @@
 		</table>
 	</section>
 
-	<section id="session">
-		<h2>{{ gettext('Session Management') }}</h2>
+
+	<section id="collab">
+		<h2>Kollaboration und Veröffentlichung</h2>
 		<table class="table table-bordered">
-			<tbody>
-				<tr>
-					<td>Berechnungen abbrechen</td>
-					<td>Im Men&uuml; findest Du den Punkt <strong>Evaluation > Abbrechen</strong>. Das wird alle aktiven Rechnungen abbrechen. Alternativ kannst Du es mit der <strong>Escape</strong> Taste versuchen.</td>
-				</tr>
-				<tr>
-					<td>{{ gettext('Restart') }}</td>
-					<td>{{ gettext('Click <strong>Evaluation > Restart Worksheet</strong>.') }}</td>
-				</tr>
-			</tbody>
+				<tbody>
+						<tr>
+								<td>Arbeitsblatt teilen</td>
+								<td>Möchtest Du gemeinsam mit Deinen Kommilitonen arbeiten, dann musst Du entwender in ein Arbeitsblatt eingeladen werden, oder Du lädst jemanden in ein eigenes Arbeitsblatt ein. Öffne dazu das Arbeitsblatt und klicke in der Navigationsleiste auf <strong>Teilen</strong>. Über das erscheinende Textfeld kannst Du kommagetrennt Benutzer hinzufügen, mit denen Du zusammenarbeiten willst. Angenommen werden hier HRZ-Namen (z.B. s1234567) oder eingestellte Nicknamen.<br><br>Kollaboratoren können weder das Arbeitsblatt löschen, noch seinen Titel oder Besitzer ändern.</td>
+						</tr>
+						<tr>
+								<td>Chat</td>
+								<td>Hast Du ein Arbeitsblatt mit Kommilitonen geteilt, dann könnt Ihr gleichzeitig daran arbeiten. Zur Koordination steht euch ein LaTeX-fähiger Chat zur Verfügung. Dabei wird alles, das zwischen den LaTeX typischen <strong>$</strong>-Zeichen steht, als LaTeX Matheblock interpretiert. Das Austauschen von Integralen und Formeln ist damit elegant möglich.</td>
+						</tr>
+						<tr>
+								<td>Arbeitsblatt veröffentlichen</td>
+								<td>Über den <strong>Menüpunkt Teilen</strong> kannst Du bequem Arbeitsblätter in POAK (PhysikOnlines Arbeitsblatt-Katalog) veröffentlichen und somit anderen Kommilitonen zur Verfügung stellen. Klicke hierfür im Teilen-Dialog auf <strong>Arbeitsblatt veröffentlichen</strong>. Es erscheint sofort der entsprechende Link zum öffentlichen Arbeitsblatt.<br><br>Aktivierst Du zusätlich die Option "Bei Änderung automatisch aktualisieren", ist das öffentliche AB immer auf deinem neusten Stand. Andernfalls ist es statisch die Version zum Zeitpunkt der Veröffentlichung.<br><br>Im Unterschied zum Teilen von Arbeitsblättern (s.o.) können andere Personen ein veröffentliches Arbeitsblatt nicht bearbeiten.</td>
+				</tbody>
 		</table>
 	</section>
 
-	<section id="special">
-		<h2>{{ gettext('Special Cell Blocks') }}</h2>
+
+	<section id="worksheet_management">
+		<h2>Arbeitsblatt Verwaltung</h2>
+		<table class="table table-bordered">
+				<tbody>
+						<tr>
+								<td>Suche</td>
+								<td>Die in POKAL integrierte Suchfunktion untersucht neben <strong>Titel</strong> und <strong>Zellinhalten</strong> auch den <strong>Besitzernamen</strong> und angelegte <strong>Tags</strong> (s.u.) auf Übereinstimmungen mit dem Suchstring. Sie stellt also ein mächtiges Werkzeug zum Auffinden von Arbeitsblättern dar.</td>
+						</tr>
+						<tr>
+								<td>Tags</td>
+								<td>Um deine Arbeitsblätter besser zu organisieren, kannst Du sie mit <strong>Tags</strong> (Kategorien-Markern) versehen. Verwende hierfür in der Arbeitsblatt-Übersicht die Zeile unter dem jeweiligen Arbeitsblatt-Namen. Tippe einfach in das Textfeld einen Tagnamen und bestätige mit <strong>Enter</strong>.<br><br> Nach Tags kannst Du explizit mit dem <strong>tag:</strong> bzw. <strong>tags:</strong> Prefix suchen. Tipp: Klicke auf einen angelegten Tag und beobachte die Suchleiste. <br><br>(Beispiel: tag:Mechanik oder tags:Theo1,Edynamik)</td>
+						</tr>
+						<tr>
+								<td>Archiv</td>
+								<td>Du kannst markierte Arbeitsblätter via <strong>Aktion > Archiv</strong> in dein persönliches Archiv verschieben. So kannst Du auch auf selten verwendete Arbeitsblätter immer wieder zurückgreifen.</td>
+						</tr>
+
+				</tbody>
+		</table>
+	</section>
+
+	<section id="more_features">
+		<h2>Weitere Funktionen</h2>
+		<table class="table table-bordered">
+				<tbody>
+						<tr>
+								<td>Weiterrechnen beim Verlassen</td>
+								<td>Setzt Du unter <strong>Evaluation > Weiterrechnen beim Verlassen</strong> einen Haken, dann führt POKAL laufende Rechnungen weiter fort auch wenn alle Personen das entsprechende Arbeitsblatt verlassen. Der dann permanent angezeigte Status <strong>aktiv</strong> visualisiert das in der Arbeitsblatt-Übersicht.</td>
+						</tr>
+				</tbody>
+		</table>
+	</section>
+
+	<!-- <section id="special">
+		<h2>Spezielle Zell-Typen</h2>
 		<table class="table table-bordered">
 			<tbody>
 				<tr>
@@ -112,26 +159,6 @@
 				<tr>
 					<td>{{ gettext('Timing') }}</td>
 					<td>{{ gettext('Cells with <code>%%time</code> will time evaluation.') }}</td>
-				</tr>
-			</tbody>
-		</table>
-	</section>
-
-	<section id="tips">
-		<h2>{{ gettext('Tips and Tricks') }}</h2>
-		<table class="table table-bordered">
-			<tbody>
-				<tr>
-					<td>{{ gettext('Input Rules') }}</td>
-					<td>{{ gettext('Code is evaluated by <code>exec</code>\'ing (after preparsing). Only the output of the last line of the cell is implicitly printed. If any line starts with <code>sage:</code> or <code>&gt;&gt;&gt;</code> the entire block is assumed to contain text and examples, so only lines that begin with a prompt are executed. Thus you can paste in complete examples from the docs without any editing, and you can write input cells that contains non-evaluated plain text mixed with examples by starting the block with <code>&gt;&gt;&gt;</code> or including an example.') }}</td>
-				</tr>
-				<tr>
-					<td>{{ gettext('Log') }}</td>
-					<td>{{ gettext('Click <strong>Profile Menu > Log</strong> to see a log of changes you have made in any worksheet.') }}</td>
-				</tr>
-				<tr>
-					<td>{{ gettext('Typesetting') }}</td>
-					<td>{{ gettext('Enable or disable typesetting of all output with <strong>View > Typesetting</strong>. You can also use <code>pretty_print_default(bool)</code>.') }}</td>
 				</tr>
 			</tbody>
 		</table>
@@ -171,29 +198,39 @@
 				</tr>
 			</tbody>
 		</table>
-	</section>
+	</section> --!>
+
+
 	<section id="morehelp">
 		<h2>Weitere Hilfe</h2>
 		<table class="table table-bordered">
 			<tbody>
+				<tr>
+						<td>POAK</td>
+						<td><a href="https://dev.pokal.uni-frankfurt.de/poak">POAK</a> (PhysikOnlines Arbeitsblatt-Katalog) ist die zentrale Veröffentlichungsstelle von POKAL Arbeitsblättern. Hier findest Du sehr hilfreiche Beispiele sowohl des PhysikOnline Teams als auch von anderen Benutzern.</td>
+				</tr>
 				<tr>
 					<td>SAGE Hilfe/Tutorials</td>
 					<td>POKAL verwendet für Berechnungen standardmäßig die OpenSource Mathematik-Engine SAGE. Einen sinnvollen Einstieg stellen somit die SAGE <a href="https://dev.pokal.uni-frankfurt.de/doc/live/tutorial/index.html">Einsteiger-Tutorials</a> dar. Alternativ gibt es thematisch geordnete <a href="http://www.sagemath.org/doc/thematic_tutorials/">Tutorials</a> und die allgemeine <a href="http://www.sagemath.org/help.html">SAGE Hilfe</a>. </td>
 				</tr>
 				<tr>
 					<td>SAGE Dokumentation durchsuchen</td>
-					<td>Durchsuche die SAGE Dokumentation direkt in einem Worksheet indem du <code>search_doc("Suchbegriff")</code> in einer Zelle evaluierst. Jeder regul&auml;re Ausdruck ist als Suchbegriff geeignet.</td>
+					<td>Durchsuche die SAGE Dokumentation direkt in einem Arbeitsblatt indem Du <code>search_doc("Suchbegriff")</code> in einer Zelle evaluierst. Jeder regul&auml;re Ausdruck ist als Suchbegriff geeignet.</td>
 				</tr>
 				<tr>
 					<td>Objekthilfe</td>
-					<td>Schreibe ein '?' hinter ein Objekt und evaluiere die Zelle. Beispiel: plot?</td>
-				</tr>
+					<td>Schreibe ein <strong>?</strong> hinter ein Objekt und evaluiere die Zelle. Beispiel: plot?</td>
+			</tr>
+			<tr>
+					<td>PhysikOnline Team</td>
+					<td>Solltest Du komplexere Fragen stellen wollen, Fehlfunktionen entdeckt haben oder einfach Kritik und Verbesserungsvorschläge äußern wollen, dann ist das PhysikOnline Team dein Ansprechpartner. Kontaktiere uns entweder auf der POKAL-eigenen <a href="https://elearning.physik.uni-frankfurt.de/projekt/wiki/POKAL/Hilfe">Hilfeseite</a> oder schreibe uns eine Email an <a href="mailto:team@elearning.physik.uni-frankfurt.de">team@elearning.physik.uni-frankfurt.de</a></td>
+			</tr>
 
 			</tbody>
 		</table>
 	</section>
 
-	<footer>{{ gettext('For more information and support see the <a href="https://groups.google.com/forum/?fromgroups#!forum/sage-notebook">sage-notebook</a> Google group and the <a href="https://github.com/sagemath/sagenb">Github repository</a>. The Sage Notebook was primarily written by William Stein with substantial contributions from Tom Boothby, Timothy Clemans, Alex Clemesha, Mike Hansen, Bobby Moretti, Yi Qiang, and Dorian Raymer.') }}</footer>
+	<footer>Sage was primarily written by William Stein. POKAL advancement was developed and implemented mainly by Carsten Bauer, Philip Arnold, Sven Köppel and Thomas Kehrenberg (alphabetical order).</footer>
 
 </div>
 

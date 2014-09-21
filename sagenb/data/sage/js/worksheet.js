@@ -528,7 +528,7 @@ sagenb.worksheetapp.worksheet = function() {
 			$("#data_list ul .btn-group a").tooltip();
 
 			if($("#data_list ul li").length === 0) {
-				$("#data_list ul").append('<li class="no_data_files"><a href="#" class="filename">No data files</a></li>');
+				$("#data_list ul").append('<li class="no_data_files"><a href="#" class="filename">Keine Dateien</a></li>');
 			}
 		}));
 	};
@@ -928,5 +928,7 @@ sagenb.worksheetapp.worksheet = function() {
 		$("#hide_all_output").click(_this.hide_all_output);
 		$("#show_all_output").click(_this.show_all_output);
 		$("#delete_all_output").click(_this.delete_all_output);
+
+		$("#navhelp").click(sagenb.help);
 	};
 };
