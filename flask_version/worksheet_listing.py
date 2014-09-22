@@ -318,6 +318,26 @@ def download_worksheets():
     response.headers['Content-Type'] = 'application/zip'
     return response
 
+###############
+# Duplicating #
+###############
+@worksheet_listing.route('/duplicate_worksheet', methods=['GET', 'POST'])
+@login_required
+def duplicate_worksheet():
+    if 'filename' in request.values:
+        filenames = [request.values['filename']]
+    elif 'filenames' in request.values:
+        import json
+        filenames = json.loads(request.values['filenames'])
+    else:
+        filenames = []
+    for filename in filenames:
+        W = g.notebook.get_worksheet_with_filename(filename)
+        if W.owner() != g.username:
+            continue
+        g.notebook.copy_worksheet(W,g.username);
+
+    return ''
 
 #############
 # Uploading #

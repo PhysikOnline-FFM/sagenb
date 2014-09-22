@@ -65,7 +65,7 @@ sagenb.chat.init = function(worksheet) {
 	$(".chat").find(".ui-dialog-buttonpane").append('<button class="btn btn-small" type="button">'+gettext('Send')+'</button>').click(sagenb.chat.send_message);
 	
 	// Log into chat
-	sagenb.chat.socket.emit('join', {'worksheet': worksheet.filename, 'nickname': sagenb.username});
+	sagenb.chat.socket.emit('join', {'worksheet': worksheet.filename, 'nickname': sagenb.nickname});
 };
 
 sagenb.chat.alert = function(text) {

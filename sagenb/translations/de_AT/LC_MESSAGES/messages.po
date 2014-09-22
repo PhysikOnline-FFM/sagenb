@@ -3002,11 +3002,14 @@ msgstr "Projekte"
 msgid "Developement"
 msgstr "Entwicklung"
 
-msgid  " is working on this cell. Therefore it has been locked."
-msgstr " arbeitet an dieser Zelle, daher ist sie vorübergehend gesperrt."
+msgid " is working on this cell"
+msgstr " arbeitet gerade an dieser Zelle"
 
 msgid "Continue computation on leave"
 msgstr "Weiterrechnen beim Verlassen"
 
 msgid "Change"
 msgstr "Ändern"
+
+msgid "Duplicate"
+msgstr "Duplizieren"

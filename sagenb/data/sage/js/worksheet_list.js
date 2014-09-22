@@ -168,6 +168,7 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 		$("#undelete_button").click(_this.undelete);
 		$("#stop_button").click(_this.stop);
 		$("#download_button").click(_this.download);
+		$("#duplicate_button").click(_this.duplicate);
 		$("#empty_trash").click(_this.empty_trash);
 		
 		$("#show_active").click(_this.show_active);
@@ -202,7 +203,11 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 		//});
 		$(document).bind("keydown", sagenb.ctrlkey + "+N", function(evt) { _this.new_worksheet(); return false; });
 		//If below is uncommented, DEL key doesnt work in search box any more
-		$(document).bind("keydown", "DEL", function(evt) { _this.delete(); return false; });
+		//$(document).bind("keydown", "DEL", function(evt) { _this.delete(); return false; });	
+		$(document).bind("keydown", "ESC", function(evt) {
+			$("#search_input").val('');
+			_this.do_search();
+		});
 	};
 	
 	///////// FOR EACH ///////////
@@ -308,6 +313,14 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 			});
 		});
 	};
+
+	_this.duplicate = function() {
+		if($("#duplicate_button").hasClass("disabled")) return;
+		_this.checked_action("/duplicate_worksheet", function(status, response) {
+				location.reload();
+		});	
+	};
+
 	_this.download = function() {
 		if($("#download_button").hasClass("disabled")) return;
 		// don't download if none are selected
@@ -388,7 +401,7 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 			$("#main_checkbox").prop("checked", false);
 
 			_this.enable_actions_menu();
-			$("#send_to_archive_button, #delete_button, #stop_button, #download_button").removeClass("disabled");
+			$("#send_to_archive_button, #delete_button, #stop_button, #download_button, #duplicate_button").removeClass("disabled");
 		});
 	};
 	_this.show_archive = function() {
@@ -400,7 +413,7 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 			$("#main_checkbox").prop("checked", false);
 
 			_this.enable_actions_menu();
-			$("#unarchive_button, #delete_button, #stop_button, #download_button").removeClass("disabled");
+			$("#unarchive_button, #delete_button, #stop_button, #download_button, #duplicate_button").removeClass("disabled");
 		});
 	};
 	_this.show_trash = function() {

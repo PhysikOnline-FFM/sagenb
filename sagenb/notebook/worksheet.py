@@ -1554,6 +1554,9 @@ class Worksheet(object):
             return False
         return True
 
+    def set_pokaltags(self,pokaltags):
+        self.__pokaltags = pokaltags
+
     def empty_pokaltags(self):
         self.__pokaltags = {}
 
@@ -1944,15 +1947,16 @@ class Worksheet(object):
         if user in self.__viewers:
             self.__viewers.remove(user)
         if self.__owner == user:
-            if len(self.__collaborators) > 0:
-                self.__owner = self.__collaborators[0]
-            elif len(self.__viewers) > 0:
-                self.__owner = self.__viewers[0]
-            else:
-                # Now there is nobody to take over ownership.  We
-                # assign the owner None, which means nobody owns it.
-                # It will get purged elsewhere.
-                self.__owner = None
+            #if len(self.__collaborators) > 0:
+            #    self.__owner = self.__collaborators[0]
+            #elif len(self.__viewers) > 0:
+            #    self.__owner = self.__viewers[0]
+            #else:
+            #    # Now there is nobody to take over ownership.  We
+            #    # assign the owner None, which means nobody owns it.
+            #    # It will get purged elsewhere.
+            #    self.__owner = None
+            self.__owner = None
 
     def add_viewer(self, user):
         """
@@ -2007,7 +2011,7 @@ class Worksheet(object):
     ##########################################################
     # Searching
     ##########################################################
-    def satisfies_search(self, search, username=''):
+    def satisfies_search(self, search, username='',owner_nickname='',collab_nicknames=[]):
         """
         Return True if all words in search are in the saved text of the
         worksheet.
@@ -2033,7 +2037,10 @@ class Worksheet(object):
             r = [unicode(x.lower()) for x in [self.owner(), self.publisher(), self.name(), contents]]
             try:
                 r = r + [unicode(x.lower()) for x in self.pokaltags()[username]]
-            except KeyError:
+                r = r + [unicode(owner_nickname.lower())]
+                r = r + [unicode(c.lower()) for c in collab_nicknames]
+                r = r + [unicode(c.lower()) for c in self.collaborators()]
+            except:
                 pass
             r = u" ".join(r)
         except UnicodeDecodeError as e:

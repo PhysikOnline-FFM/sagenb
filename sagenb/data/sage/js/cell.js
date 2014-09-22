@@ -272,7 +272,7 @@ sagenb.worksheetapp.cell = function(id) {
 				_this.worksheet.current_cell_id = _this.id;
                 
 				// inform all clients about focus for locking the cell
-                _this.socket.emit("cell_focused", _this.id, sagenb.username);
+                _this.socket.emit("cell_focused", _this.id, sagenb.nickname);
                 
 				$(".cell").removeClass("current_cell");
 				$("#cell_" + _this.id).addClass("current_cell");
@@ -1238,7 +1238,7 @@ sagenb.worksheetapp.cell = function(id) {
     _this.lock_cell = function(username){
         // DOM Manipulation
         $("#cell_" + _this.id).addClass('locked');
-        $("#cell_" + _this.id).prepend($('<div>').addClass('lock_message').html(username + gettext(' is working on this cell. Therefore it has been locked.')));
+        $("#cell_" + _this.id).prepend($('<div>').addClass('lock_message').html(username + " arbeitet gerade in dieser Zelle"));
         $("#cell_" + _this.id + " .evaluate_button_container").hide();
         // change the codemirror mode
         _this.codemirror.setOption("readOnly", 'nocursor');

@@ -187,6 +187,9 @@ class User(object):
     def get_nickname(self):
         return self._nickname
 
+    def nickname(self):
+        return self.get_nickname()
+
     def set_hashed_password(self, password):
         """
         EXAMPLES::

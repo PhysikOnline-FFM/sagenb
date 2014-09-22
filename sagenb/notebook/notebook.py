@@ -474,8 +474,9 @@ class Notebook(object):
     def copy_worksheet(self, ws, owner):
         W = self.create_new_worksheet('default', owner)
         self._initialize_worksheet(ws, W)
-        name = "Copy of %s" % ws.name()
+        name = "%s (Kopie)" % ws.name()
         W.set_name(name)
+        W.set_pokaltags(ws.pokaltags())
         return W
 
     def delete_worksheet(self, filename):
@@ -1304,7 +1305,15 @@ class Notebook(object):
         else: # typ must be archived
             W = [x for x in X if not (x.is_trashed(user) or x.is_active(user))]
         if search:
-            W = [x for x in W if x.satisfies_search(search,user)]
+            WList = []
+            for x in W:
+                owner_nickname = self.user_manager().user(x.owner()).nickname()
+                collab_nicknames = []
+                for c in x.collaborators():
+                    collab_nicknames.append(self.user_manager().user(c).nickname())
+                if x.satisfies_search(search,user,owner_nickname,collab_nicknames):
+                    WList.append(x)
+            W = WList
         sort_worksheet_list(W, sort, reverse)  # changed W in place
         return W
 
