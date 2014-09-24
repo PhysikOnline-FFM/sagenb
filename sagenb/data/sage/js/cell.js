@@ -38,6 +38,19 @@ sagenb.worksheetapp.cell = function(id) {
 		}
 	}
 
+	function get_overnext_cell() {
+		var $nextcell = $("#cell_" + _this.id).parent().next().next().find(".cell");
+		if($nextcell.length > 0) {
+			// we're not the last cell
+			var nextcell_id = parseInt($nextcell.attr("id").substring(5));
+			var $overnextcell = $("#cell_" + nextcell_id).parent().next().next().find(".cell");
+			if($overnextcell.length > 0) {
+				var overnextcell_id = parseInt($overnextcell.attr("id").substring(5));
+				return _this.worksheet.cells[overnextcell_id];
+			}
+		}
+	}
+
 	function get_prev_cell() {
 		var $prevcell = $("#cell_" + _this.id).parent().prev().prev().find(".cell");
 		if($prevcell.length > 0) {
@@ -47,6 +60,18 @@ sagenb.worksheetapp.cell = function(id) {
 		}
 	}	
 
+	function get_overprev_cell() {
+		var $prevcell = $("#cell_" + _this.id).parent().prev().prev().find(".cell");
+		if($prevcell.length > 0) {
+			// we're not the first cell
+			var prevcell_id = parseInt($prevcell.attr("id").substring(5));
+			var $overprevcell = $("#cell_" + prevcell_id).parent().prev().prev().find(".cell");
+			if($overprevcell.length > 0) {
+				var overprevcell_id = parseInt($overprevcell.attr("id").substring(5));
+				return _this.worksheet.cells[overprevcell_id];
+			}
+		}
+	}
 
 	///////////// UPDATING /////////////
 	_this.update = function(render_container, auto_evaluate) {
@@ -188,9 +213,16 @@ sagenb.worksheetapp.cell = function(id) {
 				if(c.line === 0) {
 					var prevcell = get_prev_cell();
 					if(prevcell) {
-						_this.cancel_introspect();
-
-						prevcell.focus();
+						if(prevcell.is_evaluate_cell){
+							_this.cancel_introspect();
+							prevcell.focus();
+						} else {
+							var overprevcell = get_overprev_cell();
+							if(overprevcell && overprevcell.is_evaluate_cell){
+								_this.cancel_introspect();
+								overprevcell.focus();
+							}
+						}
 					}
 				} else {
 					throw CodeMirror.Pass;
@@ -202,9 +234,16 @@ sagenb.worksheetapp.cell = function(id) {
 				if(c.line === cm.getValue().split("\n").length - 1) {
 					var nextcell = get_next_cell();
 					if(nextcell) {
-						_this.cancel_introspect();
-
-						nextcell.focus();
+						if(nextcell.is_evaluate_cell){
+							_this.cancel_introspect();
+							nextcell.focus();
+						} else {
+							var overnextcell = get_overnext_cell();
+							if(overnextcell && overnextcell.is_evaluate_cell){
+								_this.cancel_introspect();
+								overnextcell.focus();
+							}
+						}
 					}
 				} else {
 					throw CodeMirror.Pass;

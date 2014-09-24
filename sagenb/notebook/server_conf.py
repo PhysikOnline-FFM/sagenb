@@ -28,7 +28,7 @@ defaults = {'word_wrap_cols':72,
 
             'system':'sage',
 
-            'pretty_print':False,
+            'pretty_print':True,
 
             'ulimit':'',
 

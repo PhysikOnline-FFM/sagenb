@@ -238,6 +238,7 @@ sagenb.worksheetapp.worksheet = function() {
 		_this.forEachCell(function(cell) {
             console.log("_this.evaluate_all");
 			cell.set_output_loading();
+
 		});
 		
 		var firstcell_id = parseInt($(".cell").attr("id").substring(5));
@@ -246,6 +247,18 @@ sagenb.worksheetapp.worksheet = function() {
 	_this.interrupt = function() {
 		if(_this.published_mode) return;
 		sagenb.async_request(_this.worksheet_command('interrupt'), sagenb.generic_callback());
+	};
+
+	_this.interrupt_all = function() {
+		if(_this.published_mode) return;
+		_this.forEachCell(function(cell) {
+			sagenb.async_request(_this.worksheet_command('interrupt'), sagenb.generic_callback(function(status,response) {
+				if(status=="success"){
+					cell.output = "";
+					cell.render_output();
+				}
+			}));
+		});
 	};
 	_this.interrupt_with_confirm = function() {
 		if(confirm(gettext("Are you sure you would like to interrupt the running computation?"))) {
@@ -280,10 +293,12 @@ sagenb.worksheetapp.worksheet = function() {
 	_this.delete_all_output = function() {
 		if(_this.published_mode) return;
 		sagenb.async_request(_this.worksheet_command('delete_all_output'), sagenb.generic_callback(function(status, response) {
-			_this.forEachCell(function(cell) {
-				cell.output = "";
-				cell.render_output();
-			});
+			if(status=="success"){
+				_this.forEachCell(function(cell) {
+					cell.output = "";
+					cell.render_output();
+				});
+			}
 		}));
 	};
 	
@@ -932,6 +947,7 @@ sagenb.worksheetapp.worksheet = function() {
 		////////// EVALUATION ///////////
 		$("#evaluate_all_cells").click(_this.evaluate_all);
 		$("#interrupt").click(_this.interrupt);
+		$("#interrupt_all").click(_this.interrupt_all);
 		$("#restart_worksheet").click(_this.restart_sage);
 		// change system doesn't require event handler here
 		$("#hide_all_output").click(_this.hide_all_output);

@@ -539,6 +539,9 @@ msgstr "Benutzerverwaltung"
 msgid "Interrupt"
 msgstr "Abbrechen"
 
+msgid "Interrupt All"
+msgstr "Alle Abbrechen"
+
 #: sagenb/data/sage/html/docs.html:121
 msgid ""
 "Click <strong>Evaluation > Interrupt</strong>. This will (attempt) to "
@@ -649,7 +652,7 @@ msgstr ""
 
 #: sagenb/data/sage/html/docs.html:168
 msgid "Typesetting"
-msgstr "Schrift-Einstellungen"
+msgstr "LaTeX-Rendering"
 
 #: sagenb/data/sage/html/docs.html:169
 msgid ""
@@ -850,7 +853,7 @@ msgstr ""
 
 #: sagenb/data/sage/html/login.html:72
 msgid "View"
-msgstr "Anzeigen"
+msgstr "Anzeige"
 
 #: sagenb/data/sage/html/login.html:78
 #: sagenb/data/sage/js/translated-messages.js:34

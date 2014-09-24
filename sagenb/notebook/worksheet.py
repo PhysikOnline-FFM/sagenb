@@ -159,7 +159,7 @@ def Worksheet_from_basic(obj, notebook_worksheet_directory):
 class Worksheet(object):
     def __init__(self, name=None, id_number=None,
                  notebook_worksheet_directory=None, system=None,
-                 owner=None, pretty_print=False,
+                 owner=None, pretty_print=True,
                  auto_publish=False, create_directories=True):
         ur"""
         Create and initialize a new worksheet.
@@ -1027,7 +1027,7 @@ class Worksheet(object):
         try:
             return self.__pretty_print
         except AttributeError:
-            self.__pretty_print = False
+            self.__pretty_print = True
             return self.__pretty_print
 
     def continue_computation(self):
@@ -1037,7 +1037,7 @@ class Worksheet(object):
             self.__continue_computation = False
             return self.__continue_computation
 
-    def set_pretty_print(self, check='false'):
+    def set_pretty_print(self, check='true'):
         """
         Set whether or not output should be pretty printed by default.
 

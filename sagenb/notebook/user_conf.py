@@ -12,7 +12,7 @@ from flask.ext.babel import lazy_gettext
 defaults = {'max_history_length':1000,
             'default_system':'sage',
             'autosave_interval':60*60,   # 1 hour in seconds
-            'default_pretty_print': False,
+            'default_pretty_print': True,
             'next_worksheet_id_number': -1,  # not yet initialized
             'language': 'default'
             }

@@ -204,10 +204,10 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 		$(document).bind("keydown", sagenb.ctrlkey + "+N", function(evt) { _this.new_worksheet(); return false; });
 		//If below is uncommented, DEL key doesnt work in search box any more
 		//$(document).bind("keydown", "DEL", function(evt) { _this.delete(); return false; });	
-		$(document).bind("keydown", "ESC", function(evt) {
+		/*$(document).bind("keydown", "ESC", function(evt) {
 			$("#search_input").val('');
 			_this.do_search();
-		});
+		}); */
 	};
 	
 	///////// FOR EACH ///////////
