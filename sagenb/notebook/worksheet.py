@@ -1074,6 +1074,10 @@ class Worksheet(object):
             check = True
         self.__pretty_print = check
         self.eval_asap_no_output("pretty_print_default(%r)" % check)
+        if check:
+            self.eval_asap_no_output("sys.displayhook = sage.misc.latex.pretty_print")
+        else:
+            self.eval_asap_no_output("sys.displayhook = sys.__displayhook__")
 
     def set_continue_computation(self, check='false'):
         if check == 'false':
@@ -1545,7 +1549,7 @@ class Worksheet(object):
         except KeyError:
             self.__pokaltags[user] = [tag_name]
         return True
-    
+
     def remove_pokaltag(self,user,tag_name):
         try:
             if tag_name in self.__pokaltags[user]:
@@ -2970,6 +2974,11 @@ except (KeyError, IOError):
         # right pretty printing mode.
         if self.pretty_print():
             S.execute('pretty_print_default(True);')
+            S.execute('sys.displayhook = sage.misc.latex.pretty_print')
+        else:
+            S.execute('pretty_print_default(False);')
+            S.execute('sys.displayhook = sys.__displayhook__')
+
 
         if not self.is_published():
             self._enqueue_auto_cells()

@@ -685,7 +685,16 @@ sagenb.worksheetapp.cell = function(id) {
 		_this.set_output_loading();
 
 		var nextcell = get_next_cell();
-		if(nextcell) nextcell.focus();
+		if(nextcell){
+				if(nextcell.is_evaluate_cell) {
+			   		nextcell.focus();
+				} else {
+						var overnextcell = get_overnext_cell();
+						if(overnextcell && overnextcell.is_evaluate_cell) {
+								overnextcell.focus();
+						}
+				}
+		}
 
         // send information event to all collaborators
         _this.socket.emit('cell_evaluate', _this.id, sagenb.username);
@@ -1343,7 +1352,30 @@ sagenb.worksheetapp.cell = function(id) {
 
 		var prevcell = get_prev_cell();
 		if(prevcell) {
-			prevcell.focus();
+			if(prevcell.is_evaluate_cell) {
+				prevcell.focus();
+			} else {
+				var overprevcell = get_overprev_cell();
+				if(overprevcell && overprevcell.is_evaluate_cell) {
+						overprevcell.focus();
+				} else {
+						prevcell.focus();
+				}
+			}
+		}else{
+				var nextcell = get_next_cell();
+				if(nextcell) {
+						if(nextcell.is_evaluate_cell) {
+								nextcell.focus();
+						} else {
+								var overnextcell = get_overnext_cell();
+								if(overnextcell && overnextcell.is_evaluate_cell) {
+										overnextcell.focus();
+								} else {
+										nextcell.focus();
+								}
+						}
+				}
 		}
 		
 		sagenb.async_request(
