@@ -45,43 +45,36 @@ def worksheet_list():
     search = unicode_str(request.args['search']) if 'search' in request.args else None
     # Support for the 'tag:' and 'tags:' keyword
     tags = []
+    option = ''
     if search != None:
         strs = search.split()
         singletags = [s[4:] for s in strs if s.startswith('tag:')]
         multitags = [s[5:].split(',') for s in strs if s.startswith('tags:')]
         tags = singletags + [tag for m in multitags for tag in m]
-        search = " ".join([s for s in strs if not s.startswith('tag:') and not s.startswith('tags:')])
+        option = [s[7:] for s in strs if s.startswith('option:')]
+        if len(option) > 0 and (option[0] in ['published']): #currently only one option allowed
+            option = option[0]
+        search = " ".join([s for s in strs if not s.startswith('tag:') and not s.startswith('tags:') and not s.startswith('option:')])
 
     sort = request.args['sort'] if 'sort' in request.args else 'last_edited'
     reverse = (request.args['reverse'] == 'True') if 'reverse' in request.args else False
     try:
         if not pub:
             WList = [x for x in g.notebook.worksheet_list_for_user(g.username, typ=typ, sort=sort, search=search, reverse=reverse)]
-            if tags != []:
-                r['worksheets'] = []
-                for W in WList:
+            r['worksheets'] = []
+            for W in WList:
+                if not option or any([option == 'published' and W.has_published_version()]):
                     try:
-                        if all([t in W.pokaltags()[g.username] for t in tags]):
-                            r['worksheets'].append(W.basic())
+                        if tags==[] or all([t in W.pokaltags()[g.username] for t in tags]):
+                            d = W.basic()
+                            d.update({'owner_nickname': g.notebook.user_manager().user(W.owner()).get_nickname()})
+                            temp = W.basic()['collaborators']
+                            d.update({'collaborators_nicknames':[g.notebook.user_manager().user(x).get_nickname() for x in temp]})
+                            r['worksheets'].append(d)
                     except KeyError:
                         pass
-            else:
-                r['worksheets'] = []
-                for W in WList:
-                    d = W.basic()
-                    d.update({'owner_nickname': g.notebook.user_manager().user(W.owner()).get_nickname()})
-
-                    temp = W.basic()['collaborators']
-                    d.update({'collaborators_nicknames':[g.notebook.user_manager().user(x).get_nickname() for x in temp]})
-                    r['worksheets'].append(d)
-            
-            # Following not working, why? (carsten)
-            #for W in g.notebook.worksheet_list_for_user(g.username, typ=typ, sort=sort, search=search, reverse=reverse):
-            #    if W.computing() == False:
-            #        getDBWorksheet(g.db,W).running=False
-            #g.db.commit()
+                
         else:
-            #r['worksheets'] = [x.basic() for x in g.notebook.worksheet_list_for_public(g.username, sort=sort, search=search, reverse=reverse)]
             return current_app.message(_("Public listing is not supported."))
 
     except ValueError as E:

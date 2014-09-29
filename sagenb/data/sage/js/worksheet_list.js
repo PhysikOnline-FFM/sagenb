@@ -81,10 +81,15 @@ sagenb.worksheetlistapp.list_row = function() {
         }
 		if(_this.props.published_id_number && !_this.list.published_mode) {
 			// it's published
-			owner_html += '<span class="published_badge badge badge-info pull-right"><i class="icon-eye-open icon-white"></i></span>';
+			owner_html += '<a href="#"><span class="published_badge badge badge-info pull-right"><i class="icon-share icon-white"></i></span></a>';
 		}
 		_this.jquery_this.find("td.owner_cell").html(owner_html);
 		_this.jquery_this.find("td.owner_cell .collaborators_tooltip").tooltip();
+
+		$(".published_badge").click(function() {
+			$("#search_input").val("option:published");
+			sagenb.worksheetlistapp.worksheet_list.do_search();
+		});
 		
 		// Init tagit (worksheet tags)
 		var tagitelements = _this.jquery_this.find(".tagit");
