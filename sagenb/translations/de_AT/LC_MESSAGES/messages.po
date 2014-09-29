@@ -652,7 +652,7 @@ msgstr ""
 
 #: sagenb/data/sage/html/docs.html:168
 msgid "Typesetting"
-msgstr "LaTeX-Rendering"
+msgstr "Auto LaTeX-Rendering"
 
 #: sagenb/data/sage/html/docs.html:169
 msgid ""
@@ -808,11 +808,11 @@ msgstr "Hier klicken, um Obiges in ein POKAL Arbeitsblatt umzuwandeln"
 
 #: sagenb/data/sage/html/history.html:32
 msgid ""
-"Create a new POKAL worksheet version of the last 100 commands in the above "
+"Create a new Sage worksheet version of the last 100 commands in the above "
 "log."
 msgstr ""
-"Neue POKAL-Arbeitsblatt-Fassung aus den letzten 100 Befehlen im obigen "
-"Protokoll erzeugen."
+"Ein POKAL-Arbeitsblatt mit den letzten 100 Befehlen im obigen "
+"Protokoll anlegen."
 
 #: sagenb/data/sage/html/login.html:3 sagenb/data/sage/html/login.html:99
 #: sagenb/data/sage/html/login.html:146
@@ -821,7 +821,7 @@ msgstr "Anmelden"
 
 #: sagenb/data/sage/html/login.html:11
 #, python-format
-msgid "Congratulations %(u)s! You can now sign into the POKAL Notebook."
+msgid "Congratulations %(u)s! You can now sign into the Sage Notebook."
 msgstr ""
 "Herzlichen Glückwunsch %(u)s! Sie können sich jetzt bei POKAL Notebook "
 "anmelden."
@@ -2978,8 +2978,8 @@ msgstr "Letzte Änderung"
 msgid "Search..."
 msgstr "Suchen"
 
-msgid "Download All Active"
-msgstr "Aktive AB herunterladen"
+msgid "Open Worksheet from POAK"
+msgstr "Aus POAK"
 
 msgid "Unarchive"
 msgstr "Aus Archiv holen"
@@ -2994,7 +2994,7 @@ msgid "Stop"
 msgstr "Stopp"
 
 msgid "Download"
-msgstr "Download"
+msgstr "Herunterladen"
 
 msgid "Empty Trash"
 msgstr "Mülleimer leeren"

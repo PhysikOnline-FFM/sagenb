@@ -25,14 +25,14 @@ sagenb.init = function() {
 	'</a>' +
 	'<ul class="dropdown-menu">' +
 		'<li><a href="/" id="home"><i class="icon-home"></i> ' + gettext('Home') + '</a></li>' +
-		'<li><a href="/home/pub" id="published"><i class="icon-share"></i> ' + gettext('Published') + '</a></li>' +
+		'<li><a href="/poak" id="published"><i class="icon-share"></i> ' + gettext('Published') + '</a></li>' +
 		'<li><a href="#" id="log"><i class="icon-list"></i> ' + gettext('Log') + '</a></li>' +
-		'<li><a href="/settings" id="settings"><i class="icon-wrench"></i> ' + gettext('Settings') + '</a></li>' +
-		'<li><a href="/logout" id="sign_out"><i class="icon-off"></i> ' + gettext('Sign out') + '</a></li>' +
-		'<li class="divider"></li>' +
 		'<li class="nav-header">' + gettext('POKAL Hilfe') + '</li>' +
 		'<li><a href="#" id="help"><i class="icon-book"></i> ' + gettext('Help') + '</a></li>' +
 		'<li><a href="#" id="report_a_problem"><i class="icon-exclamation-sign"></i> ' + gettext('Report a Problem') + '</a></li>' +
+		'<li class="divider"></li>' +
+		'<li><a href="/settings" id="settings"><i class="icon-wrench"></i> ' + gettext('Settings') + '</a></li>' +
+		'<li><a href="/logout" id="sign_out"><i class="icon-off"></i> ' + gettext('Sign out') + '</a></li>' +
 	'</ul>' +
 '</div></div>'
 		);
