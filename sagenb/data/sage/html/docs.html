@@ -50,7 +50,7 @@
 			<tbody>
 				<tr>
 					<td>Neue Zelle</td>
-					<td>&Uuml;berstreiche mit der Maus den Bereich zwischen zwei Zellen (oder der Zelle und dem Arbeitsblatt-Anfang/Ende) und klicke auf die erscheinende horizontale Linie.</td>
+					<td>&Uuml;berstreiche mit der Maus den Bereich zwischen zwei Zellen (oder der Zelle und dem Arbeitsblatt-Anfang/Ende) und klicke auf die erscheinende horizontale Linie. Alternativ kannst Du per <strong>STRG + ENTER</strong> (ausgeführt innerhalb einer Zelle) eine neue Zelle erzeugen.</td>
 				</tr>
 				<tr>
 					<td>Neue Text-Zelle</td>
@@ -93,7 +93,7 @@
 				<tbody>
 						<tr>
 								<td>Arbeitsblatt teilen</td>
-								<td>Möchtest Du gemeinsam mit Deinen Kommilitonen arbeiten, dann musst Du entwender in ein Arbeitsblatt eingeladen werden, oder Du lädst jemanden in ein eigenes Arbeitsblatt ein. Öffne dazu das Arbeitsblatt und klicke in der Navigationsleiste auf <strong>Teilen</strong>. Über das erscheinende Textfeld kannst Du kommagetrennt Benutzer hinzufügen, mit denen Du zusammenarbeiten willst. Angenommen werden hier HRZ-Namen (z.B. s1234567) oder eingestellte Nicknamen.<br><br>Kollaboratoren können weder das Arbeitsblatt löschen, noch seinen Titel oder Besitzer ändern.</td>
+								<td>Möchtest Du gemeinsam mit Deinen Kommilitonen arbeiten, dann musst Du entwender in ein Arbeitsblatt eingeladen werden, oder Du lädst jemanden in ein eigenes Arbeitsblatt ein. Öffne dazu das Arbeitsblatt und klicke in der Navigationsleiste auf <strong>Teilen</strong>. Über das erscheinende Textfeld kannst Du kommagetrennt Benutzer hinzufügen, mit denen Du zusammenarbeiten willst. Angenommen werden hier HRZ-Namen (z.B. s1234567) oder eingestellte Nicknamen.<br><br>Kollaboratoren können weder das Arbeitsblatt löschen, noch seinen Titel oder Besitzer ändern.<br>(Tipp: Dupliziere das Arbeitsblatt um den aktuelle Stand vor Änderungen durch die Kollaboratoren zu schützen)</td>
 						</tr>
 						<tr>
 								<td>Chat</td>
@@ -123,6 +123,10 @@
 								<td>Archiv</td>
 								<td>Du kannst markierte Arbeitsblätter via <strong>Aktion > Archiv</strong> in dein persönliches Archiv verschieben. So kannst Du auch auf selten verwendete Arbeitsblätter immer wieder zurückgreifen.</td>
 						</tr>
+						<tr>
+								<td>Duplizieren/Klonen</td>
+								<td>Es kann nützlich sein, ein Arbeitsblatt z.B. bevor es geteilt wird zu duplizieren (<strong>Aktion > Duplizieren</strong>) um den aktuellen Stand zu sichern. Schließlich können die Kollaboratoren den Inhalt des Worksheets verändern oder gar entfernen.</td>
+						</tr>
 
 				</tbody>
 		</table>
@@ -139,6 +143,14 @@
 						<tr>
 								<td>Auto LaTeX-Rendering</td>
 								<td>Ist die Option <strong>Anzeige > Auto LaTeX-Rendering</strong> aktiviert, dann werden Ergebnisse (wenn möglich) automatisch im LaTeX Stil dargestellt. Dies verbessert die Darstellung von bspw. Integralen ungemein. Ist die Option deaktiviert, wird das Resultat als gewöhnlicher Text ausgegeben. Eine gezielte, manuelle LaTeX Darstellung einzelner Ausdrücke lässt sich dann mittels <code>pretty_print(OBJEKT)</code> erzeugen.</td>
+						</tr>
+						<tr>
+								<td>Zelltypen</td>
+								<td>Wenn Du <code>%Schlüsselwort</code> in die erste Zeile einer Zellen schreibst, versucht POKAL anhand des Schlüsselwortes den Typ der Zelle einzustellen . Schreibst Du z.B. <code>%latex</code> wird die Zelle als LaTeX-Zelle interpretiert. Python Code würde dann Fehler hervorrufen. Schlüsselwörter dieser Art sind u.a. <code>latex</code>,<code>cython</code>,<code>html</code>,<code>octave</code>,<code>python</code>,<code>fortran</code> und <code>maxima</code>. Weitere Informationen findest Du (leider nicht immer übersichtlich) in den SAGE Dokumentationen. An dieser Stelle sei die <a href="http://www.sagemath.org/doc/developer/coding_in_cython.html">Cython Verwendung in SAGE</a> erwähnt, die deinen Python Code deutlich performanter machen kann.<br><br>Es gibt außerdem Schlüsselwörter mit anderer Funktion. So werden Zellen mit <code>%auto</code> automatisch beim Laden des AB ausgeführt und per <code>%time</code> eine Zeitmessung durchgeführt. Der Code von mit <code>%hide</code> versehen Zellen wird nach der Evaluation ausgeblendet. Das eignet sich besonders für Definitionen von Funktionen.</td>
+						</tr>
+						<tr>
+								<td>Datenverarbeitung</td>
+								<td>TODO</td>
 						</tr>
 
 				</tbody>

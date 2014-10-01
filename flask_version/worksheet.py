@@ -382,6 +382,24 @@ def worksheet_new_text_cell_after(worksheet):
     # to centralize that code.
     return encode_response(r)
 
+@worksheet_command('move_cell_down')
+def worksheet_move_cell_down(worksheet):
+    """Move the given cell downwards by one step."""
+    r = {}
+    r['id'] = id = get_cell_id()
+    r['status'] = 'success' if worksheet.move_cell_down(id) else 'failed'
+
+    return encode_response(r)
+
+@worksheet_command('move_cell_up')
+def worksheet_move_cell_up(worksheet):
+    """Move the given cell upwards by one step."""
+    r = {}
+    r['id'] = id = get_cell_id()
+    r['status'] = 'success' if worksheet.move_cell_up(id) else 'failed'
+
+    return encode_response(r)
+
 ########################################################
 # Cell deletion
 ########################################################

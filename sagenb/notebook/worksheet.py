@@ -2842,6 +2842,46 @@ class Worksheet(object):
                     break
         return cells[0].id()
 
+    def move_cell_down(self, id):
+        """
+        Move the given cell downwards by one step if possible
+
+        INPUT:
+
+        - ``id`` - an integer or a string; the ID of the cell to find
+
+        OUTPUT:
+
+        - True or False indicating the success of the operation
+        """
+        cells = self.cell_list()
+        for i in range(len(cells)):
+            if cells[i].id() == id and i<(len(cells)-1):
+                cells[i+1], cells[i] = cells[i], cells[i+1]
+                return True
+        return False
+
+
+    def move_cell_up(self, id):
+        """
+        Move the given cell upwards by one step if possible
+
+        INPUT:
+
+        - ``id`` - an integer or a string; the ID of the cell to find
+
+        OUTPUT:
+
+        - True or False indicating the success of the operation
+        """
+        cells = self.cell_list()
+        for i in range(len(cells)):
+            if cells[i].id() == id and i>0:
+                cells[i-1], cells[i] = cells[i], cells[i-1]
+                return True
+        return False
+
+
     ##########################################################
     # Managing whether computing is happening: stop, start, clear, etc.
     ##########################################################

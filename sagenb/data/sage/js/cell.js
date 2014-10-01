@@ -184,6 +184,10 @@ sagenb.worksheetapp.cell = function(id) {
 				_this.introspect();
 			};
 			
+			extrakeys["Esc"] = function(cm) {
+				_this.cancel_introspect();
+			};
+
 			/*extrakeys["Tab"] = function(cm) {
 				if(!_this.introspect() && cm.getCursor(true).line != cm.getCursor().line) {
 					CodeMirror.commands.indentMore(cm);
@@ -249,11 +253,41 @@ sagenb.worksheetapp.cell = function(id) {
 					throw CodeMirror.Pass;
 				}
 			};
+			
+			extrakeys[sagenb.ctrlkey + "-Down"] = function(cm) {
+				if(_this.worksheet.published_mode) return;
+				// TODO we should maybe interrupt the cell if its running here
+				sagenb.async_request(_this.worksheet.worksheet_command('move_cell_down'), sagenb.generic_callback(function(status, response) {
+					// Optically move cell down
+					if(status=='success'){
+						alert('Moved cell down!');
+					}
+				}), {
+					id: toint(_this.id)
+				});
+			};
+
+			extrakeys[sagenb.ctrlkey + "-Up"] = function(cm) {
+				if(_this.worksheet.published_mode) return;
+				// TODO we should maybe interrupt the cell if its running here
+				sagenb.async_request(_this.worksheet.worksheet_command('move_cell_up'), sagenb.generic_callback(function(status, response) {
+					// Optically move cell down
+					if(status=='success'){
+						alert('Moved cell up!');
+					}
+				}), {
+					id: toint(_this.id)
+				});
+			};
 
 			extrakeys["Shift-Enter"] = function(cm) {
 				_this.evaluate();
 			};
-			
+		
+			extrakeys[sagenb.ctrlkey + "-Enter"] = function(cm) {
+				_this.worksheet.new_cell_after(_this.id);
+			};
+
 			extrakeys[sagenb.ctrlkey + "-N"] = function(cm) {
 				_this.worksheet.new_worksheet();
 			};
@@ -299,10 +333,11 @@ sagenb.worksheetapp.cell = function(id) {
                 }
                 _this.change_by_collab = false;
 			
-				if(chg.text[0] === "(") {
-					_this.introspect();
-				}
-				else if(chg.text[0] === ")") {
+				//if(chg.text[0] === "(") {
+				//	_this.introspect();
+				//}
+				
+				if(chg.text[0] === ")") {
 					_this.cancel_introspect();
 				}
 			});
@@ -579,10 +614,13 @@ sagenb.worksheetapp.cell = function(id) {
 		tooltip_root.popover({
 			placement: "bottom",
 			trigger: "manual",
-			content: content
+			content: 'Lade...'
 		});
 
 		tooltip_root.popover("show");
+		$(".popover").css("max-width","600px");
+		$(".popover").css("width","auto");
+		$(".popover-content").html(content);
 		MathJax.Hub.Queue(["Typeset", MathJax.Hub, $(".popover")[0]]);
 
 		var safety = 50;
