@@ -485,21 +485,26 @@ sagenb.worksheetapp.worksheet = function() {
 			
 			// sharing
 			if(_this.published_id_number && _this.published_id_number.length > 0) {
-				$("#publish_checkbox").prop("checked", true);
+				//$("#publish_checkbox").prop("checked", true);
 				$("#auto_republish_checkbox").removeAttr("disabled");
+                $("#publish-button").text(gettext("unpublish"));
+                $("#publish-button").addClass("published");
 				
 				$("#auto_republish_checkbox").prop("checked", _this.auto_publish);
 				
 				$("#worksheet_url a").text(_this.published_url);
                 $("#worksheet_url a").attr("href", _this.published_url);
 				$("#worksheet_url").show();
+                $("#poak-publish-button").attr("href", "http://dev.pokal.uni-frankfurt.de/poak/submit?id="+_this.published_id_number);
 			} else {
+                $("#publish-button").text(gettext("Publish this worksheet"));
 				$("#publish_checkbox").prop("checked", false);
 				$("#auto_republish_checkbox").prop("checked", false);
 				$("#auto_republish_checkbox").attr("disabled", true);
 				
 				$("#worksheet_url").hide();
 			}
+
 
 			$("#collaborators").val(_this.collaborators_nicknames.join(", "));
 		
@@ -825,6 +830,25 @@ sagenb.worksheetapp.worksheet = function() {
 				_this.worksheet_update();
 			}));
 		});
+        
+        $("#publish-button").click(function(e) {
+            var command;
+            if($("#publish-button").hasClass("published")) {
+                command = _this.worksheet_command("publish?publish_off");
+                $("#publish-button").removeClass("published");
+                $("#publish-button").text(gettext("Publish this worksheet"));
+            } else {
+                command = _this.worksheet_command("publish?publish_on");
+                $("#publish-button").addClass("published");
+                $("#publish-button").text(gettext("unpublish"));
+            }
+			sagenb.async_request(command, sagenb.generic_callback(function(status, response) {
+				_this.worksheet_update();
+			}));
+
+        });
+
+
 		$("#auto_republish_checkbox").change(function(e) {
 			var command;
 			if($("#auto_republish_checkbox").prop("checked")) {

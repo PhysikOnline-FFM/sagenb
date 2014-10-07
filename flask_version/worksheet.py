@@ -1147,6 +1147,16 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
 #    def recv_connect(self):
 
+    def duplicate_free(self, user_list):
+        nicknames_seen = []
+        users = []
+        for u in user_list:
+            if u['nickname'] not in nicknames_seen:
+                users.append(u)
+                nicknames_seen.append(u['nickname'])
+        return users
+
+
     # client information handler
     def on_join(self, data):
         #self.db = self.environ['db']
@@ -1196,25 +1206,38 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         import uuid
         self.session['session_nick']['uuid'] = str(uuid.uuid4())
 
-        try:
-            # take first color
-            self.session['session_nick']['color'] = self.ws_colors.pop()
-        except IndexError:
-            # otherwise use black
-            self.session['session_nick']['color'] = "#000000"
+        self.session['session_nick']['doubleuser'] = False
 
+        
         # store this session in the nickname list
-        found = False
+        doubleuser = False
         for n in self.ws_nicks:
             if data['nickname'] == n['nickname']:
-                self.session['session_nick'] = n
-                found = True
-        if not found:
-            self.ws_nicks.append(self.session['session_nick'])
+                self.session['session_nick']['color'] = n['color']
+                doubleuser = True
+                self.session['session_nick']['doubleuser'] = True
+                break
 
-        self.emit('new_nickname_list', encode_response(self.ws_nicks))
-        self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.ws_nicks))
-        self.emit_to_room(self.room, 'join_message', encode_response(self.session['session_nick']))
+        # Double user check. If double user, do not append to ws_nicks list and
+        # mark each user with that nick as doubleuser
+        if not doubleuser:
+            try:
+                # take first color
+                self.session['session_nick']['color'] = self.ws_colors.pop()
+            except IndexError:
+                # otherwise use black
+                self.session['session_nick']['color'] = "#000000"
+            self.ws_nicks.append(self.session['session_nick'])
+            self.emit('new_nickname_list', encode_response(self.duplicate_free(self.ws_nicks)))
+            self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.duplicate_free(self.ws_nicks)))
+            self.emit_to_room(self.room, 'join_message', encode_response(self.session['session_nick']))
+        else:
+            for n in self.ws_nicks:
+                if n['nickname'] == data['nickname']:
+                    n['doubleuser'] = True
+            self.ws_nicks.append(self.session['session_nick'])
+            self.emit('new_nickname_list', encode_response(self.duplicate_free(self.ws_nicks)))
+
         def client_watcher_process():
             userlist = self.ws_nicks #array of dictionaries, one for each user, with keys 'nickname', 'uuid' and 'color'
             # self.room entspricht z.B. s1320604/2
@@ -1341,11 +1364,17 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
             if not (self.session['session_nick'] in self.ws_nicks):
                 # this should never happen?
                 return True
-            self.ws_nicks.remove(self.session['session_nick'])
-            self.emit_to_room(self.room, 'leave_message', encode_response(self.session['session_nick']))
-            self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.ws_nicks))
-            self.ws_colors.append(self.session['session_nick']['color'])
-            #self.emit('new_nickname_list', encode_response(self.ws_nicks))
+            if self.session['session_nick']['doubleuser']:
+                self.ws_nicks.remove(self.session['session_nick'])
+                idxs = [i for i, x in enumerate(self.ws_nicks) if x['nickname'] == self.session['session_nick']['nickname']]
+                if len(idxs) == 1:
+                    self.ws_nicks[idxs[0]]['doubleuser'] = False
+            else:
+                self.ws_nicks.remove(self.session['session_nick'])
+                self.emit_to_room(self.room, 'leave_message', encode_response(self.session['session_nick']))
+                self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.duplicate_free(self.ws_nicks)))
+                self.ws_colors.append(self.session['session_nick']['color'])
+                #self.emit('new_nickname_list', encode_response(self.ws_nicks))
             return True
         except KeyError:
             #print "worksheet.py/recv_disconnect():: self.session['session_nick'] does not exist"

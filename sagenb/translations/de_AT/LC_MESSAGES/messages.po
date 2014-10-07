@@ -1057,9 +1057,12 @@ msgid "Optional. Pick a new name for the worksheet."
 msgstr "Bitte geben Sie einen Namen für dieses Arbeitsblatt ein."
 
 #: sagenb/data/sage/html/modals/sharing_modal.html:5
-#: sagenb/data/sage/html/modals/sharing_modal.html:12
 msgid "Sharing"
 msgstr "Teilen"
+
+#: sagenb/data/sage/html/modals/sharing_modal.html:12
+msgid "Collaborators"
+msgstr "Kollaboratoren"
 
 #: sagenb/data/sage/html/modals/sharing_modal.html:15
 msgid ""
@@ -1069,12 +1072,21 @@ msgstr ""
 "Kommata)."
 
 #: sagenb/data/sage/html/modals/sharing_modal.html:19
+msgid "Private Publishing"
+msgstr "Privates Veröffentlichen"
+
+#: sagenb/data/sage/html/modals/sharing_modal.html:19
 msgid "Publishing"
 msgstr "Veröffentlichen"
 
-#: sagenb/data/sage/html/modals/sharing_modal.html:21
+#: sagenb/data/sage/js/translated-messages.js:77
 msgid "Publish this worksheet"
-msgstr "Arbeitsblatt veröffentlichen"
+msgstr "Link generieren"
+
+#: sagenb/data/sage/js/translated-messages.js:76
+msgid "unpublish"
+msgstr "Veröffentlichung stoppen"
+
 
 #: sagenb/data/sage/html/modals/sharing_modal.html:22
 msgid "Re-publish this worksheet when it changes"
@@ -1082,7 +1094,7 @@ msgstr "Bei Änderung automatisch aktualisieren"
 
 #: sagenb/data/sage/html/modals/sharing_modal.html:23
 msgid "Worksheet viewable at"
-msgstr "Dieses Arbeitsblatt öffentlich sichtbar machen"
+msgstr "Link zum Teilen:"
 
 #: sagenb/data/sage/html/modals/sharing_modal.html:33
 msgid "Save changes"
@@ -2920,10 +2932,10 @@ msgid "December"
 msgstr "Dezember"
 
 msgid "joined"
-msgstr "arbeitet nun auch an diesem Arbeitsblatt"
+msgstr "ist beigetreten"
 
 msgid "left"
-msgstr "hat das Arbeitsblatt verlassen"
+msgstr "ist gegangen"
 
 msgid "Visit the other eLearning projects of <strong>PhysikOnline</strong>!"
 msgstr ""

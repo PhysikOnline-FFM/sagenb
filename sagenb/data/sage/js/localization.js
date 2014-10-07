@@ -77,6 +77,8 @@ function gettext(str) {
                           'Message from',
                           'and',
                           ' is working on this cell. Therefore it has been locked.',
+                          'unpublish',
+                          'Publish this worksheet'
 						 ] %}
 		'{{ string }}' : '{{ gettext(string) }}',
 		{% endfor %}

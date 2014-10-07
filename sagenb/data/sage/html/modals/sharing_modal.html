@@ -9,18 +9,25 @@
 <form action="#" class="form-horizontal">
 	<fieldset>
 		<div class="control-group">
-			<label for="" class="control-label">{{ gettext("Sharing") }}</label>
+			<label for="" class="control-label">{{ gettext("Collaborators") }}</label>
 			<div class="controls">
 				<textarea name="collaborators" id="collaborators" class="input-xlarge"></textarea>
 				<p class="help-block">{{ gettext("Add/remove collaborators by entering their user names separated by commas.") }}</p>
 			</div>
 		</div>
 		<div class="control-group">
+			<label for="" class="control-label">{{ gettext("Private Publishing") }}</label>
+			<div class="controls">
+
+				<label for="auto_republish_checkbox" class="checkbox"><input type="checkbox" id="auto_republish_checkbox"> {{ gettext("Re-publish this worksheet when it changes") }}</label>
+                <a href="#" class="btn" id="publish-button">{{ gettext("Publish this worksheet") }}</a>
+                <p class="help-block" id="worksheet_url">{#{{ gettext("Worksheet viewable at") }}#} <a href="#">http://insert/url/here</a></p>
+			</div>
+		</div>
+		<div class="control-group">
 			<label for="" class="control-label">{{ gettext("Publishing") }}</label>
 			<div class="controls">
-				<label for="publish_checkbox" class="checkbox"><input type="checkbox" id="publish_checkbox"> {{ gettext("Publish this worksheet") }}</label>
-				<label for="auto_republish_checkbox" class="checkbox"><input type="checkbox" id="auto_republish_checkbox"> {{ gettext("Re-publish this worksheet when it changes") }}</label>
-				<p class="help-block" id="worksheet_url">{{ gettext("Worksheet viewable at") }} <a href="#">http://insert/url/here</a></p>
+                <a href="#" class="btn" id="poak-publish-button" target="_blank">Bei POAK einreichen</a>
 			</div>
 		</div>
 	</fieldset>

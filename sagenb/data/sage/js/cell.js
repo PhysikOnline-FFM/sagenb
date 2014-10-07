@@ -1324,7 +1324,18 @@ sagenb.worksheetapp.cell = function(id) {
     _this.lock_cell = function(username){
         // DOM Manipulation
         $("#cell_" + _this.id).addClass('locked');
-        $("#cell_" + _this.id).prepend($('<div>').addClass('lock_message').html(username + " arbeitet gerade in dieser Zelle"));
+		//$("#cell_" + _this.id).prepend($('<div>').addClass('lock_message').html(username + " arbeitet gerade in dieser Zelle"));
+		$('<div id="cell_'+_this.id+'_lockmessage">'+username+'</div>').insertBefore("#cell_"+_this.id);
+		$("#cell_" + _this.id + "_lockmessage").css('position','absolute').hide();
+
+		$("#cell_" + _this.id).mousemove(function(e){
+			            $("#cell_" + _this.id + "_lockmessage").css({'top': e.pageY+12,'left': e.pageX+13});
+		}).mouseleave(function(e) {
+						$("#cell_" + _this.id + "_lockmessage").hide();
+		}).mouseenter(function(e) {
+						$("#cell_" + _this.id + "_lockmessage").show();
+		});
+
         $("#cell_" + _this.id + " .evaluate_button_container").hide();
         // change the codemirror mode
         _this.codemirror.setOption("readOnly", 'nocursor');
@@ -1333,7 +1344,10 @@ sagenb.worksheetapp.cell = function(id) {
     _this.unlock_cell = function(){
         // DOM Manipulation
         $("#cell_" + _this.id).removeClass('locked');
-        $("#cell_" + _this.id + " .lock_message").remove();
+		$("#cell_" + _this.id).mousemove(function(e){
+		});
+
+        $("#cell_" + _this.id + "_lockmessage").remove();
         //$("#cell_" + _this.id + " .evaluate_button_container").show(); << Not needed, because Eval-Button is hidden if cell has no focus.
         // change the codemirror mode
         _this.codemirror.setOption("readOnly", false);

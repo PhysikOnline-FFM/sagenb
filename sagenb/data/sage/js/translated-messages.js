@@ -73,3 +73,5 @@
 {{ gettext('left') }}
 {{ gettext('and') }}
 {{ gettext(' is working on this cell. Therefore it has been locked.') }}
+{{ gettext('unpublish') }}
+{{ gettext('Publish this worksheet') }}

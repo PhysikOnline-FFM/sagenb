@@ -74,7 +74,7 @@ sagenb.chat.alert = function(text) {
 		// create the alert box
 		sagenb.chat.alert_box = $('<div class="alert alert-info" id="user_chat_alert">' + 
 			'<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-			'<strong>'+gettext('Message from')+'</strong> <span class="alert-content"></span>'+
+			'<span class="alert-content"></span>'+
 			'<a class="btn primary btn-small open-chat" style="float:right"><i class="icon-comment"></i>&nbsp;'+gettext('Open chat')+'</a>' +
 		'</div>').appendTo(".alert_container_inner");
         
@@ -138,12 +138,12 @@ sagenb.chat.on_user_message = function(data) {
 
 sagenb.chat.on_join_message = function(user) {
 	user = $.parseJSON(user);
-	sagenb.chat.append_message("meta join", '<b>'+sagenb.chat.colorize_nickname(user)+'</b> '+ gettext('joined'));
+	sagenb.chat.append_message("meta join", '<b>'+sagenb.chat.colorize_nickname(user)+'</b> ist beigetreten.');
 }
 
 sagenb.chat.on_leave_message = function(user) {
 	user = $.parseJSON(user);
-	sagenb.chat.append_message("meta leave",'<b>'+sagenb.chat.colorize_nickname(user)+'</b> '+ gettext('left'));
+	sagenb.chat.append_message("meta leave",'<b>'+sagenb.chat.colorize_nickname(user)+'</b> ist gegangen.');
 }
 
 sagenb.chat.append_message = function(classes, text) {
