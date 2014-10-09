@@ -69,7 +69,23 @@ sagenb.worksheetapp.worksheet = function() {
 		if(_this.published_mode) return false;
 		_this.new_cell_all_after(response);
 	});
-	
+
+	_this.socket.on('new_text_cell_after', function (response){
+		if(_this.published_mode) return false;
+		_this.new_text_cell_all_after(response);
+	});
+
+	_this.socket.on('new_text_cell_before', function (response){
+		if(_this.published_mode) return false;
+		_this.new_text_cell_all_before(response);
+	});
+
+
+	_this.socket.on('new_cell_before', function (response){
+		if(_this.published_mode) return false;
+		_this.new_cell_all_before(response);
+	});
+
 	_this.socket.on('delete_cell', function(id){
 		if(_this.published_mode) return false;
 		$("#cell_" + id).parent().next().detach();
@@ -323,6 +339,26 @@ sagenb.worksheetapp.worksheet = function() {
 	};
 
 	//// NEW CELL /////
+	_this.new_cell_all_before = function(response) {
+		if(_this.published_mode) return false;
+		var X = decode_response(response);
+		var new_cell = new sagenb.worksheetapp.cell(X.new_id);
+		var a = $("#cell_" + X.id).parent().prev();
+		var wrapper = $("<div></div>").addClass("cell_wrapper").insertAfter(a);
+		new_cell.worksheet = _this;
+		new_cell.update(wrapper);
+		
+		// add the next new cell button
+		_this.add_new_cell_button_after(wrapper);
+		
+		// wait for the render to finish
+		setTimeout(new_cell.focus, 50);
+		
+		_this.cells[new_cell.id] = new_cell;
+
+	};
+
+
 	_this.new_cell_before = function(id) {
 		if(_this.published_mode) return;
 		sagenb.async_request(_this.worksheet_command("new_cell_before"), function(status, response) {
@@ -330,25 +366,14 @@ sagenb.worksheetapp.worksheet = function() {
 				$(".alert_locked").show();
 				return;
 			}
-			
-			var X = decode_response(response);
-			var new_cell = new sagenb.worksheetapp.cell(X.new_id);
-			var a = $("#cell_" + X.id).parent().prev();
-			var wrapper = $("<div></div>").addClass("cell_wrapper").insertAfter(a);
-			new_cell.worksheet = _this;
-			new_cell.update(wrapper);
-			
-			// add the next new cell button
-			_this.add_new_cell_button_after(wrapper);
-			
-			// wait for the render to finish
-			setTimeout(new_cell.focus, 50);
-			
-			_this.cells[new_cell.id] = new_cell;
+            else{
+                _this.new_cell_all_before(response);
+                _this.socket.emit('new_cell_before', response);
+            }
+		
 		},
-		{
-			id: id
-		});
+		{id: id}
+		);
 	};
 
     _this.new_cell_all_after = function(response) {
@@ -384,60 +409,71 @@ sagenb.worksheetapp.worksheet = function() {
         {id: id}
         );
     }
-	
+
+	_this.new_text_cell_all_before = function(response) {
+		if(_this.published_mode) return;
+		var X = decode_response(response);
+		var new_cell = new sagenb.worksheetapp.cell(X.new_id);
+		var a = $("#cell_" + X.id).parent().prev();
+		var wrapper = $("<div></div>").addClass("cell_wrapper").insertAfter(a);
+		new_cell.worksheet = _this;
+		new_cell.update(wrapper);
+		
+		// add the next new cell button
+		_this.add_new_cell_button_after(wrapper);
+		
+		// wait for the render to finish
+		setTimeout(new_cell.focus, 50);
+		
+		_this.cells[new_cell.id] = new_cell;
+	};
+
 	_this.new_text_cell_before = function(id) {
 		if(_this.published_mode) return;
 		sagenb.async_request(_this.worksheet_command("new_text_cell_before"), function(status, response) {
 			if(response === "locked") {
 				$(".alert_locked").show();
 				return;
+			}else{
+					_this.new_text_cell_all_before(response);
+					_this.socket.emit('new_text_cell_before', response);
 			}
 			
-			var X = decode_response(response);
-			var new_cell = new sagenb.worksheetapp.cell(X.new_id);
-			var a = $("#cell_" + X.id).parent().prev();
-			var wrapper = $("<div></div>").addClass("cell_wrapper").insertAfter(a);
-			new_cell.worksheet = _this;
-			new_cell.update(wrapper);
-			
-			// add the next new cell button
-			_this.add_new_cell_button_after(wrapper);
-			
-			// wait for the render to finish
-			setTimeout(new_cell.focus, 50);
-			
-			_this.cells[new_cell.id] = new_cell;
 		},
-		{
-			id: id
-		});
+		{id: id});
 	};
+
+	_this.new_text_cell_all_after = function(response) {
+		if(_this.published_mode) return;
+		var X = decode_response(response);
+		var new_cell = new sagenb.worksheetapp.cell(X.new_id);
+		var a = $("#cell_" + X.id).parent().next();
+		var wrapper = $("<div></div>").addClass("cell_wrapper").insertAfter(a);
+		new_cell.worksheet = _this;
+		new_cell.update(wrapper);
+			
+		// add the next new cell button
+		_this.add_new_cell_button_after(wrapper);
+		
+		// wait for the render to finish
+		setTimeout(new_cell.focus, 50);
+			
+		_this.cells[new_cell.id] = new_cell;
+	};
+
 	_this.new_text_cell_after = function(id) {
 		if(_this.published_mode) return;
 		sagenb.async_request(_this.worksheet_command("new_text_cell_after"), function(status, response) {
 			if(response === "locked") {
 				$(".alert_locked").show();
 				return;
+			}else{
+					_this.new_text_cell_all_after(response);
+                	_this.socket.emit('new_text_cell_after', response);
 			}
 			
-			var X = decode_response(response);
-			var new_cell = new sagenb.worksheetapp.cell(X.new_id);
-			var a = $("#cell_" + X.id).parent().next();
-			var wrapper = $("<div></div>").addClass("cell_wrapper").insertAfter(a);
-			new_cell.worksheet = _this;
-			new_cell.update(wrapper);
-			
-			// add the next new cell button
-			_this.add_new_cell_button_after(wrapper);
-			
-			// wait for the render to finish
-			setTimeout(new_cell.focus, 50);
-			
-			_this.cells[new_cell.id] = new_cell;
 		},
-		{
-			id: id
-		});
+		{id: id});
 	};
 	
 	

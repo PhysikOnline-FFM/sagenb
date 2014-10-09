@@ -1284,6 +1284,15 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
     def on_new_cell_after(self, response):
         self.emit_to_room(self.room,'new_cell_after', response)
 
+    def on_new_text_cell_after(self, response):
+        self.emit_to_room(self.room,'new_text_cell_after', response)
+
+    def on_new_text_cell_before(self, response):
+        self.emit_to_room(self.room,'new_text_cell_before', response)
+
+    def on_new_cell_before(self, response):
+        self.emit_to_room(self.room,'new_cell_before', response)
+
     def on_delete_cell(self, cell_id):
         self.emit('delete_cell', cell_id)
         self.emit_to_room(self.room,'delete_cell', cell_id)
