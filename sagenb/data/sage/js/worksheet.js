@@ -131,7 +131,24 @@ sagenb.worksheetapp.worksheet = function() {
 		if(_this.published_mode) return false;
         _this.cells[cid].on_cell_evaluate(username);
     });
-    
+
+	// a text cells edit mode has been canceled
+     _this.socket.on('text_cell_cancel', function (cid, input){
+		if(_this.published_mode) return false;
+        _this.cells[cid].on_text_cell_cancel(input);
+    });
+
+	// a text cell has been saved by another user
+	_this.socket.on('text_cell_save', function (cid, input){
+		if(_this.published_mode) return false;
+        _this.cells[cid].on_text_cell_save(input);
+    });
+
+	// another user started editing a text cell
+	_this.socket.on('text_cell_startedit', function (cid){
+		if(_this.published_mode) return false;
+        _this.cells[cid].on_text_cell_startedit();
+    });
 	///////////// COMMANDS ////////////
 	_this.worksheet_command = function(cmd) {
 		/*

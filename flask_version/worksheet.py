@@ -412,7 +412,7 @@ def worksheet_delete_cell(worksheet):
     """
     r = {}
     r['id'] = id = get_cell_id()
-    if len(worksheet.compute_cell_id_list()) <= 1:
+    if len(worksheet.cell_list()) <= 1:
         r['command'] = 'ignore'
     else:
         prev_id = worksheet.delete_cell_with_id(id)
@@ -1321,6 +1321,16 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
     #this message will be sent every time an input cell gets changed (every Keypress on focus)
     def on_cell_input_changed(self, cell_id, input):
         self.emit_to_room(self.room, 'cell_input_changed', cell_id, input)
+
+    def on_text_cell_cancel(self, cell_id, input):
+        self.emit_to_room(self.room, 'text_cell_cancel', cell_id, input)
+
+    def on_text_cell_save(self, cell_id, input):
+        self.emit_to_room(self.room, 'text_cell_save', cell_id, input)
+    
+    def on_text_cell_startedit(self, cell_id):
+        self.emit_to_room(self.room, 'text_cell_startedit', cell_id)
+
 
     # evaluate handler
     # this function is not needed anymore because the server handles this now

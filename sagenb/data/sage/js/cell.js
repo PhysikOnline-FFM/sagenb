@@ -394,9 +394,9 @@ sagenb.worksheetapp.cell = function(id) {
 										"<div class=\"edit_text\">" + 
 											"<textarea name=\"text_cell_textarea_" + _this.id + "\" id=\"text_cell_textarea_" + _this.id + "\">" + _this.input + "</textarea>" + 
 											"<div class=\"buttons\">" + 
-												"<button class=\"btn btn-danger delete_button pull-left\">Delete</button>" + 
-												"<button class=\"btn cancel_button\">Cancel</button>" + 
-												"<button class=\"btn btn-primary save_button\">Save</button>" + 
+												"<button class=\"btn btn-danger delete_button pull-left\">Löschen</button>" + 
+												"<button class=\"btn cancel_button\">Abbrechen</button>" + 
+												"<button class=\"btn btn-primary save_button\">Speichern</button>" + 
 											"</div>" + 
 										"</div>" + 
 									"</div> <!-- /cell -->");
@@ -408,21 +408,31 @@ sagenb.worksheetapp.cell = function(id) {
 					mode: "exact",
 					elements: ("text_cell_textarea_" + _this.id),
 					
-					plugins: "advlist,inlinepopups,lists,media,paste,searchreplace,table,autolink,",
+					//plugins: "advlist,lists,inlinepopups,media,paste,searchreplace,table,autolink,",
+					plugins: "advlist,lists,media,paste,searchreplace,table,autolink,",
 
-					theme : "advanced",
-					theme_advanced_toolbar_location : "top",
-					theme_advanced_toolbar_align : "left",
-					theme_advanced_statusbar_location : "bottom",
-					theme_advanced_buttons1 : "formatselect,fontselect,fontsizeselect,bold,italic,underline,strikethrough,forecolor,backcolor,|,bullist,numlist,|,undo,redo,search,pastetext,pasteword",
-					theme_advanced_buttons2 : "justifyleft,justifycenter,justifyright,justifyfull,outdent,indent,|,charmap,|,table,tablecontrols,|,code,|,link,image,media,unlink",
-					theme_advanced_buttons3 : "",
-					theme_advanced_resizing : true,
-					theme_advanced_show_current_color: true,
-					theme_advanced_default_background_color : "#FFCC99",
+					theme : "modern",
+					language: 'de',
+					//theme_advanced_toolbar_location : "top",
+//					theme_advanced_toolbar_align : "left",
+//					theme_advanced_statusbar_location : "bottom",
+//					theme_advanced_buttons1 : "formatselect,fontselect,fontsizeselect,bold,italic,underline,strikethrough,forecolor,backcolor,|,bullist,numlist,|,undo,redo,search,pastetext,pasteword",
+//					theme_advanced_buttons2 : "justifyleft,justifycenter,justifyright,justifyfull,outdent,indent,|,charmap,|,table,tablecontrols,|,code,|,link,image,media,unlink",
+//					theme_advanced_buttons3 : "",
+//					theme_advanced_resizing : true,
+//					theme_advanced_show_current_color: true,
+//					theme_advanced_default_background_color : "#FFCC99",
+
+					setup: function(editor) {
+							editor.on('change', function(e) {
+//									console.log('change event', e);
+//									alert(editor.getContent());
+									_this.socket.emit('cell_input_changed', _this.id, editor.getContent());
+							});
+					},
 
 					width: "100%",
-					height: "300"
+					height: "300"					
 				});
 				
 				var $_this = $("#cell_" + _this.id);
@@ -444,6 +454,7 @@ sagenb.worksheetapp.cell = function(id) {
 						
 						// add the edit class
 						$("#cell_" + _this.id).addClass("edit");
+						_this.socket.emit('text_cell_startedit', _this.id);
 					}
 				});
 				
@@ -458,6 +469,7 @@ sagenb.worksheetapp.cell = function(id) {
 					
 					// remove the edit class
 					$("#cell_" + _this.id).removeClass("edit");
+					_this.socket.emit('text_cell_cancel', _this.id, _this.input);
 				});
 				
 				$_this.find(".save_button").click(function(e) {
@@ -475,6 +487,7 @@ sagenb.worksheetapp.cell = function(id) {
 					
 					// remove the edit class
 					$("#cell_" + _this.id).removeClass("edit");
+					_this.socket.emit('text_cell_save', _this.id, _this.input);
 				});
 			}
 		}
@@ -699,7 +712,7 @@ sagenb.worksheetapp.cell = function(id) {
 		}
 		
 		// inform all clients about changed input
-        _this.socket.emit("cell_input_changed", _this.id, _this.input);
+		// _this.socket.emit("cell_input_changed", _this.id, _this.input);
 		// update the server input property
         sagenb.async_request(_this.worksheet.worksheet_command("eval"), sagenb.generic_callback, {
 			save_only: 1,
@@ -1319,7 +1332,26 @@ sagenb.worksheetapp.cell = function(id) {
         //console.log("cell.js: wss//on_cell_evaluate");
         _this.set_output_loading();
     }
-    
+   
+	_this.on_text_cell_cancel = function(input){
+       _this.input = input;
+		var ed = tinyMCE.get("text_cell_textarea_" + _this.id);
+		ed.setContent(input);
+		$("#cell_" + _this.id).removeClass("edit");
+   };
+
+	_this.on_text_cell_save = function(input){
+       _this.input = input;
+		var ed = tinyMCE.get("text_cell_textarea_" + _this.id);
+		//TODO: Das funktioniert hier noch nicht!
+		//$_this.find(".view_text").html(_this.input);
+		//MathJax.Hub.Queue(["Typeset", MathJax.Hub, $_this.find(".view_text")[0]]);
+		$("#cell_" + _this.id).removeClass("edit");
+   };
+	
+	_this.on_text_cell_startedit = function(){
+		$("#cell_" + _this.id).addClass("edit");
+   };
     /////// Locking functions ///////
     _this.lock_cell = function(username){
         // DOM Manipulation
@@ -1358,10 +1390,17 @@ sagenb.worksheetapp.cell = function(id) {
    _this.set_cell_input = function(input){
        _this.input = input;
        _this.change_by_collab = true;
-       _this.codemirror.setValue(_this.input);
+
+	   if(_this.is_evaluate_cell) {
+       	_this.codemirror.setValue(_this.input);
+	   }else{
+		var ed = tinyMCE.get("text_cell_textarea_" + _this.id);
+		ed.setContent(input);
+	   }
 
    };
-	
+
+
 	/////// OUTPUT ///////
 	_this.delete_output = function() {
 		if(_this.worksheet.published_mode) return;
@@ -1411,7 +1450,7 @@ sagenb.worksheetapp.cell = function(id) {
 				if(overprevcell && overprevcell.is_evaluate_cell) {
 						overprevcell.focus();
 				} else {
-						prevcell.focus();
+						//prevcell.focus();
 				}
 			}
 		}else{
@@ -1424,7 +1463,7 @@ sagenb.worksheetapp.cell = function(id) {
 								if(overnextcell && overnextcell.is_evaluate_cell) {
 										overnextcell.focus();
 								} else {
-										nextcell.focus();
+										//nextcell.focus();
 								}
 						}
 				}
