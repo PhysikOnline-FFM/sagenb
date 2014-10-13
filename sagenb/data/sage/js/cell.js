@@ -260,8 +260,21 @@ sagenb.worksheetapp.cell = function(id) {
 				sagenb.async_request(_this.worksheet.worksheet_command('move_cell_down'), sagenb.generic_callback(function(status, response) {
 					// Optically move cell down
 					if(status=='success'){
-						alert('Moved cell down!');
-					}
+
+						var $nextcell = $("#cell_" + _this.id).parent().next().next().find(".cell");
+						if($nextcell.length > 0) {
+							// we're not the last cell
+							var nextcell_id = parseInt($nextcell.attr("id").substring(5));
+
+							var $nextcellwrapper = $("#cell_"+nextcell_id).parent();
+							var $thiscellwrapper = $("#cell_"+_this.id).parent();
+							var $nextinsertline = $thiscellwrapper.next();
+							$nextcellwrapper.insertBefore($thiscellwrapper);
+							$nextinsertline.insertBefore($thiscellwrapper);
+
+						}
+
+        			}
 				}), {
 					id: toint(_this.id)
 				});
@@ -273,7 +286,20 @@ sagenb.worksheetapp.cell = function(id) {
 				sagenb.async_request(_this.worksheet.worksheet_command('move_cell_up'), sagenb.generic_callback(function(status, response) {
 					// Optically move cell down
 					if(status=='success'){
-						alert('Moved cell up!');
+
+						var $prevcell = $("#cell_" + _this.id).parent().prev().prev().find(".cell");
+						if($prevcell.length > 0) {
+							// we're not the last cell
+							var prevcell_id = parseInt($prevcell.attr("id").substring(5));
+
+							var $prevcellwrapper = $("#cell_"+prevcell_id).parent();
+							var $thiscellwrapper = $("#cell_"+_this.id).parent();
+							var $previnsertline = $prevcellwrapper.next();
+							$thiscellwrapper.insertBefore($prevcellwrapper);
+							$previnsertline.insertBefore($prevcellwrapper);
+
+						}
+
 					}
 				}), {
 					id: toint(_this.id)
