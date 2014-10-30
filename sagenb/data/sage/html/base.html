@@ -96,17 +96,19 @@
 		</div>
 
 		{% block main %}
-		<div class="container-fluid"><!-- was: non fluid -->
+		<div class="container-fluid" style="margin-top: 65px"><!-- was: non fluid -->
 			{% block container %}
 				{% block before_page %}
 				{% endblock before_page %}
 
 			<div class="row">
-			<div class="the_page col-md-12">
-				{% block page %}
-				{% endblock page %}
-			</div> <!-- /the_page -->
+			<div class="col-md-12 the_page_container">
+				<div class="the_page">
+					{% block page %}
+					{% endblock page %}
+				</div> <!-- /the_page -->
 			
+			</div>
 			{# fuer mehr columns, genutzt zB vom Chat #}
 			{% block container_columns %}
 			{% endblock %}

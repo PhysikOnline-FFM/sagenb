@@ -18,16 +18,18 @@ sagenb.chat.init = function(worksheet) {
 	$.each(chat_messages, function(){ sagenb.chat.socket.on(this, sagenb.chat["on_"+this]); });
 
 	
-	// header button
+	// header (=navigation) button
 	sagenb.chat.header_button = $('<li><a href="#chat_window"><span class="glyphicon glyphicon-comment"></span>&nbsp;<span>'+gettext('Chat')+'</span></a></li>');
 	sagenb.chat.header_button.find('a').click(sagenb.chat.toggle);
     
 	// put it next to the user button
 	$("#user_navbar_area").find("ul.nav").prepend(sagenb.chat.header_button);
     
-	sagenb.chat.message_box = $('<div id="chat_message_box"/>');
-
-	sagenb.chat.message_box.appendTo("body");
+	// Die box im Chatmessage-Fenster wo der chat reinkommt.
+	sagenb.chat.message_area = $("#chat-message-box .message_area"); //$('<div id="chat_message_box"/>');
+	//sagenb.chat.message_box.appendTo("body");
+	
+	/*
         sagenb.chat.dialog = sagenb.chat.message_box.dialog({
             autoOpen: false,
             dialogClass: "chat",
@@ -43,10 +45,11 @@ sagenb.chat.init = function(worksheet) {
             close: function(e,ui) { sagenb.chat.header_button.removeClass("active"); },
             open: function(e,ui) { sagenb.chat.header_button.addClass("active"); },
         });
+        */
 	
-	$(".chat").find(".ui-dialog-titlebar").after('<div id="chat_userlist_box"></div>');
+	//$(".chat").find(".ui-dialog-titlebar").after('<div id="chat_userlist_box"></div>');
 	sagenb.chat.userlist_box = $("#chat_userlist_box");
-	$(".chat").find(".ui-dialog-buttonpane").prepend('<textarea id="chat_input_text"></textarea>');
+	//$(".chat").find(".ui-dialog-buttonpane").prepend('<textarea id="chat_input_text"></textarea>');
 	sagenb.chat.input_area = $("#chat_input_text");
 	
 	// keypress handling
@@ -58,8 +61,9 @@ sagenb.chat.init = function(worksheet) {
 	});
 	
 	// jqueryUI-Button durch Twitter button ersetzen
-	$(".chat").find(".ui-dialog-buttonset").remove();
-	$(".chat").find(".ui-dialog-buttonpane").append('<button class="btn btn-small" type="button">'+gettext('Send')+'</button>').click(sagenb.chat.send_message);
+	//$(".chat").find(".ui-dialog-buttonset").remove();
+	//$(".chat").find(".ui-dialog-buttonpane").append('<button class="btn btn-small" type="button">'+gettext('Send')+'</button>').click(sagenb.chat.send_message);
+	$("#chat_send_button").click(sagenb.chat.send_message);
 	
 	// Log into chat
 	sagenb.chat.socket.emit('join', {'worksheet': worksheet.filename, 'nickname': sagenb.nickname});
@@ -76,7 +80,7 @@ sagenb.chat.alert = function(text) {
 		'</div>').appendTo(".alert_container_inner");
         
 		sagenb.chat.alert_box.find('.open-chat').click(function(){
-			sagenb.chat.message_box.dialog('open');
+			sagenb.chat.chat.show_chat_box();
 			sagenb.chat.alert_box.fadeOut(1); // aka hide()
 		});
 		
@@ -88,9 +92,33 @@ sagenb.chat.alert = function(text) {
 };
 
 sagenb.chat.toggle = function() {
-	sagenb.chat.message_box.dialog( sagenb.chat.header_button.hasClass("active") ? 'close' : 'open');
-	$(this).blur(); // FIXME klappt nicht gut
+	// Testweise aus...
+	//sagenb.chat.message_box.dialog( sagenb.chat.header_button.hasClass("active") ? 'close' : 'open');
+
+	// testweise alternativ: Die Seitenleiste auf/einklappen.
+	if(sagenb.chat.is_open())
+		sagenb.chat.hide_chat_box();
+	else	sagenb.chat.show_chat_box();
+	
 	return false; // nicht aktiv werden (der link)
+}
+
+sagenb.chat.is_open = function() {
+	return sagenb.chat.header_button.hasClass("active");
+}
+
+sagenb.chat.hide_chat_box = function() {
+	// hide chat box
+	$(".the_page_container").switchClass('col-md-8', 'col-md-12');
+	$(".chat-message-box-container").switchClass('col-md-4', 'col-md-0');
+	sagenb.chat.header_button.removeClass("active");
+}
+
+sagenb.chat.show_chat_box = function() {
+	// show chat box
+	$(".the_page_container").switchClass('col-md-12', 'col-md-8');
+	$(".chat-message-box-container").switchClass('col-md-0', 'col-md-4');
+	sagenb.chat.header_button.addClass("active");
 }
 
 sagenb.chat.send_message = function() {
@@ -150,13 +178,13 @@ sagenb.chat.append_message = function(classes, text) {
 	user_was_at_bottom = true
 
 	// push content and store the line element it for return
-	message = $('<p class="line '+classes+'">'+text+'</p>').appendTo(sagenb.chat.message_box);
+	message = $('<p class="line '+classes+'">'+text+'</p>').appendTo(sagenb.chat.message_area);
 
 	if(user_was_at_bottom)
 		// user was already at bottom -.-
-		sagenb.chat.message_box[0].scrollTop = sagenb.chat.message_box[0].scrollHeight;
+		sagenb.chat.message_area[0].scrollTop = sagenb.chat.message_area[0].scrollHeight;
 	
-	if(!sagenb.chat.message_box.dialog("isOpen")) {
+	if(!sagenb.chat.is_open) {
 		// message dialog not open, show a notificiation
 		sagenb.chat.alert(text);
 	}
@@ -164,7 +192,8 @@ sagenb.chat.append_message = function(classes, text) {
 	return message;
 }
 
-
+// Brauchts nicht mehr
+/*
 // Chat movement while SCROLLING
 $(window).scroll(function(){
 	//Animated version (The number specifies the duration of the animation in ms)
@@ -173,3 +202,4 @@ $(window).scroll(function(){
 	//Non-Animated version
 	$(".chat").css({"margin-top": ($(window).scrollTop()) + "px", "margin-left":($(window).scrollLeft()) + "px"});
 });
+*/

@@ -35,11 +35,11 @@
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ gettext("View")}} <b class="caret"></b></a>
 				<ul class="dropdown-menu">
-						<li><a href="#"><label for="typesetting_checkbox" class="checkbox"><input name="typesetting_checkbox" type="checkbox" id="typesetting_checkbox"> {{ gettext("Typesetting") }}</label></a></li>
-					<li><a href="#"><label for="line_numbers_checkbox" class="checkbox"><input name="line_numbers_checkbox" type="checkbox" id="line_numbers_checkbox"> {{ gettext("Line numbers") }}</label></a></li>
+						<li><a href="#"><label for="typesetting_checkbox"><input name="typesetting_checkbox" type="checkbox" id="typesetting_checkbox"> {{ gettext("Typesetting") }}</label></a></li>
+					<li><a href="#"><label for="line_numbers_checkbox"><input name="line_numbers_checkbox" type="checkbox" id="line_numbers_checkbox"> {{ gettext("Line numbers") }}</label></a></li>
 					<li class="divider"></li>
-					<li><a href="#"><label class="radio"><input name="cell_mode_radio" type="radio" id="single_cell_mode_radio" value="single"> {{ gettext("Single-cell Mode") }}</label></a></li>
-					<li><a href="#"><label class="radio"><input name="cell_mode_radio" type="radio" id="multi_cell_mode_radio" value="multi" checked> {{ gettext("Multi-cell Mode") }}</label></a></li>
+					<li><a href="#"><label for="single_cell_mode_radio"><input name="cell_mode_radio" type="radio" id="single_cell_mode_radio" value="single"> {{ gettext("Single-cell Mode") }}</label></a></li>
+					<li><a href="#"><label for="multi_cell_mode_radio"><input name="cell_mode_radio" type="radio" id="multi_cell_mode_radio" value="multi" checked> {{ gettext("Multi-cell Mode") }}</label></a></li>
 				</ul>
 			</li>
 			<li class="dropdown">
@@ -56,7 +56,7 @@
 					<li><a href="#" id="show_all_output"><i class="glyphicon glyphicon-eye-open"></i> {{ gettext("Show all output") }}</a></li>
 					<li><a href="#" id="delete_all_output"><i class="glyphicon glyphicon-remove"></i> {{ gettext("Delete all output") }}</a></li>
 					<li class="divider"></li>
-					<li><a href="#"><label for="continue_computation_checkbox" class="checkbox"><input name="continue_computation_checkbox" type="checkbox" id="continue_computation_checkbox"> {{ gettext("Continue computation on leave") }}</label></a></li>
+					<li><a href="#"><label for="continue_computation_checkbox"><input name="continue_computation_checkbox" type="checkbox" id="continue_computation_checkbox"> {{ gettext("Continue computation on leave") }}</label></a></li>
 				</ul>
 			</li>
 			<li><a href="#data_modal" data-toggle="modal">{{ gettext("Data") }}</a></li>
@@ -98,6 +98,25 @@
 		<input type="text" />
 	</div>
 {% endblock page %}
+
+{% block container_columns %}
+	<div class="col-md-0 chat-message-box-container">
+		<div id="chat-message-box" class="panel panel-default"
+		   data-spy="affix" data-offset-top="65" data-offset-bottom="50">
+			<div class="panel-heading">
+				<h3 class="panel-title">Arbeitsblatt-Chat</h3>
+				<div id="chat_userlist_box"></div><!-- = "Kollaboratoren: ..." -->
+			</div>
+			<div class="panel-body message_area">
+			</div>
+			<div class="panel-footer">
+				<textarea id="chat_input_text"></textarea>
+				<br>
+				<button class="btn btn-small" id="chat_send_button" type="button">Senden</button>
+			</div>
+		</div>
+	</div>
+{% endblock container_columns %}
 
 {% block after_container %}
 	{% include 'html/modals/sharing_modal.html' %}

@@ -63,11 +63,18 @@ ul.dropdown-menu > li > a > label {
 	// bs3 styles deaktivieren:
 	
 	cursor: pointer;
+	font-weight: inherit;
 	
 	input {
 		margin: inherit !important;
 		position: relative !important;
 	}
+}
+
+ul.nav > li > a {
+	/* Bei aktiven Buttons nie eine gestrichelte Umrandung zeigen
+	   (besonders nervig bei chat an/aus-button) */
+	outline: none;
 }
 
 // Weitere Fixes, wo der Style nicht mehr richtig ist:
@@ -78,3 +85,10 @@ div.worksheet_name input {
 	font-weight: 500;
 	font-family: inherit;
 }
+
+// Ein LESS-Ingredient fuer die chatbox...
+.col-xs-0, .col-sm-0, .col-md-0, .col-lg-0 {
+	width: 0;
+	opacity: 0; // netter Effekt bei switchClass jQuery UI
+}
+
