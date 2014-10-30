@@ -996,7 +996,9 @@ sagenb.worksheetapp.worksheet = function() {
 		/* Notes on hotkeys: these don't work on all browsers consistently
 		but they are included in the best case scenario that they are all 
 		accepted. */
-		$(document).bind("keydown", sagenb.ctrlkey + "+N", function(evt) { _this.new_worksheet(); return false; });
+		// ICH HASSE DIESE NEUE-FENSTER-ABFANGFUNKTION! AUSKOMMENTIERT!
+		//$(document).bind("keydown", sagenb.ctrlkey + "+N", function(evt) { _this.new_worksheet(); return false; });
+		
 		$(document).bind("keydown", sagenb.ctrlkey + "+S", function(evt) { _this.save(); return false; });
 		//$(document).bind("keydown", sagenb.ctrlkey + "+W", function(evt) { _this.close(); return false; });
 		$(document).bind("keydown", sagenb.ctrlkey + "+P", function(evt) { _this.print(); return false; });

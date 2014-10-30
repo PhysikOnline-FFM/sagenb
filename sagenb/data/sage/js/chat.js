@@ -18,17 +18,14 @@ sagenb.chat.init = function(worksheet) {
 	$.each(chat_messages, function(){ sagenb.chat.socket.on(this, sagenb.chat["on_"+this]); });
 
 	
-    // header button
-    sagenb.chat.header_button = $(
-        '<div class="btn-group pull-right nav">' +
-            '<a class="btn" href="#"><i class="icon-comment"></i>&nbsp;<span>'+gettext('Chat')+'</span></a>' +
-        '</div>'
-    ).find('.btn').click(sagenb.chat.toggle);
+	// header button
+	sagenb.chat.header_button = $('<li><a href="#chat_window"><span class="glyphicon glyphicon-comment"></span>&nbsp;<span>'+gettext('Chat')+'</span></a></li>');
+	sagenb.chat.header_button.find('a').click(sagenb.chat.toggle);
     
 	// put it next to the user button
-	$("#user_navbar_area").find(".btn-group").first().prepend(sagenb.chat.header_button);
+	$("#user_navbar_area").find("ul.nav").prepend(sagenb.chat.header_button);
     
-    sagenb.chat.message_box = $('<div id="chat_message_box"/>');
+	sagenb.chat.message_box = $('<div id="chat_message_box"/>');
 
 	sagenb.chat.message_box.appendTo("body");
         sagenb.chat.dialog = sagenb.chat.message_box.dialog({

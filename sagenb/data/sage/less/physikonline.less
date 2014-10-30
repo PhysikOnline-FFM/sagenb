@@ -34,3 +34,47 @@
 		padding-bottom: 0;
 	}
 }
+
+// Startseite
+.sponsor-min-height {
+	min-height: 80px;
+}
+
+// Seit Bootstrap3 gibts einige Menu-Elementtypen nicht mehr, die wir jetzt "simulieren":
+.quasi-nav-element() {
+	// von bs3: .dropdown-menu > li > a
+	clear: both;
+	color: #333;
+	display: block;
+	font-weight: 400;
+	line-height: 1.42857;
+	padding: 3px 20px;
+	white-space: nowrap;
+
+}
+
+li.nav-header {
+	.quasi-nav-element;
+	color: #7b7b7b;
+	margin-top: .5em;
+}
+
+ul.dropdown-menu > li > a > label {
+	// bs3 styles deaktivieren:
+	
+	cursor: pointer;
+	
+	input {
+		margin: inherit !important;
+		position: relative !important;
+	}
+}
+
+// Weitere Fixes, wo der Style nicht mehr richtig ist:
+div.worksheet_name input {
+	// soll style von h1 entsprechen
+	font-size: 42px;
+	line-height: 48px;
+	font-weight: 500;
+	font-family: inherit;
+}

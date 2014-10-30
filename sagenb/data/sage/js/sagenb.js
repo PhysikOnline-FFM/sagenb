@@ -10,6 +10,7 @@ var sagenb = {};
 sagenb.init = function() {
 	// update username
 	if(sagenb.username === "guest") {
+		// TODO: Bootstrap3-Anpassung wie in Zeilen 21-39
 		$("#user_navbar_area").html(
 '<div class="pull-right nav"><div class="btn-group">' +
 	'<a href="/login" class="btn">' + gettext('Login') + '</a>' +
@@ -18,24 +19,24 @@ sagenb.init = function() {
 	}
 	else {
 		$("#user_navbar_area").html(
-'<div class="pull-right nav"><div class="btn-group">' +
-	'<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">' +
-		'<i class="icon-user"></i> <span id="username">' + sagenb.nickname + ' </span>' +
-		'<span class="caret"></span>' +
-	'</a>' +
-	'<ul class="dropdown-menu">' +
-		'<li><a href="/" id="home"><i class="icon-home"></i> ' + gettext('Home') + '</a></li>' +
-		'<li><a href="/poak" id="published"><i class="icon-share"></i> ' + gettext('Published') + '</a></li>' +
-		'<li><a href="#" id="log"><i class="icon-list"></i> ' + gettext('Log') + '</a></li>' +
-		'<li class="nav-header">' + gettext('POKAL Hilfe') + '</li>' +
-		'<li><a href="#" id="help"><i class="icon-book"></i> ' + gettext('Help') + '</a></li>' +
-		'<li><a href="#" id="report_a_problem"><i class="icon-exclamation-sign"></i> ' + gettext('Report a Problem') + '</a></li>' +
-		'<li class="divider"></li>' +
-		'<li><a href="/settings" id="settings"><i class="icon-wrench"></i> ' + gettext('Settings') + '</a></li>' +
-		'<li><a href="/logout" id="sign_out"><i class="icon-off"></i> ' + gettext('Sign out') + '</a></li>' +
-	'</ul>' +
-'</div></div>'
-		);
+'<ul class="nav navbar-nav navbar-right">' + 
+'<li class="dropdown">' + 
+'<a href="#usermenu" class="dropdown-toggle" data-toggle="dropdown">' + 
+	'<span class="glyphicon glyphicon-user"></span> <span id="username">' + sagenb.nickname + ' </span>' +
+	'<span class="caret"></span>' +
+'</a>' +
+'<ul class="dropdown-menu" role="menu">' + 
+	'<li><a href="/" id="home"><i class="icon-home"></i> ' + gettext('Home') + '</a></li>' +
+	'<li><a href="/poak" id="published"><i class="icon-share"></i> ' + gettext('Published') + '</a></li>' +
+	'<li><a href="#" id="log"><i class="icon-list"></i> ' + gettext('Log') + '</a></li>' +
+	'<li class="nav-header">' + gettext('POKAL Hilfe') + '</li>' +
+	'<li><a href="#" id="help"><i class="icon-book"></i> ' + gettext('Help') + '</a></li>' +
+	'<li><a href="#" id="report_a_problem"><i class="icon-exclamation-sign"></i> ' + gettext('Report a Problem') + '</a></li>' +
+	'<li class="divider"></li>' +
+	'<li><a href="/settings" id="settings"><i class="icon-wrench"></i> ' + gettext('Settings') + '</a></li>' +
+	'<li><a href="/logout" id="sign_out"><i class="icon-off"></i> ' + gettext('Sign out') + '</a></li>' +
+'</ul>' +
+'</li></ul>');
 	}
 	
 	/* swap control/command on mac operating system */
