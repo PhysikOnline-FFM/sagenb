@@ -439,6 +439,8 @@ sagenb.worksheetapp.cell = function(id) {
 
 					theme : "modern",
 					language: 'de',
+					menubar: false,
+					statusbar: false,
 					//theme_advanced_toolbar_location : "top",
 //					theme_advanced_toolbar_align : "left",
 //					theme_advanced_statusbar_location : "bottom",
@@ -451,10 +453,20 @@ sagenb.worksheetapp.cell = function(id) {
 
 					setup: function(editor) {
 							editor.on('change', function(e) {
-//									console.log('change event', e);
+									console.log('change event', e);
 //									alert(editor.getContent());
 									_this.socket.emit('cell_input_changed', _this.id, editor.getContent());
 							});
+							editor.on('keyup', function(e) {
+									_this.socket.emit('cell_input_changed', _this.id, editor.getContent());
+						    });
+							editor.on('focus', function(e) {
+									_this.socket.emit("cell_focused", _this.id, sagenb.nickname);
+							});
+							editor.on('blur', function(e) {
+									_this.socket.emit("cell_released", _this.id, sagenb.username);
+							});
+
 					},
 
 					width: "100%",
@@ -1397,6 +1409,8 @@ sagenb.worksheetapp.cell = function(id) {
         $("#cell_" + _this.id + " .evaluate_button_container").hide();
         // change the codemirror mode
         _this.codemirror.setOption("readOnly", 'nocursor');
+		var ed = tinyMCE.get("text_cell_textarea_" + _this.id);
+		ed.attr('readonly', true);
     }
     
     _this.unlock_cell = function(){
@@ -1409,6 +1423,8 @@ sagenb.worksheetapp.cell = function(id) {
         //$("#cell_" + _this.id + " .evaluate_button_container").show(); << Not needed, because Eval-Button is hidden if cell has no focus.
         // change the codemirror mode
         _this.codemirror.setOption("readOnly", false);
+		var ed = tinyMCE.get("text_cell_textarea_" + _this.id);
+		ed.attr('readonly', false);
     }
     
     /////// INPUT ////////
