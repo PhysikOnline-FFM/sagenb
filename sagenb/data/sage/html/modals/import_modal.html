@@ -7,7 +7,6 @@
 {% block modal_content %}
 
 <div class="tabbable">
-
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="#upload_file_tab" data-toggle="tab">{{ gettext("Upload file") }}</a></li>
 		<li><a href="#from_url_tab" data-toggle="tab">{{ gettext("From URL") }}</a></li>
@@ -25,28 +24,23 @@
 	</div>
 
 	<div class="tab-content" style="padding-top: 10px">
-
 		<div class="tab-pane active" id="upload_file_tab">
 			<form class="form-horizontal" method="post" action="/upload_worksheet" name="upload" enctype="multipart/form-data" target="_blank">
 				<input type="hidden" name="url" value="">
-
 				<fieldset>
-
-					<div class="control-group">
-						<label class="control-label" for="file">{{ gettext("File") }}</label>
-						<div class="controls">
+					<div class="form-group">
+						<label class="col-md-4 col-lg-3 control-label" for="file">{{ gettext("File") }}</label>
+						<div class="col-md-8 col-lg-9">
 							<input class="input-file" id="file" name="file" type="file">
 						</div>
 					</div>
-
-					<div class="control-group">
-						<label class="control-label" for="name">{{ gettext("New name") }}</label>
-						<div class="controls">
-							<input type="text" class="input-xlarge" id="name" name="name">
+					<div class="form-group">
+						<label class="col-md-4 col-lg-3 control-label" for="name">{{ gettext("New name") }}</label>
+						<div class="col-md-8 col-lg-9">
+							<input type="text" class="form-control" id="name" name="name">
 							<p class="help-block">{{ gettext("Optional. Pick a new name for the worksheet.") }}</p>
 						</div>
 					</div>
-
 				</fieldset>
 			</form>
 		</div>
@@ -54,25 +48,21 @@
 		<div class="tab-pane" id="from_url_tab">
 			<form class="form-horizontal" method="post" action="/upload_worksheet" name="upload" enctype="multipart/form-data" target="_blank">
 				<input type="hidden" name="file" value="">
-
 				<fieldset>
-
-					<div class="control-group">
-						<label class="control-label" for="url">{{ gettext("URL") }}</label>
-						<div class="controls">
-							<input type="text" class="input-xlarge" id="url" name="url">
+					<div class="form-group">
+						<label class="col-md-4 col-lg-3 control-label" for="url">{{ gettext("URL") }}</label>
+						<div class="col-md-8 col-lg-9">
+							<input type="text" class="form-control" id="url" name="url">
 							<p class="help-block">{{ gettext("URL of the file you would like to import.") }}</p>
 						</div>
 					</div>
-
-					<div class="control-group">
-						<label class="control-label" for="name">{{ gettext("New name") }}</label>
-						<div class="controls">
-							<input type="text" class="input-xlarge" id="name" name="name">
+					<div class="form-group">
+						<label class="col-md-4 col-lg-3 control-label" for="name">{{ gettext("New name") }}</label>
+						<div class="col-md-8 col-lg-9">
+							<input type="text" class="form-control" id="name" name="name">
 							<p class="help-block">{{ gettext("Optional. Pick a new name for the worksheet.") }}</p>
 						</div>
 					</div>
-
 				</fieldset>
 			</form>
 		</div>
@@ -84,6 +74,6 @@
 {% endblock modal_content %}
 
 {% block modal_footer %}
-<a href="#" class="btn" data-dismiss="modal">{{ gettext("Cancel") }}</a>
+<a href="#" class="btn btn-default" data-dismiss="modal">{{ gettext("Cancel") }}</a>
 <a href="#" class="btn btn-primary" data-dismiss="modal">{{ gettext("Upload") }}</a>
 {% endblock modal_footer %}

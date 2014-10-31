@@ -1,6 +1,7 @@
 @background_color: #eee;
-@the_container_width: 1170px; /* vorher 700px */
+@the_container_width: 1170px;
 @title_font_size: 42px;
+@alert_width: 550px;
 
 /* MIXINS */
 .rounded-corners (@radius: 5px) {
@@ -21,12 +22,8 @@
   box-shadow: inset 0 0 @radius @radius @color;
 }
 
-
 body {
 	background-color: @background_color;
-
-	/* this is from the bootstrap template thing not sure if its necessary */
-	/* padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
 }
 
 .navbar {
@@ -44,7 +41,6 @@ body {
 }
 
 /* the no connection alert */
-@alert_width: 550px;
 .alert_container {
 	width: @alert_width;
 	margin-left: auto;
@@ -60,22 +56,13 @@ body {
 		/* otherwise codemirror shows through */
 		z-index: 2;
 	}
-	
-	.alert {
-		
-	}
 }
 
 // Styles angepasst fuer Bootstrap3
-
 .the_page {
-	//.rounded-corners(3px);
-	//.outer_shadow(3px, #ccc);
-	/* min-height: 700px; */
 	margin-bottom: 50px;
-	//margin-top: 65px;
 	background-color: #fff;
-	padding: 25px;
+	padding: 0 25px;
 	border: 1px solid #e7e7e7;
 }
 

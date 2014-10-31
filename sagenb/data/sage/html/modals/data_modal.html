@@ -7,7 +7,6 @@
 {% block modal_content %}
 
 <div class="tabbable">
-
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="#manage_tab" data-toggle="tab" id="manage_tab_button">{{ gettext("Manage") }}</a></li>
 		<li class="dropdown">
@@ -20,76 +19,62 @@
 			</ul>
 		</li>
 	</ul>
-
-	<div class="tab-content" style="padding-top: 0px">
-
+	<div class="tab-content">
 		<div class="tab-pane active" id="manage_tab">
 			<div id="data_list">
 				<ul class="nav nav-tabs nav-stacked">
-					
 				</ul>
 			</div>
 		</div>
-
 		<div class="tab-pane" id="new_file_tab">
 			<form class="form-horizontal" method="post" action="#" name="upload">
 				<fieldset>
-
-					<div class="control-group">
-						<label class="control-label" for="new">{{ gettext("Name") }}</label>
-						<div class="controls">
-							<input type="text" class="input-xlarge" id="new" name="new">
+					<div class="form-group">
+						<label class="col-md-4 col-lg-3 control-label" for="new">{{ gettext("Name") }}</label>
+						<div class="col-md-8 col-lg-9">
+							<input type="text" class="form-control" id="new" name="new">
 							<p class="help-block">{{ gettext("Pick a name for the file.") }}</p>
 						</div>
 					</div>
-
 				</fieldset>
 			</form>
 		</div>
-
 		<div class="tab-pane" id="upload_data_file_tab">
 			<form class="form-horizontal" method="post" action="upload_datafile" name="upload" enctype="multipart/form-data" encoding="multipart/form-data" target="upload_frame">
 				<fieldset>
-
-					<div class="control-group">
-						<label class="control-label" for="file">{{ gettext("File") }}</label>
-						<div class="controls">
+					<div class="form-group">
+						<label class="col-md-4 col-lg-3 control-label" for="file">{{ gettext("File") }}</label>
+						<div class="col-md-8 col-lg-9">
 							<input class="input-file" id="file" name="file" type="file">
 						</div>
 					</div>
-
-					<div class="control-group">
-						<label class="control-label" for="name">{{ gettext("New name") }}</label>
-						<div class="controls">
-							<input type="text" class="input-xlarge" id="name" name="name">
+					<div class="form-group">
+						<label class="col-md-4 col-lg-3 control-label" for="name">{{ gettext("New name") }}</label>
+						<div class="col-md-8 col-lg-9">
+							<input type="text" class="form-control" id="name" name="name">
 							<p class="help-block">{{ gettext("Optional. Pick a new name for the file.") }}</p>
 						</div>
 					</div>
-
 				</fieldset>
 			</form>
 		</div>
-
 		<div class="tab-pane" id="file_from_url_tab">
 			<form class="form-horizontal" method="post" action="#" name="upload">
 				<fieldset>
-
-					<div class="control-group">
-						<label class="control-label" for="url">{{ gettext("URL") }}</label>
-						<div class="controls">
-							<input type="text" class="input-xlarge" id="url" name="url">
+					<div class="form-group">
+						<label class="col-md-4 col-lg-3 control-label" for="url">{{ gettext("URL") }}</label>
+						<div class="col-md-8 col-lg-9">
+							<input type="text" class="form-control" id="url" name="url">
 							<p class="help-block">{{ gettext("URL of the file you would like to import.") }}</p>
 						</div>
 					</div>
-
-					<div class="control-group">
-						<label class="control-label" for="name">{{ gettext("New name") }}</label>
-						<div class="controls">
-							<input type="text" class="input-xlarge" id="name" name="name">
+					<div class="form-group">
+						<label class="col-md-4 col-lg-3 control-label" for="name">{{ gettext("New name") }}</label>
+						<div class="col-md-8 col-lg-9">
+							<input type="text" class="form-control" id="name" name="name">
 							<p class="help-block">{{ gettext("Optional. Pick a new name for the file.") }}</p>
 						</div>
 					</div>
-
 				</fieldset>
 			</form>
 		</div>

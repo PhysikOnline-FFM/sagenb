@@ -15,42 +15,44 @@
 {% block page %}
 	<h1 class="title">{{ gettext("Account Settings") }}</h1>
 	{% if admin %}
-	<div style="margin-top: 20px">
-		<a href="/manage_users" class="btn">{{ gettext('Manage Users') }}</a>
-		<a href="/notebook_settings" class="btn">{{ gettext('Notebook Settings') }}</a>
+	<div style="col-sm-12">
+		<a href="/manage_users" class="btn btn-default">{{ gettext('Manage Users') }}</a>
+		<a href="/notebook_settings" class="btn btn-default">{{ gettext('Notebook Settings') }}</a>
 	</div>
 	{% endif %}
 	<form action="/settings" class="form-horizontal" method="post" id="account_settings_form">
 		<fieldset>
 			<legend>{{ gettext('User') }}</legend>
-			<div class="control-group">
-				<label class="control-label" for="">{{ gettext('HRZ account') }}</label>
-				<div class="controls">
-					<input type="text" disabled="disabled" value="{{ hrz }}">
+			<div class="form-group">
+				<label class="col-sm-4 col-md-3 col-lg-2 control-label" for="hrz">{{ gettext('HRZ account') }}</label>
+				<div class="col-sm-8 col-md-7 col-lg-6">
+					<input type="text" id="hrz" class="form-control" value="{{ hrz }}" disabled>
 					<p class="help-block"></p>
 				</div>
-				<label class="control-label" for="">{{ gettext('Email') }}</label>
-				<div class="controls">
-					<input type="email" id="email" disabled="disabled" value="{{ email_address }}">
-					<p class="help-block"></p>
-			    </div>
-				<label class="control-label" for="">{{ gettext('Nickname') }}</label>
-				<div class="controls">
-					<input type="text" id="nickname" name="nickname" value="{{ nickname }}">
-					<p class="help-block"></p>
-			    </div>
-
 			</div>
-
+			<div class="form-group">
+				<label class="col-sm-4 col-md-3 col-lg-2 control-label" for="email">{{ gettext('Email') }}</label>
+				<div class="col-sm-8 col-md-7 col-lg-6">
+					<input type="email" id="email" class="form-control" disabled value="{{ email_address }}">
+					<p class="help-block"></p>
+			    </div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-4 col-md-3 col-lg-2 control-label" for="">{{ gettext('Nickname') }}</label>
+				<div class="col-sm-8 col-md-7 col-lg-6">
+					<input type="text" id="nickname" class="form-control" name="nickname" value="{{ nickname }}">
+					<p class="help-block"></p>
+			    </div>
+			</div>
 		</fieldset>
 
 
 		<fieldset>
 			<legend>{{ gettext("Auto-Save") }}</legend>
-			<div class="control-group">
-				<label class="control-label" for="autosave">{{ gettext('Interval') }}</label>
-				<div class="controls">
-					<select name="autosave" id="autosave">
+			<div class="form-group">
+				<label class="col-sm-4 col-md-3 col-lg-2 control-label" for="autosave">{{ gettext('Interval') }}</label>
+				<div class="col-sm-8 col-md-7 col-lg-6">
+					<select name="autosave" id="autosave" class="form-control" >
 						{% for i, selected in autosave_intervals %}
 							<option value="{{ i }}"{{ selected }}>{{ i }} {{ gettext('minute(s)') }}</option>
 						{% endfor %}
@@ -60,9 +62,11 @@
 			</div>
 		</fieldset>
 
-		<div class="form-actions">
-			<button type="submit" class="btn btn-primary">{{ gettext('Save') }}</button>
-			<a class="btn" href="/">{{ gettext('Cancel') }}</a>
+		<div class="row">
+			<div class="form-actions col-sm-12">
+				<button type="submit" class="btn btn-primary">{{ gettext('Save') }}</button>
+				<a class="btn btn-default" href="/">{{ gettext('Cancel') }}</a>
+			</div>
 		</div>
 	</form>
 {% endblock page %}

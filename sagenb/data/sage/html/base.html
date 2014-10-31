@@ -2,7 +2,6 @@
 <html lang="en">
 	<head>
 		{% block head %}
-
 		<meta charset="utf-8">
 		<title>{% block title %}POKAL{% endblock title %}</title>
 		
@@ -32,7 +31,6 @@
 	</head>
 
 	<body>
-
 		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
 				<div class="container-fluid">
 					<!-- Mobile: Toggled smaller navigation bar -->
@@ -70,7 +68,7 @@
 										<li class="nav-header">{{ gettext('Developement') }}</li>
 										
 										<li><a href="https://elearning.physik.uni-frankfurt.de/projekt/">POTT</a><li>
-										<li><a href="https://github.com/PhysikOnline-FFM/">Github: PhysikOnline-FFM</a></li>
+										<li><a href="https://github.com/PhysikOnline-FFM/"><img src="https://assets-cdn.github.com/favicon.ico" alt="Github:" style="height:14px" /> PhysikOnline-FFM</a></li>
 									</ul>
 							</li>
 							<li class="divider"></li>
@@ -102,17 +100,16 @@
 				{% endblock before_page %}
 
 			<div class="row">
-			<div class="col-md-12 the_page_container">
-				<div class="the_page">
-					{% block page %}
-					{% endblock page %}
-				</div> <!-- /the_page -->
-			
-			</div>
-			{# fuer mehr columns, genutzt zB vom Chat #}
-			{% block container_columns %}
-			{% endblock %}
-			
+				<div class="col-md-12 the_page_container">
+					<div class="the_page">
+						{% block page %}
+						{% endblock page %}
+					</div> <!-- /the_page -->
+				
+				</div>
+				{# fuer mehr columns, genutzt zB vom Chat #}
+				{% block container_columns %}
+				{% endblock %}
 			</div>			
 			{% endblock container %}
 		</div> <!-- /the_container -->

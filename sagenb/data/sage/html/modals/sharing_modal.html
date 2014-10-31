@@ -8,26 +8,25 @@
 
 <form action="#" class="form-horizontal">
 	<fieldset>
-		<div class="control-group">
-			<label for="" class="control-label">{{ gettext("Collaborators") }}</label>
-			<div class="controls">
-				<textarea name="collaborators" id="collaborators" class="input-xlarge"></textarea>
+		<div class="form-group">
+			<label for="" class="col-md-4 col-lg-3 control-label">{{ gettext("Collaborators") }}</label>
+			<div class="col-md-8 col-lg-9">
+				<textarea name="collaborators" id="collaborators" class="form-control"></textarea>
 				<p class="help-block">{{ gettext("Add/remove collaborators by entering their user names separated by commas.") }}</p>
 			</div>
 		</div>
-		<div class="control-group">
-			<label for="" class="control-label">{{ gettext("Private Publishing") }}</label>
-			<div class="controls">
-
+		<div class="form-group">
+			<label for="" class="col-md-4 col-lg-3 control-label">{{ gettext("Private Publishing") }}</label>
+			<div class="col-md-8 col-lg-9">
 				<label for="auto_republish_checkbox" class="checkbox"><input type="checkbox" id="auto_republish_checkbox"> {{ gettext("Re-publish this worksheet when it changes") }}</label>
-                <a href="#" class="btn" id="publish-button">{{ gettext("Publish this worksheet") }}</a>
-                <p class="help-block" id="worksheet_url">{#{{ gettext("Worksheet viewable at") }}#} <a href="#">http://insert/url/here</a></p>
+                <a href="#" class="btn btn-default" id="publish-button">{{ gettext("Publish this worksheet") }}</a>
+                {#<p class="help-block" id="worksheet_url">{{ gettext("Worksheet viewable at") }} <a href="#">http://insert/url/here</a></p>#}
 			</div>
 		</div>
-		<div class="control-group">
-			<label for="" class="control-label">{{ gettext("Publishing") }}</label>
-			<div class="controls">
-                <a href="#" class="btn" id="poak-publish-button" target="_blank">Bei POAK einreichen</a>
+		<div class="form-group">
+			<label for="" class="col-md-4 col-lg-3 control-label">{{ gettext("Publishing") }}</label>
+			<div class="col-md-8 col-lg-9">
+                <a href="#" class="btn btn-primary" id="poak-publish-button" target="_blank">Bei POAK einreichen</a>
 			</div>
 		</div>
 	</fieldset>
@@ -36,6 +35,6 @@
 {% endblock modal_content %}
 
 {% block modal_footer %}
-<a href="#" class="btn" data-dismiss="modal">{{ gettext("Cancel") }}</a>
+<a href="#" class="btn btn-default" data-dismiss="modal">{{ gettext("Cancel") }}</a>
 <a href="#" class="btn btn-primary" data-dismiss="modal">{{ gettext("Save changes") }}</a>
 {% endblock modal_footer %}

@@ -7,7 +7,7 @@
 {% block modal_content %}
 
 <div style="text-align: center">
-	<select id="system_select">
+	<select id="system_select" class="form-control">
 		<option value="sage">Sage</option>
 		<option value="gap">GAP</option>
 		<option value="gp">GP</option>
@@ -34,6 +34,6 @@
 {% endblock modal_content %}
 
 {% block modal_footer %}
-<a href="#" class="btn" data-dismiss="modal">{{ gettext("Cancel") }}</a>
+<a href="#" class="btn btn-default" data-dismiss="modal">{{ gettext("Cancel") }}</a>
 <a href="#" class="btn btn-primary" data-dismiss="modal">{{ gettext("Change system") }}</a>
 {% endblock modal_footer %}

@@ -61,7 +61,7 @@
 			<div id="sign-in-box" class="col-md-4">
 				<div class="well">
 					
-						{#					<img src="//lab2cloud.com/Content/img/beta_icon.png" style="float:right; margin: -41px -38px 0 0;" title="BETA!"> #}
+					{#	<img src="//lab2cloud.com/Content/img/beta_icon.png" style="float:right; margin: -41px -38px 0 0;" title="BETA!" alt="" /> #}
 					{#<h4>POKAL ist brandneu</h4>
 					<p>Wir haben im März 2013 den Betrieb aufgenommen. Daher ist noch nicht alles freigeschaltet. Für
 					einen Account wenden Sie sich bitte an <a href="mailto:pokal@elearning.physik.uni-frankfurt.de">pokal@elearning.physik.uni-frankfurt.de</a>.</p>
@@ -76,10 +76,9 @@
 				Sign into the Sage Notebook v{{ sage_version }}</h2>-->
 				<form method="post" action="/login" id="sign-in-form" class="well">
 					<h4>{{ gettext('Login') }}</h4>
-				
 					<div>
 						<!--<label for="email">{{ gettext('Username') }}</label>-->
-						<input placeholder="{{ gettext('HRZ account') }}" autofocus="autofocus" type="text" type="email" name="email" id="email" style="width: 97%;" />
+						<input placeholder="{{ gettext('HRZ account') }}" autofocus="autofocus" type="text" name="email" id="email" class="form-control" />
 					</div>
 					<div>
 						<div style="margin-bottom: 5px">
@@ -88,8 +87,7 @@
 								<a href="/forgotpass" style="font-size: 10px; line-height: 1em; padding-left: 5px">{{ gettext('forgot password?') }}</a>
 							{% endif %}
 						</div>
-						
-						<input placeholder="{{ gettext('Password') }}" type="password" name="password" id="password " style="width: 97%;" />
+						<input placeholder="{{ gettext('Password') }}" type="password" name="password" id="password " class="form-control" />
 					</div>
 					<div>
 						<label for="remember"><input type="checkbox" name="remember" id="remember" /> {{ gettext('Remember me') }}</label>
