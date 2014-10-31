@@ -17,41 +17,23 @@ sagenb.chat.init = function(worksheet) {
 	chat_messages = ['new_nickname_list', 'user_message', 'join_message', 'leave_message'];
 	$.each(chat_messages, function(){ sagenb.chat.socket.on(this, sagenb.chat["on_"+this]); });
 
-	
 	// header (=navigation) button
 	sagenb.chat.header_button = $('<li><a href="#chat_window"><span class="glyphicon glyphicon-comment"></span>&nbsp;<span>'+gettext('Chat')+'</span></a></li>');
 	sagenb.chat.header_button.find('a').click(sagenb.chat.toggle);
-    
 	// put it next to the user button
 	$("#user_navbar_area").find("ul.nav").prepend(sagenb.chat.header_button);
     
+	// Die Gesamt-Chat-Box (in etwa das, was es vorher war)
+	sagenb.chat.message_box = $("#chat-message-box");
+	// Header und footer...
+	sagenb.chat.message_box_heading = sagenb.chat.message_box.find('.panel-heading');
+	sagenb.chat.message_box_footer  = sagenb.chat.message_box.find('.panel-footer');
 	// Die box im Chatmessage-Fenster wo der chat reinkommt.
 	sagenb.chat.message_area = $("#chat-message-box .message_area"); //$('<div id="chat_message_box"/>');
-	//sagenb.chat.message_box.appendTo("body");
-	
-	/*
-        sagenb.chat.dialog = sagenb.chat.message_box.dialog({
-            autoOpen: false,
-            dialogClass: "chat",
-            height: 400,
-            width: 240,
-            position: {my: "right top", at: "right top", offset: "-20 80"}, // vorher at right bottom, no offset
-            show: "fast",
-            title: gettext('Worksheet - Chat'),
-            // Hacky: diese buttons sind nur farce, um die Pane zu kriegen.
-            // Es wird dann ein eigener Bootstrap-layouteter button hinzugefuegt
-            buttons: [ { text: gettext('Send'), click: sagenb.chat.send_message }  ],
-            // event handler um den richtigen sync zu kriegen zum top button
-            close: function(e,ui) { sagenb.chat.header_button.removeClass("active"); },
-            open: function(e,ui) { sagenb.chat.header_button.addClass("active"); },
-        });
-        */
-	
-	//$(".chat").find(".ui-dialog-titlebar").after('<div id="chat_userlist_box"></div>');
+	// Die Box mit der Userliste:
 	sagenb.chat.userlist_box = $("#chat_userlist_box");
-	//$(".chat").find(".ui-dialog-buttonpane").prepend('<textarea id="chat_input_text"></textarea>');
+	// Das textarea
 	sagenb.chat.input_area = $("#chat_input_text");
-	
 	// keypress handling
 	sagenb.chat.input_area.keypress(function(e) {
 		if(e.which == 13) { // newline pressed
@@ -59,12 +41,14 @@ sagenb.chat.init = function(worksheet) {
 			return false; // zeichen nicht weitergeben und damit nicht darstellen.
 		}
 	});
-	
-	// jqueryUI-Button durch Twitter button ersetzen
-	//$(".chat").find(".ui-dialog-buttonset").remove();
-	//$(".chat").find(".ui-dialog-buttonpane").append('<button class="btn btn-small" type="button">'+gettext('Send')+'</button>').click(sagenb.chat.send_message);
+	// Der Absenden-Button
 	$("#chat_send_button").click(sagenb.chat.send_message);
 	
+	// Großer Aufwand, um die Breite nicht berechnen zu muessen (wie bei position:fixed/absolute bzw .affix)
+	$(window).scroll(sagenb.chat.window_scroll_helper);
+	sagenb.chat.window_scroll_helper();
+	sagenb.chat.message_box.addClass('pseudo_fixed');
+
 	// Log into chat
 	sagenb.chat.socket.emit('join', {'worksheet': worksheet.filename, 'nickname': sagenb.nickname});
 };
@@ -107,17 +91,24 @@ sagenb.chat.is_open = function() {
 	return sagenb.chat.header_button.hasClass("active");
 }
 
+// for jQueryUI SwitchClass call in {show,hide}_chat_box.
+sagenb.chat.switchInOutOptions = {
+	'duration': 400,
+//	'easing': 'easeInSine',
+}
+
 sagenb.chat.hide_chat_box = function() {
 	// hide chat box
-	$(".the_page_container").switchClass('col-md-8', 'col-md-12');
-	$(".chat-message-box-container").switchClass('col-md-4', 'col-md-0');
+	$(".the_page_container").switchClass('col-md-8', 'col-md-12');//, sagenb.chat.switchInOutOptions);
+	$(".chat-message-box-container").switchClass('col-md-4', 'col-md-0');//, sagenb.chat.switchInOutOptions);
 	sagenb.chat.header_button.removeClass("active");
 }
 
 sagenb.chat.show_chat_box = function() {
 	// show chat box
-	$(".the_page_container").switchClass('col-md-12', 'col-md-8');
-	$(".chat-message-box-container").switchClass('col-md-0', 'col-md-4');
+	sagenb.chat.window_scroll_helper();
+	$(".the_page_container").switchClass('col-md-12', 'col-md-8');//, sagenb.chat.switchInOutOptions);
+	$(".chat-message-box-container").switchClass('col-md-0', 'col-md-4');//, sagenb.chat.switchInOutOptions);
 	sagenb.chat.header_button.addClass("active");
 }
 
@@ -190,6 +181,29 @@ sagenb.chat.append_message = function(classes, text) {
 	}
 	
 	return message;
+}
+
+sagenb.chat.box_positioning = function() {
+	// Layout-"Affix" (Mitscrollen/volle Höhe) des Chats
+	sagenb.chat.message_box.addClass('fixed').css({
+		'position': 'fixed',
+		'width': (sagenb.chat.message_box.parent().width()+15)+"px", // 15px padding right...
+		'top': "65px",
+		'bottom': '10px',
+	});
+	
+}
+
+sagenb.chat.window_scroll_helper = function() {
+		$win = $(window);
+		// Messagebox-Position = fixed
+		sagenb.chat.message_box.css('top', $win.scrollTop()+"px");
+		// Messagebox-Größe = Fenstergröße
+		var mbox_height = ($win.innerHeight() - 15 - (sagenb.chat.message_box.offset().top-$win.scrollTop()));
+		sagenb.chat.message_box.css('height', mbox_height + "px");
+		// panel-body setzen
+		var marea_height = mbox_height - sagenb.chat.message_box_heading.outerHeight() - sagenb.chat.message_box_footer.outerHeight();
+		sagenb.chat.message_area.css('height', marea_height + "px");
 }
 
 // Brauchts nicht mehr

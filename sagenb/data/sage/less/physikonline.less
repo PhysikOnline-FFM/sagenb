@@ -2,20 +2,14 @@
  * PhysikOnline design adaption
  */
 
-// Chat-Implementierung
-.chat {
-	#chat_userlist_box {
-		padding: 0.3em;
-		font-size: 80%;
-		background-color: #eee;
-	}
-	
-	
-	#chat_input_text { // textarea
+// Chat-Implementierung, jetzt als Bootstrap3 column statt jQueryUI Window
+#chat-message-box {
+	margin-left: -15px; // einheitliche margins
+	position: relative; // scrollfix per JS
+
+	textarea {
 		resize: vertical;
-		width: 100%;
 		margin-bottom: 0;
-		padding: 0.5em;
 	}
 	
 	p.line {
@@ -23,15 +17,18 @@
 		font-size: 80%;
 	}
 	
-	// haessliche hacks um das dialog .ui-dialog-buttonpane wiederzuverwenden.
-	// TODO: Das ganze ans Bootstrap-Layout anpassen!
-	button {
-		margin: 0;
-	}
-	
-	.ui-dialog-buttonpane {
-		margin-bottom: -10px;
-		padding-bottom: 0;
+	&.pseudo_fixed {
+		// when the "Pseudo" fixed styles apply (JS)
+		div.panel-body {
+			// height gesetzt per JS
+			overflow-y: scroll; // TODO -> auto einstellen.
+		}
+		
+		div.panel-footer {
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+		}
 	}
 }
 
