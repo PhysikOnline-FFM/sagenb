@@ -26,15 +26,17 @@ sagenb.init = function() {
 	'<span class="caret"></span>' +
 '</a>' +
 '<ul class="dropdown-menu" role="menu">' + 
-	'<li><a href="/" id="home"><i class="icon-home"></i> ' + gettext('Home') + '</a></li>' +
-	'<li><a href="/poak" id="published"><i class="icon-share"></i> ' + gettext('Published') + '</a></li>' +
-	'<li><a href="#" id="log"><i class="icon-list"></i> ' + gettext('Log') + '</a></li>' +
-	'<li class="nav-header">' + gettext('POKAL Hilfe') + '</li>' +
-	'<li><a href="#" id="help"><i class="icon-book"></i> ' + gettext('Help') + '</a></li>' +
-	'<li><a href="#" id="report_a_problem"><i class="icon-exclamation-sign"></i> ' + gettext('Report a Problem') + '</a></li>' +
+	'<li><a href="/" id="home"><i class="glyphicon glyphicon-home"></i> ' + gettext('Home') + '</a></li>' +
+	'<li><a href="/poak" id="published"><i class="glyphicon glyphicon-share"></i> ' + gettext('Published') + '</a></li>' +
+	'<li><a href="#" id="log"><i class="glyphicon glyphicon-list"></i> ' + gettext('Log') + '</a></li>' +
+
+//	POTT #984: Move help to more appropriate place!
+//	'<li class="nav-header">' + gettext('POKAL Hilfe') + '</li>' +
+//	'<li><a href="#" id="help"><i class="icon-book"></i> ' + gettext('Help') + '</a></li>' +
+//	'<li><a href="#" id="report_a_problem"><i class="icon-exclamation-sign"></i> ' + gettext('Report a Problem') + '</a></li>' +
 	'<li class="divider"></li>' +
-	'<li><a href="/settings" id="settings"><i class="icon-wrench"></i> ' + gettext('Settings') + '</a></li>' +
-	'<li><a href="/logout" id="sign_out"><i class="icon-off"></i> ' + gettext('Sign out') + '</a></li>' +
+	'<li><a href="/settings" id="settings"><i class="glyphicon glyphicon-wrench"></i> ' + gettext('Settings') + '</a></li>' +
+	'<li><a href="/logout" id="sign_out"><i class="glyphicon glyphicon-off"></i> ' + gettext('Sign out') + '</a></li>' +
 '</ul>' +
 '</li></ul>');
 	}

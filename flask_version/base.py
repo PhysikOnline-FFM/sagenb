@@ -102,6 +102,16 @@ def index():
 
     return login()
 
+################################
+# The feedback handler  (POKAL)#
+################################
+
+@base.route('/post-feedback', methods=['POST', 'GET']) # vor allem POST
+@guest_or_login_required
+def post_feedback():
+	import feedback
+	return feedback.handle_feedback()
+
 ######################
 # Dynamic Javascript #
 ######################
