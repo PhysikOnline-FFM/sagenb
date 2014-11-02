@@ -201,9 +201,16 @@ if %(secure)s:
 %(open_page)s
 try:
     print 'Listening on port 8080 and on port 843 (flash policy server)'
+
+    shall_i_debug = True
+    if shall_i_debug:
+        # TRYING TO RECOVER WERKZEUG DEBUGGING FACILITIES
+        from werkzeug.debug import DebuggedApplication
+        flask_app = DebuggedApplication(flask_app, evalex=True)
+
     SocketIOServer(('', 8080), flask_app, resource="socket.io", policy_server=True, policy_listener=('', 10843)).serve_forever()
     
-    flask_app.run(host=%(interface)r, port=%(port)s, threaded=True, ssl_context=ssl_context, debug=False)
+    flask_app.run(host=%(interface)r, port=%(port)s, threaded=True, ssl_context=ssl_context, debug=True) # TODO FIXME OMG debug
 finally:
     save_notebook(flask_base.notebook)
     os.unlink(%(pidfile)r)

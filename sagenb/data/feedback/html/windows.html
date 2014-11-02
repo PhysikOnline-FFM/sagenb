@@ -1,0 +1,160 @@
+<html>
+<head>
+	<meta charset="utf-8">
+</head>
+<body>
+
+<h2>Templates für das POKAL-Feedbacksystem</h2>
+<p>Sie werden von pokal-feedback-system.js per AJAX geladen und von jQuery nach id zerpflückt.
+Es ist einfach angenehmer als sie als JavaScript-Strings zu speichern.</p>
+
+<section id="description">
+	<!-- Das nutzen wir nicht: -->	
+	<div id="feedback-welcome">
+		<div class="feedback-logo">Feedback</div>
+		<p>Feedback lets you send us suggestions about our products. We welcome problem reports, feature ideas and general comments.</p>
+		<p>Start by writing a brief description:</p>
+		<textarea id="feedback-note-tmp"></textarea>
+		<p>Next we\'ll let you identify areas of the page related to your description.</p>
+		<button id="feedback-welcome-next" class="feedback-next-btn feedback-btn-gray">Next</button>
+		<div id="feedback-welcome-error">Please enter a description.</div>
+		<div class="feedback-wizard-close"></div>
+	</div>
+</section>
+
+<section id="highlighter">
+	<div class="modal fade in" id="feedback-highlighter" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-sm"><!-- small dialog -->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">Problem berichten</h4>
+				</div>
+				<div class="modal-body">
+					<!--<div class="feedback-logo">Problem berichten</div>-->
+					<p>Hier besteht die Möglichkeit, dem POKAL-Team einen <b>Screenshot</b> samt <b>Problembeschreibung</b>
+					zukommen zu lassen. Durch Klicken und Ziehen können Bereiche hervorgehoben oder ausgegraut
+					werden. Falls dieser Dialog im Weg ist, kann er wegbewegt werden.</p>
+		
+					<button class="feedback-sethighlight active btn btn-default btn-sm">
+						<div class="ico"></div>
+						<span>Hervorheben</span>
+					</button>
+					<label>Problemerelevante Bereiche hervorheben.</label>
+					<br>
+					
+					<button class="feedback-setblackout btn btn-default btn-sm">
+						<div class="ico"></div>
+						<span>Ausblenden</span>
+					</button>
+					<label class="lower">Persönliche Informationen verdecken.</label>
+				</div>
+				<div class="modal-footer">
+					<!--<div class="feedback-buttons">-->
+					<button id="feedback-highlighter-next" class="feedback-next-btn btn btn-primary btn-lg">Weiter</button>
+					<button id="feedback-highlighter-back" class="feedback-back-btn btn btn-default">Zurück</button>
+				</div>
+				<!--<div class="feedback-wizard-close"></div>-->
+			</div>
+		</div>
+	</div>
+</section>
+
+<section id="overview">
+	<div class="modal fade in" id="feedback-overview" tabindex="-1" role="dialog">
+		<div class="modal-dialog"><!-- small dialog -->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">Problem berichten</h4>
+				</div>
+				<div class="modal-body clearfix">
+					<div id="feedback-overview-description">
+						<div id="feedback-overview-description-text">
+							<h3>Problembeschreibung</h3>
+							<textarea id="feedback-overview-note" class="form-control" placeholder="Welches Problem trat auf? Welche Lösungsversuche wurden unternommen?"></textarea>
+							<h3 class="feedback-additional">Weitere übermittelte Informationen</h3>
+							<p>Unerwünschte Informationen bitte abwählen:</p>
+							<div class="checkbox">
+								<label>
+									<input id="feedback-username" class="feedback-data-collector" type="checkbox" value="" checked="checked">
+									HRZ-Benutzername (zwecks Kontaktierung)
+								</label>
+							</div>
+							<div class="checkbox">
+								<label>
+									<input id="feedback-worksheet-content" class="feedback-data-collector" type="checkbox" value="" checked="checked">
+									Worksheet-Inhalt
+								</label>
+							</div>
+							<div class="checkbox">
+								<label>
+									<input id="feedback-chat-content" class="feedback-data-collector" type="checkbox" value="" checked="checked">
+									Chat-Konversation (falls vorhanden)
+								</label>
+							</div>
+							<!-- das hier nicht auswaehlbar machen: -->
+							<input type="hidden" id="feedback-sage" class="feedback-data-collector" value="checked">
+						</div>
+					</div>
+					<div id="feedback-overview-screenshot">
+						<h3>Screenshot</h3>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div style="float: left; text-align: left; color: rgb(146, 146, 146);">
+						Alle Daten werden vertraulich behandelt.
+						<br>Bearbeitet durch das eLearning-Team der Physik
+					</div>
+					<!--<div class="feedback-buttons">-->
+					<button id="feedback-overview-back" class="feedback-back-btn btn btn-default">Screenshot ändern</button>
+					<button id="feedback-submit" class="feedback-submit-btn btn btn-success btn-lg">Absenden</button>
+					<!--<div class="feedback-wizard-close"></div>-->
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section id="submitSuccess">
+	<div class="modal fade in" id="feedback-submit-success" tabindex="-1" role="dialog">
+		<div class="modal-dialog"><!-- small dialog -->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">Problem berichten</h4>
+				</div>
+				<div class="modal-body clearfix">
+					<p>Vielen Dank für die Benachrichtigung! Wir wenden uns <b>jedem</b> Problembericht zu und versuchen
+					POKAL damit besser zu machen. Falls Kontaktdaten angegeben wurden, melden wir uns bei Lösung des Problems!
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button id="feedback-submit" class="feedback-close-btn btn btn-success btn-lg">Schließen</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section id="submitError">
+	<div class="modal fade in" id="feedback-submit-error" tabindex="-1" role="dialog">
+		<div class="modal-dialog"><!-- small dialog -->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">Problem berichten</h4>
+				</div>
+				<div class="modal-body clearfix">
+					<p>Oh nein, das Übermitteln des Problemberichtes <b>schlug fehl!</b>. Wir würden uns sehr freuen,
+					wenn stattdessen auf eine reguläre E-Mail ausgewichen wird. Unsere Kontaktdaten
+					stehen <a href="http://elearning.physik.uni-frankfurt.de/go/impressum">in unserem Impressum</a>.
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button id="feedback-submit" class="feedback-close-btn btn btn-warning btn-lg">Schließen</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

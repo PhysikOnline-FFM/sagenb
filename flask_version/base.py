@@ -112,6 +112,17 @@ def post_feedback():
 	import feedback
 	return feedback.handle_feedback()
 
+# for debugging... this does not work anyway -- sven.
+@base.route('/debug-me', methods=['POST','GET'])
+@guest_or_login_required # at least admin should be required here
+def debug_me():
+	# uh oh, enable debugging:
+	# FIXME TODO the following line MUST be disabled in production!
+	current_app.debug = True
+	print "Firing debugging..."
+	assert current_app.debug == False, "Don't panic! You're here by request of debug()"
+	return make_response("This line should never be reached")
+
 ######################
 # Dynamic Javascript #
 ######################
@@ -380,6 +391,7 @@ def create_app(path_to_notebook, *args, **kwds):
 
     from sqlalchemy import create_engine
     from sqlalchemy.orm import sessionmaker
+    # this is a dummy user/password, for sure. I hope so, guys!:
     engine = create_engine('postgresql://pokal:lakop14@localhost:5432/pokaldb')
     Session = sessionmaker(bind=engine)
     sess = Session()
@@ -388,6 +400,8 @@ def create_app(path_to_notebook, *args, **kwds):
     def set_notebook_object():
         g.notebook = notebook
         g.db = sess
+        # ist leider nicht aussagekraeftig (immer True):
+        g.pokal_debug_mode = current_app.debug
 
     ####################################
     # create Babel translation manager #

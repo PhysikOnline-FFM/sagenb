@@ -43,6 +43,8 @@ sagenb.chat.init = function(worksheet) {
 	});
 	// Der Absenden-Button
 	$("#chat_send_button").click(sagenb.chat.send_message);
+	// a nickname list (by default empty - yes, the current user should be included)
+	sagenb.chat.nicknames = []
 	
 	// Großer Aufwand, um die Breite nicht berechnen zu muessen (wie bei position:fixed/absolute bzw .affix)
 	$(window).scroll(sagenb.chat.window_scroll_helper);
@@ -132,7 +134,7 @@ sagenb.chat.colorize_nickname = function(user, suffix) {
  **/
 sagenb.chat.on_new_nickname_list = function(nicknames) {
 	nicknames = $.parseJSON(nicknames);
-	// the storage is currently used only for debugging
+	// update the global storage (used for various purposes, like feedback)
 	sagenb.chat.nicknames = nicknames;
 	// nutze colorize_nickname als callback. da $.map ihm aber zwei parameter zuweist,
 	// im zweiten den Index, wird sowas wie "username1", "username2" concatenated als suffix.
@@ -170,7 +172,7 @@ sagenb.chat.append_message = function(classes, text) {
 
 	// push content and store the line element it for return
 	message = $('<p class="line '+classes+'">'+text+'</p>').appendTo(sagenb.chat.message_area);
-
+	
 	if(user_was_at_bottom)
 		// user was already at bottom -.-
 		sagenb.chat.message_area[0].scrollTop = sagenb.chat.message_area[0].scrollHeight;
