@@ -202,8 +202,8 @@ if %(secure)s:
 try:
     print 'Listening on port 8080 and on port 843 (flash policy server)'
 
-    shall_i_debug = True
-    if shall_i_debug:
+    web_console = %(web_console)s
+    if web_console:
         # TRYING TO RECOVER WERKZEUG DEBUGGING FACILITIES
         from werkzeug.debug import DebuggedApplication
         flask_app = DebuggedApplication(flask_app, evalex=True)
@@ -475,6 +475,7 @@ def notebook_run(self,
              start_path    = "",
              fork          = False,
              quiet         = False,
+	     web_console   = False,
 
              server = "flask",
              profile = False,
@@ -625,7 +626,8 @@ def notebook_run(self,
             print "Failed to setup notebook.  Please try notebook.setup() again manually."
 
     kw = dict(port=port, automatic_login=automatic_login, secure=secure, private_pem=private_pem, public_pem=public_pem,
-              interface=interface, directory=directory, pidfile=pidfile, cwd=cwd, profile=profile, upload = upload )
+              interface=interface, directory=directory, pidfile=pidfile, cwd=cwd, profile=profile, upload = upload,
+              web_console=web_console )
     cmd = command[server]().run_command(kw)
     if cmd is None:
         return
