@@ -13,7 +13,7 @@ sagenb.init = function() {
 		// TODO: Bootstrap3-Anpassung wie in Zeilen 21-39
 		$("#user_navbar_area").html(
 '<div class="pull-right nav"><div class="btn-group">' +
-	'<a href="/login" class="btn">' + gettext('Login') + '</a>' +
+	'<a href="/login" class="btn btn-primary">' + gettext('Login') + '</a>' +
 '</div></div>'
 		);
 	}
@@ -22,12 +22,12 @@ sagenb.init = function() {
 '<ul class="nav navbar-nav navbar-right">' + 
 '<li class="dropdown">' + 
 '<a href="#usermenu" class="dropdown-toggle" data-toggle="dropdown">' + 
-	'<span class="glyphicon glyphicon-user"></span> <span id="username">' + sagenb.nickname + ' </span>' +
+	'<span class="glyphicon glyphicon-user"></span> <span id="username" class="hidden-sm">' + sagenb.nickname + ' </span>' +
 	'<span class="caret"></span>' +
 '</a>' +
 '<ul class="dropdown-menu" role="menu">' + 
-	'<li><a href="/" id="home"><i class="glyphicon glyphicon-home"></i> ' + gettext('Home') + '</a></li>' +
-	'<li><a href="/poak" id="published"><i class="glyphicon glyphicon-share"></i> ' + gettext('Published') + '</a></li>' +
+	'<li><a href="/" id="home"><i class="glyphicon glyphicon-home"></i> Mein Notebook </a></li>' +
+	'<li><a href="/poak" id="published"><i class="glyphicon glyphicon-cloud"></i> POAK</a></li>' +
 	'<li><a href="#" id="log"><i class="glyphicon glyphicon-list"></i> ' + gettext('Log') + '</a></li>' +
 
 //	POTT #984: Move help to more appropriate place!
@@ -35,7 +35,7 @@ sagenb.init = function() {
 //	'<li><a href="#" id="help"><i class="icon-book"></i> ' + gettext('Help') + '</a></li>' +
 //	'<li><a href="#" id="report_a_problem"><i class="icon-exclamation-sign"></i> ' + gettext('Report a Problem') + '</a></li>' +
 	'<li class="divider"></li>' +
-	'<li><a href="/settings" id="settings"><i class="glyphicon glyphicon-wrench"></i> ' + gettext('Settings') + '</a></li>' +
+	'<li><a href="/settings" id="settings"><i class="glyphicon glyphicon-cog"></i> ' + gettext('Settings') + '</a></li>' +
 	'<li><a href="/logout" id="sign_out"><i class="glyphicon glyphicon-off"></i> ' + gettext('Sign out') + '</a></li>' +
 '</ul>' +
 '</li></ul>');

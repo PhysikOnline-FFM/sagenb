@@ -6,7 +6,7 @@
 
 {% block alerts %}
 	{% if error_msg %}
-		<div class="alert alert-error">
+		<div class="alert alert-danger">
 			{{ error_msg }}
 		</div>
 	{% endif %}
@@ -61,14 +61,15 @@
 				</div>
 			</div>
 		</fieldset>
-
+		<br>
 		<div class="row">
 			<div class="form-actions col-sm-12">
 				<button type="submit" class="btn btn-primary">{{ gettext('Save') }}</button>
 				<a class="btn btn-default" href="/">{{ gettext('Cancel') }}</a>
 			</div>
 		</div>
-	</form>
+</form>
+<br>
 {% endblock page %}
 
 {% block extra_javascript %}

@@ -72,7 +72,14 @@
 				</ul>
 			</li>
 		</ul>
+	{% else %}
+	<ul class="nav navbar-nav">
+			<li class="dropdown">
+				<li><a href="#" id="copy_to_own_notebook"><i class="glyphicon glyphicon-cloud-download"></i> Arbeitsblatt in eigenes Notebook laden</a></li>
+			</li>
+		</ul>
 	{% endif %}
+
 {% endblock navbar %}
 
 {% block alerts %}

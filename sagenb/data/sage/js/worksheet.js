@@ -548,14 +548,31 @@ sagenb.worksheetapp.worksheet = function() {
 				$("#worksheet_url a").text(_this.published_url);
                 $("#worksheet_url a").attr("href", _this.published_url);
 				$("#worksheet_url").show();
-                $("#poak-publish-button").attr("href", "http://dev.pokal.uni-frankfurt.de/poak/submit?id="+_this.published_id_number);
+		        sagenb.async_request("/poak/check/"+_this.published_id_number, sagenb.generic_callback(function(status, response) {
+                    X = decode_response(response);
+                    if(X.check === 'y') {
+                        pk = X.pk;
+                        $("#poak-publish-button").text("Aus POAK entfernen");
+                        $("#poak-publish-button").attr("href", "/poak/w/"+pk+"/delete");
+                        $("#publish-button").text("Neuen Link erzeugen");
+                        $("#poak-link-button").attr("href", "/poak/w/"+pk);
+                        $("#poak-link-button").show();
+                    } else {
+                        $("#poak-publish-button").text("Bei POAK einreichen");
+                        $("#poak-publish-button").attr("href", "/poak/sso/submit/"+_this.published_id_number);
+                        $("#poak-link-button").hide();
+                    }
+                }));
+
 			} else {
                 $("#publish-button").text(gettext("Publish this worksheet"));
 				$("#publish_checkbox").prop("checked", false);
 				$("#auto_republish_checkbox").prop("checked", false);
 				$("#auto_republish_checkbox").attr("disabled", true);
+                $("#poak-publish-button").text("Bei POAK einreichen");
 				
 				$("#worksheet_url").hide();
+                $("#poak-link-button").hide();
 			}
 
 
@@ -582,10 +599,10 @@ sagenb.worksheetapp.worksheet = function() {
 				$("#data_list ul").append('<li>' + 
 												'<a href="#" class="filename">' + datafile + '</a>' + 
 												'<div class="btn-group">' + 
-													'<a href="#" class="btn btn-mini copy_path_btn" rel="tooltip" title="Get Path"><i class="icon-edit"></i></a>' + 
-													'<a href="edit_datafile/' + datafile + '" class="btn btn-mini download_btn" rel="tooltip" title="Edit"><i class="icon-pencil"></i></a>' + 
-													'<a href="data/' + datafile + '" class="btn btn-mini download_btn" rel="tooltip" title="Download" target="_blank"><i class="icon-download"></i></a>' + 
-													'<a href="#" class="btn btn-mini delete_btn" rel="tooltip" title="Delete"><i class="icon-remove"></i></a>' + 
+													'<a href="#" class="btn btn-xs copy_path_btn" rel="tooltip" title="Get Path"><i class="glyphicon glyphicon-question-sign"></i></a>' + 
+													'<a href="edit_datafile/' + datafile + '" class="btn btn-xs download_btn" rel="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>' + 
+													'<a href="data/' + datafile + '" class="btn btn-xs download_btn" rel="tooltip" title="Download" target="_blank"><i class="glyphicon glyphicon-download"></i></a>' + 
+													'<a href="#" class="btn btn-xs delete_btn" rel="tooltip" title="Delete"><i class="glyphicon glyphicon-remove"></i></a>' + 
 												'</div>' + 
 											'</li>');
 
@@ -611,6 +628,12 @@ sagenb.worksheetapp.worksheet = function() {
 
 			if($("#data_list ul li").length === 0) {
 				$("#data_list ul").append('<li class="no_data_files"><a href="#" class="filename">Keine Dateien</a></li>');
+			}
+
+			if(_this.published_mode) {
+					if(sagenb.username == "guest") {
+							$("#copy_to_own_notebook").hide();
+					}
 			}
 		}));
 	};
@@ -765,7 +788,7 @@ sagenb.worksheetapp.worksheet = function() {
 			window.location.hash = "#single_cell#" + $(".current_cell").attr("id");
 			
 			$(".progress_text").text(current_index + "/" + num_of_cells);
-			$(".progress .bar").css("width", current_index / num_of_cells * 100 + "%");
+			$(".progress .progress-bar").css("width", current_index / num_of_cells * 100 + "%");
 			
 			if(current_index / num_of_cells < 0.55) {
 				$(".progress_text").css("color", "#222");
@@ -887,18 +910,70 @@ sagenb.worksheetapp.worksheet = function() {
         $("#publish-button").click(function(e) {
             var command;
             if($("#publish-button").hasClass("published")) {
-                command = _this.worksheet_command("publish?publish_off");
                 $("#publish-button").removeClass("published");
                 $("#publish-button").text(gettext("Publish this worksheet"));
+                $("#poak-publish-button").attr("href", "#");
+                command = _this.worksheet_command("publish?publish_off");
+                sagenb.async_request(command, sagenb.generic_callback(function(status, response) {
+                    var old_id;
+                    old_id = _this.published_id_number;
+                    sagenb.async_request("/poak/check/"+old_id, sagenb.generic_callback(function(status, response) {
+                        X = decode_response(response);
+                        if(X.check === 'y') {
+                            // we have to re-publish
+                            command = _this.worksheet_command("publish?publish_on");
+                            sagenb.async_request(command, sagenb.generic_callback(function(status, response) {
+                                _this.worksheet_update();
+                                // wait for the update to finish
+                                interval = setInterval(function() {
+                                    if(old_id != _this.published_id_number) {
+                                        // and then move to the new id
+                                        sagenb.async_request("/poak/sso/move/"+old_id+"/"+_this.published_id_number, sagenb.generic_callback(function(status, response) {
+                                            // now we can update
+                                            _this.worksheet_update();
+                                        }));
+                                        clearInterval(interval);
+                                    }
+                                }, 100);
+                            }));
+                        } else {
+                            // worksheet is not in POAK -> we can simply update
+                            _this.worksheet_update();
+                        }
+                    }));
+                }));
             } else {
                 command = _this.worksheet_command("publish?publish_on");
                 $("#publish-button").addClass("published");
                 $("#publish-button").text(gettext("unpublish"));
+                sagenb.async_request(command, sagenb.generic_callback(function(status, response) {
+                    _this.worksheet_update();
+                }));
             }
-			sagenb.async_request(command, sagenb.generic_callback(function(status, response) {
-				_this.worksheet_update();
-			}));
 
+        });
+        $("#poak-publish-button").click(function(e) {
+            if($("#poak-publish-button").attr("href") == "#") {
+                e.preventDefault();
+                command = _this.worksheet_command("publish?publish_on");
+                sagenb.async_request(command, sagenb.generic_callback(function(status, response) {
+                    _this.worksheet_update();
+                    // wait for the update to finish
+                    interval = setInterval(function() {
+                        if(_this.published_id_number != null) {
+                            clearInterval(interval); // waited long enough
+                            sagenb.async_request("/poak/sso/submit/"+_this.published_id_number, sagenb.generic_callback(function(status, response) {
+                                _this.worksheet_update();
+                            }));
+                        }
+                    }, 100);
+                }));
+            } else {
+                e.preventDefault();
+                sagenb.async_request($("#poak-publish-button").attr("href"), sagenb.generic_callback(function(status, response) {
+                    _this.worksheet_update();
+                }));
+            }
         });
 
 
@@ -1034,5 +1109,13 @@ sagenb.worksheetapp.worksheet = function() {
 		$("#delete_all_output").click(_this.delete_all_output);
 
 		$("#navhelp").click(sagenb.help);
+
+		$("#copy_to_own_notebook").click(function(e) {
+				sagenb.async_request(_this.worksheet_command("edit_published_page"), sagenb.generic_callback(function(status, response) {
+						if(status == "success") {
+							window.open(response);
+						}
+				}));
+		});
 	};
 };

@@ -13,14 +13,14 @@
 	{% endif %}
 
 	{% if username_error or password_error %}
-		<div class="alert alert-error">
+		<div class="alert alert-danger">
 			<button class="close" data-dismiss="alert">×</button>
 			<strong>{{ gettext('Error') }}:</strong> <span>{{ gettext('Bad login credentials') }}</span>
 		</div>
 	{% endif %}
 
 	{% if creation_error %}
-		<div class="alert alert-error">
+		<div class="alert alert-danger">
 			<button class="close" data-dismiss="alert">×</button>
 			<strong>{{ gettext('Error') }}:</strong> <span>{{ gettext('Creating new users is disabled by the administrator.') }}</span>
 		</div>

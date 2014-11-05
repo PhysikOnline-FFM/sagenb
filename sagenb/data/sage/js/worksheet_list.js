@@ -57,7 +57,8 @@ sagenb.worksheetlistapp.list_row = function() {
             //name_html += '<span class="icon-plus-sign add-tag-sign"></span>';
 		}
 		if(_this.props.running && !_this.list.published_mode) {
-			name_html += '<span class="label label-important pull-right running_label">aktiv</span>';
+			name_html = '<span class="label label-warning pull-right running_label">aktiv</span>'
+					+ name_html;
 		}
 		_this.jquery_this.find("td.worksheet_name_cell").html(name_html);
 	
@@ -81,7 +82,7 @@ sagenb.worksheetlistapp.list_row = function() {
         }
 		if(_this.props.published_id_number && !_this.list.published_mode) {
 			// it's published
-			owner_html += '<a href="#"><span class="published_badge badge badge-info pull-right"><i class="icon-share icon-white"></i></span></a>';
+			owner_html += '<a href="#"><span class="published_badge badge badge-info pull-right"><i class="glyphicon glyphicon-share"></i></span></a>';
 		}
 		_this.jquery_this.find("td.owner_cell").html(owner_html);
 		_this.jquery_this.find("td.owner_cell .collaborators_tooltip").tooltip();

@@ -14,7 +14,7 @@
 	
 	p.line {
 		margin: .1em 0;
-		font-size: 80%;
+		//font-size: 80%; // POTT #997
 	}
 	
 	&.pseudo_fixed {
@@ -30,6 +30,11 @@
 			width: 100%;
 		}
 	}
+}
+
+// Running-Label in Worksheet-Liste, #997
+span.running_label {
+	font-size: 100%;
 }
 
 // Startseite
@@ -86,4 +91,6 @@ div.worksheet_name input {
 .col-xs-0, .col-sm-0, .col-md-0, .col-lg-0 {
 	width: 0;
 	opacity: 0; // netter Effekt bei switchClass jQuery UI
+	// keinen Platz reservieren!
+	height: 0; overflow: hidden;
 }

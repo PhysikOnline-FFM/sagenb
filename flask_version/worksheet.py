@@ -637,7 +637,7 @@ def worksheet_edit_published_page(worksheet):
         W = g.notebook.copy_worksheet(worksheet, g.username)
         W.set_name(worksheet.name())
 
-    return redirect(url_for_worksheet(W))
+    return url_for_worksheet(W)
 
 
 ########################################################

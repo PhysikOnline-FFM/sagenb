@@ -9,7 +9,7 @@ sagenb.settings.setup_manage_users_page = function() {
 		var X = decode_response(response);
 
 		var alert_class = "alert fade in";
-		if(X.error) alert_class += " alert-error";
+		if(X.error) alert_class += " alert-danger";
 		else alert_class += " alert-success";
 
 		var msg = "";

@@ -18,7 +18,7 @@ sagenb.chat.init = function(worksheet) {
 	$.each(chat_messages, function(){ sagenb.chat.socket.on(this, sagenb.chat["on_"+this]); });
 
 	// header (=navigation) button
-	sagenb.chat.header_button = $('<li><a href="#chat_window"><span class="glyphicon glyphicon-comment"></span>&nbsp;<span>'+gettext('Chat')+'</span></a></li>');
+	sagenb.chat.header_button = $('<li><a href="#chat_window"><span class="glyphicon glyphicon-comment"></span>&nbsp;<span class="hidden-sm">'+gettext('Chat')+'</span></a></li>');
 	sagenb.chat.header_button.find('a').click(sagenb.chat.toggle);
 	// put it next to the user button
 	$("#user_navbar_area").find("ul.nav").prepend(sagenb.chat.header_button);

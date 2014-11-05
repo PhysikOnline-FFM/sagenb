@@ -13,9 +13,9 @@
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ gettext("Import") }} <b class="caret"></b></a>
 
 			<ul class="dropdown-menu">
-				<li><a href="#new_file_tab" id="new_file" data-toggle="tab"><i class="icon-file"></i> {{ gettext("New file") }}</a></li>
-				<li><a href="#upload_data_file_tab" id="upload_file" data-toggle="tab"><i class="icon-upload"></i> {{ gettext("Upload file") }}</a></li>
-				<li><a href="#file_from_url_tab" id="file_from_url" data-toggle="tab"><i class="icon-globe"></i> {{ gettext("File from URL") }}</a></li>
+				<li><a href="#new_file_tab" id="new_file" data-toggle="tab"><i class="glyphicon glyphicon-file"></i> {{ gettext("New file") }}</a></li>
+				<li><a href="#upload_data_file_tab" id="upload_file" data-toggle="tab"><i class="glyphicon glyphicon-upload"></i> {{ gettext("Upload file") }}</a></li>
+				<li><a href="#file_from_url_tab" id="file_from_url" data-toggle="tab"><i class="glyphicon glyphicon-globe"></i> {{ gettext("File from URL") }}</a></li>
 			</ul>
 		</li>
 	</ul>
@@ -84,6 +84,6 @@
 {% endblock modal_content %}
 
 {% block modal_footer %}
-<a href="#" class="btn btn-primary hide" id="upload_button">{{ gettext("Upload") }}</a>
+<a href="#" class="btn btn-primary" style="display: none;" id="upload_button">{{ gettext("Upload") }}</a>
 <a href="#" class="btn btn-primary" data-dismiss="modal" id="done_button">{{ gettext("Done") }}</a>
 {% endblock modal_footer %}

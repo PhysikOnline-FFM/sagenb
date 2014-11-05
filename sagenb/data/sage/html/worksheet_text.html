@@ -12,14 +12,16 @@
 
 {% block navbar %}
 	{% if not published_mode %}
-		<ul class="nav">
+		<ul class="nav navbar-nav">
 			<li><a href=".">{{ gettext("Back to worksheet") }}</a></li>
 		</ul>
 	{% endif %}
 {% endblock navbar %}
 
 {% block page %}
+	<h1>Worksheet als Textdatei</h1>
 	<pre id="worksheet_text">{{ plain_text }}</pre>
+	<br/><!-- ugly style hack -->
 {% endblock page %}
 
 {% block extra_javascript %}

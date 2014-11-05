@@ -435,12 +435,13 @@ sagenb.worksheetapp.cell = function(id) {
 					elements: ("text_cell_textarea_" + _this.id),
 					
 					//plugins: "advlist,lists,inlinepopups,media,paste,searchreplace,table,autolink,",
-					plugins: "advlist,lists,media,paste,searchreplace,table,autolink,",
+					plugins: "advlist,lists,media,paste,searchreplace,table,autolink,link,image,",
 
 					theme : "modern",
 					language: 'de',
 					menubar: false,
 					statusbar: false,
+					toolbar: "formatselect | fontselect | fontsizeselect | bold italic underline | undo redo | alignleft aligncenter alignright alignjustify | table link image media",
 					//theme_advanced_toolbar_location : "top",
 //					theme_advanced_toolbar_align : "left",
 //					theme_advanced_statusbar_location : "bottom",
@@ -1458,7 +1459,7 @@ sagenb.worksheetapp.cell = function(id) {
 	_this.set_output_loading = function() {
 		if(_this.worksheet.published_mode) return;
 		_this.render_output("<div class=\"progress progress-striped active\" style=\"width: 25%; margin: 0 auto;\">" + 
-									"<div class=\"bar\" style=\"width: 100%;\"></div>" + 
+									"<div class=\"progress-bar\" style=\"width: 100%;\"></div>" + 
 								"</div>");
 	};
 	_this.set_output_hidden = function() {
