@@ -880,6 +880,25 @@ def worksheet_new_datafile(worksheet):
     open(dest, 'w').close()
     return ''
 
+###############################
+#Chat History
+################################
+
+@worksheet_command('chat_history')
+def chat_history(worksheet):
+    """
+    Send worksheet properties as a JSON object
+    """
+    from sagenb.notebook.misc import encode_response
+    messages = g.db.query(Chatlog_entry).filter_by(wsid=worksheet.filename()).order_by(
+                             Chatlog_entry.time).all()
+    r = []
+    for message in messages:
+        r.append({'time': message.time.replace(microsecond=0).isoformat(),
+                  'nickname': message.userid, 'msg': message.msg})
+
+    return encode_response(r)
+
 ################################
 #Publishing
 ################################
