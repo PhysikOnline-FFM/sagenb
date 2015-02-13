@@ -25,7 +25,6 @@ class SageNBFlask(Flask):
         Flask.__init__(self, *args, **kwds)
 
         self.config['SESSION_COOKIE_HTTPONLY'] = False
-        self.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/pokaldb"
 
         self.root_path = SAGENB_ROOT
 
@@ -389,12 +388,20 @@ def create_app(path_to_notebook, *args, **kwds):
     oid.init_app(app)
     app.debug = True
 
+    # connect to database
+    database_path = os.path.join(path_to_notebook, 'chat_history.db')
     from sqlalchemy import create_engine
     from sqlalchemy.orm import sessionmaker
-    # this is a dummy user/password, for sure. I hope so, guys!:
-    engine = create_engine('postgresql://pokal:lakop14@localhost:5432/pokaldb')
+    engine = create_engine('sqlite:///'+database_path, convert_unicode=True)
     Session = sessionmaker(bind=engine)
     sess = Session()
+
+    # initialize database if necessary
+    from sqlalchemy.engine.reflection import Inspector
+    inspector = Inspector.from_engine(engine)
+    if "chatlog" not in inspector.get_table_names():
+        import models
+        models.init_db(engine)
 
     @app.before_request
     def set_notebook_object():
@@ -432,11 +439,6 @@ def create_app(path_to_notebook, *args, **kwds):
 
     from settings import settings
     app.register_blueprint(settings)
-
-    #from flask.ext.sqlalchemy import SQLAlchemy
-    #db = SQLAlchemy(app)
-    #db.session.flush()
-
 
     #autoindex v0.3 doesnt seem to work with modules
     #routing with app directly does the trick

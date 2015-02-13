@@ -1119,7 +1119,7 @@ def socketio(remaining):
         environment = request.environ.copy()
 
         # here, information can be passed to the socket
-        environment.update({'extrainfo':'hallo', 'notebook':g.notebook, 'db':g.db})
+        environment.update({'notebook':g.notebook, 'db':g.db})
 
         socketio_manage(environment, {'/worksheet': WorksheetNamespace}, request)
     except:
@@ -1159,7 +1159,7 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
     # client information handler
     def on_join(self, data):
-        #self.db = self.environ['db']
+        self.db = self.environ['db']
         # expecting data = {nickname:"sage username", "worksheet":"worksheet-name"}
         self.room = data['worksheet']
 
@@ -1359,6 +1359,8 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
                 outtxt = str(len(self.active_cells[self.room]) != 0)
             elif msg == "/help":
                 outtxt = "Hilfetext"
+            elif msg == "/history":
+                outtxt = str(self.get_chat_history())
             else:
                 self.msg = encode_response({"user": self.session['session_nick'], "message": msg })
                 self.emit('user_message', self.msg)
@@ -1373,9 +1375,13 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         self.emit_to_room(self.room, 'user_message', self.msg)
         #user_db = getUserbyHRZ(self.db, self.session['session_nick']['nickname'])
         #ws_db = getDBWorksheetByFilename(self.db, self.room)
-        #msg_db = Chatlog_entry(msg, user_db, ws_db)
-        #self.db.add(msg_db)
-        #self.db.commit()
+        msg_db = Chatlog_entry(msg, self.session['session_nick']['nickname'], self.room)
+        self.db.add(msg_db)
+        self.db.commit()
+
+    def get_chat_history(self):
+        return self.db.query(Chatlog_entry).filter_by(wsid=self.room).order_by(
+                             Chatlog_entry.time).all()
 
     # connection handler
     def recv_disconnect(self):
