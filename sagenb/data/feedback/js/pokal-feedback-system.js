@@ -58,6 +58,9 @@ pof.start_feedback = function() {
 			tpl: pof.templates,
 			fillupPost: function(post) {
 				$.each(pof.data_collector, function(key, func) {
+					// fixme: The checkbox disabling does not work that well. that is, it does not work.
+					if(!window.sagenb) return;
+
 					var checkbox = $("#"+key);
 					if(checkbox.length && !checkbox.prop('checked'))
 						// Wert ueberspringen
