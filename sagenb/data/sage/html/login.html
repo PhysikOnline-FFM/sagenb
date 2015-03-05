@@ -5,26 +5,7 @@
 {% block page_id %}login-page{% endblock %}
 
 {% block alerts %}
-	{% if welcome_user %}
-		<div class="alert alert-success">
-			<button class="close" data-dismiss="alert">×</button>
-			<strong>{{ gettext('Congratulations %(u)s! You can now sign into the Sage Notebook.', u=welcome_user) }}</strong>
-		</div>
-	{% endif %}
-
-	{% if username_error or password_error %}
-		<div class="alert alert-danger">
-			<button class="close" data-dismiss="alert">×</button>
-			<strong>{{ gettext('Error') }}:</strong> <span>{{ gettext('Bad login credentials') }}</span>
-		</div>
-	{% endif %}
-
-	{% if creation_error %}
-		<div class="alert alert-danger">
-			<button class="close" data-dismiss="alert">×</button>
-			<strong>{{ gettext('Error') }}:</strong> <span>{{ gettext('Creating new users is disabled by the administrator.') }}</span>
-		</div>
-	{% endif %}
+{# hab die Alerts verschoben in den "Inline"-Bereich #}
 {% endblock alerts %}
 
 {% block main %}
@@ -32,75 +13,82 @@
 		<div class="row">
 			<div id="desc" class="col-md-8">
 				{# POKAL-Startseite includen #}
-				{% include "html/pokal/portal.html" %}
-				
-				{#
-				<h2>{{ gettext('Welcome!') }}</h2>
-				<p>{{ gettext('<strong>Sage</strong> is a different approach to mathematics software.') }}</p>
+				<div class="well">
+					<h2>Login bei POKAL</h2>
 
-				<h2>{{ gettext('The Sage Notebook') }}</h2>
-				<p>{{ gettext('With the Sage Notebook anyone can create, collaborate on, and publish interactive worksheets. In a worksheet, one can write code using Sage, Python, and other software included in Sage.') }}</p>
+					{% if welcome_user %}
+						<div class="alert alert-success">
+							<button class="close" data-dismiss="alert">×</button>
+							<strong>{{ gettext('Congratulations %(u)s! You can now sign into the Sage Notebook.', u=welcome_user) }}</strong>
+						</div>
+					{% endif %}
 
-				<h2>{{ gettext('General and Advanced Pure and Applied Mathematics') }}</h2>
-				<p>{{ gettext('Use Sage for studying calculus, elementary to very advanced number theory, cryptography, commutative algebra, group theory, graph theory, numerical and exact linear algebra, and more.') }}</p>
+					{% if username_error or password_error %}
+						<div class="alert alert-danger">
+							<button class="close" data-dismiss="alert">×</button>
+							<strong>{{ gettext('Error') }}:</strong> <span>{{ gettext('Bad login credentials') }}</span>
+						</div>
+					{% endif %}
 
-				<h2>{{ gettext('Use an Open Source Alternative') }}</h2>
-				<p>{{ gettext('By using Sage you help to support a viable open source alternative to Magma, Maple, Mathematica, and MATLAB. Sage includes many high-quality open source math packages.') }}</p>
+					{% if creation_error %}
+						<div class="alert alert-danger">
+							<button class="close" data-dismiss="alert">×</button>
+							<strong>{{ gettext('Error') }}:</strong> <span>{{ gettext('Creating new users is disabled by the administrator.') }}</span>
+						</div>
+					{% endif %}
 
-				<h2>{{ gettext('Use Most Mathematics Software from Within Sage') }}</h2>
-				<p>{{ gettext('Sage makes it easy for you to use most mathematics software together. Sage includes GAP, GP/PARI, Maxima, and Singular, and dozens of other open packages.') }}</p>
+					<form method="post" action="/login" id="sign-in-form" class="form-horizontal">
+						<!--<h4>{{ gettext('Login') }}</h4>-->
+						<div class="form-group">
+							<label for="email" class="col-sm-4 control-label">{{ gettext('Username') }}</label>
+							<div class="col-sm-8">
+								<input autofocus="autofocus" type="text" name="email" id="email" class="form-control" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="password" class="col-sm-4 control-label">{{ gettext('Password') }}</label>
+							<div class="col-sm-8">
+								{% if recovery %}
+									<a href="/forgotpass" style="font-size: 10px; line-height: 1em; padding-left: 5px">{{ gettext('forgot password?') }}</a>
+								{% endif %}
+								<input type="password" name="password" id="password " class="form-control" />
+								<label for="remember"><input type="checkbox" name="remember" id="remember" /> {{ gettext('Remember me') }}</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-4 col-sm-8">
+								<input type="hidden" name="next", value="{{ next }}"/>
+								<button type="submit" class="btn btn-primary">{{ gettext('Sign in') }}</button>
+								{% if accounts %}
+									<a href="/register" id="register-link" class="btn">{{ gettext('Register') }}</a>
+								{% endif %}
+							</div>
+						</div>
+					</form>
 
-				<h2>{{ gettext('Use a Mainstream Programming Language') }}</h2>
-				<p>{{ gettext('You work with Sage using the highly regarded scripting language Python. You can write programs that combine serious mathematics with anything else.') }}</p>
-
-				<h2>{{ gettext('Acknowledgement') }}</h2>
-				<p>{{ gettext('The Sage Notebook is based upon work supported by the National Science Foundation under grants DMS-0821725, DMS-1020378, DMS-0713225, DMS-0555776, DMS-0545904, DMS-0838212, DMS-0757627, DUE-1020378, DUE-1022574, DMS-1015114, etc.    Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.   See also <a href="http://sagemath.org/development-ack.html">http://sagemath.org/development-ack.html</a>.') }}</p>
-				#}
-			</div>
+					<p>Wenn Sie ihren Benutzernamen oder Passwort vergessen haben oder ein (neues) Account benötigen,
+					erhalten Sie hier <a href="/pages/einloggen-in-pokal">Hilfe zum Login</a>.</p>
+				</div><!-- well -->
+			</div><!-- col -->
 			
 			<div id="sign-in-box" class="col-md-4">
 				<div class="well">
+					<h4 style="margin-top: 26px">Mehr über POKAL</h4>
+					<p>Diese Seite dient zum Einloggen in den persönlichen Arbeitsbereich. Aber auch ohne Login
+					gibt es viel zu Entdecken.</p>
+
+					<a class="btn btn-primary" href="/">Zur Starseite von POKAL</a>
+				</div>
+
+				<div class="well">
 					
-					{#	<img src="//lab2cloud.com/Content/img/beta_icon.png" style="float:right; margin: -41px -38px 0 0;" title="BETA!" alt="" /> #}
-					{#<h4>POKAL ist brandneu</h4>
-					<p>Wir haben im März 2013 den Betrieb aufgenommen. Daher ist noch nicht alles freigeschaltet. Für
-					einen Account wenden Sie sich bitte an <a href="mailto:pokal@elearning.physik.uni-frankfurt.de">pokal@elearning.physik.uni-frankfurt.de</a>.</p>
-					#}
-					<h4 style="margin-top: 26px">{{ gettext('Public worksheets') }}</h4>
+					<h4>{{ gettext('Public worksheets') }}</h4>
 					<p>{{ gettext('Users can publish worksheets for demonstration purpose, lectures or simple sharing via link ') }}</p>
 					
 					<a class="btn btn-primary" href="/poak">{{ gettext('Open POAK') }}</a>
 				</div>
 			
-				<!--<h2 style="margin-bottom: 10px;">
-				Sign into the Sage Notebook v{{ sage_version }}</h2>-->
-				<form method="post" action="/login" id="sign-in-form" class="well">
-					<h4>{{ gettext('Login') }}</h4>
-					<div>
-						<!--<label for="email">{{ gettext('Username') }}</label>-->
-						<input placeholder="{{ gettext('HRZ account') }}" autofocus="autofocus" type="text" name="email" id="email" class="form-control" />
-					</div>
-					<div>
-						<div style="margin-bottom: 5px">
-							<!--<label  for="password" style="display: inline">{{ gettext('Password') }}</label>-->
-							{% if recovery %}
-								<a href="/forgotpass" style="font-size: 10px; line-height: 1em; padding-left: 5px">{{ gettext('forgot password?') }}</a>
-							{% endif %}
-						</div>
-						<input placeholder="{{ gettext('Password') }}" type="password" name="password" id="password " class="form-control" />
-					</div>
-					<div>
-						<label for="remember"><input type="checkbox" name="remember" id="remember" /> {{ gettext('Remember me') }}</label>
-					</div>
-					<div style="margin-top: 10px;">
-						<input type="hidden" name="next", value="{{ next }}"/>
-						<button type="submit" class="btn btn-primary">{{ gettext('Sign in') }}</button>
-						{% if accounts %}
-							<a href="/register" id="register-link" class="btn">{{ gettext('Register') }}</a>
-						{% endif %}
-					</div>
-				</form>
-
+				{# wir haben kein openid! #}
 				{% if openid %}
 					<form method="post" action="/loginoid" id="openid" class="well"></form>
 				{% endif %}
@@ -108,10 +96,10 @@
 		</div>
 	</div><!-- container -->
 	<div class="container" style="text-align: center; margin-bottom: 15px;">
-		<a href="https://elearning.physik.uni-frankfurt.de/go/impressum">{{ gettext('Impressum') }}</a>  &middot;
+		<a href="/pages/impressum">{{ gettext('Impressum') }} und Kontakt</a>  &middot;
 		{#<a href="https://elearning.physik.uni-frankfurt.de/go/datenschutz">{{ gettext('Terms of Use') }}</a>  &middot; #}
 		<a href="https://elearning.physik.uni-frankfurt.de/go/datenschutz">{{ gettext('Privacy Policy') }}</a>   &middot;
-		<a href="https://elearning.physik.uni-frankfurt.de/projekt">{{ gettext('Project') }}</a> 
+		<a href="https://elearning.physik.uni-frankfurt.de/projekt/wiki/POKAL">{{ gettext('Project') }}</a> 
 		<div style="text-align: center;">{{ gettext("PhysikOnline is a student project of physics' faculty at university of Frankfurt") }}</div>
 	</div><!-- container -->
 {% endblock %}

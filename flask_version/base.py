@@ -99,7 +99,12 @@ def index():
             current_app.startup_token = None
             return index()
 
-    return login()
+    #return login()
+    # Versuch fix POTT #1098: Weiterleitung auf CMS-Startseite, wenn keine weiteren
+    # Login-Aktivitaeten hier erkennbar. Die Route "/login" wird ohnehin von authentication.py
+    # bearbeitet.
+    return redirect("/pages/")
+
 
 ################################
 # The feedback handler  (POKAL)#
@@ -117,7 +122,7 @@ def post_feedback():
 def debug_me():
 	# uh oh, enable debugging:
 	# FIXME TODO the following line MUST be disabled in production!
-	current_app.debug = True
+	current_app.debug = False
 	print "Firing debugging..."
 	assert current_app.debug == False, "Don't panic! You're here by request of debug()"
 	return make_response("This line should never be reached")
@@ -175,9 +180,11 @@ def localization_js():
 # Help #
 ########
 @base.route('/help')
-@login_required
+# @login_required # why is a login required for displaying a help message?
 def help():
-    return render_template(os.path.join('html', 'docs.html'))
+    # content transfered to POKAL Content Managament System - POTT #1054
+    #return render_template(os.path.join('html', 'docs.html'))
+    return redirect('/pages/help')
 
 ###########
 # History #
