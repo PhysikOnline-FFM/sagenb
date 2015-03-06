@@ -552,13 +552,13 @@ sagenb.worksheetapp.worksheet = function() {
                     X = decode_response(response);
                     if(X.check === 'y') {
                         pk = X.pk;
-                        $("#poak-publish-button").text("Aus POAK entfernen");
+                        $("#poak-publish-button").text(gettext("Remove from POAK"));
                         $("#poak-publish-button").attr("href", "/poak/w/"+pk+"/delete");
-                        $("#publish-button").text("Neuen Link erzeugen");
+                        $("#publish-button").text(gettext("Generate new link"));
                         $("#poak-link-button").attr("href", "/poak/w/"+pk);
                         $("#poak-link-button").show();
                     } else {
-                        $("#poak-publish-button").text("Bei POAK einreichen");
+                        $("#poak-publish-button").text(gettext("Submit to POAK"));
                         $("#poak-publish-button").attr("href", "/poak/sso/submit/"+_this.published_id_number);
                         $("#poak-link-button").hide();
                     }
@@ -569,7 +569,7 @@ sagenb.worksheetapp.worksheet = function() {
 				$("#publish_checkbox").prop("checked", false);
 				$("#auto_republish_checkbox").prop("checked", false);
 				$("#auto_republish_checkbox").attr("disabled", true);
-                $("#poak-publish-button").text("Bei POAK einreichen");
+                $("#poak-publish-button").text(gettext("Submit to POAK"));
 				
 				$("#worksheet_url").hide();
                 $("#poak-link-button").hide();
@@ -591,31 +591,36 @@ sagenb.worksheetapp.worksheet = function() {
 				}
 			}
 
-			// data
+			/////////// Worksheet DATA LIST ////////////
 			$("#data_list ul *").detach();
 			for(var i in _this.attached_data_files) {
 				var datafile = _this.attached_data_files[i];
 
-				$("#data_list ul").append('<li>' + 
-												'<a href="#" class="filename">' + datafile + '</a>' + 
-												'<div class="btn-group">' + 
-													'<a href="#" class="btn btn-xs copy_path_btn" rel="tooltip" title="Get Path"><i class="glyphicon glyphicon-question-sign"></i></a>' + 
-													'<a href="edit_datafile/' + datafile + '" class="btn btn-xs download_btn" rel="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>' + 
-													'<a href="data/' + datafile + '" class="btn btn-xs download_btn" rel="tooltip" title="Download" target="_blank"><i class="glyphicon glyphicon-download"></i></a>' + 
-													'<a href="#" class="btn btn-xs delete_btn" rel="tooltip" title="Delete"><i class="glyphicon glyphicon-remove"></i></a>' + 
-												'</div>' + 
-											'</li>');
+				$("#data_list ul").append(
+                '<li>' + 
+                    '<a href="#" class="filename">' + datafile + '</a>' + 
+                    '<div class="btn-group">' + 
+                        '<a href="#" class="btn btn-xs copy_path_btn" rel="tooltip" title="'+gettext("get path")+'"><i class="glyphicon glyphicon-question-sign"></i></a>' + 
+                        '<a href="edit_datafile/' + datafile + '" class="btn btn-xs download_btn" rel="tooltip" title="'+gettext("edit")+'"><i class="glyphicon glyphicon-edit"></i></a>' + 
+                        '<a href="data/' + datafile + '" class="btn btn-xs download_btn" rel="tooltip" title="'+gettext("download")+'" target="_blank"><i class="glyphicon glyphicon-download"></i></a>' + 
+                        '<a href="#" class="btn btn-xs delete_btn" rel="tooltip" title="'+gettext("delete")+'"><i class="glyphicon glyphicon-remove"></i></a>' + 
+                    '</div>' + 
+                '</li>');
 
 				var elem = $("#data_list li").last();
 
 				// cannot access datastore variable in these functions because it will change by the time they are called
 				elem.find(".copy_path_btn").click(function(e) {
-					window.prompt(gettext("Copy to clipboard: ") + sagenb.ctrlkey + "-C, Enter", "DATA+'" + $(this).parent().prev().text() + "'");
+					//window.prompt(gettext("Copy to clipboard: ") + sagenb.ctrlkey + "-C, Enter", "DATA+'" + $(this).parent().prev().text() + "'");
+					window.prompt(gettext("Copy to clipboard: "), "DATA+'" + $(this).parent().prev().text() + "'");
 				});
 				elem.find(".delete_btn").click(function(e) {
 					var fn = $(this).parent().prev().text();
+					$(this).tooltip('destroy');
 					$(this).parent().parent().fadeOut("slow", function() {
 						sagenb.async_request(_this.worksheet_command("delete_datafile"), sagenb.generic_callback(function(status, response) {
+							$("#data_list ul .btn-group a").tooltip('hide');
+							$("div.tooltip.in").removeClass('in'); // Brechhammer Variante, weil vorherige Zeile nicht zuverlässig wirkt.
 							_this.worksheet_update();
 						}),
 						{
@@ -624,10 +629,10 @@ sagenb.worksheetapp.worksheet = function() {
 					});
 				});
 			}
-			$("#data_list ul .btn-group a").tooltip();
+			$("#data_list ul .btn-group a").tooltip({placement:'top', container:'#data_modal'});
 
 			if($("#data_list ul li").length === 0) {
-				$("#data_list ul").append('<li class="no_data_files"><a href="#" class="filename">Keine Dateien</a></li>');
+				$("#data_list ul").append('<li class="no_data_files"><a href="#" class="filename">'+gettext("No uploaded files")+'</a></li>');
 			}
 
 			if(_this.published_mode) {
@@ -1017,10 +1022,13 @@ sagenb.worksheetapp.worksheet = function() {
 				$("body").append('<iframe name="upload_frame" id="upload_frame" />');
 				var upload_frame = $("iframe#upload_frame");
 				upload_frame.hide();
+				
 				$("#upload_data_file_tab form").submit();
+				
 				upload_frame.load(function() {
 					if($.trim(upload_frame.text()) !== "") {
-						alert(upload_frame.text());
+						//alert(upload_frame.text());
+                        $('#data_modal_alert').addClass('alert alert-danger').append(upload_frame.text())
 					}
 					else {
 						$("#manage_tab_button").click();
@@ -1063,6 +1071,62 @@ sagenb.worksheetapp.worksheet = function() {
 			1000
 		);
 
+		/////// file upload on drop ////////
+		$(document, ".cell").on('drop dragenter dragover', function(e){
+			e.preventDefault();
+			console.log(e);
+			
+			if (e.type === "drop" && e.originalEvent.dataTransfer && e.originalEvent.dataTransfer.files.length){
+				e.originalEvent.preventDefault();
+				e.stopPropagation();
+				e.stopImmediatePropagation();
+				e.originalEvent.stopPropagation();
+				e.originalEvent.stopImmediatePropagation();
+				//console.log(e.isDefaultPrevented(), e.isPropagationStopped(), e.isImmediatePropagationStopped());
+				
+				/* UPLOAD FILES HERE */
+				$.each(e.originalEvent.dataTransfer.files, function(i, file){
+					var formData = new FormData();
+					formData.append("file", file, file.name);
+					$.ajax({
+						url: _this.worksheet_command("upload_datafile"),
+						type: 'POST',
+						//Ajax events
+						beforeSend: function(jqXHR, settings){
+							var info = $('<div>').addClass('alert alert-info alert_upload_starts alert-dismissible')
+								.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>')
+								.append($('<p>').html('<strong>'+gettext("Upload started")+'</strong> '+gettext("File upload has been initialized in background")+'...'));
+							$('.alert_container_inner alert_upload_starts, .alert_container_inner alert_upload_successful, .alert_container_inner alert_upload_aborted').detach();
+							$('.alert_container_inner').append(info);
+						},
+						success: function(data, textStatus, jqXHR){
+							var succ = $('<div>').addClass('alert alert-success alert_upload_successful alert-dismissible')
+								.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>')
+								.append($('<p>').html('<strong>'+gettext("Upload successful")+'</strong> '+gettext("File is ready for use now")));
+							$('.alert_container_inner').append(succ).find('.alert_upload_starts').detach();
+							_this.worksheet_update();
+						},
+						error: function(jqXHR, textStatus, errorThrown){
+							var err = $('<div>').addClass('alert alert-danger alert_upload_aborted alert-dismissible')
+								.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>')
+								.append($('<p>').html('<strong>'+gettext("Upload aborted")+'</strong> '+gettext("An error occured during file upload")));
+							$('.alert_container_inner').append(err).find('.alert_upload_starts').detach();
+						},
+						// Form data
+						data: formData,
+						// Options to tell jQuery not to process data or worry about content-type.
+						cache: false,
+						contentType: false,
+						processData: false
+					});
+				});
+				//#$("#data_modal").modal('show');
+				//#$("#data_modal a#upload_file").click();
+				
+				return false;
+			}
+		});
+		
 		//////// CHATBOX ////////
 		sagenb.chat.init(_this);
 		
@@ -1087,7 +1151,7 @@ sagenb.worksheetapp.worksheet = function() {
 				}
 				_this.interrupt_with_confirm();	return false;
 		});
-				
+		
 		/////// FILE MENU ////////
 		$("#new_worksheet").click(_this.new_worksheet);
 		$("#save_worksheet").click(_this.save);

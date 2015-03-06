@@ -399,6 +399,10 @@ sagenb.worksheetapp.cell = function(id) {
                 _this.socket.emit("cell_released", _this.id, sagenb.username);
 			});
 
+			_this.codemirror.on("drop", function(e) {
+				console.log('drop event CodeMirror in cell.js', e);
+			});
+			
 			// render the output
 			_this.render_output();
 		}
@@ -454,20 +458,22 @@ sagenb.worksheetapp.cell = function(id) {
 
 					setup: function(editor) {
 							editor.on('change', function(e) {
-									console.log('change event', e);
+								console.log('change event in cell.js', e);
 //									alert(editor.getContent());
-									_this.socket.emit('cell_input_changed', _this.id, editor.getContent());
+								_this.socket.emit('cell_input_changed', _this.id, editor.getContent());
 							});
 							editor.on('keyup', function(e) {
-									_this.socket.emit('cell_input_changed', _this.id, editor.getContent());
+								_this.socket.emit('cell_input_changed', _this.id, editor.getContent());
 						    });
 							editor.on('focus', function(e) {
-									_this.socket.emit("cell_focused", _this.id, sagenb.nickname);
+								_this.socket.emit("cell_focused", _this.id, sagenb.nickname);
 							});
 							editor.on('blur', function(e) {
-									_this.socket.emit("cell_released", _this.id, sagenb.username);
+								_this.socket.emit("cell_released", _this.id, sagenb.username);
 							});
-
+							editor.on('drop', function(e) {
+								console.log('drop event TinyMCE in cell.js', e);
+							});
 					},
 
 					width: "100%",

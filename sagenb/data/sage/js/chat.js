@@ -171,7 +171,9 @@ sagenb.chat.append_message = function(classes, text) {
 	user_was_at_bottom = true
 
 	// push content and store the line element it for return
-	message = $('<p class="line '+classes+'">'+text+'</p>').appendTo(sagenb.chat.message_area);
+	message = $('<p class="line '+classes+'">'+text+'</p>')
+				.linkify({tagName: 'a', target: '_blank', newLine: '\n', linkClass: 'linkified', linkAttributes: null})
+				.appendTo(sagenb.chat.message_area);
 	
 	if(user_was_at_bottom)
 		// user was already at bottom -.-

@@ -1,3 +1,13 @@
+.modal {
+	.modal-header {
+		padding: 10px 15px 5px 15px;
+		h1,h2,h3,h4 {margin: 0}
+	}
+	.modal-footer {
+		padding: 5px 15px;
+	}
+}
+
 /* -------- SHARING DIALOG ---- */
 #collaborators_textarea {
 	resize: vertical;
@@ -29,6 +39,10 @@
 					position: absolute;
 					top: 7px;
 					right: 7px;
+					
+					a.btn {
+						cursor: pointer;
+					}
 				}
 
 				&:hover .btn-group {

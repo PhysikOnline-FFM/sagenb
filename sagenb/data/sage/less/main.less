@@ -51,10 +51,16 @@ body {
 		top: 50px;
 
 		/* -50 to adjust for padding */
-		width: @alert_width - 50;
+		/* width: @alert_width - 50; */
+		width: @alert_width;
 		
 		/* otherwise codemirror shows through */
 		z-index: 2;
+		
+		.alert {
+			border-radius-top: 0px;
+			padding: 10px 5px;
+		}
 	}
 }
 

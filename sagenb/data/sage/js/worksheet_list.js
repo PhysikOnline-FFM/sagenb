@@ -49,10 +49,10 @@ sagenb.worksheetlistapp.list_row = function() {
 			name_html += '<a href="/home/' + _this.props.filename + '" >' + _this.props.name + '</a>';
 			/* Tags */
 			try {
-				name_html += '<input type="text" name="'+_this.props.filename+'" class="tagit" value="'+ _this.props.pokaltags[sagenb.username].join(',') +'">';
+				name_html += '<input type="text" name="'+_this.props.filename+'" class="tagit" placeholder="'+gettext('Add new tag')+'" value="'+ _this.props.pokaltags[sagenb.username].join(',') +'">';
 			}
 			catch(e) {
-				name_html += '<input type="text" name="'+_this.props.filename+'" class="tagit" value="">';
+				name_html += '<input type="text" name="'+_this.props.filename+'" class="tagit" placeholder="'+gettext('Add new tag')+'" value="">';
 			}
             //name_html += '<span class="icon-plus-sign add-tag-sign"></span>';
 		}
@@ -97,6 +97,7 @@ sagenb.worksheetlistapp.list_row = function() {
 
 		tagitelements.tagit({
 				removeConfirmation: true,
+				placeholderText: gettext('Add new tag'),
                 onTagClicked: function(evt, ui) {
 	            	//tagitelements.tagit('tagLabel', ui.tag)
 					$("#search_input").val("tag:"+tagitelements.tagit('tagLabel', ui.tag));

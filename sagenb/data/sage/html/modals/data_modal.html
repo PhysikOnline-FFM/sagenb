@@ -5,6 +5,7 @@
 {% block modal_title %}{{ gettext("Data") }}{% endblock modal_title %}
 
 {% block modal_content %}
+<div id="data_modal_alert" class="" role="alert"></div>
 
 <div class="tabbable">
 	<ul class="nav nav-tabs">
@@ -22,13 +23,14 @@
 	<div class="tab-content">
 		<div class="tab-pane active" id="manage_tab">
 			<div id="data_list">
-				<ul class="nav nav-tabs nav-stacked">
+				<ul class="nav nav-stacked"><!--<ul class="nav nav-tabs nav-stacked">-->
 				</ul>
 			</div>
 		</div>
 		<div class="tab-pane" id="new_file_tab">
 			<form class="form-horizontal" method="post" action="#" name="upload">
 				<fieldset>
+                    <legend>{{ gettext("New file") }}</legend>
 					<div class="form-group">
 						<label class="col-md-4 col-lg-3 control-label" for="new">{{ gettext("Name") }}</label>
 						<div class="col-md-8 col-lg-9">
@@ -42,6 +44,7 @@
 		<div class="tab-pane" id="upload_data_file_tab">
 			<form class="form-horizontal" method="post" action="upload_datafile" name="upload" enctype="multipart/form-data" encoding="multipart/form-data" target="upload_frame">
 				<fieldset>
+                    <legend>{{ gettext("Upload file") }}</legend>
 					<div class="form-group">
 						<label class="col-md-4 col-lg-3 control-label" for="file">{{ gettext("File") }}</label>
 						<div class="col-md-8 col-lg-9">
@@ -61,6 +64,7 @@
 		<div class="tab-pane" id="file_from_url_tab">
 			<form class="form-horizontal" method="post" action="#" name="upload">
 				<fieldset>
+                    <legend>{{ gettext("File from URL") }}</legend>
 					<div class="form-group">
 						<label class="col-md-4 col-lg-3 control-label" for="url">{{ gettext("URL") }}</label>
 						<div class="col-md-8 col-lg-9">

@@ -1,35 +1,17 @@
 /* Optional scoped theme for tag-it based on zendesk design. */
 
-ul.tagit {
-	border: none;
-	-moz-border-radius: 0px;
-    -webkit-border-radius: 0px;
-    border-radius: 0px;
-    background: inherit;
-}
 ul.tagit li.tagit-choice {
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-    border: 1px solid #4199c1;
-
     background: none;
-    /*background-color: #25538C;*/
-    background-color: #4199c1;
+    background-color: #428bca;
+    border-color: #428bca;
 
-    font-weight: normal;
-    padding-top: 2px;
+    padding-top: 3px;
     padding-bottom: 3px;
-    padding-left: 10px;
-	margin-top:2px;
-	margin-bottom:2px;
+    padding-left: 6px;
 }
-ul.tagit li.tagit-choice .tagit-label:not(a) {
-    /*color: #555;*/
-}
+
 ul.tagit li.tagit-choice .tagit-label {
     color: #fff;
-    font-weight: bold;
     margin-right: -2px;
 }
 ul.tagit li.tagit-choice a.tagit-close {
@@ -40,15 +22,6 @@ ul.tagit li.tagit-choice a.tagit-close {
 ul.tagit li.tagit-choice:hover a.tagit-close {
     display: inline;
 }
-
-ul.tagit {
-	margin-top: 5px;
-}
-
-/*ul.tagit .tagit-new input:hover {
-    border: 1px solid #aaa;
-	transition-delay: 100ms;
-}*/
 
 ul.tagit li.tagit-choice .ui-icon {
     display: none;
@@ -64,35 +37,22 @@ ul.tagit li.tagit-choice:hover, ul.tagit li.tagit-choice.remove {
 		
 }
 
-/* Farben eines Tags im removeConfirmation Zustand */
-ul.tagit li.tagit-choice.remove {
-		/* red
-		border: solid thin #872d2d;
-		background-color: #ad3c3c;*/
-
-		/* black */
-		border: solid thin #333;
-		background-color: #333;
-}
-ul.tagit li.tagit-choice a.tagLabel:hover,
-ul.tagit li.tagit-choice a.tagit-close .text-icon:hover {
-	/* remove cross hover color/effects */
-	font-weight:bold;
-}
 ul.tagit input[type="text"] {
     background: none;
 }
 .tagit.ui-widget, .ui-widget .tagit, ul.tagit li, ul.tagit li input{
     font-size: 13px;
-	line-height: 16px;
+	line-height: 12px;
 }
 
 ul.tagit .tagit-new input {
-    /*display: none;*/
+    visibility: hidden;
+	border: 1px solid transparent !important;
     margin-left: 6px;
-	height:25px;
-	font-size:14px;
-	padding: 0px;
+	padding: 3px;
+}
+ul.tagit .tagit-new:hover input, ul.tagit .tagit-new:focus input, ul.tagit .tagit-new:active input, ul.tagit .tagit-new input:hover, ul.tagit .tagit-new input:focus {
+    visibility: visible;
 }
 
 /* Forked from a jQuery UI theme, so that we don't require the jQuery UI CSS as a dependency. */
@@ -133,15 +93,3 @@ ul.tagit .tagit-new input {
     background: #ffffff 50% 50% repeat-x;
     color: #222222;
 }
-
-.ui-widget-content {
-	margin-top:3px;
-}
-.tagit-autocomplete.ui-corner-all, .tagit-autocomplete .ui-corner-all { -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px; border-radius: 4px; }
-.tagit-autocomplete .ui-state-hover, .tagit-autocomplete .ui-state-focus { border: 1px solid #999999; background: #dadada; font-weight: normal; color: #212121; }
-.tagit-autocomplete .ui-state-active  { border: 1px solid #aaa; }
-
-.tagit-autocomplete .ui-widget-content { border: 1px solid #aaa; }
-.tagit .ui-helper-hidden-accessible { position: absolute !important; clip: rect(1px,1px,1px,1px); }
-
-
