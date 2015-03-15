@@ -8,9 +8,6 @@
 		<meta name="description" content="">
 		<meta name="author" content="Samuel Ainsworth">
 
-		<!-- styles -->
-		<link href="/data/bootstrap-2.0.4/css/bootstrap.min.css" rel="stylesheet">
-
 		<!-- fav and touch icons -->
 		<!-- these should be customized for sage -->
 		<link rel="shortcut icon" href="/data/sage/images/favicon.ico">
@@ -29,14 +26,10 @@
 		{# TODO make this only when not in debug mode #}
 		{% assets filters="rjsmin", output="webassets_generated/jmol_popup.js",
 			"jquery/jquery-1.7.2.min.js",
-			"bootstrap-2.0.4/js/bootstrap.min.js",
 			"sage/js/sagenb.js",
 			"sage/js/jmol.js"
 		%}
 			<script type="text/javascript" src="{{ ASSET_URL }}"></script>
 		{% endassets %}
-
-		<script type="text/javascript">
-		</script>
 	</body>
 </html>

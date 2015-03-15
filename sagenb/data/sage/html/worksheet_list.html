@@ -1,27 +1,65 @@
 {% extends 'html/base.html' %}
 
-{% block head %}
-	{{ super() }}
-	<!-- TagIt -->
-	<link href="/data/jquery/plugins/tagit/jquery.tagit.css" rel="stylesheet" type="text/css">
-	<link href="/data/jquery/plugins/tagit/tagit.ui-sage.css" rel="stylesheet" type="text/css">
-{% endblock head %}
-
-{% block navbar %}
-{% endblock navbar %}
-
 {% block alerts %}
 	{% include 'html/alerts/worksheet_locked_alert.html' %}
 	{% include 'html/alerts/rename_alert.html' %}
 {% endblock alerts %}
 
-{% block before_page %}
-{% endblock before_page %}
-
+{% block navbar %}
+	{% if not published_mode %}
+	<ul class="nav navbar-nav">
+		<li class="dropdown" id="new_menu">
+			<a href="#new" class="dropdown-toggle" data-toggle="dropdown">{{ gettext("New file") }} <span class="caret"></span></a>
+			<ul class="dropdown-menu">
+				<li><a href="/new_worksheet" class=""><span class="glyphicon glyphicon-file"></span> {{ gettext("New Worksheet") }}</span></a></li>
+				<li><a href="#import_modal" class="" data-toggle="modal"><span class="glyphicon glyphicon-upload"></span> {{ gettext("Upload") }}</a></li>
+				<li><a href="/poak" class=""><span class="glyphicon glyphicon-cloud-download"></span> {{ gettext("Open Worksheet from POAK") }}</a></li>
+			</ul>
+		</li>
+		<li class="dropdown" id="actions_menu">
+			<a href="#action" class="dropdown-toggle" data-toggle="dropdown">{{ gettext("Action") }} <span class="caret"></span></a>
+			<ul class="dropdown-menu">
+				<li><span class="help-block small" style="padding: 0 8px; margin: 0;">{{ gettext("Apply to selected worksheets") }}...</span></li>
+				<li class="divider"></li>
+				<li><a href="#" class="disabled" id="send_to_archive_button"><span class="glyphicon glyphicon-folder-close"></span> {{ gettext("Archive") }}</a></li>
+				<li><a href="#" class="disabled" id="unarchive_button"><span class="glyphicon glyphicon-folder-open"></span> {{ gettext("Unarchive") }}</a></li>
+				<li><a href="#" class="disabled" id="delete_button"><span class="glyphicon glyphicon-trash"></span> {{ gettext("Delete") }}</a></li>
+				<li><a href="#" class="disabled" id="undelete_button"><span class="glyphicon glyphicon-refresh"></span> {{ gettext("Undelete") }}</a></li>
+				<li><a href="#" class="disabled" id="duplicate_button"><span class="glyphicon glyphicon-duplicate"></span> {{ gettext("Duplicate") }}</a></li>
+				<li><a href="#" class="disabled" id="stop_button"><span class="glyphicon glyphicon-stop"></span> {{ gettext("Stop") }}</a></li>
+				<li><a href="#" class="disabled" id="download_button"><span class="glyphicon glyphicon-download"></span> {{ gettext("Download") }}</a></li>
+				<li class="divider"></li>
+				<li><a href="#" class="disabled" id="empty_trash"><span class="glyphicon glyphicon-fire"></span> {{ gettext("Empty Trash") }}</a></li>
+			</ul>
+		</li>
+		<li class="dropdown" id="type_buttons">
+			<a href="#new" class="dropdown-toggle" data-toggle="dropdown">{{ gettext("View") }} <span class="caret"></span></a>
+			<ul class="dropdown-menu">
+				<li><a href="#change_folder" id="show_active"> {{ gettext("Active Worksheets") }}</a></li>
+				<li><a href="#change_folder" id="show_archive"> {{ gettext("Archived Worksheets") }}</a></li>
+				<li><a href="#change_folder" id="show_trash"> {{ gettext("Deleted Worksheets") }}</a></li>
+			</ul>
+		</li>
+	</ul>
+	{% else %}
+	{{ super() }}
+	{% endif %}
+{% endblock navbar %}
 
 {% block page %}
-	<h1 class="title"></h1>
-	<!-- Deaktiviert 31.10.14, wozu gut? <div style="height: 10px;"></div>-->
+	<h2 class="title"></h2>
+	
+	<form action="#" class="form-search" role="form">
+		<div class="input-group">
+			<span class="input-group-btn">
+				<button type="submit" class="btn btn-default" id="submit_search"><span class="glyphicon glyphicon-search"></span></button>
+			</span>
+			<input type="search" class=" form-control" placeholder="{{ gettext('Search') }}" id="search_input" autofocus>
+			<span class="input-group-btn">
+				<button class="btn btn-default" id="search_clear"><span class="glyphicon glyphicon-remove-circle"></span></button>
+			</span>
+		</div>
+	</form>
 
 	{% if published_mode %}
 		{# im "Published Worksheets"-Modus, also anonym #}
@@ -32,61 +70,6 @@
 			besteht die Möglichkeit, auf diesen Arbeitsblättern aufzubauen.
 		</div>
 	{% endif %}
-
-	<div class="row">
-		{% if not published_mode %}
-		<div class="col-md-4">
-			<div class="btn-group" id="actions_menu">
-				<button class="btn btn-default dropdown-toggle span2" data-toggle="dropdown">{{ gettext("Action") }} <span class="caret"></span></button>
-				<ul class="dropdown-menu">
-					<li><a href="#" class="disabled" id="send_to_archive_button"><span class="glyphicon glyphicon-folder-close"></span> {{ gettext("Archive") }}</a></li>
-					<li><a href="#" class="disabled" id="unarchive_button"><span class="glyphicon glyphicon-folder-open"></span> {{ gettext("Unarchive") }}</a></li>
-					<li><a href="#" class="disabled" id="delete_button"><span class="glyphicon glyphicon-trash"></span> {{ gettext("Delete") }}</a></li>
-					<li><a href="#" class="disabled" id="undelete_button"><span class="glyphicon glyphicon-ok"></span> {{ gettext("Undelete") }}</a></li>
-					<li><a href="#" class="disabled" id="duplicate_button"><span class="glyphicon glyphicon-file"></span> {{ gettext("Duplicate") }}</a></li>
-					<li><a href="#" class="disabled" id="stop_button"><span class="glyphicon glyphicon-stop"></span> {{ gettext("Stop") }}</a></li>
-					<li><a href="#" class="disabled" id="download_button"><span class="glyphicon glyphicon-download"></span> {{ gettext("Download") }}</a></li>
-					<li class="divider"></li>
-					<li><a href="#" class="disabled" id="empty_trash"><span class="glyphicon glyphicon-exclamation-sign"></span> {{ gettext("Empty Trash") }}</a></li>
-				</ul>
-			</div>
-			
-			<div class="btn-group" data-toggle="buttons" id="type_buttons">
-				<label class="btn btn-default active" id="show_active">
-						<input type="radio"> Aktiv
-				</label>
-				<label class="btn btn-default" id="show_archive">
-						<input type="radio"> Archiv
-				</label>
-				<label class="btn btn-default" id="show_trash">
-						<input type="radio"> Mülleimer
-				</label>
-			</div>
-		</div>
-		<div class="col-md-5">
-			<div class="btn-group">
-				<a href="/new_worksheet" class="btn btn-default"><span class="glyphicon glyphicon-file"></span> {{ gettext("New Worksheet") }}</a>
-				<a href="#import_modal" class="btn btn-default" data-toggle="modal"><span class="glyphicon glyphicon-upload"></span>  {{ gettext("Upload") }}</a>
-				<a href="/poak" class="btn btn-default"><span class="glyphicon glyphicon-cloud-download"></span>  {{ gettext("Open Worksheet from POAK") }}</a>
-			</div>
-		</div>
-		{% endif %}
-		<div class="{% if published_mode %}col-md-offset-3 {% endif %}col-md-3">
-			<form action="#" class="form-search pull-right" style="margin-bottom:0" role="form">
-				<div class="input-append">
-					<div class="input-group input-sm">
-						<input type="search" class=" form-control input-sm" placeholder="{{ gettext('Search') }}" id="search_input">
-						<span id="search_clear">&times;</span>
-						<span class="input-group-btn">
-							<button type="submit" class="btn btn-default input-sm" id="submit_search"><span class="glyphicon glyphicon-search"></span></button>
-						</span>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-
-	<div style="clear:both"></div>
 	
 	<div class="table-responsive">
 		<table class="table table-striped worksheets_table">
@@ -113,17 +96,16 @@
 {% endblock after_container %}
 
 {% block extra_javascript %}
+	<!-- TagIt -->
+	<link href="/data/jquery/plugins/tagit/jquery.tagit.css" rel="stylesheet" type="text/css">
+	<link href="/data/jquery/plugins/tagit/tagit.ui-sage.css" rel="stylesheet" type="text/css">
+    <script src="/data/jquery/plugins/tagit/tag-it.js"></script>
+	
 	{% assets filters="rjsmin", output="webassets_generated/worksheet_list.js",
 		"sage/js/worksheet_list.js"
 	%}
 		<script type="text/javascript" src="{{ ASSET_URL }}"></script>
 	{% endassets %}
-	
-	<!-- jQuery UI -->
-	<link rel="stylesheet" href="/data/jqueryui/css/sage/jquery-ui-1.8.11.custom.css" />
-	<script type="text/javascript" src="/data/jqueryui/js/jquery-ui-1.8.11.custom.min.js"></script>
-	<!-- TagIt -->
-    <script src="/data/jquery/plugins/tagit/tag-it.js"></script>
 	
 	<script type="text/javascript">
 		$(function() {

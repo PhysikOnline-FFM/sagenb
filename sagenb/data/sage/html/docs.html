@@ -1,37 +1,40 @@
-<html>
-<head>
-	<title>POKAL Hilfe</title>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="author" content="The Sagemath collaboration and PhysikOnline eLearning">
+		<title>POKAL Hilfe</title>
 
-	<!-- styles -->
-	<link href="/data/bootstrap-2.0.4/css/bootstrap.min.css" rel="stylesheet">
-	<link href="/data/bootstrap-2.0.4/css/bootstrap-responsive.min.css" rel="stylesheet">
+		<!-- styles -->
+		<link href="/data/bootstrap-3.2.0/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/data/bootstrap-3.2.0/css/bootstrap-theme.pokal2.css" rel="stylesheet">
 
-	<style type="text/css">
-	body {
-		padding-top: 25px;
-		padding-bottom: 25px;
-	}
+		<style type="text/css">
+		body {
+			padding-top: 25px;
+			padding-bottom: 25px;
+		}
 
-	table {
-		margin-top: 10px;
-	}
+		table {
+			margin-top: 10px;
+		}
 
-	table tr td:first-child {
-		width: 30%;
-		background-color: #efefef;
-		vertical-align: middle;
-	}
+		table tr td:first-child {
+			width: 30%;
+			background-color: #efefef;
+			vertical-align: middle;
+		}
 
-	footer {
-		font-size: 9pt;
-		text-align: center;
-	}
-	</style>
-</head>
+		footer {
+			font-size: 9pt;
+			text-align: center;
+		}
+		</style>
+	</head>
 <body>
 
 <div class="container">
-
 	<header class="jumbotron subhead">
 		<h1>POKAL: Einstieg und Funktionen</h1>
 		<p class="lead"></p>
@@ -42,7 +45,6 @@
 		<p>POKAL ist eine studentische Online-Plattform zum kollaborativen Arbeiten- und Lernen. Dir steht als Nutzer eine leistungsstrake Mathematikengine zur Verf&uuml;gung, mit der Du sowohl numerisch als auch symbolisch rechnen kannst. Durch die zus&auml;tzlichen Kollaborationsfunktionen, die das gleichzeitige Arbeiten von mehreren Nutzern and einem Arbeitsblatt erlauben, kannst Du somit gemeinsam mit Kommilitonen &Uuml;bungsbl&auml;tter bearbeiten, ASCII Daten visualisieren oder einfach Programmieren lernen. Genauer gesagt l&auml;sst sich in jeder Zelle nicht nur SAGE Code sondern auch gew&ouml;hnliches Python ausf&uuml;hren. Die Einsatzm&ouml;glichkeiten von POKAL sind daher sehr vielf&auml;ltig.</p>
 		
 	</section>
-
 	
 	<section id="bindings">
 		<h2>Grundlagen</h2>
@@ -76,12 +78,6 @@
 					<td>Auto-Vervollständigung</td>
 					<td>Drücke <strong>Strg-Leertaste</strong> um die Auto-Vervollständigungsoption aufzurufen.</td>
 				</tr>
-
-
-				<!-- <tr>
-					<td>{{ gettext('Indenting') }}</td>
-					<td>{{ gettext('You can indent and un-indent selected blocks of text by pressing <strong>Tab</strong> and <strong>Shift-Tab</strong> respectively.') }}</td>
-			</tr> !-->
 			</tbody>
 		</table>
 	</section>
@@ -90,19 +86,20 @@
 	<section id="collab">
 		<h2>Kollaboration und Veröffentlichung</h2>
 		<table class="table table-bordered">
-				<tbody>
-						<tr>
-								<td>Arbeitsblatt teilen</td>
-								<td>Möchtest Du gemeinsam mit Deinen Kommilitonen arbeiten, dann musst Du entwender in ein Arbeitsblatt eingeladen werden, oder Du lädst jemanden in ein eigenes Arbeitsblatt ein. Öffne dazu das Arbeitsblatt und klicke in der Navigationsleiste auf <strong>Teilen</strong>. Über das erscheinende Textfeld kannst Du kommagetrennt Benutzer hinzufügen, mit denen Du zusammenarbeiten willst. Angenommen werden hier HRZ-Namen (z.B. s1234567) oder eingestellte Nicknamen.<br><br>Kollaboratoren können weder das Arbeitsblatt löschen, noch seinen Titel oder Besitzer ändern.<br>(Tipp: Dupliziere das Arbeitsblatt um den aktuelle Stand vor Änderungen durch die Kollaboratoren zu schützen)</td>
-						</tr>
-						<tr>
-								<td>Chat</td>
-								<td>Hast Du ein Arbeitsblatt mit Kommilitonen geteilt, dann könnt Ihr gleichzeitig daran arbeiten. Zur Koordination steht euch ein LaTeX-fähiger Chat zur Verfügung. Dabei wird alles, das zwischen den LaTeX typischen <strong>$</strong>-Zeichen steht, als LaTeX Matheblock interpretiert. Das Austauschen von Integralen und Formeln ist damit elegant möglich.</td>
-						</tr>
-						<tr>
-								<td>Arbeitsblatt veröffentlichen</td>
-								<td>Über den <strong>Menüpunkt Teilen</strong> kannst Du bequem Arbeitsblätter in POAK (PhysikOnlines Arbeitsblatt-Katalog) veröffentlichen und somit anderen Kommilitonen zur Verfügung stellen. Klicke hierfür im Teilen-Dialog auf <strong>Arbeitsblatt veröffentlichen</strong>. Es erscheint sofort der entsprechende Link zum öffentlichen Arbeitsblatt.<br><br>Aktivierst Du zusätlich die Option "Bei Änderung automatisch aktualisieren", ist das öffentliche AB immer auf deinem neusten Stand. Andernfalls ist es statisch die Version zum Zeitpunkt der Veröffentlichung.<br><br>Im Unterschied zum Teilen von Arbeitsblättern (s.o.) können andere Personen ein veröffentliches Arbeitsblatt nicht bearbeiten.</td>
-				</tbody>
+			<tbody>
+				<tr>
+					<td>Arbeitsblatt teilen</td>
+					<td>Möchtest Du gemeinsam mit Deinen Kommilitonen arbeiten, dann musst Du entwender in ein Arbeitsblatt eingeladen werden, oder Du lädst jemanden in ein eigenes Arbeitsblatt ein. Öffne dazu das Arbeitsblatt und klicke in der Navigationsleiste auf <strong>Teilen</strong>. Über das erscheinende Textfeld kannst Du kommagetrennt Benutzer hinzufügen, mit denen Du zusammenarbeiten willst. Angenommen werden hier HRZ-Namen (z.B. s1234567) oder eingestellte Nicknamen.<br><br>Kollaboratoren können weder das Arbeitsblatt löschen, noch seinen Titel oder Besitzer ändern.<br>(Tipp: Dupliziere das Arbeitsblatt um den aktuelle Stand vor Änderungen durch die Kollaboratoren zu schützen)</td>
+				</tr>
+				<tr>
+					<td>Chat</td>
+					<td>Hast Du ein Arbeitsblatt mit Kommilitonen geteilt, dann könnt Ihr gleichzeitig daran arbeiten. Zur Koordination steht euch ein LaTeX-fähiger Chat zur Verfügung. Dabei wird alles, das zwischen den LaTeX typischen <strong>$</strong>-Zeichen steht, als LaTeX Matheblock interpretiert. Das Austauschen von Integralen und Formeln ist damit elegant möglich.</td>
+				</tr>
+				<tr>
+					<td>Arbeitsblatt veröffentlichen</td>
+					<td>Über den <strong>Menüpunkt Teilen</strong> kannst Du bequem Arbeitsblätter in POAK (PhysikOnlines Arbeitsblatt-Katalog) veröffentlichen und somit anderen Kommilitonen zur Verfügung stellen. Klicke hierfür im Teilen-Dialog auf <strong>Arbeitsblatt veröffentlichen</strong>. Es erscheint sofort der entsprechende Link zum öffentlichen Arbeitsblatt.<br><br>Aktivierst Du zusätlich die Option "Bei Änderung automatisch aktualisieren", ist das öffentliche AB immer auf deinem neusten Stand. Andernfalls ist es statisch die Version zum Zeitpunkt der Veröffentlichung.<br><br>Im Unterschied zum Teilen von Arbeitsblättern (s.o.) können andere Personen ein veröffentliches Arbeitsblatt nicht bearbeiten.</td>
+				</tr>
+			</tbody>
 		</table>
 	</section>
 
@@ -110,50 +107,48 @@
 	<section id="worksheet_management">
 		<h2>Arbeitsblatt Verwaltung</h2>
 		<table class="table table-bordered">
-				<tbody>
-						<tr>
-								<td>Suche</td>
-								<td>Die in POKAL integrierte Suchfunktion untersucht neben <strong>Titel</strong> und <strong>Zellinhalten</strong> auch den <strong>Besitzernamen</strong> und angelegte <strong>Tags</strong> (s.u.) auf Übereinstimmungen mit dem Suchstring. Sie stellt also ein mächtiges Werkzeug zum Auffinden von Arbeitsblättern dar.</td>
-						</tr>
-						<tr>
-								<td>Tags</td>
-								<td>Um deine Arbeitsblätter besser zu organisieren, kannst Du sie mit <strong>Tags</strong> (Kategorien-Markern) versehen. Verwende hierfür in der Arbeitsblatt-Übersicht die Zeile unter dem jeweiligen Arbeitsblatt-Namen. Tippe einfach in das Textfeld einen Tagnamen und bestätige mit <strong>Enter</strong>.<br><br> Nach Tags kannst Du explizit mit dem <strong>tag:</strong> bzw. <strong>tags:</strong> Prefix suchen. Tipp: Klicke auf einen angelegten Tag und beobachte die Suchleiste. <br><br>(Beispiel: tag:Mechanik oder tags:Theo1,Edynamik)</td>
-						</tr>
-						<tr>
-								<td>Archiv</td>
-								<td>Du kannst markierte Arbeitsblätter via <strong>Aktion > Archiv</strong> in dein persönliches Archiv verschieben. So kannst Du auch auf selten verwendete Arbeitsblätter immer wieder zurückgreifen.</td>
-						</tr>
-						<tr>
-								<td>Duplizieren/Klonen</td>
-								<td>Es kann nützlich sein, ein Arbeitsblatt z.B. bevor es geteilt wird zu duplizieren (<strong>Aktion > Duplizieren</strong>) um den aktuellen Stand zu sichern. Schließlich können die Kollaboratoren den Inhalt des Worksheets verändern oder gar entfernen.</td>
-						</tr>
-
-				</tbody>
+			<tbody>
+				<tr>
+					<td>Suche</td>
+					<td>Die in POKAL integrierte Suchfunktion untersucht neben <strong>Titel</strong> und <strong>Zellinhalten</strong> auch den <strong>Besitzernamen</strong> und angelegte <strong>Tags</strong> (s.u.) auf Übereinstimmungen mit dem Suchstring. Sie stellt also ein mächtiges Werkzeug zum Auffinden von Arbeitsblättern dar.</td>
+				</tr>
+				<tr>
+					<td>Tags</td>
+					<td>Um deine Arbeitsblätter besser zu organisieren, kannst Du sie mit <strong>Tags</strong> (Kategorien-Markern) versehen. Verwende hierfür in der Arbeitsblatt-Übersicht die Zeile unter dem jeweiligen Arbeitsblatt-Namen. Tippe einfach in das Textfeld einen Tagnamen und bestätige mit <strong>Enter</strong>.<br><br> Nach Tags kannst Du explizit mit dem <strong>tag:</strong> bzw. <strong>tags:</strong> Prefix suchen. Tipp: Klicke auf einen angelegten Tag und beobachte die Suchleiste. <br><br>(Beispiel: tag:Mechanik oder tags:Theo1,Edynamik)</td>
+				</tr>
+				<tr>
+					<td>Archiv</td>
+					<td>Du kannst markierte Arbeitsblätter via <strong>Aktion > Archiv</strong> in dein persönliches Archiv verschieben. So kannst Du auch auf selten verwendete Arbeitsblätter immer wieder zurückgreifen.</td>
+				</tr>
+				<tr>
+					<td>Duplizieren/Klonen</td>
+					<td>Es kann nützlich sein, ein Arbeitsblatt z.B. bevor es geteilt wird zu duplizieren (<strong>Aktion > Duplizieren</strong>) um den aktuellen Stand zu sichern. Schließlich können die Kollaboratoren den Inhalt des Worksheets verändern oder gar entfernen.</td>
+				</tr>
+			</tbody>
 		</table>
 	</section>
 
 	<section id="more_features">
 		<h2>Weitere Funktionen</h2>
 		<table class="table table-bordered">
-				<tbody>
-						<tr>
-								<td>Weiterrechnen beim Verlassen</td>
-								<td>Setzt Du unter <strong>Evaluation > Weiterrechnen beim Verlassen</strong> einen Haken, dann führt POKAL laufende Rechnungen weiter fort auch wenn alle Personen das entsprechende Arbeitsblatt verlassen. Der dann permanent angezeigte Status <strong>aktiv</strong> visualisiert das in der Arbeitsblatt-Übersicht.</td>
-						</tr>
-						<tr>
-								<td>Auto LaTeX-Rendering</td>
-								<td>Ist die Option <strong>Anzeige > Auto LaTeX-Rendering</strong> aktiviert, dann werden Ergebnisse (wenn möglich) automatisch im LaTeX Stil dargestellt. Dies verbessert die Darstellung von bspw. Integralen ungemein. Ist die Option deaktiviert, wird das Resultat als gewöhnlicher Text ausgegeben. Eine gezielte, manuelle LaTeX Darstellung einzelner Ausdrücke lässt sich dann mittels <code>pretty_print(OBJEKT)</code> erzeugen.</td>
-						</tr>
-						<tr>
-								<td>Zelltypen</td>
-								<td>Wenn Du <code>%Schlüsselwort</code> in die erste Zeile einer Zellen schreibst, versucht POKAL anhand des Schlüsselwortes den Typ der Zelle einzustellen . Schreibst Du z.B. <code>%latex</code> wird die Zelle als LaTeX-Zelle interpretiert. Python Code würde dann Fehler hervorrufen. Schlüsselwörter dieser Art sind u.a. <code>latex</code>,<code>cython</code>,<code>html</code>,<code>octave</code>,<code>python</code>,<code>fortran</code> und <code>maxima</code>. Weitere Informationen findest Du (leider nicht immer übersichtlich) in den SAGE Dokumentationen. An dieser Stelle sei die <a href="http://www.sagemath.org/doc/developer/coding_in_cython.html">Cython Verwendung in SAGE</a> erwähnt, die deinen Python Code deutlich performanter machen kann.<br><br>Es gibt außerdem Schlüsselwörter mit anderer Funktion. So werden Zellen mit <code>%auto</code> automatisch beim Laden des AB ausgeführt und per <code>%time</code> eine Zeitmessung durchgeführt. Der Code von mit <code>%hide</code> versehen Zellen wird nach der Evaluation ausgeblendet. Das eignet sich besonders für Definitionen von Funktionen.</td>
-						</tr>
-						<tr>
-								<td>Datenverarbeitung</td>
-								<td>Über den Menüpunkt <strong>Daten</strong> kannst Du beispielsweise ASCII Dateien in dein POKAL Arbeitsblatt einbinden. Die <code>DATA</code> Variable gibt den Pfad zu dem Ordner des Arbeitsblatts an. Der vollständige Pfad lässt sich dann so konstruieren und weiterverarbeiten: <code>DATA+"Dateiname.txt"</code><br><br>PS: Das Daten-Modal hat noch viel mehr zu bieten. Du kannst Dateien in einem simplen Webeditor auch direkt in POKAL bearbeiten!</td>
-						</tr>
-
-				</tbody>
+			<tbody>
+				<tr>
+						<td>Weiterrechnen beim Verlassen</td>
+						<td>Setzt Du unter <strong>Evaluation > Weiterrechnen beim Verlassen</strong> einen Haken, dann führt POKAL laufende Rechnungen weiter fort auch wenn alle Personen das entsprechende Arbeitsblatt verlassen. Der dann permanent angezeigte Status <strong>aktiv</strong> visualisiert das in der Arbeitsblatt-Übersicht.</td>
+				</tr>
+				<tr>
+						<td>Auto LaTeX-Rendering</td>
+						<td>Ist die Option <strong>Anzeige > Auto LaTeX-Rendering</strong> aktiviert, dann werden Ergebnisse (wenn möglich) automatisch im LaTeX Stil dargestellt. Dies verbessert die Darstellung von bspw. Integralen ungemein. Ist die Option deaktiviert, wird das Resultat als gewöhnlicher Text ausgegeben. Eine gezielte, manuelle LaTeX Darstellung einzelner Ausdrücke lässt sich dann mittels <code>pretty_print(OBJEKT)</code> erzeugen.</td>
+				</tr>
+				<tr>
+						<td>Zelltypen</td>
+						<td>Wenn Du <code>%Schlüsselwort</code> in die erste Zeile einer Zellen schreibst, versucht POKAL anhand des Schlüsselwortes den Typ der Zelle einzustellen . Schreibst Du z.B. <code>%latex</code> wird die Zelle als LaTeX-Zelle interpretiert. Python Code würde dann Fehler hervorrufen. Schlüsselwörter dieser Art sind u.a. <code>latex</code>,<code>cython</code>,<code>html</code>,<code>octave</code>,<code>python</code>,<code>fortran</code> und <code>maxima</code>. Weitere Informationen findest Du (leider nicht immer übersichtlich) in den SAGE Dokumentationen. An dieser Stelle sei die <a href="http://www.sagemath.org/doc/developer/coding_in_cython.html">Cython Verwendung in SAGE</a> erwähnt, die deinen Python Code deutlich performanter machen kann.<br><br>Es gibt außerdem Schlüsselwörter mit anderer Funktion. So werden Zellen mit <code>%auto</code> automatisch beim Laden des AB ausgeführt und per <code>%time</code> eine Zeitmessung durchgeführt. Der Code von mit <code>%hide</code> versehen Zellen wird nach der Evaluation ausgeblendet. Das eignet sich besonders für Definitionen von Funktionen.</td>
+				</tr>
+				<tr>
+						<td>Datenverarbeitung</td>
+						<td>Über den Menüpunkt <strong>Daten</strong> kannst Du beispielsweise ASCII Dateien in dein POKAL Arbeitsblatt einbinden. Die <code>DATA</code> Variable gibt den Pfad zu dem Ordner des Arbeitsblatts an. Der vollständige Pfad lässt sich dann so konstruieren und weiterverarbeiten: <code>DATA+"Dateiname.txt"</code><br><br>PS: Das Daten-Modal hat noch viel mehr zu bieten. Du kannst Dateien in einem simplen Webeditor auch direkt in POKAL bearbeiten!</td>
+				</tr>
+			</tbody>
 		</table>
 	</section>
 
@@ -250,6 +245,6 @@
 	<footer>Sage was primarily written by William Stein. POKAL advancement was developed and implemented mainly by Carsten Bauer, Philip Arnold, Sven Köppel and Thomas Kehrenberg (alphabetical order).</footer>
 
 </div>
-
+-->
 </body>
 </html>

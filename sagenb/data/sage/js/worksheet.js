@@ -55,14 +55,11 @@ sagenb.worksheetapp.worksheet = function() {
 	
 	// other variables go here
 
-	$("#pokal_logo").attr("href", "#");
-	$("#home").attr("href", "#");
-
+	
 	////////// JOIN/LEAVE WEBSITE EVENT /////////////
 	window.onbeforeunload = function (e) {
 		_this.socket.emit('disconnect');
 	}
-
 
     ////////// WEBSOCKET_HANDLER ////////	
 	_this.socket.on('new_cell_after', function (response){
@@ -79,7 +76,6 @@ sagenb.worksheetapp.worksheet = function() {
 		if(_this.published_mode) return false;
 		_this.new_text_cell_all_before(response);
 	});
-
 
 	_this.socket.on('new_cell_before', function (response){
 		if(_this.published_mode) return false;
@@ -957,6 +953,7 @@ sagenb.worksheetapp.worksheet = function() {
             }
 
         });
+		
         $("#poak-publish-button").click(function(e) {
             if($("#poak-publish-button").attr("href") == "#") {
                 e.preventDefault();
@@ -1052,24 +1049,6 @@ sagenb.worksheetapp.worksheet = function() {
 				});
 			}
 		});
-		
-		var load_done_interval = setInterval(function() {
-			/* because the cells array is sparse we need this.
-			 * it may be easier/faster to use $.grep either way...
-			 */
-			var numcells = 0;
-			
-			_this.forEachCell(function(cell) {
-				numcells++;
-			});
-			
-			if(numcells > 0 && numcells === $(".cell").length) {
-				_this.on_load_done();
-				clearInterval(load_done_interval);
-			}
-		},
-			1000
-		);
 
 		/////// file upload on drop ////////
 		$(document, ".cell").on('drop dragenter dragover', function(e){
@@ -1095,13 +1074,15 @@ sagenb.worksheetapp.worksheet = function() {
 						beforeSend: function(jqXHR, settings){
 							var info = $('<div>').addClass('alert alert-info alert_upload_starts alert-dismissible')
 								.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>')
-								.append($('<p>').html('<strong>'+gettext("Upload started")+'</strong> '+gettext("File upload has been initialized in background")+'...'));
+								.append($('<p>').html('<strong>'+gettext("Upload started")+'</strong> '+gettext("File upload has been initialized in background")+'...'))
+								.append('<div class="progress"><div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div>');
 							$('.alert_container_inner alert_upload_starts, .alert_container_inner alert_upload_successful, .alert_container_inner alert_upload_aborted').detach();
 							$('.alert_container_inner').append(info);
 						},
 						success: function(data, textStatus, jqXHR){
 							var succ = $('<div>').addClass('alert alert-success alert_upload_successful alert-dismissible')
 								.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>')
+								.append($('<button type="button" class="btn btn-sm btn-success">').text(gettext("Show")).click(function(e){e.preventDefault(); $("#data_modal").modal('show');}))
 								.append($('<p>').html('<strong>'+gettext("Upload successful")+'</strong> '+gettext("File is ready for use now")));
 							$('.alert_container_inner').append(succ).find('.alert_upload_starts').detach();
 							_this.worksheet_update();
@@ -1127,6 +1108,24 @@ sagenb.worksheetapp.worksheet = function() {
 			}
 		});
 		
+		var load_done_interval = setInterval(function() {
+			/* because the cells array is sparse we need this.
+			 * it may be easier/faster to use $.grep either way...
+			 */
+			var numcells = 0;
+			
+			_this.forEachCell(function(cell) {
+				numcells++;
+			});
+			
+			if(numcells > 0 && numcells === $(".cell").length) {
+				_this.on_load_done();
+				clearInterval(load_done_interval);
+			}
+		},
+			1000
+		);
+		
 		//////// CHATBOX ////////
 		sagenb.chat.init(_this);
 		
@@ -1135,11 +1134,12 @@ sagenb.worksheetapp.worksheet = function() {
 		/* Notes on hotkeys: these don't work on all browsers consistently
 		but they are included in the best case scenario that they are all 
 		accepted. */
-		// ICH HASSE DIESE NEUE-FENSTER-ABFANGFUNKTION! AUSKOMMENTIERT!
+		
+		// Carsten: ICH HASSE DIESE NEUE-FENSTER-ABFANGFUNKTION! AUSKOMMENTIERT!
 		//$(document).bind("keydown", sagenb.ctrlkey + "+N", function(evt) { _this.new_worksheet(); return false; });
 		
 		$(document).bind("keydown", sagenb.ctrlkey + "+S", function(evt) { _this.save(); return false; });
-		//$(document).bind("keydown", sagenb.ctrlkey + "+W", function(evt) { _this.close(); return false; });
+		$(document).bind("keydown", sagenb.ctrlkey + "+Q", function(evt) { _this.close(); return false; });
 		$(document).bind("keydown", sagenb.ctrlkey + "+P", function(evt) { _this.print(); return false; });
 		$(document).bind("keydown", "esc", function(evt) { 
 				if ($("#sharing_modal").hasClass("in")){
@@ -1152,12 +1152,11 @@ sagenb.worksheetapp.worksheet = function() {
 				_this.interrupt_with_confirm();	return false;
 		});
 		
+		$("#home, #pokal_logo").attr("href", "#close_worksheet");
 		/////// FILE MENU ////////
 		$("#new_worksheet").click(_this.new_worksheet);
 		$("#save_worksheet").click(_this.save);
-		$("#close_worksheet").click(_this.close);
-		$("#pokal_logo").click(_this.close);
-		$("#home").click(_this.close);
+		$("#close_worksheet, #pokal_logo, #home").click(_this.close);
 		$("#export_to_file").click(_this.export_worksheet);
 		// $("#import_from_file").click(_this.import_worksheet);
 		$("#print").click(_this.print);
@@ -1172,14 +1171,12 @@ sagenb.worksheetapp.worksheet = function() {
 		$("#show_all_output").click(_this.show_all_output);
 		$("#delete_all_output").click(_this.delete_all_output);
 
-		$("#navhelp").click(sagenb.help);
-
 		$("#copy_to_own_notebook").click(function(e) {
-				sagenb.async_request(_this.worksheet_command("edit_published_page"), sagenb.generic_callback(function(status, response) {
-						if(status == "success") {
-							window.open(response);
-						}
-				}));
+			sagenb.async_request(_this.worksheet_command("edit_published_page"), sagenb.generic_callback(function(status, response) {
+					if(status == "success") {
+						window.open(response);
+					}
+			}));
 		});
 	};
 };

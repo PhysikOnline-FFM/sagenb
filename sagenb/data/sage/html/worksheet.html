@@ -5,7 +5,6 @@
 
 	<!-- CodeMirror -->
 	<link rel="stylesheet" href="/data/codemirror-3.0/lib/codemirror.css">
-	
 	<!-- simple hinting -->
 	<link rel="stylesheet" href="/data/codemirror-3.0/lib/util/simple-hint.css">
 {% endblock head %}
@@ -14,26 +13,26 @@
 	{% if not published_mode %}
 		<ul class="nav navbar-nav">
 			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ gettext("File") }} <b class="caret"></b></a>
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ gettext("File") }} <span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="#" id="new_worksheet"><i class="glyphicon glyphicon-file"></i> {{ gettext("New Worksheet") }}</a></li>
-					<li><a href="#" id="save_worksheet"><i class="glyphicon glyphicon-ok"></i> {{ gettext("Save Worksheet") }}</a></li>
-					<li><a href="#" id="close_worksheet"><i class="glyphicon glyphicon-remove"></i> {{ gettext("Close Worksheet") }}</a></li>
+					<li><a href="#" id="new_worksheet"><span class="glyphicon glyphicon-file"></span> {{ gettext("New Worksheet") }}</a></li>
+					<li><a href="#" id="save_worksheet"><span class="glyphicon glyphicon-ok"></span> {{ gettext("Save Worksheet") }}</a></li>
+					<li><a href="#" id="close_worksheet"><span class="glyphicon glyphicon-remove"></span> {{ gettext("Close Worksheet") }}</a></li>
 
 					<li class="divider"></li>
-					<li><a href="text" id="worksheet_text"><i class="glyphicon glyphicon-font"></i> Textansicht</a></li>
-					<li><a href="edit" id="worksheet_edit"><i class="glyphicon glyphicon-pencil"></i> Textansicht (Editieren)</a></li>
+					<li><a href="text" id="worksheet_text"><span class="glyphicon glyphicon-font"></span> Textansicht</a></li>
+					<li><a href="edit" id="worksheet_edit"><span class="glyphicon glyphicon-pencil"></span> Textansicht (Editieren)</a></li>
 
 					<li class="divider"></li>
-					<li><a href="#" id="export_to_file"><i class="glyphicon glyphicon-download"></i> {{ gettext("Export to File") }}</a></li>
-					<li><a href="#import_modal" id="import_from_file" data-toggle="modal"><i class="glyphicon glyphicon-upload"></i> {{ gettext("Import from File") }}</a></li>
+					<li><a href="#" id="export_to_file"><span class="glyphicon glyphicon-export"></span> {{ gettext("Export to File") }}</a></li>
+					<li><a href="#import_modal" id="import_from_file" data-toggle="modal"><span class="glyphicon glyphicon-import"></span> {{ gettext("Import from File") }}</a></li>
 
 					<li class="divider"></li>
-					<li><a href="#" id="print"><i class="glyphicon glyphicon-print"></i> {{ gettext("Print") }}</a></li>
+					<li><a href="#" id="print"><span class="glyphicon glyphicon-print"></span> {{ gettext("Print") }}</a></li>
 				</ul>
 			</li>
 			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ gettext("View")}} <b class="caret"></b></a>
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ gettext("View")}} <span class="caret"></span></a>
 				<ul class="dropdown-menu">
 						<li><a href="#"><label for="typesetting_checkbox"><input name="typesetting_checkbox" type="checkbox" id="typesetting_checkbox"> {{ gettext("Typesetting") }}</label></a></li>
 					<li><a href="#"><label for="line_numbers_checkbox"><input name="line_numbers_checkbox" type="checkbox" id="line_numbers_checkbox"> {{ gettext("Line numbers") }}</label></a></li>
@@ -43,43 +42,38 @@
 				</ul>
 			</li>
 			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ gettext("Evaluation") }} <b class="caret"></b></a>
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ gettext("Evaluation") }} <span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="#" id="evaluate_all_cells"><i class="glyphicon glyphicon-play"></i> {{ gettext("Evaluate all Cells") }}</a></li>
-					<li><a href="#" id="interrupt"><i class="glyphicon glyphicon-stop"></i> {{ gettext("Interrupt") }}</a></li>
-					<li><a href="#" id="interrupt_all"><i class="glyphicon glyphicon-stop"></i> {{ gettext("Interrupt All") }}</a></li>
-					<!--					<li><a href="#" id="restart_worksheet"><i class="glyphicon glyphicon-refresh"></i> {{ gettext("Restart Worksheet") }}</a></li> !-->
+					<li><a href="#" id="evaluate_all_cells"><span class="glyphicon glyphicon-play"></span> {{ gettext("Evaluate all Cells") }}</a></li>
+					<li><a href="#" id="interrupt"><span class="glyphicon glyphicon-stop"></span> {{ gettext("Interrupt") }}</a></li>
+					<li><a href="#" id="interrupt_all"><span class="glyphicon glyphicon-stop"></span> {{ gettext("Interrupt All") }}</a></li>
+					<!-- <li><a href="#" id="restart_worksheet"><span class="glyphicon glyphicon-refresh"></span> {{ gettext("Restart Worksheet") }}</a></li> !-->
 					<li class="divider"></li>
-					<li><a href="#system_modal" id="change_system" data-toggle="modal"><i class="glyphicon glyphicon-cog"></i> {{ gettext("Change system") }}</a></li>
+					<li><a href="#system_modal" id="change_system" data-toggle="modal"><span class="glyphicon glyphicon-cog"></span> {{ gettext("Change system") }}</a></li>
 					<li class="divider"></li>
-					<li><a href="#" id="hide_all_output"><i class="glyphicon glyphicon-eye-close"></i> {{ gettext("Hide all output") }}</a></li>
-					<li><a href="#" id="show_all_output"><i class="glyphicon glyphicon-eye-open"></i> {{ gettext("Show all output") }}</a></li>
-					<li><a href="#" id="delete_all_output"><i class="glyphicon glyphicon-remove"></i> {{ gettext("Delete all output") }}</a></li>
+					<li><a href="#" id="hide_all_output"><span class="glyphicon glyphicon-eye-close"></span> {{ gettext("Hide all output") }}</a></li>
+					<li><a href="#" id="show_all_output"><span class="glyphicon glyphicon-eye-open"></span> {{ gettext("Show all output") }}</a></li>
+					<li><a href="#" id="delete_all_output"><span class="glyphicon glyphicon-remove"></span> {{ gettext("Delete all output") }}</a></li>
 					<li class="divider"></li>
 					<li><a href="#"><label for="continue_computation_checkbox"><input name="continue_computation_checkbox" type="checkbox" id="continue_computation_checkbox"> {{ gettext("Continue computation on leave") }}</label></a></li>
 				</ul>
 			</li>
 			<li><a href="#data_modal" data-toggle="modal">{{ gettext("Data") }}</a></li>
 			<li><a href="#sharing_modal" id="sharing" data-toggle="modal">{{ gettext("Sharing") }}</a></li>
-			<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ gettext('Help') }}  <b class="caret"></b></a>
-				<!-- TODO: id="navhelp" rausgeschmissen, das hier vorher statt dem dropdown stand. Sollte auch im Code verschwinden -->
+			<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ gettext('Help') }}  <span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="#" id="navhelp"><i class="glyphicon glyphicon-flag"></i> {{ gettext('Help') }}</a></li>
-					<!--<li><a href="#" id="help"><i class="glyphicon glyphicon-book"></i> (Userleiste)</a></li>-->
-					<!-- "report a problem" ist das ja gerade nicht: -->
-					<li><a href="#" id="report_a_problem"><i class="glyphicon glyphicon-book"></i> Einführung</a></li>
-					<li><a href="#" id="start_feedback"><i class="glyphicon glyphicon-heart"></i> Problem berichten</a></li>
+					<li><a href="/help" id="help"><span class="glyphicon glyphicon-flag"></span> {{ gettext('Help') }}</a></li>
+					<li><a href="#start_feedback" id="start_feedback"><span class="glyphicon glyphicon-heart"></span> {{ gettext('Report a Problem') }}</a></li>
 				</ul>
 			</li>
 		</ul>
 	{% else %}
 	<ul class="nav navbar-nav">
-			<li class="dropdown">
-				<li><a href="#" id="copy_to_own_notebook"><i class="glyphicon glyphicon-cloud-download"></i> Arbeitsblatt in eigenes Notebook laden</a></li>
-			</li>
-		</ul>
+		<li class="dropdown">
+			<li><a href="#" id="copy_to_own_notebook"><span class="glyphicon glyphicon-cloud-download"></span> Arbeitsblatt in eigenes Notebook laden</a></li>
+		</li>
+	</ul>
 	{% endif %}
-
 {% endblock navbar %}
 
 {% block alerts %}
@@ -90,8 +84,8 @@
 {% block before_page %}
 	<div class="single_cell_controls">
 		<div class="left_controls">
-			<button type="button" class="btn" id="first_cell"><i class="glyphicon glyphicon-fast-backward"></i></button>
-			<button type="button" class="btn btn-primary" id="previous_cell"><i class="glyphicon glyphicon-step-backward glyphicon glyphicon-white"></i></button>
+			<button type="button" class="btn" id="first_cell"><span class="glyphicon glyphicon-fast-backward"></span></button>
+			<button type="button" class="btn btn-primary" id="previous_cell"><span class="glyphicon glyphicon-step-backward glyphicon glyphicon-white"></span></button>
 		</div>
 		
 		<div class="progress_text"></div>
@@ -101,8 +95,8 @@
 		</div>
 		
 		<div class="right_controls">
-			<button type="button" class="btn btn-primary" id="next_cell"><i class="glyphicon glyphicon-step-forward glyphicon glyphicon-white"></i></button>
-			<button type="button" class="btn" id="last_cell"><i class="glyphicon glyphicon-fast-forward"></i></button>
+			<button type="button" class="btn btn-primary" id="next_cell"><span class="glyphicon glyphicon-step-forward glyphicon glyphicon-white"></span></button>
+			<button type="button" class="btn" id="last_cell"><span class="glyphicon glyphicon-fast-forward"></span></button>
 		</div>
 	</div>
 {% endblock before_page %}
@@ -120,7 +114,7 @@
 		<div id="chat-message-box" class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">Arbeitsblatt-Chat</h3>
-				<div id="chat_userlist_box"></div><!-- = "Kollaboratoren: ..." -->
+				<div id="chat_userlist_box"><!-- = "Kollaboratoren: ..." --></div>
 			</div>
 			<div class="panel-body message_area">
 			</div>
@@ -164,11 +158,8 @@
 		<script type="text/javascript" src="{{ ASSET_URL }}"></script>
 	{% endassets %}
 	
-	<script src="/data/socketio/socket.io.min.js"></script>
-	
 	<!-- Can't minify -->
 	<!-- TinyMCE -->
-	<!--<script type="text/javascript" src="/data/tinymce-3.5.2/jscripts/tiny_mce/tiny_mce.js"></script>--!>
 	<script type="text/javascript" src="/data/tinymce-4.1.6/js/tinymce/tinymce.min.js"></script>
 
 	<!-- Jmol - embedded 3D graphics -->
@@ -176,10 +167,6 @@
 	<script>jmolInitialize("/java/jmol");jmolSetCallback("menuFile","/java/jmol/appletweb/SageMenu.mnu");</script>
 
 	<!-- These are already minified, so there's no point in minifying again -->
-	<!-- jQuery UI - interacts, widgets, drag-drop, etc. -->
-	<link rel="stylesheet" href="/data/jqueryui/css/sage/jquery-ui-1.8.11.custom.css" />
-	<script type="text/javascript" src="/data/jqueryui/js/jquery-ui-1.8.11.custom.min.js"></script>
-
 	<!-- jQuery plugins - color pickers, shift-click, AJAX forms, IE fixes, notifications -->
 	<link rel="stylesheet" href="/data/jquery/plugins/farbtastic/farbtastic.css" type="text/css" />
 	<script type="text/javascript" src="/data/jquery/plugins/farbtastic/farbtastic.min.js"></script>

@@ -10,17 +10,10 @@ var sagenb = {};
 sagenb.init = function() {
 	// update username
 	if(sagenb.username === "guest") {
-		// TODO: Bootstrap3-Anpassung wie in Zeilen 21-39
-		$("#user_navbar_area").html(
-'<div class="pull-right nav"><div class="btn-group">' +
-	'<a href="/login" class="btn btn-primary">' + gettext('Login') + '</a>' +
-'</div></div>'
-		);
+		$("#user_navbar_area").html('<a href="/login" class="">' + gettext('Login') + '</a>');
 	}
 	else {
 		$("#user_navbar_area").html(
-'<ul class="nav navbar-nav navbar-right">' + 
-'<li class="dropdown">' + 
 '<a href="#usermenu" class="dropdown-toggle" data-toggle="dropdown">' + 
 	'<span class="glyphicon glyphicon-user"></span> <span id="username" class="hidden-sm">' + sagenb.nickname + ' </span>' +
 	'<span class="caret"></span>' +
@@ -29,7 +22,6 @@ sagenb.init = function() {
 	'<li><a href="/" id="home"><i class="glyphicon glyphicon-home"></i> Mein Notebook </a></li>' +
 	'<li><a href="/poak" id="published"><i class="glyphicon glyphicon-cloud"></i> POAK</a></li>' +
 	'<li><a href="#" id="log"><i class="glyphicon glyphicon-list"></i> ' + gettext('Log') + '</a></li>' +
-
 //	POTT #984: Move help to more appropriate place!
 //	'<li class="nav-header">' + gettext('POKAL Hilfe') + '</li>' +
 //	'<li><a href="#" id="help"><i class="icon-book"></i> ' + gettext('Help') + '</a></li>' +
@@ -37,8 +29,8 @@ sagenb.init = function() {
 	'<li class="divider"></li>' +
 	'<li><a href="/settings" id="settings"><i class="glyphicon glyphicon-cog"></i> ' + gettext('Settings') + '</a></li>' +
 	'<li><a href="/logout" id="sign_out"><i class="glyphicon glyphicon-off"></i> ' + gettext('Sign out') + '</a></li>' +
-'</ul>' +
-'</li></ul>');
+'</ul>'
+		);
 	}
 	
 	/* swap control/command on mac operating system */
@@ -48,12 +40,8 @@ sagenb.init = function() {
 	}
 	
 	$("#log").click(sagenb.history_window);
-	$("#report_a_problem").click(function(e) {
-		//window.open('http://spreadsheets.google.com/viewform?key=pCwvGVwSMxTzT6E2xNdo5fA', '', 'menubar=1,location=1,scrollbars=1,width=800,height=650,toolbar=1,resizable=1');
-		window.open('https://elearning.physik.uni-frankfurt.de/projekt/wiki/POKAL/Hilfe');
-	});
 	$("#help").click(sagenb.help);
-	$(document).bind("keydown", "F1", function(evt) { sagenb.help(); return false; });
+	$(document).bind("keydown", "F1", function(evt) { sagenb.help(); evt.preventDefault(); return false; });
 	
 	sagenb.spinner = new Spinner();
 	
@@ -146,9 +134,12 @@ sagenb.history_window = function() {
     */
     window.open("/history", "", "menubar=1,scrollbars=1,width=800,height=600,toolbar=1,resizable=1");
 };
-sagenb.help = function() {
+
+sagenb.help = function(event) {
     /*
     Popup the help window.
     */
-    window.open("/help", "", "menubar=1,location=1,scrollbars=1,width=800,height=650,toolbar=1,  resizable=1");
+	if (event && !event.isDefaultPrevented() ) event.preventDefault();
+	
+    window.open("/help", "", "menubar=1,location=1,scrollbars=1,width=800,height=650,toolbar=1,resizable=1");
 }

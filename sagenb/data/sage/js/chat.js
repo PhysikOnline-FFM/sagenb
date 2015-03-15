@@ -18,10 +18,10 @@ sagenb.chat.init = function(worksheet) {
 	$.each(chat_messages, function(){ sagenb.chat.socket.on(this, sagenb.chat["on_"+this]); });
 
 	// header (=navigation) button
-	sagenb.chat.header_button = $('<li><a href="#chat_window"><span class="glyphicon glyphicon-comment"></span>&nbsp;<span class="hidden-sm">'+gettext('Chat')+'</span></a></li>');
-	sagenb.chat.header_button.find('a').click(sagenb.chat.toggle);
+	sagenb.chat.header_button = $('<a href="#chat_window"><span class="glyphicon glyphicon-comment"></span>&nbsp;<span class="hidden-sm">'+gettext('Chat')+'</span></a>');
+	sagenb.chat.header_button.click(sagenb.chat.toggle);
 	// put it next to the user button
-	$("#user_navbar_area").find("ul.nav").prepend(sagenb.chat.header_button);
+	$("#worksheet_chat_bar").prepend(sagenb.chat.header_button);
     
 	// Die Gesamt-Chat-Box (in etwa das, was es vorher war)
 	sagenb.chat.message_box = $("#chat-message-box");
@@ -77,7 +77,8 @@ sagenb.chat.alert = function(text) {
 	sagenb.chat.alert_box.delay(6000).fadeOut(500); // fade out
 };
 
-sagenb.chat.toggle = function() {
+sagenb.chat.toggle = function(e) {
+	e.preventDefault();
 	// Testweise aus...
 	//sagenb.chat.message_box.dialog( sagenb.chat.header_button.hasClass("active") ? 'close' : 'open');
 

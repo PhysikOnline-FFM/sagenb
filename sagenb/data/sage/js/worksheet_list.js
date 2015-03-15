@@ -183,7 +183,8 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 		$("#show_trash").click(_this.show_trash);
 		
 		$("#submit_search").click(_this.do_search);
-        $("#search_clear").click(function() {
+        $("#search_clear").click(function(event) {
+			event.preventDefault();
             $("#search_input").val('');
 			_this.do_search();
         });
@@ -191,26 +192,11 @@ sagenb.worksheetlistapp.worksheet_list = function() {
         $("span.add-tag-sign").click(function() {
             alert("hi");
         });
-	
-		/*$("#pokal_logo").click(function(e) {
-			window.location.href="/";
-		});
-
-		$("#home").click(function(e) {
-			window.location.href="/";
-		});*/
-
-		// not going to mess with this for now
-		// $("#action_buttons button").addClass("disabled");
 		
 		// Bind hotkeys
-		// $(document).bind('keydown',function(e){
-		//    $('#search_input').focus();
-		//    $(document).unbind('keydown');
-		//});
 		$(document).bind("keydown", sagenb.ctrlkey + "+N", function(evt) { _this.new_worksheet(); return false; });
 		//If below is uncommented, DEL key doesnt work in search box any more
-		//$(document).bind("keydown", "DEL", function(evt) { _this.delete(); return false; });	
+		/*$(document).bind("keydown", "DEL", function(evt) { _this.delete(); return false; }); */
 		/*$(document).bind("keydown", "ESC", function(evt) {
 			$("#search_input").val('');
 			_this.do_search();
@@ -384,11 +370,12 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 	};
 	
 	_this.disable_actions_menu = function() {
-		$("#actions_menu button").attr("disabled", "disabled");
-		$("#actions_menu ul li a").addClass("disabled");
+		$("#actions_menu button").prop("disabled", true);
+		$("#actions_menu, #actions_menu ul li a").addClass("disabled");
 	}
 	_this.enable_actions_menu = function() {
-		$("#actions_menu button").removeAttr("disabled");
+		$("#actions_menu button").prop("disabled", false);
+		$("#actions_menu").removeClass("disabled");
 	}
 	
 	//// VIEWS ////
@@ -397,6 +384,7 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 			$(".title").text(gettext("Published Worksheets"));
 			document.title = gettext("Published Worksheets") + " - POKAL";
 			$("#search_input").val("");
+			$("#type_buttons li").removeClass('active').find('#show_pub').parent().addClass('active');
 		});
 	};
 	_this.show_active = function() {
@@ -409,6 +397,8 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 
 			_this.enable_actions_menu();
 			$("#send_to_archive_button, #delete_button, #stop_button, #download_button, #duplicate_button").removeClass("disabled");
+			
+			$("#type_buttons li").removeClass('active').find('#show_active').parent().addClass('active');
 		});
 	};
 	_this.show_archive = function() {
@@ -421,6 +411,8 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 
 			_this.enable_actions_menu();
 			$("#unarchive_button, #delete_button, #stop_button, #download_button, #duplicate_button").removeClass("disabled");
+			
+			$("#type_buttons li").removeClass('active').find('#show_archive').parent().addClass('active');
 		});
 	};
 	_this.show_trash = function() {
@@ -433,14 +425,16 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 
 			_this.enable_actions_menu();
 			$("#send_to_archive_button, #undelete_button, #stop_button, #download_button, #empty_trash").removeClass("disabled");
+			
+			$("#type_buttons li").removeClass('active').find('#show_trash').parent().addClass('active');
 		});
 	};
 	_this.do_search = function() {
 		var q = $("#search_input").val();
 
-		var seach_title, no_search_title, urlq;
+		var search_title, no_search_title, urlq;
 		if(_this.published_mode) {
-			seach_title = gettext("Published");
+			search_title = gettext("Published");
 			no_search_title = gettext("Published Worksheets");
 			urlq = "pub";
 		}
@@ -448,18 +442,18 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 			var current_id = $("#type_buttons .active").attr("id");
 			switch(current_id) {
 				case "show_active":
-					seach_title = gettext("Active");
+					search_title = gettext("Active");
 					no_search_title = gettext("My Notebook");
 					urlq = "active";
 					break;
 				case "show_archive":
-					seach_title = gettext("Archive");
-					no_search_title = seach_title;
+					search_title = gettext("Archive");
+					no_search_title = search_title;
 					urlq = "archive";
 					break;
 				case "show_trash":
-					seach_title = gettext("Trash");
-					no_search_title = seach_title;
+					search_title = gettext("Trash");
+					no_search_title = search_title;
 					urlq = "trash";
 					break;
 			}
@@ -476,8 +470,8 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 				document.title = gettext(no_search_title) + " - POKAL";
 				$(".title").text(gettext(no_search_title));
 			} else {
-				document.title = gettext(seach_title) + " - " + gettext("Search") + " - POKAL";
-				$(".title").text(gettext(seach_title) + " - " + gettext("Search"));
+				document.title = gettext(search_title) + " - " + gettext("Search") + " - POKAL";
+				$(".title").text(gettext(search_title) + " - " + gettext("Search"));
 			}
 			$("#main_checkbox").prop("checked", false);
 		});
