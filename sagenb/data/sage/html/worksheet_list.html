@@ -9,7 +9,7 @@
 	{% if not published_mode %}
 	<ul class="nav navbar-nav">
 		<li class="dropdown" id="new_menu">
-			<a href="#new" class="dropdown-toggle" data-toggle="dropdown">{{ gettext("New file") }} <span class="caret"></span></a>
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ gettext("New file") }} <span class="caret"></span></a>
 			<ul class="dropdown-menu">
 				<li><a href="/new_worksheet" class=""><span class="glyphicon glyphicon-file"></span> {{ gettext("New Worksheet") }}</span></a></li>
 				<li><a href="#import_modal" class="" data-toggle="modal"><span class="glyphicon glyphicon-upload"></span> {{ gettext("Upload") }}</a></li>
@@ -17,7 +17,7 @@
 			</ul>
 		</li>
 		<li class="dropdown" id="actions_menu">
-			<a href="#action" class="dropdown-toggle" data-toggle="dropdown">{{ gettext("Action") }} <span class="caret"></span></a>
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ gettext("Action") }} <span class="caret"></span></a>
 			<ul class="dropdown-menu">
 				<li><span class="help-block small" style="padding: 0 8px; margin: 0;">{{ gettext("Apply to selected worksheets") }}...</span></li>
 				<li class="divider"></li>
@@ -33,11 +33,11 @@
 			</ul>
 		</li>
 		<li class="dropdown" id="type_buttons">
-			<a href="#new" class="dropdown-toggle" data-toggle="dropdown">{{ gettext("View") }} <span class="caret"></span></a>
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ gettext("Folder") }} <span class="caret"></span></a>
 			<ul class="dropdown-menu">
-				<li><a href="#change_folder" id="show_active"> {{ gettext("Active Worksheets") }}</a></li>
-				<li><a href="#change_folder" id="show_archive"> {{ gettext("Archived Worksheets") }}</a></li>
-				<li><a href="#change_folder" id="show_trash"> {{ gettext("Deleted Worksheets") }}</a></li>
+				<li><a href="#"   id="show_active"> {{ gettext("Active Worksheets") }}</a></li>
+				<li><a href="#" id="show_archive"> {{ gettext("Archived Worksheets") }}</a></li>
+				<li><a href="#"  id="show_trash"> {{ gettext("Deleted Worksheets") }}</a></li>
 			</ul>
 		</li>
 	</ul>
@@ -79,7 +79,6 @@
 					<th class="checkbox_cell"><input type="checkbox" id="main_checkbox" /></th>
 					{% endif %}
 					<th class="worksheet_name_cell">{{ gettext("Worksheet") }}</th>
-					{#<th class="tags_cell">{{ gettext("Tags") }}</th>#}
 					<th>{{ gettext("Owner/Collaborators") }}</th>
 					<th class="last_edit_cell">{{ gettext("Last Edited") }}</th>
 				</tr>

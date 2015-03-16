@@ -197,10 +197,12 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 		$(document).bind("keydown", sagenb.ctrlkey + "+N", function(evt) { _this.new_worksheet(); return false; });
 		//If below is uncommented, DEL key doesnt work in search box any more
 		/*$(document).bind("keydown", "DEL", function(evt) { _this.delete(); return false; }); */
-		/*$(document).bind("keydown", "ESC", function(evt) {
-			$("#search_input").val('');
-			_this.do_search();
-		}); */
+		$(document).bind("keydown", "ESC", function(evt) {
+			if ($("#search_input").val() !== ''){
+				$("#search_input").val('');
+				_this.do_search();
+			}
+		});
 	};
 	
 	///////// FOR EACH ///////////
@@ -431,23 +433,23 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 	};
 	_this.do_search = function() {
 		var q = $("#search_input").val();
-
 		var search_title, no_search_title, urlq;
+		
 		if(_this.published_mode) {
 			search_title = gettext("Published");
 			no_search_title = gettext("Published Worksheets");
 			urlq = "pub";
 		}
 		else {
-			var current_id = $("#type_buttons .active").attr("id");
+			var current_id = $("#type_buttons .active a").attr("id");
 			switch(current_id) {
 				case "show_active":
-					search_title = gettext("Active");
+					search_title = gettext("Active Worksheets");
 					no_search_title = gettext("My Notebook");
 					urlq = "active";
 					break;
 				case "show_archive":
-					search_title = gettext("Archive");
+					search_title = gettext("Archived Worksheets");
 					no_search_title = search_title;
 					urlq = "archive";
 					break;
@@ -471,7 +473,7 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 				$(".title").text(gettext(no_search_title));
 			} else {
 				document.title = gettext(search_title) + " - " + gettext("Search") + " - POKAL";
-				$(".title").text(gettext(search_title) + " - " + gettext("Search"));
+				$(".title").text(gettext("Search") + ' in ' + gettext(search_title));
 			}
 			$("#main_checkbox").prop("checked", false);
 		});

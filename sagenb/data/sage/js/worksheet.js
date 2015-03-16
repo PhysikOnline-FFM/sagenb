@@ -596,10 +596,10 @@ sagenb.worksheetapp.worksheet = function() {
                 '<li>' + 
                     '<a href="#" class="filename">' + datafile + '</a>' + 
                     '<div class="btn-group">' + 
-                        '<a href="#" class="btn btn-xs copy_path_btn" rel="tooltip" title="'+gettext("get path")+'"><i class="glyphicon glyphicon-question-sign"></i></a>' + 
-                        '<a href="edit_datafile/' + datafile + '" class="btn btn-xs download_btn" rel="tooltip" title="'+gettext("edit")+'"><i class="glyphicon glyphicon-edit"></i></a>' + 
-                        '<a href="data/' + datafile + '" class="btn btn-xs download_btn" rel="tooltip" title="'+gettext("download")+'" target="_blank"><i class="glyphicon glyphicon-download"></i></a>' + 
-                        '<a href="#" class="btn btn-xs delete_btn" rel="tooltip" title="'+gettext("delete")+'"><i class="glyphicon glyphicon-remove"></i></a>' + 
+                        '<a href="#" class="btn btn-xs copy_path_btn" rel="tooltip" title="'+gettext("get path")+'"><span class="glyphicon glyphicon-copy"></span></a>' + 
+                        '<a href="edit_datafile/' + datafile + '" class="btn btn-xs download_btn" rel="tooltip" title="'+gettext("edit")+'"><span class="glyphicon glyphicon-pencil"></span></a>' + 
+                        '<a href="data/' + datafile + '" class="btn btn-xs download_btn" rel="tooltip" title="'+gettext("download")+'" target="_blank"><span class="glyphicon glyphicon-download"></span></a>' + 
+                        '<a href="#" class="btn btn-xs delete_btn" rel="tooltip" title="'+gettext("delete")+'"><span class="glyphicon glyphicon-trash"></span></a>' + 
                     '</div>' + 
                 '</li>');
 
@@ -1082,7 +1082,7 @@ sagenb.worksheetapp.worksheet = function() {
 						success: function(data, textStatus, jqXHR){
 							var succ = $('<div>').addClass('alert alert-success alert_upload_successful alert-dismissible')
 								.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>')
-								.append($('<button type="button" class="btn btn-sm btn-success">').text(gettext("Show")).click(function(e){e.preventDefault(); $("#data_modal").modal('show');}))
+								.append($('<button type="button" class="btn btn-xs btn-success pull-right">').text(gettext("Show")).click(function(e){e.preventDefault(); $("#data_modal").modal('show');}))
 								.append($('<p>').html('<strong>'+gettext("Upload successful")+'</strong> '+gettext("File is ready for use now")));
 							$('.alert_container_inner').append(succ).find('.alert_upload_starts').detach();
 							_this.worksheet_update();

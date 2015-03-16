@@ -85,7 +85,8 @@ sagenb.chat.toggle = function(e) {
 	// testweise alternativ: Die Seitenleiste auf/einklappen.
 	if(sagenb.chat.is_open())
 		sagenb.chat.hide_chat_box();
-	else	sagenb.chat.show_chat_box();
+	else 
+		sagenb.chat.show_chat_box();
 	
 	return false; // nicht aktiv werden (der link)
 }
@@ -104,7 +105,7 @@ sagenb.chat.hide_chat_box = function() {
 	// hide chat box
 	$(".the_page_container").switchClass('col-md-8', 'col-md-12');//, sagenb.chat.switchInOutOptions);
 	$(".chat-message-box-container").switchClass('col-md-4', 'col-md-0');//, sagenb.chat.switchInOutOptions);
-	sagenb.chat.header_button.removeClass("active");
+	sagenb.chat.header_button.removeClass("active").parent().removeClass("active");
 }
 
 sagenb.chat.show_chat_box = function() {
@@ -112,7 +113,7 @@ sagenb.chat.show_chat_box = function() {
 	sagenb.chat.window_scroll_helper();
 	$(".the_page_container").switchClass('col-md-12', 'col-md-8');//, sagenb.chat.switchInOutOptions);
 	$(".chat-message-box-container").switchClass('col-md-0', 'col-md-4');//, sagenb.chat.switchInOutOptions);
-	sagenb.chat.header_button.addClass("active");
+	sagenb.chat.header_button.addClass("active").parent().addClass("active");
 }
 
 sagenb.chat.send_message = function() {

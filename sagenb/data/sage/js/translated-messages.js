@@ -57,7 +57,6 @@
 {{ gettext('My Notebook') }}
 {{ gettext('Archive') }}
 {{ gettext('Trash') }}
-{{ gettext('Published Worksheets') }}
 {{ gettext('Active') }}
 {{ gettext('Search') }}
 {{ gettext('close') }}
