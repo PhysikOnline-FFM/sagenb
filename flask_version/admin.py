@@ -56,6 +56,21 @@ def suspend_user():
         'message': _('User <strong>%(username)s</strong> has been suspended/unsuspended.', username=user)
     })
 
+@admin.route('/delete_user', methods = ['POST'])
+@admin_required
+@with_lock
+def delete_user():
+    user = request.values['username']
+    try:
+        g.notebook.user_manager().delete_user(user)
+        g.notebook.save_users()
+    except KeyError:
+        pass
+
+    return encode_response({
+        'message': _('User <strong>%(username)s</strong> has been deleted.', username=user)
+    })
+
 @admin.route('/add_user', methods = ['POST'])
 @admin_required
 @with_lock
