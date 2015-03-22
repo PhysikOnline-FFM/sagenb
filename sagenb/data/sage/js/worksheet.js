@@ -104,7 +104,7 @@ sagenb.worksheetapp.worksheet = function() {
 	
     // Evaluation result is replied by server
     _this.socket.on('eval_reply', function (result, input){
-        console.log("ws// eval_reply");
+        console.log("ws// eval_reply in worksheet.js");
         var X = decode_response(result);
 
         // let the cell handle everything
