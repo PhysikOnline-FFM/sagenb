@@ -11,17 +11,19 @@ class Chatlog_entry(Base):
     id = Column(Integer, primary_key=True)
     wsid = Column(String(100))
     userid = Column(String(100))
+    nickname = Column(String(100))
     time = Column(DateTime)
     msg = Column(Text)
 
-    def __init__(self, msg, userid, wsid):
+    def __init__(self, msg, userid, nickname, wsid):
         self.msg = msg
         self.userid = userid
+        self.nickname = nickname
         self.wsid = wsid
         self.time = datetime.datetime.now()
 
     def __repr__(self):
-        return '{}: "{}"'.format(self.userid, self.msg)
+        return '{}: "{}"'.format(self.nickname, self.msg)
 
 def init_db(engine):
     Base.metadata.create_all(engine)
