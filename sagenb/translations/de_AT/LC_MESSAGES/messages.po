@@ -3160,3 +3160,5 @@ msgstr "Weiterrechnen beim Verlassen"
 msgid "Duplicate"
 msgstr "Duplizieren"
 
+msgid "Load all previous messages"
+msgstr "Alle vorherigen Nachrichten zeigen"

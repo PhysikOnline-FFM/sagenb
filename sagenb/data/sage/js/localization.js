@@ -101,6 +101,7 @@ function gettext(str) {
 							'Upload aborted',
 							'An error occured during file upload',
 							'Add new tag',
+							'Load all previous messages',
 						 ] %}
 		'{{ string }}' : '{{ gettext(string) }}',
 		{% endfor %}

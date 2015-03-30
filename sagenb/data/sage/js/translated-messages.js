@@ -93,3 +93,4 @@
 {{ gettext("Upload aborted") }}
 {{ gettext("An error occured during file upload") }}
 {{ gettext('Add new tag') }}
+{{ gettext('Load all previous messages') }}
