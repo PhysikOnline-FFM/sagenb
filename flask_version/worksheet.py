@@ -15,6 +15,7 @@ from gevent import monkey
 import gevent
 #import smtplib
 from models import *
+import datetime
 
 monkey.patch_all()
 
@@ -61,8 +62,7 @@ def url_for_worksheet(worksheet):
     """
     Returns the url for a given worksheet.
     """
-    return url_for('worksheet.worksheet', username=worksheet.owner(),
-                   id=worksheet.filename_without_owner())
+    return url_for('worksheet.worksheet', username=worksheet.owner(), id=worksheet.filename_without_owner())
 
 
 def get_cell_id():
@@ -880,6 +880,45 @@ def worksheet_new_datafile(worksheet):
     open(dest, 'w').close()
     return ''
 
+###############################
+#Chat History
+################################
+
+@worksheet_command('chat_history/<num>/<starting>')
+def chat_history(worksheet, num, starting):
+    """
+    Send chat history as a JSON object
+    """
+    from sagenb.notebook.misc import encode_response
+
+    num = int(num)
+    starting = int(starting)
+    if starting > 0 and num > 0:
+        messages = g.db.query(Chatlog_entry).\
+                filter_by(wsid=worksheet.filename()).\
+                filter(Chatlog_entry.id < starting).\
+                order_by(Chatlog_entry.id.desc())[:num]
+    elif starting > 0: # take everything from starting point
+        messages = g.db.query(Chatlog_entry).\
+                filter_by(wsid=worksheet.filename()).\
+                filter(Chatlog_entry.id < starting).\
+                order_by(Chatlog_entry.id.desc()).all()
+    elif num > 0: # no starting point -> don't filter IDs
+        messages = g.db.query(Chatlog_entry).\
+                filter_by(wsid=worksheet.filename()).\
+                order_by(Chatlog_entry.id.desc())[:num]
+    else: # don't filter anything
+        messages = g.db.query(Chatlog_entry).\
+                filter_by(wsid=worksheet.filename()).\
+                order_by(Chatlog_entry.id.desc()).all()
+
+    r = []
+    for message in messages:
+        r.append({'id': message.id, 'time': message.time.replace(microsecond=0).isoformat(),
+            'nickname': message.nickname, 'username': message.userid, 'msg': message.msg})
+
+    return encode_response(r)
+
 ################################
 #Publishing
 ################################
@@ -1119,7 +1158,7 @@ def socketio(remaining):
         environment = request.environ.copy()
 
         # here, information can be passed to the socket
-        environment.update({'extrainfo':'hallo', 'notebook':g.notebook, 'db':g.db})
+        environment.update({'notebook':g.notebook, 'db':g.db})
 
         socketio_manage(environment, {'/worksheet': WorksheetNamespace}, request)
     except:
@@ -1159,8 +1198,8 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
     # client information handler
     def on_join(self, data):
-        #self.db = self.environ['db']
-        # expecting data = {nickname:"sage username", "worksheet":"worksheet-name"}
+        self.db = self.environ['db']
+        # expecting data = {nickname:"sage username", "worksheet":"worksheet-name", "username":"HRZname"}
         self.room = data['worksheet']
 
         try:
@@ -1194,28 +1233,23 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
         self.join(self.room)
 
-        import random
-        self.connection_id = random.randint(0,100000)
-
         # we can't directly use the self.session object because it contains
-        # room information from the room mixin which is basically a python set and not
-        # serializable by encode_response. And it isn't supposed to be shared anyway.
+        # room information from the room mixin which is basically a python set
+        # and not serializable by encode_response. And it isn't supposed to be
+        # shared anyway.
         self.session['session_nick'] = {}
         self.session['session_nick']['nickname'] = data['nickname']
-
-        import uuid
-        self.session['session_nick']['uuid'] = str(uuid.uuid4())
+        self.session['session_nick']['username'] = data['username']
 
         self.session['session_nick']['doubleuser'] = False
 
-        
+
         # store this session in the nickname list
         doubleuser = False
         for n in self.ws_nicks:
             if data['nickname'] == n['nickname']:
                 self.session['session_nick']['color'] = n['color']
-                doubleuser = True
-                self.session['session_nick']['doubleuser'] = True
+                doubleuser = self.session['session_nick']['doubleuser'] = True
                 break
 
         # Double user check. If double user, do not append to ws_nicks list and
@@ -1228,24 +1262,29 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
                 # otherwise use black
                 self.session['session_nick']['color'] = "#000000"
             self.ws_nicks.append(self.session['session_nick'])
-            self.emit('new_nickname_list', encode_response(self.duplicate_free(self.ws_nicks)))
-            self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.duplicate_free(self.ws_nicks)))
-            self.emit_to_room(self.room, 'join_message', encode_response(self.session['session_nick']))
+            self.emit('new_nickname_list',
+                    encode_response(self.duplicate_free(self.ws_nicks)))
+            self.emit_to_room(self.room, 'new_nickname_list',
+                    encode_response(self.duplicate_free(self.ws_nicks)))
+            self.emit_to_room(self.room, 'join_message',
+                    encode_response(self.session['session_nick']))
         else:
             for n in self.ws_nicks:
                 if n['nickname'] == data['nickname']:
                     n['doubleuser'] = True
             self.ws_nicks.append(self.session['session_nick'])
-            self.emit('new_nickname_list', encode_response(self.duplicate_free(self.ws_nicks)))
+            self.emit('new_nickname_list',
+                    encode_response(self.duplicate_free(self.ws_nicks)))
 
         def client_watcher_process():
-            userlist = self.ws_nicks #array of dictionaries, one for each user, with keys 'nickname', 'uuid' and 'color'
-            # self.room entspricht z.B. s1320604/2
+            # array of dictionaries, one for each user, with keys 'nickname', 'username' and 'color'
+            userlist = self.ws_nicks
 
             if len(userlist) == 1: #if this is the first user in this room start loop
 
                 # get current worksheet
                 notebook = self.environ['notebook']
+                # self.room entspricht z.B. s1320604/2
                 worksheet = notebook.get_worksheet_with_filename(self.room)
 
                 # main loop
@@ -1262,10 +1301,6 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
                             # remove id
                             self.ws_a_cells.remove(cell_id)
 
-                            # Update 'running' status in database
-                            #getDBWorksheet(self.db,worksheet).running = False
-                            #self.db.commit()
-
                             # send email if computation finished while all users are gone
                             #server = smtplib.SMTP('localhost')
                             #server.sendmail("service@pokal.uni-frankfurt.de", "receiver@abc.de", "Your computation has finished!!")
@@ -1275,8 +1310,6 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
                     worksheet.set_not_computing()
                     worksheet.quit()
                     #worksheet.get_sage().quit()
-                    #getDBWorksheet(self.db,worksheet).running = False
-                    #self.db.commit()
         self.spawn(client_watcher_process)
         return True
 
@@ -1307,18 +1340,15 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
         self.emit_to_room(self.room,'cell_released', cell_id, username)
 
     def on_cell_evaluate(self, cell_id, username):
-        #print "cell " + str(cell_id) + " is going to be evaluated by " + username
+        #print "cell "+str(cell_id)+" is going to be evaluated by "+username
         if not cell_id in self.ws_a_cells:
             self.ws_a_cells.append(cell_id)
         self.emit_to_room(self.room,'cell_evaluate', cell_id, username)
-        # update running status in database
-        # get current worksheet
-        #getDBWorksheetByFilename(self.db,self.room).running=True
-        #self.db.commit()
 
-    #Used for Realtime Input-Synchronisation
-    #input = input as string + new char
-    #this message will be sent every time an input cell gets changed (every Keypress on focus)
+    # Used for Realtime Input-Synchronisation
+    # input = input as string + new char
+    # this message will be sent every time an input cell gets changed (every
+    # Keypress on focus)
     def on_cell_input_changed(self, cell_id, input):
         self.emit_to_room(self.room, 'cell_input_changed', cell_id, input)
 
@@ -1327,7 +1357,7 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
 
     def on_text_cell_save(self, cell_id, input):
         self.emit_to_room(self.room, 'text_cell_save', cell_id, input)
-    
+
     def on_text_cell_startedit(self, cell_id):
         self.emit_to_room(self.room, 'text_cell_startedit', cell_id)
 
@@ -1351,31 +1381,49 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
     def on_user_message(self, msg):
         if msg.startswith('/'):
             outtxt = ""
-            if msg == "/cid":
-                outtxt = str(self.connection_id)
-            elif msg == "/uuid":
-                outtxt = self.session['session_nick']['uuid']
-            elif msg == "/a":
+            if msg == "/a":
                 outtxt = str(len(self.active_cells[self.room]) != 0)
             elif msg == "/help":
                 outtxt = "Hilfetext"
+            elif msg == "/history":
+                outtxt = str(self.get_chat_history())
+            elif msg == "/users":
+                outtxt = str(self.ws_nicks)
+            elif msg == "/room":
+                outtxt = self.room
             else:
-                self.msg = encode_response({"user": self.session['session_nick'], "message": msg })
+                self.msg = self.msg_object(msg, -1)
                 self.emit('user_message', self.msg)
                 return
 
-            server = {'nickname':'Server', 'color':'#000000', 'uuid':'SERVER'}
-            self.msg = encode_response({"user": server, "message": outtxt })
+            msg = {'nickname':'Server', 'username':'Server', 'color':'#000000'}
+            msg.update({
+                'time': datetime.datetime.now().replace(microsecond=0).isoformat(),
+                'msg': outtxt, 'id':-1})
+            self.msg = encode_response(msg)
             self.emit('user_message', self.msg)
             return
-        self.msg = encode_response({"user": self.session['session_nick'], "message": msg })
+        msg_db = Chatlog_entry(msg, self.session['session_nick']['username'],
+                self.session['session_nick']['nickname'], self.room)
+        self.db.add(msg_db)
+        self.db.commit()
+        self.msg = self.msg_object(msg, msg_db.id)
         self.emit('user_message', self.msg)
         self.emit_to_room(self.room, 'user_message', self.msg)
-        #user_db = getUserbyHRZ(self.db, self.session['session_nick']['nickname'])
-        #ws_db = getDBWorksheetByFilename(self.db, self.room)
-        #msg_db = Chatlog_entry(msg, user_db, ws_db)
-        #self.db.add(msg_db)
-        #self.db.commit()
+
+    def get_chat_history(self):
+        return self.db.query(Chatlog_entry).filter_by(wsid=self.room).order_by(
+                             Chatlog_entry.time).all()
+
+    def msg_object(self, msg, msg_id):
+        msg_obj = {'username': self.session['session_nick']['username'],
+                'nickname': self.session['session_nick']['nickname'],
+                'color': self.session['session_nick']['color'],
+                'msg': msg,
+                'id': msg_id,
+                'time': datetime.datetime.now().replace(microsecond=0).isoformat(),
+                }
+        return encode_response(msg_obj)
 
     # connection handler
     def recv_disconnect(self):
@@ -1390,13 +1438,15 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
                     self.ws_nicks[idxs[0]]['doubleuser'] = False
             else:
                 self.ws_nicks.remove(self.session['session_nick'])
-                self.emit_to_room(self.room, 'leave_message', encode_response(self.session['session_nick']))
-                self.emit_to_room(self.room, 'new_nickname_list', encode_response(self.duplicate_free(self.ws_nicks)))
+                self.emit_to_room(self.room, 'leave_message', encode_response(
+                    self.session['session_nick']))
+                self.emit_to_room(self.room, 'new_nickname_list',
+                        encode_response(self.duplicate_free(self.ws_nicks)))
                 self.ws_colors.append(self.session['session_nick']['color'])
                 #self.emit('new_nickname_list', encode_response(self.ws_nicks))
             return True
         except KeyError:
-            #print "worksheet.py/recv_disconnect():: self.session['session_nick'] does not exist"
+             # self.session['session_nick'] does not exist
              return False
 
     def on_disconnect(self):

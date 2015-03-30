@@ -25,7 +25,6 @@ class SageNBFlask(Flask):
         Flask.__init__(self, *args, **kwds)
 
         self.config['SESSION_COOKIE_HTTPONLY'] = False
-        self.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/pokaldb"
 
         self.root_path = SAGENB_ROOT
 
@@ -100,7 +99,12 @@ def index():
             current_app.startup_token = None
             return index()
 
-    return login()
+    #return login()
+    # Versuch fix POTT #1098: Weiterleitung auf CMS-Startseite, wenn keine weiteren
+    # Login-Aktivitaeten hier erkennbar. Die Route "/login" wird ohnehin von authentication.py
+    # bearbeitet.
+    return redirect("/pages/")
+
 
 ################################
 # The feedback handler  (POKAL)#
@@ -118,7 +122,7 @@ def post_feedback():
 def debug_me():
 	# uh oh, enable debugging:
 	# FIXME TODO the following line MUST be disabled in production!
-	current_app.debug = True
+	current_app.debug = False
 	print "Firing debugging..."
 	assert current_app.debug == False, "Don't panic! You're here by request of debug()"
 	return make_response("This line should never be reached")
@@ -176,9 +180,11 @@ def localization_js():
 # Help #
 ########
 @base.route('/help')
-@login_required
+# @login_required # why is a login required for displaying a help message?
 def help():
-    return render_template(os.path.join('html', 'docs.html'))
+    # content transfered to POKAL Content Managament System - POTT #1054
+    #return render_template(os.path.join('html', 'docs.html'))
+    return redirect('/pages/help')
 
 ###########
 # History #
@@ -389,12 +395,20 @@ def create_app(path_to_notebook, *args, **kwds):
     oid.init_app(app)
     app.debug = True
 
+    # connect to database
+    database_path = os.path.join(path_to_notebook, 'chat_history.db')
     from sqlalchemy import create_engine
     from sqlalchemy.orm import sessionmaker
-    # this is a dummy user/password, for sure. I hope so, guys!:
-    engine = create_engine('postgresql://pokal:lakop14@localhost:5432/pokaldb')
+    engine = create_engine('sqlite:///'+database_path, convert_unicode=True)
     Session = sessionmaker(bind=engine)
     sess = Session()
+
+    # initialize database if necessary
+    from sqlalchemy.engine.reflection import Inspector
+    inspector = Inspector.from_engine(engine)
+    if "chatlog" not in inspector.get_table_names():
+        import models
+        models.init_db(engine)
 
     @app.before_request
     def set_notebook_object():
@@ -432,11 +446,6 @@ def create_app(path_to_notebook, *args, **kwds):
 
     from settings import settings
     app.register_blueprint(settings)
-
-    #from flask.ext.sqlalchemy import SQLAlchemy
-    #db = SQLAlchemy(app)
-    #db.session.flush()
-
 
     #autoindex v0.3 doesnt seem to work with modules
     #routing with app directly does the trick

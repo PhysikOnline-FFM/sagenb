@@ -22,7 +22,7 @@ pof.setup = function() {
 
 pof.start_feedback = function() {
 	// show the spinner (ripped from worksheet.js:705)
-	sagenb.start_loading();
+	if(window.sagenb) sagenb.start_loading();
 	
 	// TODO while developing, turn off caching (turn on lateron!)
 	$.ajaxSetup({ cache: false });
@@ -37,6 +37,11 @@ pof.start_feedback = function() {
 			// extract the templates. They will be plain text strings.
 			pof.templates = {};
 			$("section", pof.template_file).each(function(){
+				// if there is no sagenb-context, try to disable the buttons
+				if(!window.sagenb) {
+					$(this).find("input[type=checkbox]").prop('checked', false).attr('disabled',true);
+				}
+
 				pof.templates[this.id] = $(this).html();
 			});
 		}),
@@ -44,7 +49,7 @@ pof.start_feedback = function() {
 		$.Deferred(function(deferred){ $( deferred.resolve ); })
 	).then(function(){
 		// hide the spinner
-		sagenb.done_loading();
+		if(window.sagenb) sagenb.done_loading();
 		
 		// start the feedback system
 		$.feedback({
@@ -53,6 +58,9 @@ pof.start_feedback = function() {
 			tpl: pof.templates,
 			fillupPost: function(post) {
 				$.each(pof.data_collector, function(key, func) {
+					// fixme: The checkbox disabling does not work that well. that is, it does not work.
+					if(!window.sagenb) return;
+
 					var checkbox = $("#"+key);
 					if(checkbox.length && !checkbox.prop('checked'))
 						// Wert ueberspringen
@@ -69,7 +77,7 @@ pof.start_feedback = function() {
 		
 	}, function() {
 		//  hide the spinner
-		sagenb.done_loading();
+		if(window.sagenb) sagenb.done_loading();
 		alert("Failed to load feedback system. Everything is broken. My pleasure!");
 	})
 };
