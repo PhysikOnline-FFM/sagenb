@@ -140,8 +140,11 @@ body.single_cell_mode {
 	}
 
 	.evaluate_button_container {
-		text-align: center;
-		margin-top: 10px;
+		text-align: right;
+		margin-top: -22px;
+		z-index: 999999; // does nothing
+		
+		> .btn {border-radius: 8px 0;}
 	}
 	
 	.output_cell {

@@ -1051,14 +1051,14 @@ sagenb.worksheetapp.worksheet = function() {
 		});
 
 		/////// file upload on drop ////////
-		$(document, ".cell").on('drop dragenter dragover', function(e){
+		$("html, .the_page, .cell, #chat-message-box").on('drop dragenter dragover', function(e){
 			e.preventDefault();
-			console.log(e);
 			
 			if (e.type === "drop" && e.originalEvent.dataTransfer && e.originalEvent.dataTransfer.files.length){
-				e.originalEvent.preventDefault();
+				console.log(e);
 				e.stopPropagation();
 				e.stopImmediatePropagation();
+				e.originalEvent.preventDefault();
 				e.originalEvent.stopPropagation();
 				e.originalEvent.stopImmediatePropagation();
 				//console.log(e.isDefaultPrevented(), e.isPropagationStopped(), e.isImmediatePropagationStopped());
@@ -1084,8 +1084,18 @@ sagenb.worksheetapp.worksheet = function() {
 								.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>')
 								.append($('<button type="button" class="btn btn-xs btn-success pull-right">').text(gettext("show")).click(function(e){e.preventDefault(); $("#data_modal").modal('show');}))
 								.append($('<p>').html('<strong>'+gettext("Upload successful")+'!</strong> '+gettext("File is ready for use now")));
-							$('.alert_container_inner').append(succ).find('.alert_upload_starts').detach();
+							$('.alert_container_inner .alert_upload_starts, .alert_container_inner .alert_upload_successful').detach();
+							$('.alert_container_inner').append(succ);
 							_this.worksheet_update();
+							
+							// if drop on chat -> send <img>-tag
+							if (e.currentTarget && $(e.currentTarget).is('#chat-message-box')){
+								var filename = file.name,
+									imgtag = '<img src="' + _this.worksheet_command("data") +'/'+ filename 
+									+ '" alt="Datei nicht gefunden... (' + filename + ')" title="Diese Datei (' + filename 
+									+ ') wurde hochgeladen, um sie dir zu zeigen und steht nun auch unter Daten zur Verfügung." />';
+								_this.socket.emit('user message', imgtag);
+							}
 						},
 						error: function(jqXHR, textStatus, errorThrown){
 							var err = $('<div>').addClass('alert alert-danger alert_upload_aborted alert-dismissible')

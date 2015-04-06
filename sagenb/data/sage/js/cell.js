@@ -152,7 +152,7 @@ sagenb.worksheetapp.cell = function(id) {
 			$(container).html("<div class=\"cell evaluate_cell\" id=\"cell_" + _this.id + "\">" +
 									"<div class=\"input_cell\"></div>" +
 									"<div class=\"evaluate_button_container\">" + 
-										"<button class=\"btn evaluate_button\" type=\"button\">" + gettext("Evaluate") + "</button>" +
+										"<button class=\"btn btn-default btn-xs evaluate_button\" type=\"button\">" + gettext("Evaluate") + "</button>" +
 									"</div>" +
 								"</div> <!-- /cell -->");
             $(container).find(".evaluate_button_container").hide();

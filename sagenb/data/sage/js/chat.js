@@ -153,7 +153,7 @@ sagenb.chat.load_previous_messages = function(max_num_messages, start_at_msg_id)
 						loc_time_str = sagenb.chat.getLocaleDateString(m.time, false, true),
 						comp_date_str= sagenb.chat.getComparableDateString(m.time);
 					
-					sagenb.chat.show_message(m, {'css': "history", 'prepend': false});
+					sagenb.chat.show_message(m, {'css': "history", 'prepend': true});
 				});
 				
 				// Show button to load all previous messages, if not already done
@@ -328,7 +328,7 @@ sagenb.chat.show_message = function(msg_obj, options){
 	line.append($('<span class="message chat-math" />').html(" " + msg_obj.msg));
 	
 	// add to DOM
-	if (!opt.prepend)
+	if (opt.prepend)
 		line.prependTo(opt.target_elem);
 	else
 		line.appendTo(opt.target_elem);
