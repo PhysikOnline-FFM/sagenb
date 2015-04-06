@@ -9,4 +9,6 @@ case $1 in
             sleep 1s
             pybabel -v update -i ./message.pot -d ./sagenb/translations/ -l de_AT
             ;;
+	*)
+			echo "Must be called with one argument. Options: extract|update or compile";
 esac
