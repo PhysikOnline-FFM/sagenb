@@ -325,7 +325,7 @@ sagenb.chat.show_message = function(msg_obj, options){
 	line.append( $(sagenb.chat.colorize_nickname(msg_obj, opt.nickname_suffix)).css('font-weight', 'bold') );
 	
 	// message text
-	line.append($('<span class="message chat-math" />').html(" " + msg_obj.msg));
+	line.append($('<span class="message chat-math" />').html(" " + msg_obj.msg)).linkify();
 	
 	// add to DOM
 	if (opt.prepend)
