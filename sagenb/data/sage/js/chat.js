@@ -136,14 +136,10 @@ sagenb.chat.load_previous_messages = function(max_num_messages, start_at_msg_id)
 	var url = sagenb.worksheetapp.worksheet.worksheet_command('chat_history')+'/'+max_num_messages+'/'+start_at_msg_id;
 	sagenb.async_request(url, sagenb.generic_callback(function(status, response) {
 		if(status == "success") {
-			var history = $.parseJSON(response);;
+			var history = $.parseJSON(response);
 			
 			// output messages
-			last_date = (new Date()).toISOString();
-			if (!history.length)
-				sagenb.chat.prepend_message("meta date text-center text-muted small", '&mdash;&nbsp;' + sagenb.chat.getLocaleDateString(last_date, true, false) + '&nbsp;&mdash;');
-			else {
-				var date_blocks = {};
+			if (history.length) {
 				// Fill block elements with messages for each day
 				$.each(history, function(i,m){
 					// add color to msg, get from DOM if exist otherwise black
@@ -157,27 +153,14 @@ sagenb.chat.load_previous_messages = function(max_num_messages, start_at_msg_id)
 						loc_time_str = sagenb.chat.getLocaleDateString(m.time, false, true),
 						comp_date_str= sagenb.chat.getComparableDateString(m.time);
 					
-					// create/choose right date block
-					if (!date_blocks[comp_date_str]) {
-						var dom = $('.date_blocks#d_'+comp_date_str);
-						if (dom.length){
-							dom.find('.meta.date').remove();
-							date_blocks[comp_date_str] = dom;
-						}
-						else
-							date_blocks[comp_date_str] = $('<div class="history date_blocks" />').attr({'id': 'd_'+comp_date_str, 'data-loc_date_str':loc_date_str});
-					}
-					
-					sagenb.chat.prepend_message("history",'<b>'+sagenb.chat.colorize_nickname(m, ":")+'</b> <span class="message chat-math">'+m.msg+'</span>', loc_time_str, date_blocks[comp_date_str]);
+					sagenb.chat.show_message(m, {'css': "history", 'prepend': false});
 				});
-				// Show these block elements and put a date notice into it
-				$.each(date_blocks, function(i,b){
-					sagenb.chat.prepend_message("meta date text-center text-muted small", '&mdash;&nbsp;' + b.attr('data-loc_date_str') + '&nbsp;&mdash;', null, b);
-					sagenb.chat.message_area.prepend(b);
-				});
+				
 				// Show button to load all previous messages, if not already done
 				if (max_num_messages > 0 && history.length == max_num_messages){
-					var btn = $('<button class="btn btn-xs btn-default btn-block text-muted" />').append($('<span class="glyphicon glyphicon-time" />')).append($('<span />').text(' '+gettext('Load all previous messages')));
+					var btn = $('<button class="btn btn-xs btn-default btn-block text-muted" />')
+						.append($('<span class="glyphicon glyphicon-download" />'))
+						.append($('<span />').text(' '+gettext('Load all previous messages')));
 					btn.click(function(e){
 						e.preventDefault(); e.stopPropagation();
 						sagenb.chat.load_previous_messages(-1, history[history.length-1].id);
@@ -232,7 +215,7 @@ sagenb.chat.colorize_nickname = function(user, suffix, include_previous) {
  **/
 sagenb.chat.on_new_nickname_list = function(nicknames) {
 	nicknames = $.parseJSON(nicknames);
-	console.log('sagenb.chat.on_new_nickname_list()', nicknames);
+	//console.log('sagenb.chat.on_new_nickname_list()', nicknames);
 	// update the global storage (used for various purposes, like feedback)
 	sagenb.chat.nicknames = nicknames;
 	// nutze colorize_nickname als callback. da $.map ihm aber zwei parameter zuweist,
@@ -247,7 +230,7 @@ sagenb.chat.on_new_nickname_list = function(nicknames) {
  **/
 sagenb.chat.on_user_message = function(data) {
 	data = $.parseJSON(data);
-	message = sagenb.chat.append_message("",'<b>'+sagenb.chat.colorize_nickname(data, ":")+'</b> <span class="message chat-math">'+data.msg+'</span>', sagenb.chat.getLocaleDateString(data.time, false, true));
+	sagenb.chat.show_message(data);
 	
 	// enable MathJax/LaTex on output
 	MathJax.Hub.Queue(["Typeset", MathJax.Hub, $(".chat-math", data.msg)[0]]);
@@ -255,46 +238,113 @@ sagenb.chat.on_user_message = function(data) {
 
 sagenb.chat.on_join_message = function(user) {
 	user = $.parseJSON(user);
-	sagenb.chat.append_message("meta join text-right", '<b>'+sagenb.chat.colorize_nickname(user)+'</b> ist beigetreten.');
+	$.extend(user, {'msg': 'ist beigetreten', 'time': (new Date()).toISOString()});
+	sagenb.chat.show_message(user, {'css': 'meta join text-right', 'nickname_suffix':''});
 }
 
 sagenb.chat.on_leave_message = function(user) {
 	user = $.parseJSON(user);
-	sagenb.chat.append_message("meta leave text-right",'<b>'+sagenb.chat.colorize_nickname(user)+'</b> ist gegangen.');
+	$.extend(user, {'msg': 'hat sich verabschiedet', 'time': (new Date()).toISOString()});
+	sagenb.chat.show_message(user, {'css': 'meta leave text-right', 'nickname_suffix':''});
 }
 
-sagenb.chat.append_message = function(classes, text, time, target) {
+sagenb.chat.show_message = function(msg_obj, options){
+	// Expects msg_obj := {'username': 'Username', 'nickname': 'Nickname', 'color': '#124578', 'msg': 'Text', 'time': 'Datetime ISO', 'id':0}
+	
+	var default_options = {
+		'css': null,				// add additional css classes 
+		'target_elem': undefined,	// element where message shall be added to. If undefined target element will be choosen automatically.
+		'prepend': false, 			// append (false) or prepend (true) message to target element.
+		'nickname_suffix' : ':',	// text that will be shown after the nickname automatically.
+		},
+		line, user_was_at_bottom,	// predefine variables
+		opt = $.extend({}, default_options, options); 	// overwrite default_options with options
+	
+	// Break if no msg_obj is given
+	if (!msg_obj) return;
+	
 	// scroll to end if user was already at end
 	//user_was_at_bottom = (sagenb.chat.message_box.scrollTop() == sagenb.chat.message_box[0].scrollHeight - sagenb.chat.message_box.height());
 	// TODO: This check doesnt work yet
 	user_was_at_bottom = true
-
-	// push content and store the line element it for return
-	message = $('<p class="line '+classes+'">')
-		.append('<span class="text">'+text+'</span>')
-		.linkify({tagName: 'a', target: '_blank', newLine: '\n', linkClass: 'linkified', linkAttributes: null});
-	if (time) message.prepend('<span class="time fade pull-right text-muted small">'+time+'</span>');
-	message.appendTo((target) ? target : sagenb.chat.message_area);
 	
+	// New line
+	line = $('<p class="line" />').addClass(opt.css);
 	
-	if(user_was_at_bottom)
+	// if time is given
+	if (msg_obj.time){
+		var loc_date_str = sagenb.chat.getLocaleDateString(msg_obj.time, true, false),
+			loc_time_str = sagenb.chat.getLocaleDateString(msg_obj.time, false, true),
+			comp_date_str= sagenb.chat.getComparableDateString(msg_obj.time),
+			clockicon;
+		
+		clockicon = $('<span class="time fade pull-right text-muted" />')
+			.attr({'data-toggle':"tooltip", 'title': loc_date_str+" <br /><b>"+loc_time_str+"</b>"})
+			.css({'cursor': 'pointer', 'margin': '0 -12px 0 4px'})
+			.html($('<span class="glyphicon glyphicon-time" aria-hidden="true"></span>'));
+		
+		line.append(clockicon);
+		
+		// Find target 
+		if (!opt.target_elem){
+			var existing_block = sagenb.chat.message_area.find('#date_block_'+comp_date_str+' .body');
+			if (existing_block.length)
+				opt.target_elem = existing_block;
+			else {
+				var new_block_id = 'date_block_'+comp_date_str, 
+					new_block = $('<div class="date_blocks" />').attr('id', new_block_id);
+				new_block
+					.append($('<div class="head meta date text-center text-muted small" />').html('&mdash;&nbsp;' + loc_date_str + '&nbsp;&mdash;'))
+					.append($('<div class="body" />'));
+				
+				// Put block to the right place (sorted manner)!
+				var date_blocks = sagenb.chat.message_area.find('.date_blocks');
+				if (date_blocks.length){
+					date_blocks.each(function(i, block){
+						var block = $(block);
+						if (new_block_id < block.attr('id')){
+							block.before(new_block);
+							return false; // == break
+						}
+						else if (i == date_blocks.length - 1){
+							sagenb.chat.message_area.append(new_block);
+						}
+					});
+				}
+				else
+					sagenb.chat.message_area.append(new_block);
+				
+				opt.target_elem = new_block.children('.body');
+			}
+		}
+	}
+	else if (!opt.target_elem)
+		opt.target_elem = sagenb.chat.message_area;
+	
+	// (colorized) nickname
+	line.append( $(sagenb.chat.colorize_nickname(msg_obj, opt.nickname_suffix)).css('font-weight', 'bold') );
+	
+	// message text
+	line.append($('<span class="message chat-math" />').html(" " + msg_obj.msg));
+	
+	// add to DOM
+	if (!opt.prepend)
+		line.prependTo(opt.target_elem);
+	else
+		line.appendTo(opt.target_elem);
+	
+	if (user_was_at_bottom){
 		// user was already at bottom -.-
 		sagenb.chat.message_area[0].scrollTop = sagenb.chat.message_area[0].scrollHeight;
+	}
 	
-	if(!sagenb.chat.is_open) {
+	if (!sagenb.chat.is_open) {
 		// message dialog not open, show a notificiation
 		sagenb.chat.alert(text);
 	}
 	
-	return message;
-}
-
-sagenb.chat.prepend_message = function(classes, text, time, target) {
-	// push content and store the line element it for return
-	message = $('<p class="line '+classes+'">').append('<span class="text">'+text+'</span>');
-	if (time) message.prepend('<span class="time fade pull-right text-muted small">'+time+'</span>');
-	message.prependTo((target) ? target : sagenb.chat.message_area);
-	return message;
+	line.find('[data-toggle="tooltip"]').tooltip({'placement':"left", 'html':true});
+	return line;
 }
 
 sagenb.chat.box_positioning = function() {
