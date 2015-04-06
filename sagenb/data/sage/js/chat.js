@@ -238,13 +238,13 @@ sagenb.chat.on_user_message = function(data) {
 
 sagenb.chat.on_join_message = function(user) {
 	user = $.parseJSON(user);
-	$.extend(user, {'msg': 'ist beigetreten', 'time': (new Date()).toISOString()});
+	$.extend(user, {'msg': gettext('is online now'), 'time': (new Date()).toISOString()});
 	sagenb.chat.show_message(user, {'css': 'meta join text-right', 'nickname_suffix':''});
 }
 
 sagenb.chat.on_leave_message = function(user) {
 	user = $.parseJSON(user);
-	$.extend(user, {'msg': 'hat sich verabschiedet', 'time': (new Date()).toISOString()});
+	$.extend(user, {'msg': gettext('has left'), 'time': (new Date()).toISOString()});
 	sagenb.chat.show_message(user, {'css': 'meta leave text-right', 'nickname_suffix':''});
 }
 

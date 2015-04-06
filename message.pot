@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-03-05 19:08+0100\n"
+"POT-Creation-Date: 2015-04-06 16:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,7 +57,7 @@ msgstr ""
 msgid "Email Confirmed"
 msgstr ""
 
-#: flask_version/base.py:195 sagenb/data/sage/js/translated-messages.js:37
+#: flask_version/base.py:201 sagenb/data/sage/js/translated-messages.js:37
 msgid "Log"
 msgstr ""
 
@@ -65,7 +65,7 @@ msgstr ""
 msgid "You do not have permission to access this location"
 msgstr ""
 
-#: flask_version/worksheet.py:38 flask_version/worksheet.py:47
+#: flask_version/worksheet.py:39 flask_version/worksheet.py:48
 #: flask_version/worksheet_listing.py:257
 #: flask_version/worksheet_listing.py:266
 msgid "You do not have permission to access this worksheet"
@@ -87,8 +87,8 @@ msgstr ""
 msgid "Error: can't add more than 250 collaborators at a time"
 msgstr ""
 
-#: flask_version/worksheet.py:722 sagenb/data/sage/html/login.html:18
-#: sagenb/data/sage/html/login.html:25
+#: flask_version/worksheet.py:722 sagenb/data/sage/html/login.html:29
+#: sagenb/data/sage/html/login.html:36
 #: sagenb/data/sage/js/translated-messages.js:17
 msgid "Error"
 msgstr ""
@@ -106,7 +106,7 @@ msgstr ""
 msgid "URL must start with http, https, or ftp."
 msgstr ""
 
-#: flask_version/worksheet.py:969
+#: flask_version/worksheet.py:1008
 msgid "No such worksheet."
 msgstr ""
 
@@ -300,110 +300,102 @@ msgstr ""
 msgid "<strong>Nice try!</strong> This worksheet is locked. You can look but you can't touch."
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:82
-msgid "Indenting"
-msgstr ""
-
-#: sagenb/data/sage/html/docs.html:83
-msgid "You can indent and un-indent selected blocks of text by pressing <strong>Tab</strong> and <strong>Shift-Tab</strong> respectively."
-msgstr ""
-
-#: sagenb/data/sage/html/docs.html:165
+#: sagenb/data/sage/html/docs.html:166
 msgid "Cell System"
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:166
+#: sagenb/data/sage/html/docs.html:167
 #, python-format
 msgid "Put <code>%%gap</code>, <code>%%singular</code>, etc. as the first line of cell input to evaluate using that system. In addition, using <code>%%sh</code> will evaluate a cell as a shell script."
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:169
+#: sagenb/data/sage/html/docs.html:170
 msgid "Interaction"
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:170
+#: sagenb/data/sage/html/docs.html:171
 msgid "Put <code>@interact</code> on the line before a function definition. Type <code>interact?</code> for more details."
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:173
+#: sagenb/data/sage/html/docs.html:174
 msgid "Auto-Evaluation"
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:174
+#: sagenb/data/sage/html/docs.html:175
 #, python-format
 msgid "Cells with <code>%%auto</code> in the input will be automatically evaluated when the worksheet is loaded."
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:177
+#: sagenb/data/sage/html/docs.html:178
 msgid "Timing"
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:178
+#: sagenb/data/sage/html/docs.html:179
 #, python-format
 msgid "Cells with <code>%%time</code> will time evaluation."
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:185 sagenb/notebook/tutorial.py:414
+#: sagenb/data/sage/html/docs.html:186 sagenb/notebook/tutorial.py:414
 msgid "Files and Scripts"
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:189
+#: sagenb/data/sage/html/docs.html:190
 msgid "Loading Sage/Python Scripts"
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:190
+#: sagenb/data/sage/html/docs.html:191
 msgid "Use <code>load filename.sage</code> and <code>load filename.py</code>. Load is relative to the path you started the notebook in. The .sage files are preparsed and .py files are not. You may omit the .sage or .py extension. Files may load other files."
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:193 sagenb/notebook/tutorial.py:417
+#: sagenb/data/sage/html/docs.html:194 sagenb/notebook/tutorial.py:417
 msgid "Attaching Scripts"
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:194
+#: sagenb/data/sage/html/docs.html:195
 msgid "Use <code>attach filename.sage</code> or <code>attach filename.py</code>. Attached files are automatically reloaded when the file changes. The file $HOME/.sage/init.sage is attached on startup if it exists."
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:197 sagenb/notebook/tutorial.py:419
+#: sagenb/data/sage/html/docs.html:198 sagenb/notebook/tutorial.py:419
 msgid "Working Directory"
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:198
+#: sagenb/data/sage/html/docs.html:199
 msgid "Each block of code is run from its own directory. If any images are created as a side effect, they will automatically be displayed."
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:201 sagenb/notebook/tutorial.py:421
+#: sagenb/data/sage/html/docs.html:202 sagenb/notebook/tutorial.py:421
 msgid "DIR Variable"
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:202
+#: sagenb/data/sage/html/docs.html:203
 msgid "The variable DIR contains the directory from which you started the Sage notebook. For example, to open a file in that directory, do <code>open(DIR+'filename')</code>."
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:205 sagenb/notebook/tutorial.py:423
+#: sagenb/data/sage/html/docs.html:206 sagenb/notebook/tutorial.py:423
 msgid "DATA Variable"
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:206
+#: sagenb/data/sage/html/docs.html:207
 msgid "Use the Data menu to upload images and other files, and create new files that can be shared between worksheets. The DATA variable contains the path to the data files. For example, to open a file in that directory, do <code>open(DATA+'filename')</code>. If foo.sage is a Sage file that you uploaded, type <code>load foo.sage</code>; if foo.py is a Python file, you can import it by typing <code>import foo</code>."
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:209 sagenb/notebook/tutorial.py:425
+#: sagenb/data/sage/html/docs.html:210 sagenb/notebook/tutorial.py:425
 msgid "Loading and Saving Objects"
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:210
+#: sagenb/data/sage/html/docs.html:211
 msgid "Use <code>save obj1 obj2 ...</code> and <code>load obj1 obj2 ...</code>. This allows for easy moving of objects from one worksheet to another, and saving of objects for later use."
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:213 sagenb/notebook/tutorial.py:427
+#: sagenb/data/sage/html/docs.html:214 sagenb/notebook/tutorial.py:427
 msgid "Loading and Saving Sessions"
 msgstr ""
 
-#: sagenb/data/sage/html/docs.html:214
+#: sagenb/data/sage/html/docs.html:215
 msgid "Use <code>save_session('name')</code> to save all variables to an object. Use <code>load_session('name')</code> to merge in all variables from a saved session."
 msgstr ""
 
-#: sagenb/data/sage/html/error_message.html:33
+#: sagenb/data/sage/html/error_message.html:56
 msgid "Continue"
 msgstr ""
 
@@ -412,50 +404,38 @@ msgstr ""
 msgid "POKAL: History for %(u)s"
 msgstr ""
 
-#: sagenb/data/sage/html/history.html:25
+#: sagenb/data/sage/html/history.html:31
 msgid "Click here to turn the above into a Sage worksheet"
 msgstr ""
 
-#: sagenb/data/sage/html/history.html:25
+#: sagenb/data/sage/html/history.html:31
 msgid "Create a new Sage worksheet version of the last 100 commands in the above log."
 msgstr ""
 
-#: sagenb/data/sage/html/login.html:3 sagenb/data/sage/html/login.html:97
-#: sagenb/data/sage/html/login.html:144
+#: sagenb/data/sage/html/login.html:3 sagenb/data/sage/html/login.html:61
+#: sagenb/data/sage/html/login.html:132
 msgid "Sign in"
 msgstr ""
 
-#: sagenb/data/sage/html/login.html:11
+#: sagenb/data/sage/html/login.html:22
 #, python-format
 msgid "Congratulations %(u)s! You can now sign into the Sage Notebook."
 msgstr ""
 
-#: sagenb/data/sage/html/login.html:18
+#: sagenb/data/sage/html/login.html:29
 msgid "Bad login credentials"
 msgstr ""
 
-#: sagenb/data/sage/html/login.html:25
+#: sagenb/data/sage/html/login.html:36
 msgid "Creating new users is disabled by the administrator."
 msgstr ""
 
-#: sagenb/data/sage/html/login.html:69
-msgid "Public worksheets"
-msgstr ""
-
-#: sagenb/data/sage/html/login.html:70
-msgid "Users can publish worksheets for demonstration purpose, lectures or simple sharing via link "
-msgstr ""
-
-#: sagenb/data/sage/html/login.html:72
-msgid "POAK öffnen"
-msgstr ""
-
-#: sagenb/data/sage/html/login.html:78
+#: sagenb/data/sage/html/login.html:41
 #: sagenb/data/sage/js/translated-messages.js:34
 msgid "Login"
 msgstr ""
 
-#: sagenb/data/sage/html/login.html:80
+#: sagenb/data/sage/html/login.html:43
 #: sagenb/data/sage/html/accounts/account_recovery.html:11
 #: sagenb/data/sage/html/accounts/openid_profile.html:21
 #: sagenb/data/sage/html/accounts/registration.html:11
@@ -464,51 +444,58 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: sagenb/data/sage/html/login.html:81
-#: sagenb/data/sage/html/settings/account_settings.html:27
-msgid "HRZ account"
-msgstr ""
-
-#: sagenb/data/sage/html/login.html:85 sagenb/data/sage/html/login.html:90
+#: sagenb/data/sage/html/login.html:49
 #: sagenb/data/sage/html/accounts/registration.html:29
 msgid "Password"
 msgstr ""
 
-#: sagenb/data/sage/html/login.html:87
+#: sagenb/data/sage/html/login.html:52
 msgid "forgot password?"
 msgstr ""
 
-#: sagenb/data/sage/html/login.html:93
+#: sagenb/data/sage/html/login.html:55
 msgid "Remember me"
 msgstr ""
 
-#: sagenb/data/sage/html/login.html:99
+#: sagenb/data/sage/html/login.html:63
 #: sagenb/data/sage/html/accounts/registration.html:2
 #: sagenb/data/sage/html/accounts/registration.html:94
 msgid "Register"
 msgstr ""
 
-#: sagenb/data/sage/html/login.html:111
+#: sagenb/data/sage/html/login.html:85
+msgid "Public worksheets"
+msgstr ""
+
+#: sagenb/data/sage/html/login.html:86
+msgid "Users can publish worksheets for demonstration purpose, lectures or simple sharing via link "
+msgstr ""
+
+#: sagenb/data/sage/html/login.html:88
+msgid "Open POAK"
+msgstr ""
+
+#: sagenb/data/sage/html/login.html:99
 msgid "Impressum"
 msgstr ""
 
-#: sagenb/data/sage/html/login.html:113
+#: sagenb/data/sage/html/login.html:101
 msgid "Privacy Policy"
 msgstr ""
 
-#: sagenb/data/sage/html/login.html:114
+#: sagenb/data/sage/html/login.html:102
 msgid "Project"
 msgstr ""
 
-#: sagenb/data/sage/html/login.html:115
+#: sagenb/data/sage/html/login.html:103
 msgid "PhysikOnline is a student project of physics' faculty at university of Frankfurt"
 msgstr ""
 
-#: sagenb/data/sage/html/login.html:142
+#: sagenb/data/sage/html/login.html:130
 msgid "username"
 msgstr ""
 
-#: sagenb/data/sage/html/login.html:143
+#: sagenb/data/sage/html/login.html:131
 msgid "Select an OpenID provider"
 msgstr ""
 
@@ -643,7 +630,7 @@ msgid "Add/remove collaborators by entering their user names separated by commas
 msgstr ""
 
 #: sagenb/data/sage/html/modals/sharing_modal.html:21
-#: sagenb/data/sage/js/translated-messages.js:77
+#: sagenb/data/sage/js/translated-messages.js:76
 msgid "Publish this worksheet"
 msgstr ""
 
@@ -671,14 +658,6 @@ msgstr ""
 msgid "Change system"
 msgstr ""
 
-#: sagenb/data/sage/html/pokal/portal.html:6
-msgid "Welcome to POKAL 2.0"
-msgstr ""
-
-#: sagenb/data/sage/html/pokal/portal.html:51
-msgid "Friends and Sponsors"
-msgstr ""
-
 #: sagenb/data/sage/html/settings/account_settings.html:3
 #: sagenb/data/sage/html/settings/account_settings.html:16
 msgid "Account Settings"
@@ -698,6 +677,10 @@ msgstr ""
 
 #: sagenb/data/sage/html/settings/account_settings.html:25
 msgid "User"
+msgstr ""
+
+#: sagenb/data/sage/html/settings/account_settings.html:27
+msgid "HRZ account"
 msgstr ""
 
 #: sagenb/data/sage/html/settings/account_settings.html:41
@@ -738,16 +721,16 @@ msgstr ""
 msgid "Suspend"
 msgstr ""
 
-#: sagenb/data/sage/html/worksheet_edit.html:16
-#: sagenb/data/sage/html/worksheet_text.html:16
+#: sagenb/data/sage/html/worksheet_edit.html:15
+#: sagenb/data/sage/html/worksheet_text.html:15
 msgid "Back to worksheet"
 msgstr ""
 
-#: sagenb/data/sage/html/worksheet_edit.html:25
+#: sagenb/data/sage/html/worksheet_edit.html:24
 msgid "Save Changes"
 msgstr ""
 
-#: sagenb/data/sage/html/worksheet_edit.html:26
+#: sagenb/data/sage/html/worksheet_edit.html:25
 #: sagenb/data/sage/html/modals/add_user_modal.html:24
 #: sagenb/data/sage/html/modals/import_modal.html:77
 #: sagenb/data/sage/html/modals/sharing_modal.html:44
@@ -949,7 +932,6 @@ msgid "Nothing here!"
 msgstr ""
 
 #: sagenb/data/sage/js/translated-messages.js:56
-#: sagenb/data/sage/js/translated-messages.js:60
 msgid "Published Worksheets"
 msgstr ""
 
@@ -965,128 +947,132 @@ msgstr ""
 msgid "Trash"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:61
+#: sagenb/data/sage/js/translated-messages.js:60
 msgid "Active"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:62
+#: sagenb/data/sage/js/translated-messages.js:61
 msgid "Search"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:63
+#: sagenb/data/sage/js/translated-messages.js:62
 msgid "close"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:64
+#: sagenb/data/sage/js/translated-messages.js:63
 msgid "open"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:65
+#: sagenb/data/sage/js/translated-messages.js:64
 msgid "Open chat"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:66
+#: sagenb/data/sage/js/translated-messages.js:65
 msgid "Chat"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:67
+#: sagenb/data/sage/js/translated-messages.js:66
 msgid "chat"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:68
+#: sagenb/data/sage/js/translated-messages.js:67
 msgid "Worksheet - Chat"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:69
+#: sagenb/data/sage/js/translated-messages.js:68
 msgid "Send"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:70
+#: sagenb/data/sage/js/translated-messages.js:69
 msgid "send"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:71
+#: sagenb/data/sage/js/translated-messages.js:70
 msgid "Message from"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:72
+#: sagenb/data/sage/js/translated-messages.js:71
 msgid "joined"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:73
+#: sagenb/data/sage/js/translated-messages.js:72
 msgid "left"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:74
+#: sagenb/data/sage/js/translated-messages.js:73
 msgid "and"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:75
+#: sagenb/data/sage/js/translated-messages.js:74
 msgid " is working on this cell. Therefore it has been locked."
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:76
+#: sagenb/data/sage/js/translated-messages.js:75
 msgid "unpublish"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:78
+#: sagenb/data/sage/js/translated-messages.js:77
 msgid "Get Path"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:79
+#: sagenb/data/sage/js/translated-messages.js:78
 msgid "get path"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:80
+#: sagenb/data/sage/js/translated-messages.js:79
 msgid "Edit"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:81
+#: sagenb/data/sage/js/translated-messages.js:80
 msgid "edit"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:82
+#: sagenb/data/sage/js/translated-messages.js:81
 msgid "Download"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:83
+#: sagenb/data/sage/js/translated-messages.js:82
 msgid "download"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:84
+#: sagenb/data/sage/js/translated-messages.js:83
 msgid "Delete"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:85
+#: sagenb/data/sage/js/translated-messages.js:84
 msgid "delete"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:86
+#: sagenb/data/sage/js/translated-messages.js:85
 msgid "No uploaded files"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:87
+#: sagenb/data/sage/js/translated-messages.js:86
 msgid "Remove from POAK"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:88
+#: sagenb/data/sage/js/translated-messages.js:87
 msgid "Generate new link"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:89
+#: sagenb/data/sage/js/translated-messages.js:88
 msgid "Submit to POAK"
 msgstr ""
 
-#: sagenb/data/sage/js/translated-messages.js:90
+#: sagenb/data/sage/js/translated-messages.js:89
 msgid "Upload started"
 msgstr ""
 
+#: sagenb/data/sage/js/translated-messages.js:90
+msgid "File upload has been initialized in background"
+msgstr ""
+
 #: sagenb/data/sage/js/translated-messages.js:91
-msgid "File upload has been initialized in background..."
+msgid "Upload successful"
 msgstr ""
 
 #: sagenb/data/sage/js/translated-messages.js:92
-msgid "Upload successful"
+msgid "show"
 msgstr ""
 
 #: sagenb/data/sage/js/translated-messages.js:93
@@ -1103,6 +1089,26 @@ msgstr ""
 
 #: sagenb/data/sage/js/translated-messages.js:96
 msgid "Add new tag"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:97
+msgid "Load all previous messages"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:98
+msgid "Folder"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:99
+msgid "Apply to selected worksheets"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:100
+msgid "is online now"
+msgstr ""
+
+#: sagenb/data/sage/js/translated-messages.js:101
+msgid "has left"
 msgstr ""
 
 #: sagenb/notebook/challenge.py:180

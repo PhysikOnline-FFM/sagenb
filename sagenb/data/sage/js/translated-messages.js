@@ -87,10 +87,15 @@
 {{ gettext("Generate new link") }}
 {{ gettext("Submit to POAK") }}
 {{ gettext("Upload started") }}
-{{ gettext("File upload has been initialized in background...") }}
+{{ gettext("File upload has been initialized in background") }}
 {{ gettext("Upload successful") }}
+{{ gettext("show") }}
 {{ gettext("File is ready for use now") }}
 {{ gettext("Upload aborted") }}
 {{ gettext("An error occured during file upload") }}
 {{ gettext('Add new tag') }}
 {{ gettext('Load all previous messages') }}
+{{ gettext('Folder') }}
+{{ gettext('Apply to selected worksheets') }}
+{{ gettext('is online now') }}
+{{ gettext('has left') }}

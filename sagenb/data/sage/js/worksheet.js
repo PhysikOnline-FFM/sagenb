@@ -1074,7 +1074,7 @@ sagenb.worksheetapp.worksheet = function() {
 						beforeSend: function(jqXHR, settings){
 							var info = $('<div>').addClass('alert alert-info alert_upload_starts alert-dismissible')
 								.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>')
-								.append($('<p>').html('<strong>'+gettext("Upload started")+'</strong> '+gettext("File upload has been initialized in background")+'...'))
+								.append($('<p>').html('<strong>'+gettext("Upload started")+'.</strong> '+gettext("File upload has been initialized in background")+'...'))
 								.append('<div class="progress"><div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div></div>');
 							$('.alert_container_inner alert_upload_starts, .alert_container_inner alert_upload_successful, .alert_container_inner alert_upload_aborted').detach();
 							$('.alert_container_inner').append(info);
@@ -1082,15 +1082,15 @@ sagenb.worksheetapp.worksheet = function() {
 						success: function(data, textStatus, jqXHR){
 							var succ = $('<div>').addClass('alert alert-success alert_upload_successful alert-dismissible')
 								.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>')
-								.append($('<button type="button" class="btn btn-xs btn-success pull-right">').text(gettext("Show")).click(function(e){e.preventDefault(); $("#data_modal").modal('show');}))
-								.append($('<p>').html('<strong>'+gettext("Upload successful")+'</strong> '+gettext("File is ready for use now")));
+								.append($('<button type="button" class="btn btn-xs btn-success pull-right">').text(gettext("show")).click(function(e){e.preventDefault(); $("#data_modal").modal('show');}))
+								.append($('<p>').html('<strong>'+gettext("Upload successful")+'!</strong> '+gettext("File is ready for use now")));
 							$('.alert_container_inner').append(succ).find('.alert_upload_starts').detach();
 							_this.worksheet_update();
 						},
 						error: function(jqXHR, textStatus, errorThrown){
 							var err = $('<div>').addClass('alert alert-danger alert_upload_aborted alert-dismissible')
 								.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>')
-								.append($('<p>').html('<strong>'+gettext("Upload aborted")+'</strong> '+gettext("An error occured during file upload")));
+								.append($('<p>').html('<strong>'+gettext("Upload aborted")+'.</strong> '+gettext("An error occured during file upload")));
 							$('.alert_container_inner').append(err).find('.alert_upload_starts').detach();
 						},
 						// Form data

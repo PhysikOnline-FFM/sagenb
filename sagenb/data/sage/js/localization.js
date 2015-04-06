@@ -95,13 +95,19 @@ function gettext(str) {
 							'Generate new link',
 							'Submit to POAK',
 							'Upload started',
-							'File upload has been initialized in background...',
+							'File upload has been initialized in background',
 							'Upload successful',
 							'File is ready for use now',
+							'show',
 							'Upload aborted',
 							'An error occured during file upload',
 							'Add new tag',
 							'Load all previous messages',
+							'Folder',
+							'Apply to selected worksheets',
+							'is online now',
+							'has left',
+							
 						 ] %}
 		'{{ string }}' : '{{ gettext(string) }}',
 		{% endfor %}
