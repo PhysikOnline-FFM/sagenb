@@ -1090,11 +1090,7 @@ sagenb.worksheetapp.worksheet = function() {
 							
 							// if drop on chat -> send <img>-tag
 							if (e.currentTarget && $(e.currentTarget).is('#chat-message-box')){
-								var filename = file.name,
-									imgtag = '<img src="' + _this.worksheet_command("data") +'/'+ filename 
-									+ '" alt="Datei nicht gefunden... (' + filename + ')" title="Diese Datei (' + filename 
-									+ ') wurde hochgeladen, um sie dir zu zeigen und steht nun auch unter Daten zur Verfügung." />';
-								_this.socket.emit('user message', imgtag);
+								_this.socket.emit('user message', '[[data|'+ _this.worksheet_command("data") +'/'+ file.name +']]');
 							}
 						},
 						error: function(jqXHR, textStatus, errorThrown){

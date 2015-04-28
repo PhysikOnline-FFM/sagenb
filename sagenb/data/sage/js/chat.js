@@ -248,6 +248,38 @@ sagenb.chat.on_leave_message = function(user) {
 	sagenb.chat.show_message(user, {'css': 'meta leave text-right', 'nickname_suffix':''});
 }
 
+/**
+ * Apply some replacement on the chat message string (such as link to html-link, image to html-image etc.)
+ **/
+sagenb.chat.replace_stuff_in_msg = function(msg_str){
+	// Own Rules
+	// Preview images [[data|src_url]]
+	msg_str = msg_str.replace(/\[\[data\|([^\]]+)\]\]/gi, function(str, p1){
+		var match_split = p1.split('/');
+		// extend url if only filename has been typed (shorthand)
+		if (match_split.length == 1){
+			p1 = sagenb.worksheetapp.worksheet.worksheet_command("data") +'/'+ p1;
+			match_split = p1.split('/'); // repeat this step
+		}
+			
+		var text, filename = match_split.pop();
+		// differntiate between image and other file types
+		if (filename.match(/\.(jpe?g|png|gif)$/i))
+			text = '<img src="'+ p1 +'" title="Diese Datei wurde hochgeladen, um sie dir zu zeigen und steht nun auch unter Daten zur Verfügung." ' 
+				+ 'alt="' + filename + ' nicht gefunden..." />';
+		else 
+			text = filename;
+		return '<a href="'+ sagenb.worksheetapp.worksheet.worksheet_command("edit_datafile") +'/'+ filename 
+				+'" title="Diese Datei wurde hochgeladen, um sie dir zu zeigen und steht nun auch unter Daten zur Verfügung." >'
+				+ text + '</a>';
+	});
+	
+	// External Lib 
+	$msg = $('<span>').html(msg_str).linkify(); // URL detection and html link convert
+	
+	return $msg.html();
+}
+
 sagenb.chat.show_message = function(msg_obj, options){
 	// Expects msg_obj := {'username': 'Username', 'nickname': 'Nickname', 'color': '#124578', 'msg': 'Text', 'time': 'Datetime ISO', 'id':0}
 	
@@ -322,10 +354,11 @@ sagenb.chat.show_message = function(msg_obj, options){
 		opt.target_elem = sagenb.chat.message_area;
 	
 	// (colorized) nickname
-	line.append( $(sagenb.chat.colorize_nickname(msg_obj, opt.nickname_suffix)).css('font-weight', 'bold') );
-	
+	line.append($(sagenb.chat.colorize_nickname(msg_obj, opt.nickname_suffix)).css('font-weight', 'bold'));
+	// space
+	line.append(" ");
 	// message text
-	line.append($('<span class="message chat-math" />').html(" " + msg_obj.msg)).linkify();
+	line.append($('<span class="message chat-math" />').html(sagenb.chat.replace_stuff_in_msg(msg_obj.msg)));
 	
 	// add to DOM
 	if (opt.prepend)
