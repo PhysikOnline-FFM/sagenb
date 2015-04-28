@@ -35,7 +35,7 @@
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ gettext("View")}} <span class="caret"></span></a>
 				<ul class="dropdown-menu">
 						<li><a href="#"><label for="typesetting_checkbox"><input name="typesetting_checkbox" type="checkbox" id="typesetting_checkbox"> {{ gettext("Typesetting") }}</label></a></li>
-					<li><a href="#"><label for="line_numbers_checkbox"><input name="line_numbers_checkbox" type="checkbox" id="line_numbers_checkbox"> {{ gettext("Line numbers") }}</label></a></li>
+					<li><a href="#"><label for="line_numbers_checkbox"><input name="line_numbers_checkbox" type="checkbox" id="line_numbers_checkbox" checked> {{ gettext("Line numbers") }}</label></a></li>
 					<li class="divider"></li>
 					<li><a href="#"><label for="single_cell_mode_radio"><input name="cell_mode_radio" type="radio" id="single_cell_mode_radio" value="single"> {{ gettext("Single-cell Mode") }}</label></a></li>
 					<li><a href="#"><label for="multi_cell_mode_radio"><input name="cell_mode_radio" type="radio" id="multi_cell_mode_radio" value="multi" checked> {{ gettext("Multi-cell Mode") }}</label></a></li>
@@ -61,9 +61,11 @@
 			<li><a href="#data_modal" data-toggle="modal">{{ gettext("Data") }}</a></li>
 			<li><a href="#sharing_modal" id="sharing" data-toggle="modal">{{ gettext("Sharing") }}</a></li>
 			<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ gettext('Help') }}  <span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<li><a href="/help" id="help"><span class="glyphicon glyphicon-flag"></span> {{ gettext('Help') }}</a></li>
-					<li><a href="#start_feedback" id="start_feedback"><span class="glyphicon glyphicon-heart"></span> {{ gettext('Report a Problem') }}</a></li>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="/pages/help"><span class="glyphicon glyphicon-flag"></span> {{ gettext('Help') }}</a></li>
+					<li><a href="/pages/einfuehrung"><span class="glyphicon glyphicon-book"></span> Spickzettel</a></li>
+					<li class="divider"></li>
+					<li><a href="#start_feedback" class="start_feedback"><span class="glyphicon glyphicon-heart"></span> {{ gettext('Report a Problem') }}</a></li>
 				</ul>
 			</li>
 		</ul>

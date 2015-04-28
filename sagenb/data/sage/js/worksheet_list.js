@@ -57,8 +57,7 @@ sagenb.worksheetlistapp.list_row = function() {
             //name_html += '<span class="icon-plus-sign add-tag-sign"></span>';
 		}
 		if(_this.props.running && !_this.list.published_mode) {
-			name_html = '<span class="label label-warning pull-right running_label">aktiv</span>'
-					+ name_html;
+			name_html = '<span class="label label-warning pull-right running_label">aktiv</span>' + name_html;
 		}
 		_this.jquery_this.find("td.worksheet_name_cell").html(name_html);
 	
@@ -184,9 +183,8 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 		
 		$("#submit_search").click(_this.do_search);
         $("#search_clear").click(function(event) {
-			event.preventDefault();
             $("#search_input").val('');
-			_this.do_search();
+			_this.do_search(event);
         });
         console.log("add handler");
         $("span.add-tag-sign").click(function() {
@@ -195,8 +193,7 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 		
 		// Bind hotkeys
 		$(document).bind("keydown", sagenb.ctrlkey + "+N", function(evt) { _this.new_worksheet(); return false; });
-		//If below is uncommented, DEL key doesnt work in search box any more
-		/*$(document).bind("keydown", "DEL", function(evt) { _this.delete(); return false; }); */
+		$(document).bind("keydown", "DEL", function(evt) { _this.delete(); });
 		$(document).bind("keydown", "ESC", function(evt) {
 			if ($("#search_input").val() !== ''){
 				$("#search_input").val('');
@@ -431,7 +428,9 @@ sagenb.worksheetlistapp.worksheet_list = function() {
 			$("#type_buttons li").removeClass('active').find('#show_trash').parent().addClass('active');
 		});
 	};
-	_this.do_search = function() {
+	_this.do_search = function(event) {
+		if (event) event.preventDefault();
+		
 		var q = $("#search_input").val();
 		var search_title, no_search_title, urlq;
 		

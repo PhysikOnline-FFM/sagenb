@@ -40,6 +40,14 @@
 				<li><a href="#"  id="show_trash"> {{ gettext("Deleted Worksheets") }}</a></li>
 			</ul>
 		</li>
+		<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ gettext('Help') }}  <span class="caret"></span></a>
+			<ul class="dropdown-menu" role="menu">
+				<li><a href="/pages/help"><span class="glyphicon glyphicon-flag"></span> {{ gettext('Help') }}</a></li>
+				<li><a href="/pages/einfuehrung"><span class="glyphicon glyphicon-book"></span> Spickzettel</a></li>
+				<li class="divider"></li>
+				<li><a href="#start_feedback" class="start_feedback"><span class="glyphicon glyphicon-heart"></span> {{ gettext('Report a Problem') }}</a></li>
+			</ul>
+		</li>
 	</ul>
 	{% else %}
 	{{ super() }}
@@ -54,9 +62,9 @@
 			<span class="input-group-btn">
 				<button type="submit" class="btn btn-default" id="submit_search"><span class="glyphicon glyphicon-search"></span></button>
 			</span>
-			<input type="search" class=" form-control" placeholder="{{ gettext('Search') }}" id="search_input" autofocus>
+			<input type="text" class=" form-control" placeholder="{{ gettext('Search') }}" id="search_input" autofocus>
 			<span class="input-group-btn">
-				<button class="btn btn-default" id="search_clear"><span class="glyphicon glyphicon-remove-circle"></span></button>
+				<button type="button" class="btn btn-default" id="search_clear"><span class="glyphicon glyphicon-remove-circle"></span></button>
 			</span>
 		</div>
 	</form>

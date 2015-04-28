@@ -447,11 +447,11 @@ sagenb.worksheetapp.worksheet = function() {
 			if(response === "locked") {
 				$(".alert_locked").show();
 				return;
-			}else{
-					_this.new_text_cell_all_before(response);
-					_this.socket.emit('new_text_cell_before', response);
 			}
-			
+			else{
+				_this.new_text_cell_all_before(response);
+				_this.socket.emit('new_text_cell_before', response);
+			}
 		},
 		{id: id});
 	};
@@ -480,11 +480,11 @@ sagenb.worksheetapp.worksheet = function() {
 			if(response === "locked") {
 				$(".alert_locked").show();
 				return;
-			}else{
-					_this.new_text_cell_all_after(response);
-                	_this.socket.emit('new_text_cell_after', response);
 			}
-			
+			else{
+				_this.new_text_cell_all_after(response);
+				_this.socket.emit('new_text_cell_after', response);
+			}
 		},
 		{id: id});
 	};
@@ -627,14 +627,14 @@ sagenb.worksheetapp.worksheet = function() {
 			}
 			$("#data_list ul .btn-group a").tooltip({placement:'top', container:'#data_modal'});
 
-			if($("#data_list ul li").length === 0) {
+			if ($("#data_list ul li").length === 0) {
 				$("#data_list ul").append('<li class="no_data_files"><a href="#" class="filename">'+gettext("No uploaded files")+'</a></li>');
 			}
 
-			if(_this.published_mode) {
-					if(sagenb.username == "guest") {
-							$("#copy_to_own_notebook").hide();
-					}
+			if (_this.published_mode) {
+				if(sagenb.username == "guest") {
+					$("#copy_to_own_notebook").hide();
+				}
 			}
 		}));
 	};
@@ -1143,6 +1143,9 @@ sagenb.worksheetapp.worksheet = function() {
 		
 		// Carsten: ICH HASSE DIESE NEUE-FENSTER-ABFANGFUNKTION! AUSKOMMENTIERT!
 		//$(document).bind("keydown", sagenb.ctrlkey + "+N", function(evt) { _this.new_worksheet(); return false; });
+		
+		// Prevent undesired leaving of worksheet, when deleting cells (see ticket #1125)
+		$(document).bind("keydown", "backspace", function(evt) { evt.preventDefault(); });
 		
 		$(document).bind("keydown", sagenb.ctrlkey + "+S", function(evt) { _this.save(); return false; });
 		$(document).bind("keydown", sagenb.ctrlkey + "+Q", function(evt) { _this.close(); return false; });
