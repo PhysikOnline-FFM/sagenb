@@ -62,11 +62,12 @@ class LdapAuth(AuthMethod):
         conn = ldap.initialize(self._conf['ldap_uri'])
 
         try:
-            conn.start_tls_s()
+            #conn.start_tls_s()
             if self._conf['ldap_gssapi']:
                 token = gssapi()
                 conn.sasl_interactive_bind_s('', token)
-            elif self._conf['ldap_binddn'] and self.conf['ldap_bindpw']:
+            else:
+                print "LDAP: simple bind"
                 conn.simple_bind_s(
                     self._conf['ldap_binddn'], self._conf['ldap_bindpw'])
 
@@ -120,7 +121,7 @@ class LdapAuth(AuthMethod):
         # try to bind with found DN
         conn = ldap.initialize(uri=self._conf['ldap_uri'])
         try:
-            conn.start_tls_s()
+            #conn.start_tls_s()
             conn.simple_bind_s(dn, password)
             return True
         except ldap.INVALID_CREDENTIALS:

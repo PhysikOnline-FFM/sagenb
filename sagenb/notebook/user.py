@@ -27,7 +27,7 @@ def generate_salt():
 
 
 class User(object):
-    def __init__(self, username, password='', email='', account_type='admin', external_auth=None):
+    def __init__(self, username, password='', email='', account_type='admin', external_auth=None, full_name=''):
         self._username = username
         self.set_password(password)
         self._email = email
@@ -41,6 +41,7 @@ class User(object):
         self._is_suspended = False
         self._viewable_worksheets = set()
         self._nickname = username
+        self._full_name = full_name
 
     def __eq__(self, other):
         if self.__class__ is not other.__class__:
@@ -227,6 +228,31 @@ class User(object):
             'bob@gmail.gov'
         """
         self._email = email
+
+    def get_full_name(self):
+        """
+        EXAMPLES::
+
+            sage: from sagenb.notebook.user import User
+            sage: user = User('bob', 'Aisfa!!', 'bob@sagemath.net', 'admin')
+            sage: user.get_email()
+            'bob@sagemath.net'
+        """
+        return self._full_name
+
+    def set_full_name(self, full_name):
+        """
+        EXAMPLES::
+
+            sage: from sagenb.notebook.user import User
+            sage: user = User('bob', 'Aisfa!!', 'bob@sagemath.net', 'admin')
+            sage: user.get_email()
+            'bob@sagemath.net'
+            sage: user.set_email('bob@gmail.gov')
+            sage: user.get_email()
+            'bob@gmail.gov'
+        """
+        self._full_name = full_name
 
     def set_email_confirmation(self, value):
         """

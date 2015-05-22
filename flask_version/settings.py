@@ -99,7 +99,7 @@ def settings_page():
 
     #td['email'] = g.notebook.conf()['email']
     #if td['email']:
-    #    td['email_address'] = nu.get_email() or 'None'
+    td['email_address'] = nu.get_email() or ''
     #    if nu.is_email_confirmed():
     #        td['email_confirmed'] = 'Confirmed'
     #    else:
@@ -110,6 +110,7 @@ def settings_page():
     #td['nickname'] = usertemp.nickname
     td['nickname'] = nu.get_nickname()
     td['hrz'] = g.username
+    td['full_name'] = nu.get_full_name().encode("ascii","ignore") or ''
 
     return render_template(os.path.join('html', 'settings', 'account_settings.html'), **td)
 
