@@ -46,4 +46,15 @@ sagenb.settings.setup_manage_users_page = function() {
 			username: $(this).parent().parent().data("username")
 		});
 	});
+	$(".delete_user_button").click(function(e) {
+		// TODO gettext
+		if(!confirm("Are you sure you want to delete " + 
+			$(this).parent().parent().data("username") + 
+			"'s account?")) return;
+		sagenb.async_request("/delete_user", sagenb.generic_callback(function(status, response) {
+			window.location.reload();
+		}), {
+			username: $(this).parent().parent().data("username")
+		});
+	});
 };

@@ -14,7 +14,7 @@
 			<tr>
 				<th class="user_col">{{ gettext('Username') }}</th>
 				<th>{{ gettext('Nickname') }}</th>
-				<th>{{ gettext('User Suspension') }}</th>
+				<th>Account Aktionen</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -28,7 +28,8 @@
       					{{ gettext('Unsuspend') }}
       				{% else %}
       					{{ gettext('Suspend') }}
-      				{% endif %}
+					{% endif %}
+					<a href="#" class="delete_user_button btn btn-mini">L&ouml;schen</a>
       			</td>
       		</tr>
 			{% endfor %}
