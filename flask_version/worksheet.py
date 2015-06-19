@@ -913,9 +913,16 @@ def chat_history(worksheet, num, starting):
                 order_by(Chatlog_entry.id.desc()).all()
 
     r = []
+    nickname_map = {}
     for message in messages:
+        try:
+            nickname = nickname_map[message.userid]
+        except LookupError:
+            nickname = g.notebook.user_manager().user(message.userid).get_nickname()
+            nickname_map[message.userid] = nickname
+
         r.append({'id': message.id, 'time': message.time.replace(microsecond=0).isoformat(),
-            'nickname': message.nickname, 'username': message.userid, 'msg': message.msg})
+            'nickname': nickname, 'username': message.userid, 'msg': message.msg})
 
     return encode_response(r)
 
@@ -1383,8 +1390,8 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
             outtxt = ""
             if msg == "/a":
                 outtxt = str(len(self.active_cells[self.room]) != 0)
-            elif msg == "/help":
-                outtxt = "Hilfetext"
+            elif msg == "/h":
+                outtxt = "Befehle: /a, /history, /users, /room"
             elif msg == "/history":
                 outtxt = str(self.get_chat_history())
             elif msg == "/users":
