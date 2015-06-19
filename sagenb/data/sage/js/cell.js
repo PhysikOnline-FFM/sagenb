@@ -439,13 +439,13 @@ sagenb.worksheetapp.cell = function(id) {
 					elements: ("text_cell_textarea_" + _this.id),
 					
 					//plugins: "advlist,lists,inlinepopups,media,paste,searchreplace,table,autolink,",
-					plugins: "advlist,lists,media,paste,searchreplace,table,autolink,link,image,",
+					plugins: "advlist,lists,media,paste,searchreplace,table,autolink,link,image,code,",
 
 					theme : "modern",
 					language: 'de',
 					menubar: false,
 					statusbar: false,
-					toolbar: "formatselect | fontselect | fontsizeselect | bold italic underline | undo redo | alignleft aligncenter alignright alignjustify | table link image media",
+					toolbar: "formatselect | fontselect | fontsizeselect | bold italic underline | undo redo | alignleft aligncenter alignright alignjustify | table link image media | code",
 					//theme_advanced_toolbar_location : "top",
 //					theme_advanced_toolbar_align : "left",
 //					theme_advanced_statusbar_location : "bottom",
