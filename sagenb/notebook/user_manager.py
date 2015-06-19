@@ -303,7 +303,7 @@ class UserManager(object):
         return self._accounts
 
 
-    def add_user(self, username, password, email, account_type="user", external_auth=None, force=False):
+    def add_user(self, username, password, email, account_type="user", external_auth=None, force=False, full_name=''):
         """
         Adds a new user to the user dictionary.
 
@@ -329,7 +329,7 @@ class UserManager(object):
         us = self.users()
         if us.has_key(username):
             print "WARNING: User '%s' already exists -- and is now being replaced."%username
-        U = user.User(username, password, email, account_type, external_auth)
+        U = user.User(username, password, email, account_type, external_auth, full_name=full_name)
         us[username] = U
         self.set_password(username, password)
 
@@ -545,9 +545,15 @@ class ExtAuthUserManager(SimpleUserManager):
                     try:
                         email = self._auth_methods[a].get_attrib(username, 'email')
                     except KeyError:
+                        print "no email found"
                         email = None
 
-                    self.add_user(username, password='', email=email, account_type='user', external_auth=a, force=True)
+                    try:
+                        full_name = self._auth_methods[a].get_attrib(username, 'displayName')
+                    except KeyError:
+                        full_name = None
+
+                    self.add_user(username, password='', email=email, account_type='user', external_auth=a, force=True, full_name=full_name)
                     return self.users()[username]
 
         raise LookupError("no user '{}'".format(username))
