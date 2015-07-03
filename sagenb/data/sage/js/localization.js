@@ -84,6 +84,7 @@ function gettext(str) {
 							'Publish this worksheet',
 							'Get Path',
 							'get path',
+							'send via chat',
 							'Edit',
 							'edit',
 							'Download',

@@ -76,6 +76,7 @@
 {{ gettext('Publish this worksheet') }}
 {{ gettext('Get Path') }}
 {{ gettext('get path') }}
+{{ gettext('send via chat') }}
 {{ gettext('Edit') }}
 {{ gettext('edit') }}
 {{ gettext('Download') }}
@@ -83,16 +84,16 @@
 {{ gettext('Delete') }}
 {{ gettext('delete') }}
 {{ gettext('No uploaded files') }}
-{{ gettext("Remove from POAK") }}
-{{ gettext("Generate new link") }}
-{{ gettext("Submit to POAK") }}
-{{ gettext("Upload started") }}
-{{ gettext("File upload has been initialized in background") }}
-{{ gettext("Upload successful") }}
-{{ gettext("show") }}
-{{ gettext("File is ready for use now") }}
-{{ gettext("Upload aborted") }}
-{{ gettext("An error occured during file upload") }}
+{{ gettext('Remove from POAK') }}
+{{ gettext('Generate new link') }}
+{{ gettext('Submit to POAK') }}
+{{ gettext('Upload started') }}
+{{ gettext('File upload has been initialized in background') }}
+{{ gettext('Upload successful') }}
+{{ gettext('show') }}
+{{ gettext('File is ready for use now') }}
+{{ gettext('Upload aborted') }}
+{{ gettext('An error occured during file upload') }}
 {{ gettext('Add new tag') }}
 {{ gettext('Load all previous messages') }}
 {{ gettext('Folder') }}

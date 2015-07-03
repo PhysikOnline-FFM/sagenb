@@ -16,8 +16,10 @@
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ gettext("File") }} <span class="caret"></span></a>
 				<ul class="dropdown-menu">
 					<li><a href="#" id="new_worksheet"><span class="glyphicon glyphicon-file"></span> {{ gettext("New Worksheet") }}</a></li>
-					<li><a href="#" id="save_worksheet"><span class="glyphicon glyphicon-ok"></span> {{ gettext("Save Worksheet") }}</a></li>
-					<li><a href="#" id="close_worksheet"><span class="glyphicon glyphicon-remove"></span> {{ gettext("Close Worksheet") }}</a></li>
+					<li><a href="#" id="save_worksheet"><span class="glyphicon glyphicon-floppy-disk"></span> {{ gettext("Save Worksheet") }}</a></li>
+					
+					<li class="divider"></li>
+					<li><a href="#" id="delete_worksheet"><span class="glyphicon glyphicon-trash"></span> {{ gettext("Delete Worksheet") }}</a></li>
 
 					<li class="divider"></li>
 					<li><a href="text" id="worksheet_text"><span class="glyphicon glyphicon-font"></span> Textansicht</a></li>
@@ -29,6 +31,8 @@
 
 					<li class="divider"></li>
 					<li><a href="#" id="print"><span class="glyphicon glyphicon-print"></span> {{ gettext("Print") }}</a></li>
+					<li class="divider"></li>
+					<li><a href="#" id="close_worksheet"><span class="glyphicon glyphicon-remove"></span> {{ gettext("Close Worksheet") }}</a></li>
 				</ul>
 			</li>
 			<li class="dropdown">

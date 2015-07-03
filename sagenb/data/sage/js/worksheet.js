@@ -58,8 +58,10 @@ sagenb.worksheetapp.worksheet = function() {
 	
 	////////// JOIN/LEAVE WEBSITE EVENT /////////////
 	window.onbeforeunload = function (e) {
-		_this.socket.emit('disconnect');
-	}
+		//_this.socket.emit('disconnect');
+		_this.socket.onclose = function(){}; // disable onclose handler first;
+		_this.socket.close();
+	};
 
     ////////// WEBSOCKET_HANDLER ////////	
 	_this.socket.on('new_cell_after', function (response){
@@ -197,6 +199,15 @@ sagenb.worksheetapp.worksheet = function() {
 		if(_this.published_mode) return;
 		sagenb.async_request(_this.worksheet_command("save_snapshot"), sagenb.generic_callback());
 	};
+	_this.delete = function() {
+		if(_this.published_mode) return;
+		
+		sagenb.async_request("/send_to_trash", sagenb.generic_callback(function(){
+			_this.close();
+		}), {
+			filenames: encode_response([_this.filename])
+		});
+	};
 	_this.close = function() {
 		if(_this.name === gettext("Untitled") && !_this.published_mode) {
 			$(".alert_rename").show();
@@ -227,9 +238,7 @@ sagenb.worksheetapp.worksheet = function() {
 		/* Add a new cell button after the given
 		 * DOM/jQuery object
 		 */
-		var button = $("<div class=\"new_cell_button\">" + 
-							"<div class=\"line\"></div>" + 
-						"</div>");
+		var button = $("<div class=\"new_cell_button\"><div class=\"line\"></div></div>");
 		
 		button.insertAfter(obj);
 		button.click(function(event) {
@@ -267,7 +276,6 @@ sagenb.worksheetapp.worksheet = function() {
 		_this.forEachCell(function(cell) {
             //console.log("_this.evaluate_all");
 			cell.set_output_loading();
-
 		});
 		
 		var firstcell_id = parseInt($(".cell").attr("id").substring(5));
@@ -597,6 +605,7 @@ sagenb.worksheetapp.worksheet = function() {
                     '<a href="#" class="filename">' + datafile + '</a>' + 
                     '<div class="btn-group">' + 
                         '<a href="#" class="btn btn-xs copy_path_btn" rel="tooltip" title="'+gettext("get path")+'"><span class="glyphicon glyphicon-copy"></span></a>' + 
+						'<a href="#" class="btn btn-xs send_to_chat_btn" rel="tooltip" title="'+gettext("send via chat")+'"><span class="glyphicon glyphicon-comment"></span></a>' + 
                         '<a href="edit_datafile/' + datafile + '" class="btn btn-xs download_btn" rel="tooltip" title="'+gettext("edit")+'"><span class="glyphicon glyphicon-pencil"></span></a>' + 
                         '<a href="data/' + datafile + '" class="btn btn-xs download_btn" rel="tooltip" title="'+gettext("download")+'" target="_blank"><span class="glyphicon glyphicon-download"></span></a>' + 
                         '<a href="#" class="btn btn-xs delete_btn" rel="tooltip" title="'+gettext("delete")+'"><span class="glyphicon glyphicon-trash"></span></a>' + 
@@ -610,6 +619,13 @@ sagenb.worksheetapp.worksheet = function() {
 					//window.prompt(gettext("Copy to clipboard: ") + sagenb.ctrlkey + "-C, Enter", "DATA+'" + $(this).parent().prev().text() + "'");
 					window.prompt(gettext("Copy to clipboard: "), "DATA+'" + $(this).parent().prev().text() + "'");
 				});
+				
+				elem.find(".send_to_chat_btn").click(function(e) {
+					_this.socket.emit('user message', '[[data|'+ _this.worksheet_command("data") +'/'+ $(this).parent().prev().text() +']]');
+					$("#data_modal").modal('hide');
+					sagenb.chat.show_chat_box();
+				});
+				
 				elem.find(".delete_btn").click(function(e) {
 					var fn = $(this).parent().prev().text();
 					$(this).tooltip('destroy');
@@ -738,8 +754,7 @@ sagenb.worksheetapp.worksheet = function() {
 		if(_this.published_mode) {
 			$("body").addClass("published_mode");
 		}
-
-			
+		
 		// this is the event handler for the input
 		var worksheet_name_input_handler = function(e) {
 			$(".worksheet_name").removeClass("edit");
@@ -1090,7 +1105,7 @@ sagenb.worksheetapp.worksheet = function() {
 							
 							// if drop on chat -> send <img>-tag
 							if (e.currentTarget && $(e.currentTarget).is('#chat-message-box')){
-								_this.socket.emit('user message', '[[data|'+ _this.worksheet_command("data") +'/'+ file.name +']]');
+								_this.socket.emit('user message', '[[data|'+ _this.worksheet_command("data") +'/'+ file.name.replace(" ", "_") +']]');
 							}
 						},
 						error: function(jqXHR, textStatus, errorThrown){
@@ -1165,6 +1180,7 @@ sagenb.worksheetapp.worksheet = function() {
 		/////// FILE MENU ////////
 		$("#new_worksheet").click(_this.new_worksheet);
 		$("#save_worksheet").click(_this.save);
+		$("#delete_worksheet").click(_this.delete);
 		$("#close_worksheet, #pokal_logo, #home").click(_this.close);
 		$("#export_to_file").click(_this.export_worksheet);
 		// $("#import_from_file").click(_this.import_worksheet);

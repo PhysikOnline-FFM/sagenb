@@ -254,21 +254,22 @@ sagenb.chat.on_leave_message = function(user) {
 sagenb.chat.replace_stuff_in_msg = function(msg_str){
 	// Own Rules
 	// Preview images [[data|src_url]]
-	msg_str = msg_str.replace(/\[\[data\|([^\]]+)\]\]/gi, function(str, p1){
-		var match_split = p1.split('/');
+	msg_str = msg_str.replace(/\[\[(data|img)\|([^\]]+)\]\]/gi, function(str, p1){
+		var match_split = p2.split('/');
 		// extend url if only filename has been typed (shorthand)
 		if (match_split.length == 1){
-			p1 = sagenb.worksheetapp.worksheet.worksheet_command("data") +'/'+ p1;
-			match_split = p1.split('/'); // repeat this step
+			p2 = sagenb.worksheetapp.worksheet.worksheet_command("data") +'/'+ p2;
+			match_split = p2.split('/'); // repeat this step
 		}
 			
 		var text, filename = match_split.pop();
 		// differntiate between image and other file types
 		if (filename.match(/\.(jpe?g|png|gif)$/i))
-			text = '<img src="'+ p1 +'" title="Diese Datei wurde hochgeladen, um sie dir zu zeigen und steht nun auch unter Daten zur Verfügung." ' 
+			text = '<img src="'+ p2 +'" title="Diese Datei wurde hochgeladen, um sie dir zu zeigen und steht nun auch unter Daten zur Verfügung." ' 
 				+ 'alt="' + filename + ' nicht gefunden..." />';
 		else 
 			text = filename;
+		
 		return '<a href="'+ sagenb.worksheetapp.worksheet.worksheet_command("edit_datafile") +'/'+ filename 
 				+'" title="Diese Datei wurde hochgeladen, um sie dir zu zeigen und steht nun auch unter Daten zur Verfügung." >'
 				+ text + '</a>';
