@@ -14,7 +14,7 @@ class Chatlog_entry(Base):
     time = Column(DateTime)
     msg = Column(Text)
 
-    def __init__(self, msg, userid, nickname, wsid):
+    def __init__(self, msg, userid, wsid):
         self.msg = msg
         self.userid = userid
         self.wsid = wsid

@@ -1411,7 +1411,7 @@ class WorksheetNamespace(BaseNamespace, RoomsMixin, BroadcastMixin):
             self.emit('user_message', self.msg)
             return
         msg_db = Chatlog_entry(msg, self.session['session_nick']['username'],
-                self.session['session_nick']['nickname'], self.room)
+                               self.room)
         self.db.add(msg_db)
         self.db.commit()
         self.msg = self.msg_object(msg, msg_db.id)

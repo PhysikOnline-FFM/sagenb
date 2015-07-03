@@ -4,6 +4,7 @@ import re
 from flask import Module, url_for, render_template, request, session, redirect, g, current_app
 from decorators import login_required, with_lock
 from models import *
+from sagenb.notebook.auth import LdapAuth
 
 settings = Module('sagenb.flask_version.settings')
 
@@ -12,15 +13,17 @@ def valid_nickname(nickname,old_nickname):
     r = True
     if len(nickname)<2 or len(nickname)>20:
         r = "Dein Nickname muss mindestens drei Zeichen lang sein und darf 20 Zeichen nicht &uuml;berschreiten."
-    if not re.match("^[a-zA-Z0-9_]*$", nickname):
+    elif not re.match("^[a-zA-Z0-9_]*$", nickname):
         r = "Dein Nickname darf nur aus Zahlen, Gro&szlig;- und Kleinbuchstaben oder einem Unterstrich bestehen."
-    # Forbid hrz-like nicknames like 's1234567' ('sNUMBERS' type is forbidden)
-    if nickname.startswith('s') and re.match("^[0-9]*$",nickname[1:]):
-        r = "Dein Nickname &auml;hnelt einem HRZ-Namen. Bitte versuche etwas anderes."
-    if nickname in ["Admin","administrator","Administrator","PhysikOnline","Service","service"]:
-        r = "Dieser Nickname ist gesperrt. W&auml;hle bitte einen anderen."
-    if g.notebook.user_manager().is_nickname_occupied(nickname) and not nickname.lower()==old_nickname.lower():
+    elif g.notebook.user_manager().is_nickname_occupied(nickname) and not nickname.lower()==old_nickname.lower():
         r = "Dieser Nickname wird leider bereits verwendet. Bitte suche Dir einen anderen aus."
+    elif nickname in ["Admin","administrator","Administrator","PhysikOnline","Service","service"]:
+        r = "Dieser Nickname ist gesperrt. W&auml;hle bitte einen anderen." 
+    elif nickname.startswith('s') and re.match("^[0-9]*$",nickname[1:]):
+        r = "Dein Nickname &auml;hnelt einem HRZ-Namen. Bitte versuche etwas anderes."
+    elif LdapAuth(g.notebook.conf()).check_user(nickname):
+        r = "Dein Nickname entspricht einem HRZ-Namen. Bitte versuche etwas anderes."
+
     return r
 
 
