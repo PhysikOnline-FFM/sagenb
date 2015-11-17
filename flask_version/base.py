@@ -100,7 +100,9 @@ def index():
             current_app.startup_token = None
             return index()
 
-    return login()
+    #return login()
+    # Fix POTT #1098 bzw. commit 2e81208b0936226c92507b5a42046295c04efaac:
+    return redirect("/pages/")
 
 ################################
 # The feedback handler  (POKAL)#
@@ -176,9 +178,9 @@ def localization_js():
 # Help #
 ########
 @base.route('/help')
-@login_required
 def help():
-    return render_template(os.path.join('html', 'docs.html'))
+    #return render_template(os.path.join('html', 'docs.html'))
+    return redirect('/pages/help')
 
 ###########
 # History #
