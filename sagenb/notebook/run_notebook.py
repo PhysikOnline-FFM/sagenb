@@ -208,7 +208,7 @@ try:
         from werkzeug.debug import DebuggedApplication
         flask_app = DebuggedApplication(flask_app, evalex=True)
 
-    SocketIOServer(('', 8080), flask_app, resource="socket.io", policy_server=True, policy_listener=('', 10843)).serve_forever()
+    SocketIOServer(('', %(port)s), flask_app, resource="socket.io", policy_server=True, policy_listener=('', 10843)).serve_forever()
     
     flask_app.run(host=%(interface)r, port=%(port)s, threaded=True, ssl_context=ssl_context, debug=True) # TODO FIXME OMG debug
 finally:
